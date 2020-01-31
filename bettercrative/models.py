@@ -56,3 +56,6 @@ class Quizzes(db.Model):
     quizzes_id = db.Column(db.Integer, primary_key=True)
     quizzes_Name = db.Column(db.Integer, nullable=False)
     user = db.relationship('User', backref='quiz_owner')
+
+    def __repr__(self):
+        return f"Quizzes('{self.quizzes_Name}')"
