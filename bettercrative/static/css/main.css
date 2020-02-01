@@ -1,1 +1,14 @@
+body{
+  background: #ffafaa;
+  color: #333333;
+  margin-top:5rem;
+}
 
+
+ul{
+  font-size: 150%;
+  list-style-type: 0;
+  margin: 0;
+  padding: 0;
+}
+ 
