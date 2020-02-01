@@ -6,14 +6,8 @@ from flask_mail import Mail
 from bettercrative.config import Config
 
 
-db = SQLAlchemy()
-bcrypt = Bcrypt()
-login_manager = LoginManager()
-login_manager.login_view = 'users.login'
-login_manager.login_message_category = 'users.info'
-mail = Mail()
-
 # Application factory
+# Blueprint registartion
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -29,9 +23,19 @@ def create_app(config_class=Config):
     from bettercrative.users.routes import users
     from bettercrative.classrooms.routes import classrooms
     from bettercrative.main.routes import main
+    from bettercrative.auth import auth as auth_blueprint
 
     app.register_blueprint(users)
     app.register_blueprint(classrooms)
     app.register_blueprint(main)
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
     return app
+
+
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+login_manager = LoginManager()
+login_manager.login_view = 'users.login'
+login_manager.login_message_category = 'users.info'
+mail = Mail()

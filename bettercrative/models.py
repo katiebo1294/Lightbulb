@@ -40,6 +40,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
+
 class Classroom(db.Model):
     __tablename__ = 'classroom'
     classroom_id = db.Column(db.Integer, primary_key=True)
