@@ -36,8 +36,8 @@ class User(db.Model, UserMixin):
             return None
         return User.query.get(user_id)
 
-  #  def __repr__(self):
-    #    return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+    def __repr__(self):
+        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
 
@@ -48,8 +48,8 @@ class Classroom(db.Model):
     key = db.Column(db.String(15), nullable=False)
     user = db.relationship('User', backref='classroom_owner')
 
-   # def __repr__(self):
-#        return f"Classroom('{self.classroom_Name}')"
+    def __repr__(self):
+        return f"Classroom('{self.classroom_Name}')"
 
 
 class Quizzes(db.Model):
@@ -58,5 +58,5 @@ class Quizzes(db.Model):
     quizzes_Name = db.Column(db.Integer, nullable=False)
     user = db.relationship('User', backref='quiz_owner')
 
-   # def __repr__(self):
-    #    return f"Quizzes('{self.quizzes_Name}')"
+    def __repr__(self):
+        return f"Quizzes('{self.quizzes_Name}')"
