@@ -9,8 +9,10 @@ li{
   border-radius: 10px;
 }
 
-
 ul{
   font-size: 100%;
 }
- 
+  
+.container{
+    display: flex;
+}

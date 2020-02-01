@@ -1,5 +1,5 @@
 from flask import render_template, request, Blueprint, make_response
-from bettercrative.models import Classroom
+from bettercrative.models import Classroom, Quizzes
 
 main = Blueprint('main', __name__)
 

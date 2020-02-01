@@ -3,5 +3,5 @@ from wtforms import StringField, PasswordField, SubmitField, FieldList, FormFiel
 from wtforms.validators import InputRequired, Length, ValidationError
 
 class QuizForm(FlaskForm):
-    #questions and answers and stuff
+    quizzes_Name = StringField('Title', validators=[InputRequired()])
     submit = SubmitField('Create Quiz')
