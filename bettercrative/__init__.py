@@ -13,6 +13,7 @@ login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'users.info'
 mail = Mail()
 
+# Application factory
 
 def create_app(config_class=Config):
     app = Flask(__name__)
