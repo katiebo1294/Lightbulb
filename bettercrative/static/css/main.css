@@ -3,6 +3,12 @@ body{
   color: #333333;
 }
 
+li{
+  border: 1px solid black;
+  box-shadow: 1px 2px 2px black;
+  border-radius: 10px;
+}
+
 
 ul{
   font-size: 100%;
