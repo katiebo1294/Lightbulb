@@ -36,7 +36,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You are now able to log in', 'success')
-        # automatically generate a classroom and attach its id to this user
+        # TODO: automatically generate a classroom or not?
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
 

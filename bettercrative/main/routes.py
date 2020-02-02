@@ -18,4 +18,4 @@ def about():
 @main.route("/<page_name>")
 def other_page(page_name):
     response = make_response(render_template('404.html'), 404)
-    return response
+    return render_template('404.html')
