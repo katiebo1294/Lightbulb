@@ -11,6 +11,7 @@
 </head>
 
     <body>
+        <!--NavBar-->
         <header class="site-header">
             <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                   <a class="navbar-brand mr-4" href="/home">Bettercrative</a>
@@ -19,8 +20,9 @@
                   </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
                   <div class="navbar-nav mr-auto navleft">
-                      <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
-                      <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+                      <a class="nav-item nav-link homebutton" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
+                      <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About <span class="sr-only">(current)</span></a>
+                      <a class="nav-item nav-link" href="{{ url_for('main.about') }}">Quizzes</a>
                   </div>
                   <!--Another navbar on the right side-->
                   <div class="navbar-nav mr-auto navright">
@@ -31,6 +33,11 @@
                 </div>
             </nav>
         </header>
+        <!--End Of NavBar-->
+        <container>
+
+
+        </container>
     </body>
 
 

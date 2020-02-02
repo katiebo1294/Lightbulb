@@ -26,15 +26,22 @@ nav{
   box-shadow: 1px 2px 2px black;
   border-radius: 10px;
   margin-bottom:15%;
-  margin-left:85%;
+  margin-left:250%;
   text-align:center;
+  width:100%;
+}
+
+.homebutton{
+  margin-left:100%;
 }
 
 .navleft{
+  width:5%;
 }
 
 .navright{
-  margin-left:50%;
+  margin-left:25%;
+  width:5%;
 }
 
 .login{
