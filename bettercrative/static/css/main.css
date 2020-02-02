@@ -1,16 +1,29 @@
 body{
-  background: #ffafaa;
+  background: #9bdaf2;
   color: #333333;
 }
 
-li{
+nav{
+  background-image: linear-gradient(to bottom,#15afe9,#9bdaf2);
+}
+
+.navbar-brand{
+  margin-bottom:1%;
+  color:#ffa600;
+}
+
+.nav-link{
+  background-color:#9bdaf2;
   border: 1px solid black;
   box-shadow: 1px 2px 2px black;
   border-radius: 10px;
+  margin-bottom:15%;
+  text-align:center;
+}
+
+li{
+  margin-left:75%;
 }
 
 
-ul{
-  font-size: 100%;
-}
  
