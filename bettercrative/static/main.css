@@ -12,11 +12,14 @@ body{
 nav{
   background-image: linear-gradient(to bottom,#15afe9,#9bdaf2);
   font-family:RobotoBold;
+  font-size:200%;
+  height:17%;
 }
 
 .navbar-brand{
-  margin-bottom:1%;
   color:#ffa600;
+  font-size:175%;
+  margin-left:1.5%;
 }
 
 
@@ -25,14 +28,13 @@ nav{
   border: 1px solid black;
   box-shadow: 1px 2px 2px black;
   border-radius: 10px;
-  margin-bottom:15%;
-  margin-left:250%;
+  margin-left:200%;
   text-align:center;
-  width:100%;
+  width:200%;
 }
 
 .homebutton{
-  margin-left:100%;
+  margin-left:75%;
 }
 
 .navleft{
@@ -40,7 +42,7 @@ nav{
 }
 
 .navright{
-  margin-left:25%;
+  margin-left:15%;
   width:5%;
 }
 
