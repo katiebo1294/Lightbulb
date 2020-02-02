@@ -7,30 +7,28 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" >
+  	<link rel="stylesheet" type="text/css" href="../static/main.css" >
 </head>
 
     <body>
         <header class="site-header">
             <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-              <div class="container">
-                <a class="navbar-brand mr-4" href="/home">Bettercrative</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-              <div class="collapse navbar-collapse" id="navbarToggle">
-                <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+                  <a class="navbar-brand mr-4" href="/home">Bettercrative</a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                  <div class="navbar-nav mr-auto">
+                      <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
+                      <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+                  </div>
+                  <!--Another navbar on the right side-->
+                  <div class="navbar-nav navright">
+                    <!--Add authentication conditional here later-->
+                      <a class="nav-item nav-link login" href="{{ url_for('classrooms.new_classroom') }}">Login</a>
+                      <a class="nav-item nav-link register" href="{{ url_for('quizzes.new_quiz') }}">Register</a>
+                  </div>
                 </div>
-                <!--Another navbar on the right side-->
-                <div class="navbar-nav">
-                  <!--Add authentication conditional here later-->
-                    <a class="nav-item nav-link" href="{{ url_for('classrooms.new_classroom') }}">Classrooms</a>
-                    <a class="nav-item nav-link" href="{{ url_for('quizzes.new_quiz') }}">Quizzes</a>
-                </div>
-                </div>
-              </div>
             </nav>
         </header>
       <main class="container">
