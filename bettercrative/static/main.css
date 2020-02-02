@@ -3,8 +3,15 @@ body{
   color: #333333;
 }
 
+@font-face{
+  font-family: RobotoBold;
+  src: url("../Fonts/fontkit/roboto-bold-webfont.woff");
+  font-weight: bold;
+}
+
 nav{
   background-image: linear-gradient(to bottom,#15afe9,#9bdaf2);
+  font-family:RobotoBold;
 }
 
 .navbar-brand{
@@ -19,8 +26,11 @@ nav{
   box-shadow: 1px 2px 2px black;
   border-radius: 10px;
   margin-bottom:15%;
-  margin-left:75%;
+  margin-left:85%;
   text-align:center;
+}
+
+.navleft{
 }
 
 .navright{
@@ -37,16 +47,6 @@ nav{
   margin-right:25%;
 }
 
-li{
-  margin-left:75%;
-}
-
-
- 
-ul{
-  font-size: 100%;
-}
-  
 .container{
     display: flex;
     align-items: center;
