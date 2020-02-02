@@ -2,13 +2,13 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from bettercrative import db
-from bettercrative.models import Quizzes
+from bettercrative.models import Classroom, Quizzes
 from bettercrative.quizzes.forms import QuizForm
 
-classrooms = Blueprint('quizzes', __name__)
+quizzes = Blueprint('quizzes', __name__)
 
 
-@classrooms.route("/quiz/new", methods=['GET', 'POST'])
+@quizzes.route("/quizzes/new", methods=['GET', 'POST'])
 @login_required
 def new_quiz():
     form = QuizForm()

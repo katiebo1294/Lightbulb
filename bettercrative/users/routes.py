@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from bettercrative import db, bcrypt
-from bettercrative.models import User, Classroom
+from bettercrative.models import User, Classroom, Quizzes
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
 from bettercrative.users.util import save_picture, send_reset_email

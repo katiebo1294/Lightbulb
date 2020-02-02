@@ -27,3 +27,12 @@ li{
 
 
  
+ul{
+  font-size: 100%;
+}
+  
+.container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}

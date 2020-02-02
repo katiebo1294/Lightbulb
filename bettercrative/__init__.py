@@ -23,10 +23,12 @@ def create_app(config_class=Config):
     from bettercrative.users.routes import users
     from bettercrative.classrooms.routes import classrooms
     from bettercrative.main.routes import main
+    from bettercrative.quizzes.routes import quizzes
 
     app.register_blueprint(users)
     app.register_blueprint(classrooms)
     app.register_blueprint(main)
+    app.register_blueprint(quizzes)
 
     return app
 
