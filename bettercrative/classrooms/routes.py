@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from bettercrative import db
-from bettercrative.models import Classroom, Quizzes
+from bettercrative.models import Classroom, Quiz
 from bettercrative.classrooms.forms import ClassroomForm
 
 classrooms = Blueprint('classrooms', __name__)
@@ -23,7 +23,7 @@ def new_classroom():
 
 
 # TODO: add ability to add quiz to classroom
-@classrooms.route("classroom/<int:classroom_id>")
+@classrooms.route("/classroom/<int:classroom_id>")
 @login_required
 def classroom(classroom_id):
     classroom = Classroom.query_or_404(classroom_id)

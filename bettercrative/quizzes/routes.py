@@ -5,10 +5,10 @@ from bettercrative import db
 from bettercrative.models import Classroom, Quiz
 from bettercrative.quizzes.forms import QuizForm
 
-quiz = Blueprint('quiz', __name__)
+quizzes = Blueprint('quizzes', __name__)
 
 
-@quiz.route("/quiz/new", methods=['GET', 'POST'])
+@quizzes.route("/quiz/new", methods=['GET', 'POST'])
 @login_required
 def new_quiz():
     form = QuizForm()
@@ -21,7 +21,7 @@ def new_quiz():
 
 
 # TODO: make quiz home route page
-@quiz.route("/quiz/<int:quiz_id>")
+@quizzes.route("/quiz/<int:quiz_id>")
 @login_required
 def quiz(quiz_id):
     quiz = Quiz.query_or_404(quiz_id)
