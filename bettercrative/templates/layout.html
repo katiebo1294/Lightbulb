@@ -2,37 +2,52 @@
 <html lang = "en">
 <head>
 	<!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  	<link rel="stylesheet" type="text/css" href="../static/main.css" >
+  <title>Agency - Start Bootstrap Theme</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="../static/main.css" >
 </head>
 
-    <body>
+    <body id="page-top">
         <!--NavBar-->
-        <header class="site-header">
-            <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-                  <a class="navbar-brand mr-auto" href="/home">Bettercrative</a>
-                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                <div class="collapse navbar-collapse" id="navbarToggle">
-                  <div class="navbar-nav mr-auto navright">
-                      <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
-                      <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About </a>
-                      <a class="nav-item nav-link" href="{{ url_for('main.about') }}">Quizzes</a>
-                  
-                  <!--Another navbar on the right side-->
-                  
-                    <!--Add authentication conditional here later-->
-                      <a class="nav-item nav-link roomID" href="{{ url_for('classrooms.new_classroom') }}">Room ID:______</a>
-                      <a class="nav-item nav-link register" href="{{ url_for('quizzes.new_quiz') }}">Login</a>
-                  </div>
-                </div>
-            </nav>
-        </header>
+        <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+            <div class="container navbackground">
+              <a class="navbar-brand js-scroll-trigger" href="#page-top">Bettercrative</a>
+              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#services">About</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#development">Development</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
         <!--End Of NavBar-->
         {% block content %}
 
