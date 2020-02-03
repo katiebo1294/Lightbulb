@@ -19,13 +19,13 @@
                     <span class="navbar-toggler-icon"></span>
                   </button>
                 <div class="collapse navbar-collapse" id="navbarToggle">
-                  <div class="navbar-nav mr-auto navleft">
+                  <div class="navbar-nav mr-auto navright">
                       <a class="nav-item nav-link" href="{{ url_for('main.home') }}">Home <span class="sr-only">(current)</span></a>
                       <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About </a>
                       <a class="nav-item nav-link" href="{{ url_for('main.about') }}">Quizzes</a>
-                  </div>
+                  
                   <!--Another navbar on the right side-->
-                  <div class="navbar-nav mr-auto navright">
+                  
                     <!--Add authentication conditional here later-->
                       <a class="nav-item nav-link roomID" href="{{ url_for('classrooms.new_classroom') }}">Room ID:______</a>
                       <a class="nav-item nav-link register" href="{{ url_for('quizzes.new_quiz') }}">Login</a>
