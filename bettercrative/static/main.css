@@ -46,14 +46,11 @@ nav{
   border: 1px solid black;
   box-shadow: 1px 2px 2px black;
   border-radius: 10px;
-  margin-left:200%;
+  margin-left:150%;
   text-align:center;
   width:200px;
 }
 
-.homebutton{
-  margin-left:75%;
-}
 
 .navleft{
   width:5%;
@@ -61,19 +58,20 @@ nav{
 }
 
 .navright{
-  margin-left:15%;
   width:5%;
   margin-bottom:2%;
 }
 
-.login{
+.roomID{
   background-color:#ffa600;
-  margin-right:25%;
+  width:500px;
+  white-space:nowrap;
+  margin-right:7%;
 }
 
 .register{
   background-color:#3265f0;
-  margin-right:25%;
+  width:200px;
 }
 
 .container{
