@@ -115,6 +115,19 @@ body:after{
     width: 100%;
 }
 
+.col-large{
+  text-align: center;
+  background-color: rgb(32, 179, 224);
+  font-size: 200%;
+  position: relative;
+  left: 15%;
+  width: 80%;
+  height: 80%;
+  border-radius: 10%;
+  border: 1px black;
+  box-shadow: 1px 2px 2px black;
+}
+
 .col-left{
   text-align: center;
   background-color: rgb(32, 179, 224);
