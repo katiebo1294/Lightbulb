@@ -3,17 +3,8 @@ body{
   color: #333333;
 }
 
-body:after{ 
-  content: ' ';
-  display: block;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  opacity: 0.1;
-  background-image:url("../possibleBG/loading-gears-animation-13.gif");
+section{
+  opacity:100%;
 }
 
 @font-face{
@@ -42,12 +33,13 @@ body:after{
 }
 
 .navbackground{
-  background-color:rgba(42, 91, 165, 0.5);
+  background-color:rgba(42, 91, 165, 1);
 }
 
 #mainNav {
   background-color: #212529;
 }
+
 #mainNav .navbar-toggler {
   font-size: 12px;
   right: 0;
@@ -109,12 +101,6 @@ body:after{
 
 /* end of nav*/
 
-.container{
-    display: flex;
-    align-items: relative;
-    width: 100%;
-}
-
 .col-large{
   text-align: center;
   background-color: rgb(32, 179, 224);
@@ -166,6 +152,49 @@ body:after{
   font-size: 175%;
   border-radius: 10px;
   box-shadow: 1px 2px 2px black;
-  
-  
+}
+
+/**Header**/
+
+header.masthead {
+  text-align: center;
+  color: white;
+  background-image: url("../possibleBG/laptopmono.jpg");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+}
+
+@media (min-width: 768px) {
+  header.masthead .intro-text {
+    padding-top: 10%;
+    padding-bottom: 200px;
+  }
+}
+
+
+/**Create Classroom**/
+.headerbg{
+  background-color:rgb(155, 155, 155);
+}
+
+.createclassroom{
+  background-color:rgb(207, 207, 207);
+  padding:5%;
+  background-image:none;
+}
+.service-heading {
+  margin: 15px 0;
+  text-transform: none;
+}
+
+.classroomlistings {
+  position: relative;
+  background-color: white;
+  height:500px;
+  font-size: 175%;
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px black;
+  background-color:rgb(155, 155, 155);
 }
