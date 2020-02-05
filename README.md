@@ -1,12 +1,15 @@
-[# **CSCI-247: Bettercrative - Socrative but better**]
+**CSCI-247: Bettercrative - Socrative but better**
 
 Bettercrative : Classroom review tool
 
-[# **Using the project**]
+**Using the project**
+
 Clone the repository 
 pip install the required plugins (found in requirements.txt)
 
-[# **Running the program**]
+**Running the program**
+
+
 make sure python is version 3.6 or higher
 
 To run the program, type in  $python3 run.py
