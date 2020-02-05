@@ -20,9 +20,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
 
     users_classroom = db.Column(db.Integer, db.ForeignKey('classrooms.id'), nullable=False)
-    users_quizzes = db.Column(db.Integer, db.ForeignKey('quizzes.id'), nullable=False)
-
-
+    users_quizzes = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config(['SECRET_KEY'], expires_sec))
@@ -40,7 +38,6 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
 
-
 class Classroom(db.Model):
     __tablename__ = 'classroom'
     classroom_id = db.Column(db.Integer, primary_key=True)
@@ -52,11 +49,11 @@ class Classroom(db.Model):
         return f"Classroom('{self.classroom_Name}')"
 
 
-class Quizzes(db.Model):
-    __tablename__ = 'quizzes'
-    quizzes_id = db.Column(db.Integer, primary_key=True)
-    quizzes_Name = db.Column(db.Integer, nullable=False)
+class Quiz(db.Model):
+    __tablename__ = 'quiz'
+    quiz_id = db.Column(db.Integer, primary_key=True)
+    quiz_Name = db.Column(db.Integer, nullable=False)
     user = db.relationship('User', backref='quiz_owner')
 
     def __repr__(self):
-        return f"Quizzes('{self.quizzes_Name}')"
+        return f"Quiz('{self.quiz_Name}')"

@@ -4,13 +4,16 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from bettercrative.config import Config
-
+from flask_bootstrap import Bootstrap
 
 # Application factory
-# Blueprint registartion
+# Blueprint registration
+from bettercrative.errors.routes import not_found
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    Bootstrap(app)
     app.config.from_object(Config)
     db.app = app
 
@@ -24,11 +27,15 @@ def create_app(config_class=Config):
     from bettercrative.classrooms.routes import classrooms
     from bettercrative.main.routes import main
     from bettercrative.quizzes.routes import quizzes
+    from bettercrative.errors.routes import errors
 
     app.register_blueprint(users)
     app.register_blueprint(classrooms)
     app.register_blueprint(main)
     app.register_blueprint(quizzes)
+    app.register_blueprint(errors)
+
+    app.register_error_handler(404, not_found)
 
     return app
 

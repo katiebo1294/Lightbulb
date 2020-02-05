@@ -1,12 +1,28 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from bettercrative import db, bcrypt
-from bettercrative.models import User, Classroom, Quizzes
+from bettercrative.models import User, Classroom, Quiz
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
 from bettercrative.users.util import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
+
+
+@users.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash('Your account has been created! You are now able to log in', 'success')
+        # TODO: automatically generate a classroom or not?
+        return redirect(url_for('users.login'))
+    return render_template('register.html', title='Register', form=form)
 
 
 @users.route("/login", methods=['GET', 'POST'])
@@ -23,22 +39,6 @@ def login():
         else:
             flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
-
-
-@users.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('main.home'))
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(user)
-        db.session.commit()
-        flash('Your account has been created! You are now able to log in', 'success')
-        # automatically generate a classroom and attach its id to this user
-        return redirect(url_for('users.login'))
-    return render_template('register.html', title='Register', form=form)
 
 
 @users.route("/logout")
@@ -66,6 +66,16 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
+
+
+# displays the current user's created quizzes
+@users.route("/user/quizzes")
+@login_required
+def user_quizzes():
+    user = User.query.filter_by(current_user)
+    quizzes = Quiz.query.filter_by(quiz_owner=user) \
+        .order_by(Quiz.date_created.desc())
+    return render_template('user_quizzes.html')
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])
