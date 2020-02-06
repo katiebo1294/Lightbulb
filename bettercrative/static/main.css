@@ -159,7 +159,7 @@ section{
 header.masthead {
   text-align: center;
   color: white;
-  background-image: url("../possibleBG/laptopmono.jpg");
+  background-image: url("../static/images/laptopmono.jpg");
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-position: center center;
