@@ -15,6 +15,8 @@ section{
 
 .page-section {
   padding: 100px 0;
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px black;
 }
 
 .page-section h2.section-heading {
@@ -172,6 +174,8 @@ header.masthead {
 /**Create Classroom**/
 .headerbg{
   background-color:rgb(155, 155, 155);
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px black;
 }
 
 .createclassroom{
@@ -192,4 +196,6 @@ header.masthead {
   border-radius: 10px;
   box-shadow: 1px 2px 2px black;
   background-color:rgb(155, 155, 155);
+  border-radius: 10px;
+  box-shadow: 1px 2px 2px black;
 }
