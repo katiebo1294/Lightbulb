@@ -9,7 +9,7 @@
   <meta name="author" content="">
   
 
-  <title>Agency - Start Bootstrap Theme</title>
+  <title>Bettercrative</title>
 
   <!-- Bootstrap core CSS -->
   
@@ -37,24 +37,24 @@
               <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ml-auto">
                   <!-- condition for if user is logged in -->
-                      {% if current_user.is_authenticated %}
-                          <li class="nav-item">
-                      <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link js-scroll-trigger" href="{{ url_for('classrooms.new_classroom') }}">Create Classroom</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link js-scroll-trigger" href="{{ url_for('users.account') }}">Account</a>
-                  </li>
-                      {% else %}
-                          <li class="nav-item">
-                      <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link js-scroll-trigger" href="{{ url_for('users.register') }}">Register</a>
-                  </li>
-                      {% endif %}
+                    {% if current_user.is_authenticated %}
+                      <li class="nav-item">
+                          <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link js-scroll-trigger" href="{{ url_for('classrooms.new_classroom') }}">Create Classroom</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link js-scroll-trigger" href="{{ url_for('users.account') }}">Account</a>
+                      </li>
+                          {% else %}
+                              <li class="nav-item">
+                          <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link js-scroll-trigger" href="{{ url_for('users.register') }}">Register</a>
+                      </li>
+                    {% endif %}
                   </ul>
               </div>
             </div>
