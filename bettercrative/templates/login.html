@@ -1,7 +1,7 @@
-
-
-{% block head %}
-<div class="content-section">
+{% extends "layout.html" %}
+{% block content %}
+<div class="form-container">
+    <div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }} <!--adds ctrf form-->
         <fieldset class="form-group">
@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 {{ form.password.label(class="form=control-label") }}
-                
+
                 {% if form.password.errors %}
                     {{ form.password(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
@@ -53,5 +53,6 @@
     <small class="text-muted">
         Need An Account? <a class="ml-2" href="{{ url_for('users.register') }}"> Sign Up Now</a>
     </small>
+</div>
 </div>
 {% endblock  %}

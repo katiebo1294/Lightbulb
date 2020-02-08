@@ -11,9 +11,21 @@ body:after{
   top: 0;
   width: 100%;
   height: 100%;
+<<<<<<< HEAD
   z-index: 1;
   /* opacity: 0.1;*/
+=======
+  z-index: -1;
+  opacity: 0.1;
+>>>>>>> backendKatie
   background-image: url('../static/possibleBG/loading-gears-animation-13.gif');
+}
+.form-container {
+    position: relative;
+    height: 100%;
+    width: 30%;
+    margin-top: 15%;
+    margin-left: 35%;
 }
 
 @font-face{
@@ -139,8 +151,8 @@ body:after{
   border-radius: 10%;
   border: 1px black;
   box-shadow: 1px 2px 2px black;
-  
-  
+
+
 }
 
 .col-right{
@@ -166,6 +178,6 @@ body:after{
   font-size: 175%;
   border-radius: 10px;
   box-shadow: 1px 2px 2px black;
-  
-  
+
+
 }
