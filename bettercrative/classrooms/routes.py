@@ -18,7 +18,8 @@ def new_classroom():
                               key=form.key.data, author=current_user)
         db.session.add(classroom)
         db.session.commit()
-        flash('New Classroom Created!', 'success')
+        flash('Quiz added to classroom!', 'success')
+        # TODO: have flash message say the specific classroom name
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
 
