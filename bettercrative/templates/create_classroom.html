@@ -7,7 +7,7 @@
 <header class="masthead">
     <div class="container">
         <div class="intro-text">
-            <section class="page-section container-background" id="services">
+            <section class="page-section container-background">
                 <div class="container createclassroom">
                     <div class="row classroomlistings">
                         <!--Classroom Creation Form-->
@@ -16,10 +16,8 @@
                                 <form action="" method="POST">
                                     {{ form.hidden_tag() }} <!--adds ctrf form-->
                                     <fieldset class="form-group">
-
                                         <div class="form-group">
                                             {{ form.classroom_Name.label(class="form=control-label") }}
-
                                             {% if form.classroom_Name.errors %}
                                             {{ form.classroom_Name(class="form-control form-control-lg is-invalid") }}
                                             <div class="invalid-feedback">

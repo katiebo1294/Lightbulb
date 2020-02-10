@@ -14,33 +14,7 @@
                     <!-- column for students-->
                     <div class = "col-left">
                         <h1>Students</h1>
-                        <!--FORM HERE--><div class="form-container">
-    <div class="content-section">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }} <!--adds ctrf form-->
-        <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Students</legend>
-            <div class="form-group">
-                {{ form.key.label(class="form=control-label") }}
-
-                {% if form.key.errors %}
-                    {{ form.key(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.password.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.key(class="form-control form-control-lg") }}
-                {% endif %}
-            </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
-        </div>
-    </form>
-</div>
-</div>
+                        <!--FORM HERE-->
                         <div class = "room_id" >
                             Room ID
                         </div>

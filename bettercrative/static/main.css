@@ -1,6 +1,6 @@
 body{
-  background: #9bdaf2;
-  color: #333333;
+  background-image: url("../static/images/laptopmono.jpg");
+  background-attachment: fixed;
 }
 
 section {
