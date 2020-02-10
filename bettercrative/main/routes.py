@@ -1,4 +1,6 @@
 from flask import render_template, request, Blueprint, make_response
+from flask_login import current_user
+
 from bettercrative.models import Classroom, Quiz
 
 main = Blueprint('main', __name__)
@@ -7,7 +9,10 @@ main = Blueprint('main', __name__)
 @main.route('/')
 @main.route('/home')
 def home():
-    return render_template('home.html')
+    if current_user.is_authenticated:
+        return render_template('login_home.html')
+    else:
+        return render_template('home.html')
 
 
 @main.route('/about')
