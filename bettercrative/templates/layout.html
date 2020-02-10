@@ -38,31 +38,31 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ml-auto">
                         {% if current_user.is_authenticated %}
-                            <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('classrooms.new_classroom') }}">Create Classroom</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('users.account') }}">Account</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link js-scrool-trigger" href="{{ url_for('users.logout') }}">Log out</a>
-                    </li>
-                        {% else %}
-                            <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
-                    </li>
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
+                          <li>
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="{{ url_for('classrooms.new_classroom') }}">Create Classroom</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link js-scroll-trigger" href="{{ url_for('users.account') }}">Account</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link js-scrool-trigger" href="{{ url_for('users.logout') }}">Log out</a>
+                          </li>
+                              {% else %}
+                                  <li class="nav-item">
+                                      <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
+                                  </li>
 
-                 
-                      <li class="nav-item">
-                          <a class="nav-link js-scroll-trigger" href="{{ url_for('users.login') }}">Login</a>
-                      </li>
+                  
+                                  <li class="nav-item">
+                                        <a class="nav-link js-scroll-trigger" href="{{ url_for('users.login') }}">Login</a>
+                                  </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('users.register') }}">Register</a>
-                    </li>
+                                  <li class="nav-item">
+                                      <a class="nav-link js-scroll-trigger" href="{{ url_for('users.register') }}">Register</a>
+                                  </li>
                         {% endif %}
                     </ul>
                 </div>
