@@ -1,4 +1,4 @@
-**CSCI-247: Bettercrative - Socrative but better**
+**CSCI-497: Bettercrative - Socrative but better**
 
 Bettercrative : Classroom review tool
 
