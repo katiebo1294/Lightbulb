@@ -164,11 +164,6 @@ body:after{
 header.masthead {
   text-align: center;
   color: white;
-  background-image: url("../static/images/laptopmono.jpg");
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: center center;
-  background-size: cover;
 }
 
 
@@ -223,4 +218,9 @@ header.masthead {
     background-color: rgb(42, 91, 165);
     color: white;
     border-color: rgb(42, 91, 165);
+}
+
+.login {
+    border: 1px solid black;
+    margin: auto;
 }
