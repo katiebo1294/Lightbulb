@@ -11,7 +11,7 @@ main = Blueprint('main', __name__)
 @main.route('/home')
 def home():
     if current_user.is_authenticated:
-        return render_template('login_home.html')
+        return render_template('account.html')
     else:
         return render_template('home.html')
 

@@ -14,7 +14,7 @@ classrooms = Blueprint('classrooms', __name__)
 def new_classroom():
     form = ClassroomForm()
     if form.validate_on_submit():
-        classroom = Classroom(classroom_Name=form.classroom_Name.data, key=form.key.data, author=current_user)
+        classroom = Classroom(classroom_Name=form.classroom_Name.data, key=form.key.data, classroom_owner=current_user)
         db.session.add(classroom)
         db.session.commit()
         flash('Quiz added to classroom!', 'success')

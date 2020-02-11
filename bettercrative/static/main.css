@@ -224,3 +224,8 @@ header.masthead {
     color: white;
     border-color: rgb(42, 91, 165);
 }
+
+.login {
+    border: 1px solid black;
+    margin: auto;
+}

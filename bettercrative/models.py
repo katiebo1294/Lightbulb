@@ -46,7 +46,7 @@ class Classroom(db.Model):
     classroom_id = db.Column(db.Integer, primary_key=True)
     classroom_Name = db.Column(db.String(100), nullable=False)
     key = db.Column(db.String(15), nullable=False)
-    #user = db.relationship('User', backref='classroom_owner')
+    user = db.relationship('User', backref='classroom_owner')
 
     def __repr__(self):
         return f"Classroom('{self.classroom_Name}')"
@@ -56,7 +56,7 @@ class Quiz(db.Model):
     __tablename__ = 'quiz'
     quiz_id = db.Column(db.Integer, primary_key=True)
     quiz_Name = db.Column(db.Integer, nullable=False)
-    #user = db.relationship('User', backref='quiz_owner')
+    user = db.relationship('User', backref='quiz_owner')
 
     def __repr__(self):
         return f"Quiz('{self.quiz_Name}')"
