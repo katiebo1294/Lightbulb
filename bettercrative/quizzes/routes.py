@@ -21,8 +21,8 @@ def new_quiz():
 
 
 # TODO: make quiz home route page
-@quizzes.route("/quiz/<int:quiz_id>")
+@quizzes.route("/quiz/<int:id>")
 @login_required
-def quiz(quiz_id):
-    quiz = Quiz.query_or_404(quiz_id)
+def quiz(id):
+    quiz = Quiz.query_or_404(id)
     return render_template('quiz.html', title=quiz.quiz_Name, quiz=quiz)

@@ -8,7 +8,7 @@ from bettercrative.classrooms.forms import ClassroomForm
 classrooms = Blueprint('classrooms', __name__)
 
 
-# TODO: when user attempts to create new classroom, check if there is already a classroom attached to their user_id(?)
+# TODO: when user attempts to create new classroom, check if there is already a classroom attached to their id(?)
 @classrooms.route("/classroom/new", methods=['GET', 'POST'])
 @login_required
 def new_classroom():
@@ -23,15 +23,15 @@ def new_classroom():
 
 
 # TODO: add ability to add quiz to classroom
-@classrooms.route("/classroom/<int:classroom_id>")
+@classrooms.route("/classroom/<int:id>")
 @login_required
-def classroom(classroom_id):
-    classroom = Classroom.query_or_404(classroom_id)
+def classroom(id):
+    classroom = Classroom.query_or_404(id)
     return render_template('classroom.html', title=classroom.classroom_Name, classroom=classroom)
 
 
-def add_quiz(classroom_id):
-    classroom = Classroom.query_or_404(classroom_id)
+def add_quiz(id):
+    classroom = Classroom.query_or_404(id)
     quizzes = Quiz.query.filter_by(quiz_owner=current_user)
     flash('Quiz added to classroom!', 'success')
     # TODO: have flash message say the specific classroom name
