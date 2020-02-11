@@ -21,14 +21,15 @@ class RegistrationForm(FlaskForm):
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user:
-            raise ValidationError('That username is take. Please choose a different one.')
+            raise ValidationError('That username is taken. Please choose a different one.')
 
     def validate_email(self, email):
         user_email = User.query.filter_by(email=email.data).first()
         if user_email:
-            raise ValidationError("That email is take. Please choose a different one.")
+            raise ValidationError("That email is taken. Please choose a different one.")
 
 
+# TODO add error messages for incorrect login attempts
 class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
@@ -49,13 +50,13 @@ class UpdateAccountForm(FlaskForm):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
-                raise ValidationError('That username is take. Please choose a different one.')
+                raise ValidationError('That username is taken. Please choose a different one.')
 
     def validate_email(self, email):
         if email.data != current_user.email:
             user_email = User.query.filter_by(email=email.data).first()
             if user_email:
-                raise ValidationError("That email is take. Please choose a different one.")
+                raise ValidationError("That email is taken. Please choose a different one.")
 
 
 class RequestResetForm(FlaskForm):

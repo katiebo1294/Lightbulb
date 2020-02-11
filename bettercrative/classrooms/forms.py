@@ -4,7 +4,6 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from bettercrative.models import Classroom
 
 
-
 class ClassroomForm(FlaskForm):
     classroom_Name = StringField('Title', validators=[InputRequired()])
     key = PasswordField('Key', validators=[InputRequired(), Length(min=4, max=15)])

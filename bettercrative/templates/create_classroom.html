@@ -1,63 +1,45 @@
 {% extends "layout.html" %}
-
 {% block content %}
+<div class="form-container">
+    <div class="content-section">
+        <form action="" method="POST">
+            {{ form.hidden_tag() }} <!--adds ctrf form-->
+            <fieldset class="form-group">
+                <div class="form-group">
+                    <legend class="border-bottom mb-4">Create Classroom</legend>
+                    {{ form.classroom_Name.label(class="form=control-label") }}
 
-
-<!-- Header -->
-<header class="masthead">
-    <div class="container">
-        <div class="intro-text">
-            <section class="page-section container-background">
-                <div class="container createclassroom">
-                    <div class="row classroomlistings">
-                        <!--Classroom Creation Form-->
-                        <div class="form-container">
-                            <div class="content-section">
-                                <form action="" method="POST">
-                                    {{ form.hidden_tag() }} <!--adds ctrf form-->
-                                    <fieldset class="form-group">
-                                        <div class="form-group">
-                                            {{ form.classroom_Name.label(class="form=control-label") }}
-                                            {% if form.classroom_Name.errors %}
-                                            {{ form.classroom_Name(class="form-control form-control-lg is-invalid") }}
-                                            <div class="invalid-feedback">
-                                                {% for errors in form.classroom_Name.errors %}
-                                                <span>{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
-                                            {% else %}
-                                            {{ form.classroom_Name(class="form-control form-control-lg") }}
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group">
-                                            {{ form.key.label(class="form=control-label") }}
-
-                                            {% if form.key.errors %}
-                                            {{ form.key(class="form-control form-control-lg is-invalid") }}
-                                            <div class="invalid-feedback">
-                                                {% for errors in form.key.errors %}
-                                                <span>{{ error }}</span>
-                                                {% endfor %}
-                                            </div>
-                                            {% else %}
-                                            {{ form.key(class="form-control form-control-lg") }}
-                                            {% endif %}
-                                        </div>
-                                    </fieldset>
-                                    <div class="form-group">
-                                        {{ form.submit(class="btn btn-outline-info btn-lg") }}
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-
+                    {% if form.classroom_Name.errors %}
+                    {{ form.classroom_Name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.classroom_Name.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
                     </div>
+                    {% else %}
+                    {{ form.classroom_Name(class="form-control form-control-lg") }}
+                    {% endif %}
                 </div>
-            </section>
-        </div>
+
+                <div class="form-group">
+                    {{ form.key.label(class="form=control-label") }}
+
+                    {% if form.key.errors %}
+                    {{ form.key(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for errors in form.key.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.key(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
     </div>
-</header>
-
-
-{% endblock %}
+</div>
+{% endblock  %}
