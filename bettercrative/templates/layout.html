@@ -20,57 +20,72 @@
   <link href="..static/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <!-- <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'> -->
   <link rel="stylesheet" type="text/css" href="../static/main.css" >
 </head>
 
     <body id="page-top">
         <!--NavBar-->
         <header>
-            <nav class="navbar navbar-expand-lg fixed-top nav-fill w-100" id="mainNav">
-                <div class="container navbackground">
-                    <a class="navbar-brand js-scroll-trigger" href="{{ url_for('main.home') }}">Bettercrative</a>
-                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        Menu
-                        <i class="fas fa-bars"></i>
-                    </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav text-uppercase ml-auto">
+            <nav class ="nav">
+                <div class = "container">
+                    <div class = "logo"> 
+                        <a href = "{{ url_for('main.home') }}">Bettercrative</a>
+                    </div>
+                
+                
+                <div id = "navlistcontents" class = "listofcontents">
+                    <ul class = "navlinks">
                         {% if current_user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('classrooms.new_classroom') }}">Create Classroom</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('users.account') }}">Account</a>
-                    </li>
-                        <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
-                    </li>
-                        <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('users.logout') }}">Logout</a>
-                    </li>
+                        <li> <a href = "{{ url_for('classrooms.new_classroom') }}"> Create Classroom </a> </li>
+                        <li> <a href = "{{ url_for('users.account') }}"> Account </a> </li>
+                        <li> <a href = "{{ url_for('main.about') }}"> About </a> </li>
+                        <li> <a href = "{{ url_for('users.logout') }}"> Logout </a> </li>
                         {% else %}
-                            <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('main.about') }}">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('users.login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{{ url_for('users.register') }}">Register</a>
-                    </li>
+                        <li> <a href = "{{ url_for('main.about') }}"> About </a> </li>
+                        <li> <a href = "{{ url_for('users.login') }}"> Login </a> </li>
+                        <li> <a href = "{{ url_for('users.register') }}"> Register </a> </li>
+                        
                         {% endif %}
+
                     </ul>
                 </div>
-                </div>
+                <span class = navTrigger>
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </span>
+                
+            </div> <!-- container close tag-->   
+                
+
             </nav>
+            
         </header>
         <!--End Of NavBar-->
+
+        <div class = "test-container">
+        
+        </div>
+
             {% block content %}{% endblock %}
 
 
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="../static/js/scripts.js"></script>
+    <script>
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > 50) {
+                $('.nav').addClass('affix');
+                console.log("OK");
+            } else {
+                $('.nav').removeClass('affix');
+            }
+        });
+    </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
