@@ -74,3 +74,8 @@ class ResetPasswordForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+
+
+class StudentLoginForm(FlaskForm):
+    room_id = StringField('Room ID', validators=[DataRequired()])
+    submit = SubmitField('Login')

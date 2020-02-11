@@ -7,7 +7,6 @@ from bettercrative.models import Classroom
 
 class ClassroomForm(FlaskForm):
     classroom_Name = StringField('Title', validators=[InputRequired()])
-    classroom_Content = StringField('Content', validators=[InputRequired()])
     key = PasswordField('Key', validators=[InputRequired(), Length(min=4, max=15)])
 
     def validate_key(self, key):

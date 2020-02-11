@@ -1,6 +1,6 @@
 body{
-  background: #9bdaf2;
-  color: #333333;
+  background-image: url("../static/images/laptopmono.jpg");
+  background-attachment: fixed;
 }
 
 section {
@@ -15,15 +15,11 @@ body:after{
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
-  opacity: 0.1;
-  background-image: url('../static/possibleBG/loading-gears-animation-13.gif');
 }
 .form-container {
     position: relative;
     height: 100%;
     width: 30%;
-    margin-top: 15%;
     margin-left: 35%;
 }
 
@@ -36,8 +32,6 @@ body:after{
 
 .page-section {
   padding: 100px 0;
-  border-radius: 10px;
-  box-shadow: 1px 2px 2px black;
 }
 
 .page-section h2.section-heading {
@@ -54,13 +48,12 @@ body:after{
   text-transform: none;
   font-family: 'Droid Serif', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
-
 .navbackground{
   background-color:rgba(42, 91, 165, 1);
 }
 
-#mainNav {
-  background-color: #212529;
+.container-background{
+    background-color: transparent;
 }
 
 #mainNav .navbar-toggler {
@@ -189,6 +182,7 @@ header.masthead {
   background-size: cover;
 }
 
+
 @media (min-width: 768px) {
   header.masthead .intro-text {
     padding-top: 10%;
@@ -205,7 +199,7 @@ header.masthead {
 }
 
 .createclassroom{
-  background-color:rgb(207, 207, 207);
+  background: transparent;
   padding:5%;
   background-image:none;
 }
@@ -216,12 +210,24 @@ header.masthead {
 
 .classroomlistings {
   position: relative;
-  background-color: white;
+  background-color: transparent;
   height:500px;
   font-size: 175%;
-  border-radius: 10px;
-  box-shadow: 1px 2px 2px black;
-  background-color:rgb(155, 155, 155);
-  border-radius: 10px;
-  box-shadow: 1px 2px 2px black;
+}
+
+fieldset {
+    background-color:rgba(50,50,50,.35);
+    padding:8%;
+    border-radius:15px;
+}
+
+.btn-outline-info {
+    color: rgb(42, 91, 165);
+    border-color: rgb(42, 91, 165);
+    background-color:white ;
+}
+.btn-outline-info:hover {
+    background-color: rgb(42, 91, 165);
+    color: white;
+    border-color: rgb(42, 91, 165);
 }
