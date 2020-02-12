@@ -1,0 +1,11 @@
+-reroute classroom after creation
+-show a user's classrooms on account page
+-page for create quiz
+-add quiz to classroom
+-student sign in
+
+-fix navbar size/positioning
+-color for active page in navbar
+-style flash messages/error messages for forms
+-shift form boxes down slightly
+-home page scroll-down for "about the product" section
