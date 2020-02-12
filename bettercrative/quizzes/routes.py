@@ -13,7 +13,7 @@ quizzes = Blueprint('quizzes', __name__)
 def new_quiz():
     form = QuizForm()
     if form.validate_on_submit():
-        quiz = Quiz(quiz_Name=form.quiz_Name.data)
+        quiz = Quiz(quiz_Name=form.quiz_Name.data, questions=form.questions.data, quiz_owner=current_user)
         db.session.add(quiz)
         db.session.commit()
         flash('New Quiz Created!', 'success')
@@ -21,8 +21,8 @@ def new_quiz():
 
 
 # TODO: make quiz home route page
-@quizzes.route("/quiz/<int:quiz_id>")
+@quizzes.route("/quiz/<int:id>")
 @login_required
-def quiz(quiz_id):
-    quiz = Quiz.query_or_404(quiz_id)
+def quiz(id):
+    quiz = Quiz.query_or_404(id)
     return render_template('quiz.html', title=quiz.quiz_Name, quiz=quiz)
