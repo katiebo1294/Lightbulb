@@ -18,7 +18,7 @@
 
 
   <!-- Custom fonts for this template -->
-  <link href="../static/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
@@ -28,16 +28,6 @@
 </head>
 
     <body id="page-top">
-        <!--NavBar-->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <ul class=flashes>
-        {% for message in messages %}
-           <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
         <header>
             <nav class ="nav">
                 <div class = "container">
@@ -73,7 +63,6 @@
             </nav>
         </header>
         <!--End Of NavBar-->
-
         <div class = "test-container">
         
         </div>

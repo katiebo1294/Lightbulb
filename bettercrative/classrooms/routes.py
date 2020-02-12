@@ -17,7 +17,7 @@ def new_classroom():
         classroom = Classroom(classroom_Name=form.classroom_Name.data, key=form.key.data, classroom_owner=current_user)
         db.session.add(classroom)
         db.session.commit()
-        flash('Classroom created!', 'success')
+        flash(u'Classroom created!', 'success')
         return redirect(url_for('users.account'))
         # TODO: have flash message say the specific classroom name
     return render_template('create_classroom.html', title='New Classroom', form=form)
@@ -34,7 +34,7 @@ def classroom(id):
 def add_quiz(id):
     classroom = Classroom.query_or_404(id)
     quizzes = Quiz.query.filter_by(quiz_owner=current_user)
-    flash('Quiz added to classroom!', 'success')
+    flash(u'Quiz added to classroom!', 'success')
     # TODO: have flash message say the specific classroom name
     return render_template('classroom.html', title=classroom.classroom_Name, classroom=classroom)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom

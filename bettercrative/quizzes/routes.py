@@ -16,7 +16,7 @@ def new_quiz():
         quiz = Quiz(quiz_Name=form.quiz_Name.data, questions=form.questions.data, quiz_owner=current_user)
         db.session.add(quiz)
         db.session.commit()
-        flash('New Quiz Created!', 'success')
+        flash(u'New Quiz Created!', 'success')
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
 
