@@ -16,75 +16,70 @@
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
 
 
-
-  <!-- Custom fonts for this template -->
-  <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
-  <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-  <!-- <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'> -->
-  <link rel="stylesheet" type="text/css" href="../static/main.css" >
+    <!-- Custom fonts for this template -->
+    <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <!-- <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'> -->
+    <link href="../static/main.css" rel="stylesheet" type="text/css">
 </head>
 
-    <body id="page-top">
-        <!--NavBar-->
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <ul class=flashes>
-        {% for message in messages %}
-           <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-        <header>
-            <nav class ="nav">
-                <div class = "container">
-                    <div class = "logo"> 
-                        <a href = "{{ url_for('main.home') }}">Bettercrative</a>
-                    </div>
-                
-                
-                <div id = "navlistcontents" class = "listofcontents">
-                    <ul class = "navlinks">
-                        {% if current_user.is_authenticated %}
-                        <li> <a href = "{{ url_for('users.logout') }}"> Logout </a> </li>
-                        <li> <a href = "{{ url_for('classrooms.new_classroom') }}"> Create Classroom </a> </li>
-                        <li> <a href = "{{ url_for('users.account') }}"> Account </a> </li>
-                        <li> <a href = "{{ url_for('main.about') }}"> About </a> </li>
-                        {% else %}
-                        <li> <a href = "{{ url_for('main.about') }}"> About </a> </li>
-                        <li> <a href = "{{ url_for('users.login') }}"> Login </a> </li>
-                        <li> <a href = "{{ url_for('users.register') }}"> Register </a> </li>
-                        {% endif %}
+<body id="page-top">
+<!--NavBar-->
+<header>
+    <nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="{{ url_for('main.home') }}">Bettercrative</a>
+            </div>
 
-                    </ul>
-                </div>
-                <span class = navTrigger>
+
+            <div class="listofcontents" id="navlistcontents">
+                <ul class="navlinks">
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
+                    <li><a href="{{ url_for('classrooms.new_classroom') }}"> Create Classroom </a></li>
+                    <li><a href="{{ url_for('users.account') }}"> Account </a></li>
+                    <li><a href="{{ url_for('main.about') }}"> About </a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('main.about') }}"> About </a></li>
+                    <li><a href="{{ url_for('users.login') }}"> Login </a></li>
+                    <li><a href="{{ url_for('users.register') }}"> Register </a></li>
+                    {% endif %}
+
+                </ul>
+            </div>
+            <span class=navTrigger>
                     <i></i>
                     <i></i>
                     <i></i>
                 </span>
-                
-            </div> <!-- container close tag-->   
-                
 
-            </nav>
-        </header>
-        <!--End Of NavBar-->
+        </div> <!-- container close tag-->
 
-        <div class = "test-container">
-        
+
+    </nav>
+</header>
+<!--End Of NavBar-->
+
+<!-- Message flashing -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
         </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+{% block content %}{% endblock %}
 
-            {% block content %}{% endblock %}
-
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="../static/js/scripts.js"></script>
-    <script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="../static/js/scripts.js"></script>
+<script>
         $(window).scroll(function() {
             if ($(document).scrollTop() > 50) {
                 $('.nav').addClass('affix');
@@ -93,9 +88,16 @@
                 $('.nav').removeClass('affix');
             }
         });
-    </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </body>
+
+</script>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>

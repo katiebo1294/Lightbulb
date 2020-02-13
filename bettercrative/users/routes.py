@@ -64,20 +64,8 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
-    classrooms = Classroom.query.filter_by(owner=current_user)
-    quizzes = Quiz.query.filter_by(owner=current_user)
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form, classrooms=classrooms, quizzes=quizzes, user=current_user)
-
-
-# displays the current user's created quizzes
-@users.route("/user/quizzes")
-@login_required
-def user_quizzes():
-    user = User.query.filter_by(current_user)
-    quizzes = Quiz.query.filter_by(owner=user) \
-        .order_by(Quiz.date_created.desc())
-    return render_template('user_quizzes.html')
+                           image_file=image_file, form=form)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])
@@ -106,6 +94,6 @@ def reset_token(token):
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         user.password = hashed_password
         db.session.commit()
-        flash(u'Your passowrd has been updated! You are now able to log in', 'success')
+        flash(u'Your password has been updated! You are now able to log in', 'success')
         return redirect(url_for('users.login'))
     return render_template('reset_token.html', title='Reset Password', form=form)

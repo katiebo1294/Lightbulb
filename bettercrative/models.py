@@ -1,5 +1,5 @@
 import enum
-
+from datetime import datetime
 from bettercrative import db, login_manager
 from flask import current_app
 from flask_login import UserMixin
@@ -13,8 +13,8 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# Warning: Database migration cannot auto-detect changes in table or
-# column name, and must be manually changed in the migration script.
+# Warning: Database migration cannot auto-detect changes in table/column name
+# or default values and must be manually changed in the migration script.
 # ALWAYS manually correct script before upgrading database.
 
 class User(db.Model, UserMixin):
@@ -45,6 +45,7 @@ class User(db.Model, UserMixin):
 class Classroom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -55,6 +56,7 @@ class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     questions = db.relationship('Question', backref='source', lazy=True, collection_class=list)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
