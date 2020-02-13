@@ -1,4 +1,4 @@
--reroute classroom after creation
+-reroute classroom after creation                       (DONE)
 -show a user's classrooms on account page
 -page for create quiz
 -add quiz to classroom

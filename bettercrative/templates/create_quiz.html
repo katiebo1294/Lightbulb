@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
+<!-- Scripts for adding and removing questions and answers -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../static/js/QuizForm.js"></script>
 <div class="form-container">
     <div class="content-section">
         <form action="" method="POST">
@@ -7,35 +10,79 @@
             <fieldset class="form-group">
                 <div class="form-group">
                     <legend class="border-bottom mb-4">Create Quiz</legend>
-                    {{ form.quiz_Name.label(class="form=control-label") }}
+                    {{ form.name.label(class="form=control-label") }}
 
-                    {% if form.quiz_Name.errors %}
-                    {{ form.quiz_Name(class="form-control form-control-lg is-invalid") }}
+                    {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for errors in form.quiz_Name.errors %}
+                        {% for errors in form.name.errors %}
                         <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.quiz_Name(class="form-control form-control-lg") }}
+                    {{ form.name(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                {% for question in form.questions %}
-                <div class="form-group">
-                    {{ form.question.label(class="form=control-label") }}
+                <a class="add" href="#">Add Question</a>
+                <form action="" id="question-form" method="POST" role="form">
+                    <div class="subforms-container">
+                        {% for question in form.questions %}
+                        <div class="subform" data-index="{{ loop.index0 }}" id="question-{{loop.index0 }}-form">
+                            {{ question.content.label(class="form=control-label") }}
 
-                    {% if form.question.errors %}
-                    {{ form.question(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.question.errors %}
-                        <span>{{ error }}</span>
+                            {% if question.content.errors %}
+                            {{ question.content(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for errors in question.content.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ question.content(class="form-control form-control-lg") }}
+                            {% endif %}
+
+                            {{ question.type.label(class="form=control-label") }}
+
+                            {% if question.type.errors %}
+                            {{ question.type(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">type
+                                {% for errors in question.type.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ question.type(class="form-control form-control-lg") }}
+                            {% endif %}
+
+                            <a class="add" href="#">Add Answer</a>
+                            <form action="" id="answer-form" method="POST" role="form">
+                                <div class="subforms-container">
+                                    {% for answer in question.answers %}
+                                    <div class="subform" data-index="{{ loop.index0 }}"
+                                         id="answer-{{loop.index0 }}-form">
+                                        {{ answer.content.label(class="form=control-label") }}
+
+                                        {% if answer.content.errors %}
+                                        {{ answer.content(class="form-control form-control-lg is-invalid") }}
+                                        <div class="invalid-feedback">
+                                            {% for errors in answer.content.errors %}
+                                            <span>{{ error }}</span>
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        {{ answer.content(class="form-control form-control-lg") }}
+                                        {% endif %}
+
+                                        <a class="remove" href="#">Remove</a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </form>
+                            <a class="remove" href="#">Remove</a>
+                        </div>
                         {% endfor %}
                     </div>
-                    {% else %}
-                    {{ form.question(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-                {% endfor %}
+                </form>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}

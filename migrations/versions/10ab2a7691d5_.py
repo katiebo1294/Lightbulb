@@ -30,7 +30,7 @@ def upgrade():
     )
     op.create_table('classroom',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('classroom_Name', sa.String(length=100), nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('key', sa.String(length=15), nullable=False),
     sa.Column('classroom_owner_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['classroom_owner_id'], ['user.id'], ),
@@ -38,7 +38,7 @@ def upgrade():
     )
     op.create_table('quiz',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('quiz_Name', sa.Integer(), nullable=False),
+    sa.Column('name', sa.Integer(), nullable=False),
     sa.Column('questions', sa.String(length=100), nullable=True),
     sa.Column('answers', sa.String(length=200), nullable=True),
     sa.Column('quiz_owner_id', sa.Integer(), nullable=False),

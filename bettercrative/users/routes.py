@@ -73,7 +73,7 @@ def account():
 @login_required
 def user_quizzes():
     user = User.query.filter_by(current_user)
-    quizzes = Quiz.query.filter_by(quiz_owner=user) \
+    quizzes = Quiz.query.filter_by(owner=user) \
         .order_by(Quiz.date_created.desc())
     return render_template('user_quizzes.html')
 

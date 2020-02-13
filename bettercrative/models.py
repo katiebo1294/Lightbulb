@@ -1,3 +1,5 @@
+import enum
+
 from bettercrative import db, login_manager
 from flask import current_app
 from flask_login import UserMixin
@@ -12,14 +14,13 @@ def load_user(id):
 
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    classrooms = db.relationship('Classroom', backref='classroom_owner', lazy=True)
-    quizzes = db.relationship('Quiz', backref='quiz_owner', lazy=True)
+    classrooms = db.relationship('Classroom', backref='owner', lazy=True)
+    quizzes = db.relationship('Quiz', backref='owner', lazy=True)
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config(['SECRET_KEY'], expires_sec))
@@ -38,23 +39,39 @@ class User(db.Model, UserMixin):
 
 
 class Classroom(db.Model):
-    __tablename__ = 'classroom'
     id = db.Column(db.Integer, primary_key=True)
-    classroom_Name = db.Column(db.String(100), nullable=False)
-    key = db.Column(db.String(15), nullable=False)
-    classroom_owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    name = db.Column(db.String(20), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Classroom('{self.classroom_Name}')"
+        return f"Classroom('{self.name}')"
 
 
 class Quiz(db.Model):
-    __tablename__ = 'quiz'
     id = db.Column(db.Integer, primary_key=True)
-    quiz_Name = db.Column(db.Integer, nullable=False)
-    questions = db.Column(db.String(100), nullable=True)
-    answers = db.Column(db.String(200), nullable=True)
-    quiz_owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
+    questions = db.relationship('Question', backref='source', lazy=True, collection_class=list)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Quiz('{self.quiz_Name}')"
+        return f"Quiz('{self.name}')"
+
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    type = db.Column(db.String, nullable=False)
+    answers = db.relationship('Answer', backref='source', lazy=True, collection_class=list)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Question('{self.content}')"
+
+
+class Answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Answer('{self.content}')"

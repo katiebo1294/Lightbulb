@@ -7,17 +7,17 @@
             <fieldset class="form-group">
                 <div class="form-group">
                     <legend class="border-bottom mb-4">Create Quiz</legend>
-                    {{ form.classroom_Name.label(class="form=control-label") }}
+                    {{ form.name.label(class="form=control-label") }}
 
-                    {% if form.classroom_Name.errors %}
-                    {{ form.classroom_Name(class="form-control form-control-lg is-invalid") }}
+                    {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for errors in form.classroom_Name.errors %}
+                        {% for errors in form.name.errors %}
                         <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                     {% else %}
-                    {{ form.classroom_Name(class="form-control form-control-lg") }}
+                    {{ form.name(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
 
