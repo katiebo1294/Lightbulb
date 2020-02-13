@@ -29,3 +29,4 @@ Werkzeug==0.16.0
 wrapt==1.11.2
 WTForms==2.2.1
 flask_bootstrap
+flask_table
