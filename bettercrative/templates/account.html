@@ -1,3 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
+    <h1 class="mb-3">{{ user.username }}'s Classrooms</h1>
+    {% for classroom in classrooms.items %}
+    <!-- display each classroom title and quiz status -->
+    {% endfor %}
+    <h1 class="mb-3">{{ user.username }}'s Quizzes</h1>
+    {% for quiz in quizzes.items %}
+    <!-- display each quiz title and number of questions -->
+    {% endfor %}
 {% endblock %}

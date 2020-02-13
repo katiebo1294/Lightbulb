@@ -1,7 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from bettercrative import db, bcrypt
-from bettercrative.models import User, Quiz
+from bettercrative.models import User, Quiz, Classroom
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
 from bettercrative.users.util import save_picture, send_reset_email
@@ -64,8 +64,10 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    classrooms = Classroom.query.filter_by(owner=current_user)
+    quizzes = Quiz.query.filter_by(owner=current_user)
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form)
+                           image_file=image_file, form=form, classrooms=classrooms, quizzes=quizzes, user=current_user)
 
 
 # displays the current user's created quizzes
