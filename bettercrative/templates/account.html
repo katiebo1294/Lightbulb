@@ -1,5 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
         <!-- Display the user's classrooms here in reverse chronological order -->
-        {{ table }}
+        <!--{{ table }}-->
+        <!--This is to iterate through all classrooms-->
+        {% for classrooms in Classrooms %}
+                <ul id="classroomList">
+                        <li>
+                                Key: {{ classrooms.key}}
+                        </li>
+                        <li>
+                                Name: {{ classrooms.classroom}}
+                        </li>
+                </ul>
+        {% endfor %}
 {% endblock %}
