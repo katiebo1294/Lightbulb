@@ -5,12 +5,11 @@ from bettercrative.models import Classroom
 
 
 class ClassroomForm(FlaskForm):
-    name = StringField('Title', validators=[InputRequired()])
-    key = PasswordField('Key', validators=[InputRequired(), Length(min=4, max=15)])
+    name = PasswordField('Title', validators=[InputRequired(), Length(min=4, max=15)])
 
-    def validate_key(self, key):
-        key = Classroom.query.filter_by(key=key.data).first()
-        if key:
-            raise ValidationError('That key has already been taken. Please choose another.')
+    def validate_name(self, name):
+        name = Classroom.query.filter_by(name=name.data).first()
+        if name:
+            raise ValidationError('That name has already been taken. Please choose another.')
 
     submit = SubmitField('Create Classroom')

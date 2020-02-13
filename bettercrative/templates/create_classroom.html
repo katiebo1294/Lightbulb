@@ -20,21 +20,6 @@
                     {{ form.name(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-
-                <div class="form-group">
-                    {{ form.key.label(class="form=control-label") }}
-
-                    {% if form.key.errors %}
-                    {{ form.key(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.key.errors %}
-                        <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.key(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}

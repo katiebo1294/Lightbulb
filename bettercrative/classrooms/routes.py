@@ -14,7 +14,7 @@ classrooms = Blueprint('classrooms', __name__)
 def new_classroom():
     form = ClassroomForm()
     if form.validate_on_submit():
-        classroom = Classroom(name=form.name.data, key=form.key.data, owner=current_user)
+        classroom = Classroom(name=form.name.data, owner=current_user)
         db.session.add(classroom)
         db.session.commit()
         flash(u'Classroom created!', 'success')

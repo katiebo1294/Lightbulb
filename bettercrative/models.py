@@ -13,6 +13,10 @@ def load_user(id):
     return User.query.get(int(id))
 
 
+# Warning: Database migration cannot auto-detect changes in table or
+# column name, and must be manually changed in the migration script.
+# ALWAYS manually correct script before upgrading database.
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True, nullable=False)
@@ -40,7 +44,7 @@ class User(db.Model, UserMixin):
 
 class Classroom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(20), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
