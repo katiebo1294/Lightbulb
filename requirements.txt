@@ -28,3 +28,4 @@ virtualenv==16.7.9
 Werkzeug==0.16.0
 wrapt==1.11.2
 WTForms==2.2.1
+flask_bootstrap
