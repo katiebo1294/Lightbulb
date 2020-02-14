@@ -11,6 +11,7 @@
     <title>Bettercrative</title>
 
     <!-- Bootstrap core CSS -->
+    
 
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
@@ -28,6 +29,7 @@
 </head>
     
     <body id="page-top">
+    <div class = "transparent-background">
         <!--NavBar-->
     <section class = "nav-section">
       {% with messages = get_flashed_messages(with_categories=true) %}
@@ -62,16 +64,18 @@
 
                     </ul>
                 </div>
+                
+                <!-- Collapse for mobile-->
                 <span class = navTrigger>
-                    <i></i>
-                    <i></i>
-                    <i></i>
+                    <i> <p>B</p> </i>
+                    <i> <p>C</p></i>
+                    <i> </i>
                 </span>
                 
             </div> <!-- container close tag-->   
                 
 
-            </nav>
+        </nav>
         </header>
         </section>
         
@@ -81,10 +85,14 @@
         <section class = "about-section">
             <div class = "about-section-container">
                 <h1> Bettercrative </h1>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+                <p> Be the best version of yourself </p>
+                <p> Get Started!</p>
+            </div>
+            <div class = "students-button">
+                
             </div>
         </section>
-
+        </div>
         <!-- End of About Section -->
 
         <!-- Login Section -->
@@ -94,6 +102,7 @@
             </div>
             
         </section>
+        
         
 
         {%block content%}

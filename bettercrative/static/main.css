@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
 body{
-  background-image: url("../static/images/laptopmono.jpg");
+  
   background-attachment: fixed;
   font-family: 'Open Sans Condensed';
   font-size: 180%;
@@ -45,6 +46,8 @@ body:after{
   text-decoration: none;
   color: black;
   font-size: 2.5rem;
+  font-family: 'Source Code Pro', monospace;
+
 }
 .nav div.logo a:hover{
   /* setting to green for now */
@@ -57,6 +60,8 @@ body:after{
 .nav div.listofcontents a{
   text-decoration: none;
   color: black;
+  font-family: 'Source Code Pro', monospace;
+
 }
 
 .nav div.listofcontents ul{
@@ -90,17 +95,17 @@ body:after{
   display:none;
 }
 
+
 /* end of nav*/
 
 /* media query */
-@media screen and (min-width: 1920px) and (max-width: 1080px){
+@media screen and (min-width: 900px) and (max-width: 1080px){
   .container{
     margin: 0;
-    box-shadow: var(--box-shadow);
-    border-color: black;
+    
   }
 }
-@media screen and (max-width:1080px ){
+@media screen and (max-width:1080px){
   .navTrigger{
     display:block;
   }
@@ -140,6 +145,8 @@ body:after{
     display: block;
   }
 }
+
+/*Collapse*/
 /* end media query */
 
 /* animation */
@@ -152,15 +159,44 @@ body:after{
   right: 30px;
   top: 0;
   bottom: 0;
+  padding-top: 18px;
+}
+.affix .navTrigger{
+  cursor: pointer;
+  width: 30px;
+  height:25px;
+  margin: auto;
+  position: absolute;
+  right: 30px;
+  top: 0;
+  bottom: 0;
+  padding: 0;
 }
 .navTrigger i {
-  background-color: #fff;
+  background-color: black;
   border-radius: 2px;
   content: '';
   display: block;
   width: 100%;
   height: 4px;
 }
+.navTrigger p{
+  font-size: 40%;
+  color: black;
+}
+.affix .navTrigger i{
+  background-color: white;
+  border-radius: 2px;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+}
+.affix .navTrigger p{
+  color: white;
+  font-size: 50%;
+}
+
 .navTrigger i:nth-child(1) {
   -webkit-animation: outT 0.8s backwards;
   animation: outT 0.8s backwards;
@@ -333,26 +369,49 @@ body:after{
   padding: 0;
   font-size: 80%;
   background-color:black;
+  font-family:
 }
 
 .affix .container .logo a{
   color: white;
+  font-size: 100%;
+}
+
+.affix .container .logo a:hover{
+  color: #00E676;
 }
 
 .affix .container .navlinks a{
   color: white;
 }
 
+.affix .container .navlinks a:hover{
+  color: #00E676;
+}
+
+.nav .affix .navTrigger i{
+  font-size: 80%;
+  color: white;
+}
+
+
 
 /* end of animation */
 
 .nav-section{
+  
   width: 100%;
   height:100px;
 }
+/* transparent-background */
+.transparent-background{
+  background-image: url("../static/images/laptopmono.jpg");
+}
+/* end transparent-background */
 /* About-Section */
 
 .about-section{
+  
   width: 100%;
   padding-top: 40px;
   height: 1000px;
@@ -364,7 +423,7 @@ body:after{
 }
 .about-section-container p{
   text-align: center;
-  font-family: 'Amatic SC';
+  font-family: 'Indie Flower';
   font-size: 30px;
 }
 /* end about-section */
@@ -373,14 +432,20 @@ body:after{
 .login-section{
   width: 100%;
   padding-top: 40px;
-  /* background-color: green; */
-  height: 1000px
+   /* background-color: green;  */
+  height: 1000px;
+  background-image: url('../static/images/login-section-bg.png');
+  
+
+  
 }
 .login-section-container p{
   text-align: center;
   font-family: 'Amatic SC', cursive;
+  
 
 }
+
 
 /* end login-section */
 
