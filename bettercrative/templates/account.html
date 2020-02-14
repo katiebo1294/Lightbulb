@@ -3,13 +3,10 @@
         <!-- Display the user's classrooms here in reverse chronological order -->
         <!--{{ table }}-->
         <!--This is to iterate through all classrooms-->
-        {% for classrooms in Classrooms %}
+        {% for classroom in current_user.classrooms %}
                 <ul id="classroomList">
                         <li>
-                                Key: {{ classrooms.key}}
-                        </li>
-                        <li>
-                                Name: {{ classrooms.classroom}}
+                                Name: {{ classroom }}
                         </li>
                 </ul>
         {% endfor %}
