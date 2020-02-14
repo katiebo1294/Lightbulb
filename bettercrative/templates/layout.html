@@ -111,7 +111,8 @@
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="../static/js/scripts.js"></script>
+    <!-- makes collapse icon clickable w/ animation -->
+    <script src="../static/js/scripts.js"></script> 
     <script>
         $(window).scroll(function() {
             if ($(document).scrollTop() > 50) {
@@ -121,6 +122,17 @@
                 $('.nav').removeClass('affix');
             }
         });
+    </script>
+    <script>
+        function dropDown(){
+            var x = document.getElementById("navlistofcontents");
+            if(x.className === "listofcontents"){
+                x.className += " responsive ";
+            }
+            else{
+                x.className = "listofcontents";
+            }
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
