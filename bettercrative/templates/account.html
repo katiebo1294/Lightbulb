@@ -1,4 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
-        <!-- Display the user's classrooms here in reverse chronological order -->
+<!-- Display the user's classrooms here in reverse chronological order -->
+<!--{{ table }}-->
+<!--This is to iterate through all classrooms-->
+
+<body class="container-fluid"> 
+        <div class="col classroomcolumn">
+                <div class="classroomdisplay">
+                        {% for classroom in current_user.classrooms %}
+                                Name: {{ classroom.classroom_Name }}
+                        {% endfor %}
+                </div>
+        </div>
+</body>
 {% endblock %}

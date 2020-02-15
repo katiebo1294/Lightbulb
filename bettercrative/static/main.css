@@ -452,3 +452,14 @@ a{
     border: 1px solid black;
     margin: auto;
 }
+
+/**Account**/
+.classroomdisplay {
+  background-color:rgb(121, 153, 201);
+}
+
+.classroomcolumn {
+  background-color:rgba(71, 104, 153, 0.8);
+  height:500px;
+  width:700px;
+}
