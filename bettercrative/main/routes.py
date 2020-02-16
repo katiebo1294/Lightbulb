@@ -23,13 +23,6 @@ def about():
     return render_template('about.html')
 
 
-
-
-
-
-
-
-
 #to do - work out how to take user id and retrieve classroom id from it
 #then afterwards do that with the key
 
