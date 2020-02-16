@@ -3,12 +3,11 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.models import Classroom, Quiz
-from bettercrative.classrooms.forms import ClassroomForm
+from bettercrative.classrooms.forms import ClassroomForm, enterClassroom
 
 classrooms = Blueprint('classrooms', __name__)
 
 
-# TODO: when user attempts to create new classroom, check if there is already a classroom attached to their user_id(?)
 @classrooms.route("/classroom/new", methods=['GET', 'POST'])
 @login_required
 def new_classroom():
@@ -19,8 +18,15 @@ def new_classroom():
         db.session.commit()
         flash('Clasroom created! ', 'success')
         # TODO: have flash message say the specific classroom name
-        return redirect(url_for('main.home'))
+        return redirect(url_for('main.home')) #should redirect to the classroom
     return render_template('create_classroom.html', title='New Classroom', form=form)
+
+@classrooms.route("/enter_classroom", methods=['GET', 'POST'])
+def enter_classroom():
+    form = enterClassroom()
+    if form.validate_on_submit():
+        return redirect(url_for('main.home')) #should redirect to classroom later
+    return render_template('enter_classroom.html', title='get in chief', form=form)
 
 
 # TODO: add ability to add quiz to classroom
@@ -30,11 +36,3 @@ def classroom(id):
     classroom = Classroom.query_or_404(id)
     return render_template('classroom.html', title=classroom.classroom_Name, classroom=classroom)
 
-
-def add_quiz(id):
-    classroom = Classroom.query_or_404(id)
-    quizzes = Quiz.query.filter_by(quiz_owner=current_user)
-    flash('Quiz added to classroom!', 'success')
-    # TODO: have flash message say the specific classroom name
-    return render_template('classroom.html', title=classroom.classroom_Name, classroom=classroom)
-    # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom

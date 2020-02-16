@@ -37,6 +37,15 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 
+class teacher_LoginForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember Me')
+    submit = SubmitField('Login')
+    
+
+
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=4, max=15)])

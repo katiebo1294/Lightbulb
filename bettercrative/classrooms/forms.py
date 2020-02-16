@@ -15,3 +15,7 @@ class ClassroomForm(FlaskForm):
             raise ValidationError('That key has already been taken. Please choose another.')
 
     submit = SubmitField('Create Classroom')
+
+class enterClassroom(FlaskForm):
+    input_key = StringField('What is the key', validators=[InputRequired()])
+    submit = SubmitField('Enter Classroom')

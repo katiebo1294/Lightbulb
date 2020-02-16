@@ -1,9 +1,9 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from bettercrative import db, bcrypt
-from bettercrative.models import User, Quiz
+from bettercrative.models import User, Quiz, Classroom
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                                       RequestResetForm, ResetPasswordForm)
+                                       RequestResetForm, ResetPasswordForm, teacher_LoginForm)
 from bettercrative.users.util import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -41,6 +41,22 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
+@users.route("/teacher_login", methods=['GET', 'POST'])
+def teacher_login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
+    form = teacher_LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('main.home'))
+        else:
+            flash('Login Unsuccessful. Please check email and password', 'danger')
+    return render_template('teacher_login.html', title='Login', form=form)
+
+
 @users.route("/logout")
 def logout():
     logout_user()
@@ -67,15 +83,6 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-
-# displays the current user's created quizzes
-@users.route("/user/quizzes")
-@login_required
-def user_quizzes():
-    user = User.query.filter_by(current_user)
-    quizzes = Quiz.query.filter_by(quiz_owner=user) \
-        .order_by(Quiz.date_created.desc())
-    return render_template('user_quizzes.html')
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

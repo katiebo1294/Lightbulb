@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="form-container">
+    <div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }} <!--adds ctrf form-->
+        <fieldset class="form-group">
+            <div class="form-group">
+                <legend class="border-bottom mb-4">Enter Classroom</legend>
+                {{ form.input_key.label(class="form=control-label") }}
+                {{ form.input_key(class="form-control form-control-lg") }}
+            </div>
+
+         <!--Add validation to input key here later-->
+
+        </fieldset>
+    </form>
+</div>
+</div>
+{% endblock  %}

@@ -22,8 +22,6 @@ class User(db.Model, UserMixin):
     classrooms = db.relationship('Classroom', backref='user', lazy='dynamic')
 
 
-    
-    #users_quizzes = db.Column(db.Integer, db.ForeignKey('quiz.quiz_id'))
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config(['SECRET_KEY'], expires_sec))
