@@ -21,7 +21,7 @@ class enterClassroom(FlaskForm):
     
     def validate_entrance(self, input_key, key):
         key = Classroom.query.filter_by(key=key.data).first()
-        if not(input_key==key):
+        if (input_key==key):
             raise ValidationError('There is not key that is that')
-        
+
     submit = SubmitField('Enter Classroom')
