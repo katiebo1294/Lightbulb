@@ -25,7 +25,7 @@ def new_classroom():
 def enter_classroom():
     form = enterClassroom()
     if form.validate_on_submit and form.validate_entrance(input_key=form.input_key, key=form.input_key):
-        return redirect(url_for('main.home')) #should redirect to classroom later
+        return redirect(url_for('main.about')) #should redirect to classroom later
     return render_template('enter_classroom.html', title='get in chief', form=form)
 
 

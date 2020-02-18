@@ -1,6 +1,6 @@
 import sqlite3
 import pytest
-from app.db import get_db
+from bettercrative import db
 
 
 def test_get_close_db(app):

@@ -16,12 +16,16 @@ class ClassroomForm(FlaskForm):
 
     submit = SubmitField('Create Classroom')
 
+
+
+
+
 class enterClassroom(FlaskForm):
     input_key = StringField('What is the key', validators=[InputRequired()])
     
     def validate_entrance(self, input_key, key):
         key = Classroom.query.filter_by(key=key.data).first()
-        if (input_key==key):
+        if not (input_key==key):
             raise ValidationError('There is not key that is that')
 
     submit = SubmitField('Enter Classroom')

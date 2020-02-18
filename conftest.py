@@ -3,7 +3,6 @@ import tempfile
 
 import pytest
 from bettercrative import create_app, db
-#from bettercrative.db import get_db, init_db
 
 @pytest.fixture
 def app():

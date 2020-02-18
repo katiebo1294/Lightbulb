@@ -1,6 +1,6 @@
 import pytest
 from flask import g, session
-from app.db import get_db
+from bettercrative import db
 
 def test_register(client, app):
     assert client.get('/register').status_code == 200
