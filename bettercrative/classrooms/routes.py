@@ -3,12 +3,11 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.models import Classroom, Quiz
-from bettercrative.classrooms.forms import ClassroomForm
+from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
 
 classrooms = Blueprint('classrooms', __name__)
 
 
-# TODO: when user attempts to create new classroom, check if there is already a classroom attached to their id(?)
 @classrooms.route("/classroom/new", methods=['GET', 'POST'])
 @login_required
 def new_classroom():
@@ -23,11 +22,22 @@ def new_classroom():
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
 
-# TODO: add ability to add quiz to classroom
+@classrooms.route("/classroom/enter", methods=['GET', 'POST'])
+def enter_classroom():
+    form = EnterClassroomForm()
+    if form.validate_on_submit():
+        classroom = Classroom.query.filter_by(name=form.room_id.data).first()
+        if classroom:
+            return redirect(url_for('classrooms.classroom', id=classroom.id))
+        else:
+            flash(u'A classroom does not exist with that name. Please try again.', 'danger')
+    return render_template('enter_classroom.html', title='get in chief', form=form)
+
+
+# displays a specific classroom (student view)
 @classrooms.route("/classroom/<int:id>")
-@login_required
 def classroom(id):
-    classroom = Classroom.query_or_404(id)
+    classroom = Classroom.query.get_or_404(id)
     return render_template('classroom.html', title=classroom.name, classroom=classroom)
 
 

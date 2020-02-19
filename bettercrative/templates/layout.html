@@ -44,9 +44,10 @@
                     <li><a href="{{ url_for('users.account') }}"> Account </a></li>
                     <li><a href="{{ url_for('main.about') }}"> About </a></li>
                     {% else %}
-                    <li><a href="{{ url_for('main.about') }}"> About </a></li>
+                    <li><a href="{{ url_for('classrooms.enter_classroom') }}"> Enter Classroom </a></li>
                     <li><a href="{{ url_for('users.login') }}"> Login </a></li>
                     <li><a href="{{ url_for('users.register') }}"> Register </a></li>
+                    <li><a href="{{ url_for('main.about') }}"> About </a></li>
                     {% endif %}
 
                 </ul>

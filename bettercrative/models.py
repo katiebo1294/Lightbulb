@@ -13,10 +13,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# Warning: Database migration cannot auto-detect changes in table/column name
-# or default values and must be manually changed in the migration script.
-# ALWAYS manually correct script before upgrading database.
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True, nullable=False)

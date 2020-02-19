@@ -19,7 +19,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash(u'Your account has been created! You are now able to log in', 'success')
+        flash(u'Your account has been created! You are now able to log in.', 'success')
         # TODO: automatically generate a classroom or not?
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
@@ -37,7 +37,7 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
-            flash(u'Login Unsuccessful. Please check email and password', 'danger')
+            flash(u'Login Unsuccessful. Please check email and password.', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 

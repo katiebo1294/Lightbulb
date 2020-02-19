@@ -5,7 +5,7 @@ from bettercrative.models import Classroom
 
 
 class ClassroomForm(FlaskForm):
-    name = PasswordField('Title', validators=[InputRequired(), Length(min=4, max=15)])
+    name = StringField('Title', validators=[InputRequired(), Length(min=4, max=15)])
 
     def validate_name(self, name):
         name = Classroom.query.filter_by(name=name.data).first()
@@ -13,3 +13,9 @@ class ClassroomForm(FlaskForm):
             raise ValidationError('That name has already been taken. Please choose another.')
 
     submit = SubmitField('Create Classroom')
+
+
+class EnterClassroomForm(FlaskForm):
+    room_id = StringField('Room ID', validators=[InputRequired()])
+
+    submit = SubmitField('Enter Classroom')
