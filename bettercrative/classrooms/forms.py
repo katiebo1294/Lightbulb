@@ -4,7 +4,6 @@ from wtforms.validators import InputRequired, Length, ValidationError
 from bettercrative.models import Classroom
 
 
-
 class ClassroomForm(FlaskForm):
     classroom_Name = StringField('Title', validators=[InputRequired()])
     key = PasswordField('Key', validators=[InputRequired(), Length(min=4, max=15)])
@@ -18,14 +17,23 @@ class ClassroomForm(FlaskForm):
 
 
 
-
-
 class enterClassroom(FlaskForm):
+    classroomName = StringField("What is the classrooms name", validators=[InputRequired()])
     input_key = StringField('What is the key', validators=[InputRequired()])
-    
-    def validate_entrance(self, input_key, key):
+    submit = SubmitField('Enter Classroom')
+
+
+    def validate_entrance(self, input_key, key, classroomName):
         key = Classroom.query.filter_by(key=key.data).first()
-        if not (input_key==key):
+        getName = Classroom.query.filter_by(classroom_Name=classroomName.data).first()
+        if getName and not(input_key==key): #if no key exists, 
             raise ValidationError('There is not key that is that')
 
-    submit = SubmitField('Enter Classroom')
+
+#FROM CLASSROOM WHERE classroom_Name = inputed classroomNamedata
+
+#if that classroom_name does not exists - just continue b/c no issue
+# if that classrom_name does exist, check the users key to the key for that 
+# classroom id. If t
+# if that classroom
+
