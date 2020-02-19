@@ -1,5 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1> Account </h1>
-
+    <h1 class="mb-3">{{ current_user.username }}'s Classrooms</h1>
+    {% for classroom in current_user.classrooms.items %}
+    <!-- display each classroom title and quiz status -->
+        <div class="classroom-desc">
+            <ul>
+                <li>{{ classroom.name }}</li>
+            </ul>
+        </div>
+    {% endfor %}
+    <h1 class="mb-3">{{ current_user.username }}'s Quizzes</h1>
+    {% for quiz in current_user.quizzes.items %}
+    <!-- display each quiz title and number of questions -->
+    {% endfor %}
 {% endblock %}
