@@ -11,6 +11,7 @@
     <title>Bettercrative</title>
 
     <!-- Bootstrap core CSS -->
+    
 
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
@@ -27,6 +28,7 @@
 </head>
 
 <body id="page-top">
+  <div class="transparent-background">
 <!--NavBar-->
 <header>
     <nav class="nav">
@@ -51,11 +53,12 @@
                     {% endif %}
 
                 </ul>
-            </div>
-            <span class=navTrigger>
-                    <i></i>
-                    <i></i>
-                    <i></i>
+            </div> 
+              <!-- Collapse for mobile-->
+                <span class = navTrigger>
+                    <i> <p>B</p> </i>
+                    <i> <p>C</p></i>
+                  <i> </i>
                 </span>
 
         </div> <!-- container close tag-->
@@ -64,6 +67,30 @@
     </nav>
 </header>
 <!--End Of NavBar-->
+        <!-- About section -->
+        <section class = "about-section">
+            <div class = "about-section-container">
+                <h1> Bettercrative </h1>
+                <p> Be the best version of yourself </p>
+                <p> Get Started!</p>
+            </div>
+            <div class = "students-button">
+                
+            </div>
+        </section>
+        </div>
+        <!-- End of About Section -->
+
+        <!-- Login Section -->
+        <section class = "login-section">
+            <div class = "login-section-container">
+                
+            </div>
+            
+        </section>
+        
+        {%block content%}
+        {%endblock%}
 
 <!-- Message flashing -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -77,10 +104,11 @@
     {% endwith %}
 {% block content %}{% endblock %}
 
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="../static/js/scripts.js"></script>
-<script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- makes collapse icon clickable w/ animation -->
+    <script src="../static/js/scripts.js"></script> 
+    <script>
         $(window).scroll(function() {
             if ($(document).scrollTop() > 50) {
                 $('.nav').addClass('affix');
@@ -89,16 +117,20 @@
                 $('.nav').removeClass('affix');
             }
         });
-
-</script>
-<script crossorigin="anonymous"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script crossorigin="anonymous"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script crossorigin="anonymous"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-</body>
+    </script>
+    <script>
+        function dropDown(){
+            var x = document.getElementById("navlistofcontents");
+            if(x.className === "listofcontents"){
+                x.className += " responsive ";
+            }
+            else{
+                x.className = "listofcontents";
+            }
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
 </html>
