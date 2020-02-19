@@ -5,7 +5,7 @@ from bettercrative.models import Classroom
 
 
 class ClassroomForm(FlaskForm):
-    classroom_Name = StringField('Title', validators=[InputRequired()])
+    classroom_Name = StringField('Classroom Name', validators=[InputRequired()])
     key = PasswordField('Key', validators=[InputRequired(), Length(min=4, max=15)])
 
     def validate_key(self, key):
@@ -23,11 +23,15 @@ class enterClassroom(FlaskForm):
     submit = SubmitField('Enter Classroom')
 
 
-    def validate_entrance(self, input_key, key, classroomName):
-        key = Classroom.query.filter_by(key=key.data).first()
+    def validate_entrance(self, input_key, classroomName):
+        key = Classroom.query.filter_by(key=input_key.data).first()
         getName = Classroom.query.filter_by(classroom_Name=classroomName.data).first()
-        if getName and not(input_key==key): #if no key exists, 
+        
+        if getName and not(key): #If that classroom name exists and the key is wrong 
             raise ValidationError('There is not key that is that')
+        elif getName and (key):
+            return True
+        
 
 
 #FROM CLASSROOM WHERE classroom_Name = inputed classroomNamedata

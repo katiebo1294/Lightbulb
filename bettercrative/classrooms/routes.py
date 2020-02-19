@@ -24,7 +24,7 @@ def new_classroom():
 @classrooms.route("/enter_classroom", methods=['GET', 'POST'])
 def enter_classroom():
     form = enterClassroom()
-    if form.validate_on_submit and  form.validate_entrance(input_key=form.input_key, key=form.input_key, classroomName=form.classroomName):
+    if form.validate_on_submit and  form.validate_entrance(input_key=form.input_key, classroomName=form.classroomName):
         return redirect(url_for('main.home')) #should redirect to classroom later
     return render_template('enter_classroom.html', title='get in chief', form=form)
 
