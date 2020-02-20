@@ -56,6 +56,13 @@ body:after{
 .nav div.listofcontents{
   height:65px;
   float:right;
+  
+}
+.nav div.logged_in{
+  height: 65px;
+  float: right;
+  font-size: 80%;
+  display:flex;
 }
 .nav div.listofcontents a{
   text-decoration: none;

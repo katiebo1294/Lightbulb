@@ -52,10 +52,12 @@
                 <div id = "navlistcontents" class = "listofcontents">
                     <ul class = "navlinks">
                         {% if current_user.is_authenticated %}
+                        <div class = "logged_in">
                         <li> <a href = "{{ url_for('users.logout') }}"> Logout </a> </li>
                         <li> <a href = "{{ url_for('classrooms.new_classroom') }}"> Create Classroom </a> </li>
                         <li> <a href = "{{ url_for('users.account') }}"> Account </a> </li>
                         <li> <a href = "{{ url_for('main.about') }}"> About </a> </li>
+                        </div>
                         {% else %}
                         <li> <a href = "{{ url_for('main.about') }}"> About </a> </li>
                         <li> <a href = "{{ url_for('users.login') }}"> Login </a> </li>
