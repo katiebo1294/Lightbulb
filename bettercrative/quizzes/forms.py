@@ -1,20 +1,21 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FieldList, FormField, BooleanField, IntegerField
+from wtforms import StringField, SubmitField, FieldList, FormField, SelectField, Form
 from wtforms.validators import InputRequired, Length, ValidationError
 
 
-class AnswerForm(FlaskForm):
-    answer_type = StringField(validators=[InputRequired()])
+class AnswerForm(Form):
+    # TODO will this work for all question types?
+    content = StringField('Answer Content', validators=[InputRequired()])
 
 
-class QuestionForm(FlaskForm):
-    answers = FieldList(FormField(AnswerForm))
+class QuestionForm(Form):
+    content = StringField('Question Content', validators=[InputRequired()])
+    qtype = SelectField('Question Type', choices=[('T/F', 'True/False'), ('MC', 'Multiple Choice'),
+                                                  ('SA', 'Short Answer'), ('IDE', 'Code')])
+    answers = FieldList(FormField(AnswerForm), min_entries=2, max_entries=4)  # TODO increase limit on answers
 
 
 class QuizForm(FlaskForm):
-    quiz_Name = StringField('Title', validators=[InputRequired()])
-    questions = FieldList(FormField(QuestionForm))
+    name = StringField('Title', validators=[InputRequired()])
+    questions = FieldList(FormField(QuestionForm), min_entries=1, max_entries=20)  # TODO increase limit on questions
     submit = SubmitField('Create Quiz')
-
-# TODO: how to allow user to add however many questions and answers they want
-# TODO: how to have different question types (i.e., true/false, multiple choice, short answer, IDE, etc.)

@@ -1,8 +1,11 @@
-from flask import render_template, request, Blueprint, make_response
-from flask_login import current_user
-from bettercrative.users.forms import LoginForm, StudentLoginForm
+from flask import render_template, request, Blueprint, make_response, url_for, flash, redirect
+from flask_login import current_user, login_user
 
-from bettercrative.models import Classroom, Quiz
+from bettercrative import bcrypt
+from bettercrative.classrooms.forms import EnterClassroomForm
+from bettercrative.users.forms import LoginForm
+
+from bettercrative.models import Classroom, Quiz, User
 
 main = Blueprint('main', __name__)
 
