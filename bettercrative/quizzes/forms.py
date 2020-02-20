@@ -10,8 +10,8 @@ class AnswerForm(Form):
 
 class QuestionForm(Form):
     content = StringField('Question Content', validators=[InputRequired()])
-    qtype = SelectField('Question Type', choices=[(('T/F', 'True or False'), ('MC', 'Multiple Choice'),
-                                                  ('SA', 'Short Answer'), ('IDE', 'Code'))])
+    qtype = SelectField('Question Type', choices=[('T/F', 'True/False'), ('MC', 'Multiple Choice'),
+                                                  ('SA', 'Short Answer'), ('IDE', 'Code')])
     answers = FieldList(FormField(AnswerForm), min_entries=2, max_entries=4)  # TODO increase limit on answers
 
 

@@ -1,8 +1,11 @@
-from flask import render_template, request, Blueprint, make_response
-from flask_login import current_user
+from flask import render_template, request, Blueprint, make_response, url_for, flash, redirect
+from flask_login import current_user, login_user
+
+from bettercrative import bcrypt
+from bettercrative.classrooms.forms import EnterClassroomForm
 from bettercrative.users.forms import LoginForm
 
-from bettercrative.models import Classroom, Quiz
+from bettercrative.models import Classroom, Quiz, User
 
 main = Blueprint('main', __name__)
 
@@ -13,6 +16,12 @@ def home():
     if current_user.is_authenticated:
         return render_template('account.html')
     else:
+        studentForm = EnterClassroomForm()
+        if studentForm.validate_on_submit():
+            return
+        teacherForm = LoginForm()
+        if teacherForm.validate_on_submit():
+            return
         return render_template('home.html')
 
 

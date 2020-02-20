@@ -502,11 +502,13 @@ body:after{
     border-radius:15px;
 }
 
-.login {
-    border: 1px solid black;
-    margin: auto;
-}
-
 .btn {
     background-color: white;
+}
+
+.qtype-choice {
+    margin: 3px;
+}
+.qtype-container {
+    margin: auto;
 }

@@ -11,7 +11,7 @@
                 <div class="form-group">
                     <legend class="border-bottom mb-4">Create Quiz</legend>
                     <!-- quiz title -->
-                    {{ form.name.label(class="form=control-label") }}
+                    {{ form.name.label(class="form-control-label") }}
 
                     {% if form.name.errors %}
                     {{ form.name(class="form-control form-control-lg is-invalid") }}
@@ -32,7 +32,7 @@
                         <!-- for each question, add the question content and specify a type; then add answer(s) -->
                         <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
                             <div class="form-group">
-                                {{ question.content.label(class="form=control-label") }}
+                                {{ question.content.label(class="form-control-label") }}
 
                                 {% if question.content.errors %}
                                 {{ question.content(class="form-control form-control-lg is-invalid") }}
@@ -47,12 +47,11 @@
                             </div>
                             <!-- 4 buttons to specify question type - MC, SA, T/F, or coding -->
                             <div class="form-group">
-                                {{ question.qtype.label(class="form=control-label") }}
-                                <div class="form-control form-row">
-                                    <btn class="col">True or False</btn>
-                                    <btn class="col">Multiple Choice</btn>
-                                    <btn class="col">Short Answer</btn>
-                                    <btn class="col">Code</btn>
+                                {{ question.qtype.label(class="form-control-label") }}
+                                <div class="row btn-group btn-group-toggle qtype-container">
+                                    {% for choice in question.qtype.choices %}
+                                        <label class="btn btn-outline-warning qtype-choice" data-toggle="button"><input type="radio">{{ choice[1] }}</input></label>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <a class="add btn btn-outline-success" onclick="addAnswer();" href="#">Add Answer</a>
@@ -62,7 +61,7 @@
                                     {% for answer in question.answers %}
                                     <div class="subform" data-index="{{ loop.index0 }}"
                                          id="answer-{{loop.index0 }}-form">
-                                        {{ answer.content.label(class="form=control-label") }}
+                                        {{ answer.content.label(class="form-control-label") }}
 
                                         {% if answer.content.errors %}
                                         {{ answer.content(class="form-control form-control-lg is-invalid") }}
