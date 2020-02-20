@@ -13,7 +13,7 @@ quizzes = Blueprint('quizzes', __name__)
 def new_quiz():
     form = QuizForm()
     if form.validate_on_submit():
-        quiz = Quiz(quiz_Name=form.quiz_Name.data, questions=form.questions.data, quiz_owner=current_user)
+        quiz = Quiz(quiz_Name=form.quiz_Name.data)
         db.session.add(quiz)
         db.session.commit()
         flash('New Quiz Created!', 'success')

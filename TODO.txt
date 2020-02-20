@@ -3,8 +3,6 @@
 -page for create quiz
 -add quiz to classroom
 -student sign in
--student fill out quiz
--calculate and display scores
 
 -fix navbar size/positioning
 -color for active page in navbar

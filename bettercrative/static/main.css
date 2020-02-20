@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
 body{
-  background-image: url("../static/images/laptopmono.jpg");
+  
   background-attachment: fixed;
   font-family: 'Open Sans Condensed';
   font-size: 180%;
@@ -26,6 +28,7 @@ body:after{
 
 /* start nav*/
 .nav {
+  z-index: 3;
   width: 100%;
   height: 65px;
   position: fixed;
@@ -44,6 +47,8 @@ body:after{
   text-decoration: none;
   color: black;
   font-size: 2.5rem;
+  font-family: 'Source Code Pro', monospace;
+
 }
 .nav div.logo a:hover{
   /* setting to green for now */
@@ -52,13 +57,21 @@ body:after{
 .nav div.listofcontents{
   height:65px;
   float:right;
+  
+}
+.nav div.logged_in{
+  height: 65px;
+  float: right;
+  font-size: 80%;
+  display:flex;
 }
 .nav div.listofcontents a{
   text-decoration: none;
+  color: black;
+  font-family: 'Source Code Pro', monospace;
+
 }
-a{
-  color: white;
-}
+
 .nav div.listofcontents ul{
   width: 100%;
   height: 65px;
@@ -66,6 +79,7 @@ a{
   list-style: none;
   margin: 0;
   padding: 0;
+  
   
 }
 
@@ -90,20 +104,45 @@ a{
   display:none;
 }
 
+
 /* end of nav*/
 
 /* media query */
-@media screen and (min-width: 1920px) and (max-width: 1080px){
-  .container{
-    margin: 0;
-    box-shadow: var(--box-shadow);
-    border-color: black;
+@media screen and (max-width: 414px){
+  .nav div.logo a{
+    text-decoration: none;
+    color: black;
+    font-size: 2rem;
+    font-family: 'Source Code Pro', monospace;
   }
 }
-@media screen and (max-width:1080px ){
+@media screen and (min-width: 900px) and (max-width: 1080px){
+  .container{
+    
+    
+  }
+}
+@media screen and (max-width:1200px){
   .navTrigger{
     display:block;
   }
+  
+  .nav div.logged_in{
+    height: 65px;
+    float: right;
+    
+    display:flex;
+  }
+  .nav div.logged_in a{
+    font-size: 80%;
+  }
+  .nav div.listofcontents a{
+    text-decoration: none;
+    color:white;
+    font-family: 'Source Code Pro', monospace;
+    
+  }
+
   .nav div.logo{
     margin-left: 15px;
   }
@@ -114,7 +153,7 @@ a{
   }
   .nav div.show_list{
     height: auto;
-    display: none;
+    display: flex;
   }
   .nav div.listofcontents ul{
     flex-direction: column;
@@ -128,10 +167,11 @@ a{
   }
   .nav div.listofcontents ul li{
     width: 100%;
-    text-align: right;
+    text-align: center;
+    font-size: 300%;
   }
   .nav div.listofcontents ul li a{
-    text-align: center;
+    
     width: 100%;
     font-size: 50%;
     padding: 20px;
@@ -140,6 +180,8 @@ a{
     display: block;
   }
 }
+
+/*Collapse*/
 /* end media query */
 
 /* animation */
@@ -152,15 +194,44 @@ a{
   right: 30px;
   top: 0;
   bottom: 0;
+  padding-top: 18px;
+}
+.affix .navTrigger{
+  cursor: pointer;
+  width: 30px;
+  height:25px;
+  margin: auto;
+  position: absolute;
+  right: 30px;
+  top: 0;
+  bottom: 0;
+  padding: 0;
 }
 .navTrigger i {
-  background-color: #fff;
+  background-color: black;
   border-radius: 2px;
   content: '';
   display: block;
   width: 100%;
   height: 4px;
 }
+.navTrigger p{
+  font-size: 60%;
+  color: black;
+}
+.affix .navTrigger i{
+  background-color: white;
+  border-radius: 2px;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+}
+.affix .navTrigger p{
+  color: white;
+  font-size: 40%;
+}
+
 .navTrigger i:nth-child(1) {
   -webkit-animation: outT 0.8s backwards;
   animation: outT 0.8s backwards;
@@ -331,19 +402,112 @@ a{
 
 .affix {
   padding: 0;
-  background-color: black;
   font-size: 80%;
-  color:white;
+  background-color:black;
+  font-family:
 }
 
+.affix .container .logo a{
+  color: white;
+  font-size: 100%;
+}
+
+.affix .container .logo a:hover{
+  color: #00E676;
+}
+
+.affix .container .navlinks a{
+  color: white;
+}
+
+.affix .container .navlinks a:hover{
+  color: #00E676;
+}
+
+.nav .affix .navTrigger i{
+  font-size: 80%;
+  color: white;
+}
 
 
 
 /* end of animation */
 
-.test-container{
-  height: 1000px;
+.nav-section{
+  
+  width: 100%;
+  height:100px;
 }
+/* transparent-background */
+.transparent-background{
+  background-image: url("../static/images/laptopmono.jpg");
+  background-size: cover;
+}
+/* end transparent-background */
+/* About-Section */
+
+.about-section{
+  
+  width: 100%;
+  padding-top: 40px;
+  height: 1000px;
+  /* background-color: blue; */
+}
+.col-md-6 img{
+  margin-left: 10%;
+  margin-top: 8%;
+  box-shadow:  black 5px 5px 45px;
+  
+
+
+}
+.students-button{
+  width: 50%;
+  padding-left: 13%;
+  float:left
+}
+.teachers-button{
+  width:50%;
+  float:left;
+  padding-right:13%;
+}
+.teachers-button img{
+  display:inline-flex;
+  margin-left: 20%;
+  margin-top: 8%;
+  box-shadow: black 5px 5px 45px;
+
+}
+.students-button img{
+  margin-left: 20%;
+  margin-top: 8%;
+  box-shadow: black 5px 5px 45px;
+
+}
+
+
+/* end about-section */
+
+/* Login-Section */
+.login-section{
+  width: 100%;
+  padding-top: 40px;
+   /* background-color: green;  */
+  height: 1000px;
+  background-image: url('../static/images/login-section-bg.png');
+  
+
+  
+}
+.login-section-container p{
+  text-align: center;
+  font-family: 'Amatic SC', cursive;
+  
+
+}
+
+
+/* end login-section */
 
 .col-large{
   text-align: center;
@@ -394,6 +558,25 @@ a{
 }
 
 /**Header**/
+@media(max-width:1300px){
+  .teachers-button{
+    width: 50%;
+    padding-left: 13%;
+  }
+  .teachers-button img{
+    width: 80%;
+    display: inline-flex;
+    margin-left: 20%;
+    margin-top: 8%;
+    box-shadow:black 5px 5px 45px;
+  }
+}
+
+@media(max-width: 320px){
+  .nav div.logo a{
+
+  }
+}
 
 @media (min-width: 768px) {
   header.masthead .intro-text {

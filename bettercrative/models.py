@@ -52,8 +52,6 @@ class Quiz(db.Model):
     __tablename__ = 'quiz'
     id = db.Column(db.Integer, primary_key=True)
     quiz_Name = db.Column(db.Integer, nullable=False)
-    questions = db.Column(db.String(100), nullable=True)
-    answers = db.Column(db.String(200), nullable=True)
     quiz_owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
