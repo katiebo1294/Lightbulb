@@ -9,13 +9,13 @@
 
 
     {% if title %}
-				<title>Bettercrative - {{ title }}</title>
-		{% else %}
-				<title>Bettercrative</title>
-		{% endif %}
+    <title>Bettercrative - {{ title }}</title>
+    {% else %}
+    <title>Bettercrative</title>
+    {% endif %}
 
     <!-- Bootstrap core CSS -->
-    
+
 
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
@@ -60,89 +60,74 @@
 
                         </ul>
                     </div>
-                
-                <!-- Collapse for mobile-->
-                <span class = navTrigger>
+
+                    <!-- Collapse for mobile-->
+                    <span class=navTrigger>
                     <i> <p>B</p> </i>
                     <i> <p>C</p></i>
                     <i> </i>
                 </span>
-                
-            </div> <!-- container close tag-->
 
-        </nav>
+                </div> <!-- container close tag-->
+
+            </nav>
         </header>
-        </section>
-        
-        <!--End Of NavBar-->
-
-        <!-- About section -->
-        <section class = "about-section">
-            <div class="container">
-                <div class="row">
-                  <div class="col-md-6">
-                        <a href = "#"><img src= '../static/images/Student.png'></a>
-                  </div>
-                  <div class="col-md-6">
-                      
-                <a href = "#"><img src = '../static/images/Teacher.png'></a>
-                    
-                  </div>
-                </div>
-              </div>
-            <!-- <div class = "about-section-container">
-                
-           
-            </div>
-            <div class = "students-button">
-                
-                <a href = "#"><img src= '../static/images/Student.png'></a>
-            </div>
-            <div class = "teachers-button">
-                <a href = "#"><img src = '../static/images/Teacher.png'></a>
-            </div> -->
-        </section>
-        </div>
-        <!-- End of About Section -->
-
-        <!-- Login Section -->
-        <section class = "login-section">
-            <div class = "login-section-container">
-                
-            </div>
-            
-        </section>
-        
-        
-        
-
-        {%block content%}
-        {%endblock%}
-
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- makes collapse icon clickable w/ animation -->
-    <script src="../static/js/scripts.js"></script>
+    </section>
     <!--End Of NavBar-->
-    {% block content %}{% endblock %}
 
-    <!-- Message flashing -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">
-            {{ message }}
+    <!-- About section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ url_for('classrooms.enter_classroom') }}"><img src='../static/images/Student.png'></a>
+                </div>
+                <div class="col-md-6">
+
+                    <a href="{{ url_for('users.login') }}"><img src='../static/images/Teacher.png'></a>
+
+                </div>
+            </div>
         </div>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
+    </section>
+</div>
+<!-- End of About Section -->
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="../static/js/scripts.js"></script>
-    <script src="../static/js/QuizForm.js"></script>
-    <script>
+<!-- Login Section -->
+<section class="login-section">
+    <div class="login-section-container">
+
+    </div>
+
+</section>
+
+
+{% block content %}
+{% endblock %}
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- makes collapse icon clickable w/ animation -->
+<script src="../static/js/scripts.js"></script>
+<!--End Of NavBar-->
+
+<!-- Message flashing -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="../static/js/scripts.js"></script>
+<script src="../static/js/QuizForm.js"></script>
+<script>
             $(window).scroll(function() {
                 if ($(document).scrollTop() > 50) {
                     $('.nav').addClass('affix');
@@ -152,8 +137,9 @@
                 }
             });
 
-    </script>
-    <script>
+
+</script>
+<script>
         function dropDown(){
             var x = document.getElementById("navlistofcontents");
             if(x.className === "listofcontents"){
@@ -163,18 +149,25 @@
                 x.className = "listofcontents";
             }
         }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script crossorigin="anonymous"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script crossorigin="anonymous"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script crossorigin="anonymous"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    </body>
+
+</script>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
 </html>

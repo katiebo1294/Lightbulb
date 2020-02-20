@@ -1,10 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
-<<<<<<< HEAD
-=======
 
->>>>>>> katie
 body{
   
   background-attachment: fixed;
@@ -51,10 +48,6 @@ body:after{
   color: black;
   font-size: 2.5rem;
   font-family: 'Source Code Pro', monospace;
-<<<<<<< HEAD
-
-=======
->>>>>>> katie
 }
 .nav div.logo a:hover{
   /* setting to green for now */
@@ -75,10 +68,6 @@ body:after{
   text-decoration: none;
   color: black;
   font-family: 'Source Code Pro', monospace;
-<<<<<<< HEAD
-
-=======
->>>>>>> katie
 }
 
 .nav div.listofcontents ul{
@@ -229,6 +218,7 @@ body:after{
 }
 .affix .navTrigger i{
   background-color: white;
+  }
 
 .affix .navTrigger p {
   color: white;
@@ -468,14 +458,11 @@ body:after{
   padding-top: 40px;
   height: 1000px;
   /* background-color: blue; */
-
+}
 .col-md-6 img{
   margin-left: 10%;
   margin-top: 8%;
   box-shadow:  black 5px 5px 45px;
-  
-
-
 }
 .students-button{
   width: 50%;

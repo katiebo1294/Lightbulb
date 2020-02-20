@@ -11,17 +11,17 @@
                                 <div class="dropdown show classroom_element">
                                         <a class="btn-lg btn-block btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Name: {{ classroom.classroom_Name }}
+                                                Name: {{ classroom.name }}
                                         </a>
                                         <div class="dropdown-menu">
                                                 {% for quiz in current_user.classrooms.quiz %}
-                                                        {% if quiz.active==quiz.quiz_Name %}
+                                                        {% if quiz.active==quiz.name %}
                                                                 <a class="dropdown-item active" href="#">
-                                                                        Quiz: {{quiz.quiz_Name}}
+                                                                        Quiz: {{quiz.name}}
                                                                 </a>
                                                         {%else%}
                                                                 <a class="dropdown-item" href="#">
-                                                                        Quiz: {{quiz.quiz_Name}}
+                                                                        Quiz: {{quiz.name}}
                                                                 </a>
                                                         {%endif%}
                                                 {% endfor %}

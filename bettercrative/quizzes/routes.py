@@ -13,11 +13,7 @@ quizzes = Blueprint('quizzes', __name__)
 def new_quiz():
     form = QuizForm()
     if form.validate_on_submit():
-<<<<<<< HEAD
-        quiz = Quiz(quiz_Name=form.quiz_Name.data)
-=======
         quiz = Quiz(name=form.name.data, owner=current_user)
->>>>>>> katie
         db.session.add(quiz)
         # add each question to the quiz
         for question in form.questions.data:
