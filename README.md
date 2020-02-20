@@ -7,6 +7,7 @@ Bettercrative : Classroom review tool
 1) Clone the repository @ https://github.com/wwu-csci-497/bettercrative.git
 
 2) pip install the required plugins (found in requirements.txt)
+$pip3 install -r requirements.txt
 
 **Running the program**
 
