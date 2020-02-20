@@ -106,7 +106,6 @@ body:after{
 /* end of nav*/
 
 /* media query */
-<<<<<<< HEAD
 @media screen and (max-width: 414px){
   .nav div.logo a{
     text-decoration: none;
@@ -205,7 +204,6 @@ body:after{
 }
 .navTrigger i {
   background-color: black;
-<<<<<<< HEAD
   border-radius: 2px;
   content: '';
   display: block;

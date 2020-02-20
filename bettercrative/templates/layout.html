@@ -7,7 +7,6 @@
     <meta content="" name="description">
     <meta content="" name="author">
 
-
     {% if title %}
     <title>Bettercrative - {{ title }}</title>
     {% else %}
@@ -56,6 +55,7 @@
                             <li><a href="{{ url_for('users.login') }}"> Login </a></li>
                             <li><a href="{{ url_for('users.register') }}"> Register </a></li>
                             <li><a href="{{ url_for('main.about') }}"> About </a></li>
+                            <li><a class="nav-link js-scroll-trigger" href="{{ url_for('main.test') }}">TEST</a></li>
                             {% endif %}
 
                         </ul>
@@ -169,5 +169,12 @@
 <script crossorigin="anonymous"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- scripts for embedded IDE -->
+<script src="src-min/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/javascript");
+    </script>
 </body>
 </html>

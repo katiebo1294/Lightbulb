@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from bettercrative import db
-from bettercrative.models import Classroom, Quiz
+from bettercrative.models import Classroom
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
 
 classrooms = Blueprint('classrooms', __name__)
@@ -19,6 +19,7 @@ def new_classroom():
         flash(u'Classroom created!', 'success')
         return redirect(url_for('users.account'))
         # TODO: have flash message say the specific classroom name
+        return redirect(url_for('main.home')) #should redirect to the classroom
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
 

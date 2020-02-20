@@ -109,6 +109,11 @@ celerybeat.pid
 .env
 .venv
 env/
+__pycahce__/
+.pytest_cache/
+tests/__pycache__/
+app.egg-info/
+app/_pycache__/*
 venv/
 ENV/
 env.bak/
