@@ -28,6 +28,7 @@ body:after{
 
 /* start nav*/
 .nav {
+  z-index: 3;
   width: 100%;
   height: 65px;
   position: fixed;
@@ -79,6 +80,7 @@ body:after{
   margin: 0;
   padding: 0;
   
+  
 }
 
 .nav div.listofcontents li{
@@ -106,24 +108,41 @@ body:after{
 /* end of nav*/
 
 /* media query */
+@media screen and (max-width: 414px){
+  .nav div.logo a{
+    text-decoration: none;
+    color: black;
+    font-size: 2rem;
+    font-family: 'Source Code Pro', monospace;
+  }
+}
 @media screen and (min-width: 900px) and (max-width: 1080px){
   .container{
     
     
   }
 }
-@media screen and (max-width:990px){
+@media screen and (max-width:1200px){
   .navTrigger{
     display:block;
   }
   
-  
+  .nav div.logged_in{
+    height: 65px;
+    float: right;
+    
+    display:flex;
+  }
+  .nav div.logged_in a{
+    font-size: 80%;
+  }
   .nav div.listofcontents a{
     text-decoration: none;
     color:white;
     font-family: 'Source Code Pro', monospace;
-  
+    
   }
+
   .nav div.logo{
     margin-left: 15px;
   }
@@ -134,7 +153,7 @@ body:after{
   }
   .nav div.show_list{
     height: auto;
-    display: auto;
+    display: flex;
   }
   .nav div.listofcontents ul{
     flex-direction: column;
@@ -422,6 +441,7 @@ body:after{
 /* transparent-background */
 .transparent-background{
   background-image: url("../static/images/laptopmono.jpg");
+  background-size: cover;
 }
 /* end transparent-background */
 /* About-Section */
@@ -433,15 +453,39 @@ body:after{
   height: 1000px;
   /* background-color: blue; */
 }
-.about-section-container h1{
-  text-align: center;
-  font-family: 'Amatic SC';
+.col-md-6 img{
+  margin-left: 10%;
+  margin-top: 8%;
+  box-shadow:  black 5px 5px 45px;
+  
+
+
 }
-.about-section-container p{
-  text-align: center;
-  font-family: 'Indie Flower';
-  font-size: 30px;
+.students-button{
+  width: 50%;
+  padding-left: 13%;
+  float:left
 }
+.teachers-button{
+  width:50%;
+  float:left;
+  padding-right:13%;
+}
+.teachers-button img{
+  display:inline-flex;
+  margin-left: 20%;
+  margin-top: 8%;
+  box-shadow: black 5px 5px 45px;
+
+}
+.students-button img{
+  margin-left: 20%;
+  margin-top: 8%;
+  box-shadow: black 5px 5px 45px;
+
+}
+
+
 /* end about-section */
 
 /* Login-Section */
@@ -514,6 +558,25 @@ body:after{
 }
 
 /**Header**/
+@media(max-width:1300px){
+  .teachers-button{
+    width: 50%;
+    padding-left: 13%;
+  }
+  .teachers-button img{
+    width: 80%;
+    display: inline-flex;
+    margin-left: 20%;
+    margin-top: 8%;
+    box-shadow:black 5px 5px 45px;
+  }
+}
+
+@media(max-width: 320px){
+  .nav div.logo a{
+
+  }
+}
 
 @media (min-width: 768px) {
   header.masthead .intro-text {
