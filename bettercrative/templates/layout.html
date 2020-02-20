@@ -8,7 +8,11 @@
     <meta content="" name="author">
 
 
-    <title>Bettercrative</title>
+    {% if title %}
+				<title>Bettercrative - {{ title }}</title>
+		{% else %}
+				<title>Bettercrative</title>
+		{% endif %}
 
     <!-- Bootstrap core CSS -->
 
@@ -67,16 +71,7 @@
         </header>
     </section>
     <!--End Of NavBar-->
-
-    <!-- About section -->
-    <section class="about-section">
-        <div class="about-section-container">
-            <h1>Bettercrative</h1>
-            <p>Be the best version of yourself</p>
-            <p>Get Started!</p>
-        </div>
-    </section>
-    </div>
+    {% block content %}{% endblock %}
 
     <!-- Message flashing -->
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -88,7 +83,6 @@
         {% endfor %}
     {% endif %}
     {% endwith %}
-    {% block content %}{% endblock %}
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

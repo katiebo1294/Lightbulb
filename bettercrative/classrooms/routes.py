@@ -28,7 +28,7 @@ def enter_classroom():
     if form.validate_on_submit():
         classroom = Classroom.query.filter_by(name=form.room_id.data).first()
         if classroom:
-            return redirect(url_for('classrooms.classroom', id=classroom.id))
+            return redirect(url_for('classrooms.classroom', id=classroom.id, classroom=classroom))
         else:
             flash(u'A classroom does not exist with that name. Please try again.', 'danger')
     return render_template('enter_classroom.html', title='get in chief', form=form)
@@ -38,7 +38,7 @@ def enter_classroom():
 @classrooms.route("/classroom/<int:id>")
 def classroom(id):
     classroom = Classroom.query.get_or_404(id)
-    return render_template('classroom.html', title=classroom.name, classroom=classroom)
+    return render_template('classroom.html', classroom=classroom)
 
 
 def add_quiz(id):
