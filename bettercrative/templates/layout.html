@@ -46,6 +46,7 @@
                         <ul class="navlinks">
                             {% if current_user.is_authenticated %}
                             <li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
+                            <li><a href="{{ url_for('quizzes.new_quiz') }}"> Create Quiz </a></li>
                             <li><a href="{{ url_for('classrooms.new_classroom') }}"> Create Classroom </a></li>
                             <li><a href="{{ url_for('users.account') }}"> Account </a></li>
                             <li><a href="{{ url_for('main.about') }}"> About </a></li>
@@ -87,6 +88,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="../static/js/scripts.js"></script>
+    <script src="../static/js/QuizForm.js"></script>
     <script>
             $(window).scroll(function() {
                 if ($(document).scrollTop() > 50) {

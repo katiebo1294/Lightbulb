@@ -36,6 +36,19 @@ function removeForm() {
     adjustIndices(removedIndex);
 }
 
+
+function addQuestion() {
+
+}
+function addAnswer() {
+
+}
+function removeQuestion() {
+
+}
+function removeAnswer() {
+
+}
 //add a subform
 function addForm() {
     var $templateForm = $('#question-_-form');
@@ -86,8 +99,3 @@ $(document).ready(function() {
     $('#add').click(addForm);
     $('.remove').click(removeForm);
 });
-</script>
-<style>
-    .is-hidden {
-            display: none;
-        }

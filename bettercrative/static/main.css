@@ -502,18 +502,11 @@ body:after{
     border-radius:15px;
 }
 
-.btn-outline-info {
-    color: rgb(42, 91, 165);
-    border-color: rgb(42, 91, 165);
-    background-color: white;
-}
-.btn-outline-info:hover {
-    background-color: rgb(42, 91, 165);
-    color: white;
-    border-color: rgb(42, 91, 165);
-}
-
 .login {
     border: 1px solid black;
     margin: auto;
+}
+
+.btn {
+    background-color: white;
 }

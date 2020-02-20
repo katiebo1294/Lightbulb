@@ -10,6 +10,7 @@
             <fieldset class="form-group">
                 <div class="form-group">
                     <legend class="border-bottom mb-4">Create Quiz</legend>
+                    <!-- quiz title -->
                     {{ form.name.label(class="form=control-label") }}
 
                     {% if form.name.errors %}
@@ -23,40 +24,41 @@
                     {{ form.name(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <a class="add" href="#">Add Question</a>
+                <!-- user clicks on a button saying "Add Question" to add a question to the form -->
+                <a class="add btn btn-outline-success" onclick="addQuestion();" href="#">Add Question</a>
                 <form action="" id="question-form" method="POST" role="form">
                     <div class="subforms-container">
                         {% for question in form.questions %}
-                        <div class="subform" data-index="{{ loop.index0 }}" id="question-{{loop.index0 }}-form">
-                            {{ question.content.label(class="form=control-label") }}
+                        <!-- for each question, add the question content and specify a type; then add answer(s) -->
+                        <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
+                            <div class="form-group">
+                                {{ question.content.label(class="form=control-label") }}
 
-                            {% if question.content.errors %}
-                            {{ question.content(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">
-                                {% for errors in question.content.errors %}
-                                <span>{{ error }}</span>
-                                {% endfor %}
+                                {% if question.content.errors %}
+                                {{ question.content(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for errors in question.content.errors %}
+                                    <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                {{ question.content(class="form-control form-control-lg") }}
+                                {% endif %}
                             </div>
-                            {% else %}
-                            {{ question.content(class="form-control form-control-lg") }}
-                            {% endif %}
-
-                            {{ question.type.label(class="form=control-label") }}
-
-                            {% if question.type.errors %}
-                            {{ question.type(class="form-control form-control-lg is-invalid") }}
-                            <div class="invalid-feedback">type
-                                {% for errors in question.type.errors %}
-                                <span>{{ error }}</span>
-                                {% endfor %}
+                            <!-- 4 buttons to specify question type - MC, SA, T/F, or coding -->
+                            <div class="form-group">
+                                {{ question.qtype.label(class="form=control-label") }}
+                                <div class="form-control form-row">
+                                    <btn class="col">True or False</btn>
+                                    <btn class="col">Multiple Choice</btn>
+                                    <btn class="col">Short Answer</btn>
+                                    <btn class="col">Code</btn>
+                                </div>
                             </div>
-                            {% else %}
-                            {{ question.type(class="form-control form-control-lg") }}
-                            {% endif %}
-
-                            <a class="add" href="#">Add Answer</a>
+                            <a class="add btn btn-outline-success" onclick="addAnswer();" href="#">Add Answer</a>
                             <form action="" id="answer-form" method="POST" role="form">
                                 <div class="subforms-container">
+                                    <!-- add answer content -->
                                     {% for answer in question.answers %}
                                     <div class="subform" data-index="{{ loop.index0 }}"
                                          id="answer-{{loop.index0 }}-form">
@@ -72,20 +74,20 @@
                                         {% else %}
                                         {{ answer.content(class="form-control form-control-lg") }}
                                         {% endif %}
-
-                                        <a class="remove" href="#">Remove</a>
+                                        <!-- user can also remove a question or answer -->
+                                        <a class="remove btn btn-outline-danger" onclick="removeAnswer();" href="#">Remove Answer</a>
                                     </div>
                                     {% endfor %}
                                 </div>
                             </form>
-                            <a class="remove" href="#">Remove</a>
+                            <a class="remove btn btn-outline-danger" onclick="removeQuestion();" href="#">Remove Question</a>
                         </div>
                         {% endfor %}
                     </div>
                 </form>
             </fieldset>
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
     </div>
