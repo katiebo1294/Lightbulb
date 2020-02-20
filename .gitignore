@@ -1,5 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.pytest_cache/
+tests/__pycache__/
+app.egg-info
+app/__pycache__/
 *.py[cod]
 *$py.class
 

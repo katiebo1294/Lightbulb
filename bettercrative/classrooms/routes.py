@@ -43,7 +43,6 @@ def classroom(id):
 
 def add_quiz(id):
     classroom = Classroom.query_or_404(id)
-    quizzes = Quiz.query.filter_by(owner=current_user)
     flash(u'Quiz added to classroom!', 'success')
     # TODO: have flash message say the specific classroom name
     return render_template('classroom.html', title=classroom.name, classroom=classroom)
