@@ -1,19 +1,19 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms.validators import InputRequired, Length, Email, EqualTo, ValidationError
 from flask_login import current_user
-from bettercrative.models import User
+from bettercrative.models import User, Classroom
 
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username',
-                           validators=[DataRequired(), Length(min=4, max=15)])
+                           validators=[InputRequired(), Length(min=4, max=15)])
     email = StringField('Email',
-                        validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+                        validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[InputRequired()])
     confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('password')])
+                                     validators=[InputRequired(), EqualTo('password')])
     # TODO: add classroom name?
     profile_pic = FileField('(Optional) Choose a Profile Picture', validators=[FileAllowed('jpg', 'png')])
     submit = SubmitField('Sign Up')
@@ -29,20 +29,19 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("That email is taken. Please choose a different one.")
 
 
-# TODO add error messages for incorrect login attempts
 class LoginForm(FlaskForm):
     email = StringField('Email',
-                        validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+                        validators=[InputRequired(), Email()])
+    password = PasswordField('Password', validators=[InputRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',
-                           validators=[DataRequired(), Length(min=4, max=15)])
+                           validators=[InputRequired(), Length(min=4, max=15)])
     email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+                        validators=[InputRequired(), Email()])
     profile_pic = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
 
@@ -61,7 +60,7 @@ class UpdateAccountForm(FlaskForm):
 
 class RequestResetForm(FlaskForm):
     email = StringField('Email',
-                        validators=[DataRequired(), Email()])
+                        validators=[InputRequired(), Email()])
     submit = SubmitField('Request Password Reset')
 
     def validate_email(self, email):
@@ -71,12 +70,7 @@ class RequestResetForm(FlaskForm):
 
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[InputRequired()])
     confirm_password = PasswordField('Confirm Password',
-                                     validators=[DataRequired(), EqualTo('password')])
+                                     validators=[InputRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
-
-
-class StudentLoginForm(FlaskForm):
-    room_id = StringField('Room ID', validators=[DataRequired()])
-    submit = SubmitField('Login')

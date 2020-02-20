@@ -3,8 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
-from bettercrative.config import Config
 from flask_bootstrap import Bootstrap
+from bettercrative.config import Config
 
 # Application factory
 # Blueprint registration
@@ -38,6 +38,8 @@ def create_app(config_class=Config):
     app.register_error_handler(404, not_found)
 
     return app
+
+
 
 
 db = SQLAlchemy()
