@@ -16,12 +16,6 @@ def home():
     if current_user.is_authenticated:
         return render_template('account.html')
     else:
-        studentForm = EnterClassroomForm()
-        if studentForm.validate_on_submit():
-            return
-        teacherForm = LoginForm()
-        if teacherForm.validate_on_submit():
-            return
         return render_template('home.html')
 
 
