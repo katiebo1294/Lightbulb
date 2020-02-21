@@ -1,16 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-<!-- Display the user's classrooms here in reverse chronological order -->
-<!--{{ table }}-->
-<!--This is to iterate through all classrooms-->
 
 <body class="container-fluid">
         <div class="col classroomcolumn">
                 <div class="classroomdisplay">
                         {% for classroom in current_user.classrooms %}
                                 <div class="dropdown show classroom_element">
-                                        <a class="btn-lg btn-block btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a class="btn-lg btn-block btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 Name: {{ classroom.name }}
                                         </a>
                                         <div class="dropdown-menu">
