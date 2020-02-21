@@ -18,7 +18,7 @@
 
 
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
 
 
     <!-- Custom fonts for this template -->
@@ -32,39 +32,39 @@
 </head>
 
 <body id="page-top">
-    <div class="transparent-background">
-        <!--NavBar-->
-        <section class="nav-section">
-            <header>
-                <nav class="nav">
-                    <div class="container">
-                        <div class="logo">
-                            <a href="{{ url_for('main.home') }}">Bettercrative</a>
-                        </div>
+<div class="transparent-background">
+    <!--NavBar-->
+    <section class="nav-section">
+        <header>
+            <nav class="nav">
+                <div class="container">
+                    <div class="logo">
+                        <a href="{{ url_for('main.home') }}">Bettercrative</a>
+                    </div>
 
 
-                        <div class="listofcontents" id="navlistcontents">
-                            <ul class="navlinks">
-                                {% if current_user.is_authenticated %}
-                                <li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
-                                <li><a href="{{ url_for('quizzes.new_quiz') }}"> Create Quiz </a></li>
-                                <li><a href="{{ url_for('classrooms.new_classroom') }}"> Create Classroom </a></li>
-                                <li><a href="{{ url_for('users.account') }}"> Account </a></li>
-                                <li><a href="{{ url_for('main.about') }}"> About </a></li>
-                                {% else %}
-                                <li><a href="{{ url_for('classrooms.enter_classroom') }}"> Enter Classroom </a></li>
-                                <li><a href="{{ url_for('users.login') }}"> Login </a></li>
-                                <li><a href="{{ url_for('users.register') }}"> Register </a></li>
-                                <li><a href="{{ url_for('main.about') }}"> About </a></li>
-                                <li><a class="nav-link js-scroll-trigger" href="{{ url_for('main.test') }}">TEST</a>
-                                </li>
-                                {% endif %}
+                    <div class="listofcontents" id="navlistcontents">
+                        <ul class="navlinks">
+                            {% if current_user.is_authenticated %}
+                            <li><a href="{{ url_for('quizzes.new_quiz') }}"> Create Quiz </a></li>
+                            <li><a href="{{ url_for('classrooms.new_classroom') }}"> Create Classroom </a></li>
+                            <li><a href="{{ url_for('main.about') }}"> About </a></li>
+                            <li><a href="{{ url_for('users.account') }}"> Account </a></li>
+                            <li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
+                            {% else %}
+                            <li><a href="{{ url_for('classrooms.enter_classroom') }}"> Enter Classroom </a></li>
+                            <li><a href="{{ url_for('users.login') }}"> Login </a></li>
+                            <li><a href="{{ url_for('users.register') }}"> Register </a></li>
+                            <li><a href="{{ url_for('main.about') }}"> About </a></li>
+                            <li><a class="nav-link js-scroll-trigger test" href="{{ url_for('main.test') }}">TEST</a>
+                            </li>
+                            {% endif %}
 
-                            </ul>
-                        </div>
+                        </ul>
+                    </div>
 
-                        <!-- Collapse for mobile-->
-                        <span class=navTrigger>
+                    <!-- Collapse for mobile-->
+                    <span class=navTrigger>
                             <i>
                                 <p>B</p>
                             </i>
@@ -74,67 +74,62 @@
                             <i> </i>
                         </span>
 
-                    </div> <!-- container close tag-->
+                </div> <!-- container close tag-->
 
-                </nav>
-            </header>
-        </section>
-        <!--End Of NavBar-->
-
-        <!-- About section -->
-        <section class="about-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <a href="{{ url_for('classrooms.enter_classroom') }}"><img
-                                src='../static/images/Student.png'></a>
-                    </div>
-                    <div class="col-md-6">
-
-                        <a href="{{ url_for('users.login') }}"><img src='../static/images/Teacher.png'></a>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    <!-- End of About Section -->
-
-    <!-- Login Section -->
-    <section class="login-section">
-        <div class="login-section-container">
-
-        </div>
-
+            </nav>
+        </header>
     </section>
-
-
-    {% block content %}
-    {% endblock %}
-
-
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <!-- makes collapse icon clickable w/ animation -->
-    <script src="../static/js/scripts.js"></script>
     <!--End Of NavBar-->
 
-    <!-- Message flashing -->
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
+    <!-- About section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Student login box -->
+                    <a href="{{ url_for('classrooms.enter_classroom') }}"><img
+                            src='../static/images/Student.png'></a>
+                </div>
+                <div class="col-md-6">
+                    <!-- Teacher login box -->
+                    <a href="{{ url_for('users.login') }}"><img src='../static/images/Teacher.png'></a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- End of About Section -->
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="../static/js/scripts.js"></script>
-    <script src="../static/js/QuizForm.js"></script>
-    <script>
+<!-- Login Section -->
+<section class="login-section">
+    <div class="login-section-container">
+        <!-- Message flashing -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <!-- Page content -->
+        {% block content %}
+        {% endblock %}
+    </div>
+</section>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- makes collapse icon clickable w/ animation -->
+<script src="../static/js/scripts.js"></script>
+<!--End Of NavBar-->
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="../static/js/scripts.js"></script>
+<script src="../static/js/QuizForm.js"></script>
+<script>
         $(window).scroll(function () {
             if ($(document).scrollTop() > 50) {
                 $('.nav').addClass('affix');
@@ -145,8 +140,9 @@
         });
 
 
-    </script>
-    <script>
+
+</script>
+<script>
         function dropDown() {
             var x = document.getElementById("navlistofcontents");
             if (x.className === "listofcontents") {
@@ -157,21 +153,23 @@
             }
         }
 
-    </script>
-    
-    <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+
+</script>
+
+<script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+<script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+<script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <!-- scripts for embedded IDE -->
-    <script src="../static/js/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script>
+<!-- scripts for embedded IDE -->
+<script charset="utf-8" src="../static/js/ace.js" type="text/javascript"></script>
+<script>
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/twilight");
         editor.session.setMode("ace/mode/javascript");
-    </script>
+
+</script>
 </body>
 
 </html>

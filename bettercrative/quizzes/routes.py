@@ -13,7 +13,7 @@ quizzes = Blueprint('quizzes', __name__)
 def new_quiz():
     form = QuizForm()
     if form.validate_on_submit():
-        quiz = Quiz(name=form.name.data, owner=current_user)
+        quiz = Quiz()
         db.session.add(quiz)
         # add each question to the quiz
         for question in form.questions.data:
@@ -24,7 +24,8 @@ def new_quiz():
                 question.answers.append(answer)
             quiz.questions.append(question)
         db.session.commit()
-        flash(u'New Quiz "{{ name }}" Created!', 'success')
+        flash(u'New Quiz "{{ quiz.name }}" Created!', 'success')
+        return redirect("{{ url_for(quizzes.quiz, id=quiz.id) }}")
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
 
