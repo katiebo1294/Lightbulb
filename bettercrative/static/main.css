@@ -617,4 +617,9 @@ body:after{
 
 .classroom_element {
   margin-top:2%;
+  margin-left:2%;
+}
+
+.delete_class a{
+  float:right;
 }
