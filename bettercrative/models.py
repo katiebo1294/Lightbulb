@@ -50,7 +50,6 @@ class Classroom(db.Model):
 
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    q
     name = db.Column(db.String(50), nullable=False)
     questions = db.relationship('Question', backref='source', lazy=True, collection_class=list)
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())

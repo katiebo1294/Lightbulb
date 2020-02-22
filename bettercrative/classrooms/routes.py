@@ -18,7 +18,7 @@ def new_classroom():
         db.session.commit()
         flash(u'Classroom created!', 'success')
         # TODO: have flash message say the specific classroom name
-        return redirect(url_for('classrooms.classroom, id=classroom.id'))
+        return redirect(url_for('classrooms.classroom', id=classroom.id))
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
 
