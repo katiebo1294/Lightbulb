@@ -26,68 +26,58 @@
                 </div>
                 <!--
                 <a class="add btn btn-outline-success" href="#" onclick="addQuestion();">Add Question</a> -->
-                <form action="" id="question-form" method="POST" role="form">
-                    <div class="subforms-container">
-                        {% for question in form.questions %}
-                        <!-- for each question, add the question content and specify a type; then add answer(s) -->
-                        <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
-                            <div class="form-group">
-                                {{ question.content.label(class="form-control-label") }} {{ loop.index0 + 1 }}
+                <div class="subforms-container">
+                    {% for question in form.questions %}
+                    <!-- for each question, add the question content and specify a type; then add answer(s) -->
+                    <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
+                        <div class="form-group">
+                            {{ question.content.label(class="form-control-label") }} {{ loop.index0 + 1 }}
 
-                                {% if question.content.errors %}
-                                {{ question.content(class="form-control form-control-lg is-invalid") }}
+                            {% if question.content.errors %}
+                            {{ question.content(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for errors in question.content.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            {{ question.content(class="form-control form-control-lg") }}
+                            {% endif %}
+                        </div>
+                        <!-- 4 buttons to specify question type - MC, SA, T/F, or coding -->
+                        <div class="form-group">
+                            {{ question.qtype.label(class="form-control-label") }}
+                            {{ question.qtype }}
+                        </div> <!--
+                            <a class="add btn btn-outline-success" href="#" onclick="addAnswer();">Add Answer</a> -->
+                        <div class="subforms-container">
+                            <!-- add answer content -->
+                            {% for answer in question.answers %}
+                            <div class="subform" data-index="{{ loop.index0 }}"
+                                 id="answer-{{loop.index0 }}-form">
+                                {{ answer.content.label(class="form-control-label") }} {{ loop.index0 + 1 }}
+
+                                {% if answer.content.errors %}
+                                {{ answer.content(class="form-control form-control-lg is-invalid") }}
                                 <div class="invalid-feedback">
-                                    {% for errors in question.content.errors %}
+                                    {% for errors in answer.content.errors %}
                                     <span>{{ error }}</span>
                                     {% endfor %}
                                 </div>
                                 {% else %}
-                                {{ question.content(class="form-control form-control-lg") }}
+                                {{ answer.content(class="form-control form-control-lg") }}
                                 {% endif %}
+                                <!--
+                                <a class="remove btn btn-outline-danger" href="#" onclick="removeAnswer();">Remove
+                                    Answer</a> -->
                             </div>
-                            <!-- 4 buttons to specify question type - MC, SA, T/F, or coding -->
-                            <div class="form-group">
-                                {{ question.qtype.label(class="form-control-label") }}
-                                <div class="row btn-group btn-group-toggle qtype-container"> <!--
-                                    {% for choice in question.qtype.choices %}
-                                    <label class="btn btn-outline-warning qtype-choice" data-toggle="button"><input
-                                            type="radio">{{ choice[1] }}</input></label>
-                                    {% endfor %} -->
-                                    <button type="button" class=" btn btn-lg disabled">Multiple Choice</button>
-                                </div>
-                            </div> <!--
-                            <a class="add btn btn-outline-success" href="#" onclick="addAnswer();">Add Answer</a> -->
-                            <form action="" id="answer-form" method="POST" role="form">
-                                <div class="subforms-container">
-                                    <!-- add answer content -->
-                                    {% for answer in question.answers %}
-                                    <div class="subform" data-index="{{ loop.index0 }}"
-                                         id="answer-{{loop.index0 }}-form">
-                                        {{ answer.content.label(class="form-control-label") }} {{ loop.index0 + 1 }}
-
-                                        {% if answer.content.errors %}
-                                        {{ answer.content(class="form-control form-control-lg is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for errors in answer.content.errors %}
-                                            <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        {{ answer.content(class="form-control form-control-lg") }}
-                                        {% endif %}
-                                        <!--
-                                        <a class="remove btn btn-outline-danger" href="#" onclick="removeAnswer();">Remove
-                                            Answer</a> -->
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </form> <!--
+                            {% endfor %}
+                        </div><!--
                             <a class="remove btn btn-outline-danger" href="#" onclick="removeQuestion();">Remove
                                 Question</a> -->
-                        </div>
-                        {% endfor %}
                     </div>
-                </form>
+                    {% endfor %}
+                </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
