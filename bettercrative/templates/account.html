@@ -2,32 +2,47 @@
 {% block content %}
 
 <body class="container-fluid">
-        <div class="col classroomcolumn">
-                <div class="classroomdisplay">
-                        {% for classroom in current_user.classrooms %}
-                                <div class="dropdown show classroom_element">
-                                        <a class="btn-lg btn-block btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                Name: {{ classroom.name }}
-                                        </a>
-                                        <div class="dropdown-menu">
-                                                {% for quiz in current_user.classrooms.quiz %}
-                                                        {% if quiz.active==quiz.name %}
-                                                                <a class="dropdown-item active" href="#">
-                                                                        Quiz: {{quiz.name}}
-                                                                </a>
-                                                        {%else%}
-                                                                <a class="dropdown-item" href="#">
-                                                                        Quiz: {{quiz.name}}
-                                                                </a>
-                                                        {%endif%}
-                                                {% endfor %}
-                                                <a class="dropdown-item" href="#quizcreate">
-                                                        Create A New Quiz
-                                                </a>
-                                        </div>
-                                </div>
+<div class="col classroomcolumn">
+    <div class="classroomdisplay">
+        {% for classroom in current_user.classrooms %}
+            <div class="row classroom_element">
+                <div class="dropdown show">
+                    <a aria-expanded="false" aria-haspopup="true" class="btn-lg btn-long btn-secondary dropdown-toggle"
+                    data-toggle="dropdown" id="dropdownMenuLink" role="button">
+                        Name: {{ classroom.name }}
+                    </a>
+                    <div class="dropdown-menu">
+                        {% for quiz in current_user.classrooms.quiz %}
+                        {% if quiz.active==quiz.name %}
+                        <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
+                            Quiz: {{ quiz.name }}
+                        </a>
+                        {% else %}
+                        <a class="dropdown-item" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
+                            Quiz: {{ quiz.name }}
+                        </a>
+                        {% endif %}
                         {% endfor %}
+                        <a class="dropdown-item" href="{{ url_for('quizzes.new_quiz') }}">
+                            Create A New Quiz
+                        </a>
+                    </div>
                 </div>
-        </div>
+                <div class="edit_class">
+                    <a class="btn-lg" href="{{url_for('classrooms.classroom', id=classroom.id, classroom=classroom)}}">
+                        Enter Classroom
+                        <!--MAKE THIS LINK TO THE CLASSROOM PAGE-->
+                    </a>
+                </div>
+                <div class="delete_class">
+                    <a href="{{ url_for('users.delete_classroom', id=classroom.id) }}" class="btn-lg">
+                        Delete Classroom
+                        <!--MAKE THIS ACTIVATE A FUNCTION TO REMOVE THIS SPECIFIC CLASS FROM THE DATABASE-->
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
 </body>
 {% endblock %}

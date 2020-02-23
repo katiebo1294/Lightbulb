@@ -19,7 +19,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash(u'Your account has been created! You are now able to log in.', 'success')
+        flash(u'Your account has been created! You are now logged in.', 'success')
         # TODO: automatically generate a classroom or not?
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
@@ -33,11 +33,12 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
+            flash(u'You have been successfully logged in!', 'success')
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
-            flash(u'Login Unsuccessful. Please check email and password.', 'danger')
+            flash(u'Login unsuccessful. Please check your email and password.', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 
@@ -66,6 +67,16 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
+
+
+@users.route("/account/<int:id>", methods=['GET', 'POST'])
+def delete_classroom(id):
+    classroom = Classroom.query.filter_by(id=id).first()
+    db.session.delete(classroom)
+    db.session.commit()
+    flash(u'Classroom Removed!', 'success')
+    # TODO: have flash message say the specific classroom name
+    return redirect(url_for('users.account'))
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

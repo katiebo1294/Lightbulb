@@ -114,13 +114,15 @@ body:after{
     font-family: 'Source Code Pro', monospace;
   }
 }
+
+
 @media screen and (min-width: 900px) and (max-width: 1080px){
   .container{
-    
+    margin:0;
     
   }
 }
-@media screen and (max-width:1200px){
+@media screen and (max-width:990px){
   .navTrigger{
     display:block;
   }
@@ -150,7 +152,7 @@ body:after{
   }
   .nav div.show_list{
     height: auto;
-    display: flex;
+    display: auto ;
 }
   .nav div.listofcontents ul{
     flex-direction: column;
@@ -172,9 +174,7 @@ body:after{
     font-size: 50%;
     padding: 20px;
   }
-  .nav div.media_button{
-    display: block;
-  }
+  
 }
 /* Collapse */
 /* end media query */
@@ -450,7 +450,7 @@ body:after{
 /* end transparent-background */
 /* About-Section */
 
-.about-section{
+.home-section{
   width: 100%;
   padding-top: 40px;
   height: 1000px;
@@ -507,11 +507,11 @@ body:after{
 }
 
 /* end login-section */
-.about-section-container h1{
+.home-section-container h1{
   text-align: center;
   font-family: 'Amatic SC';
 }
-.about-section-container p{
+.home-section-container p{
   text-align: center;
   font-family: 'Indie Flower';
   font-size: 30px;
@@ -613,8 +613,14 @@ body:after{
   background-color:rgba(71, 104, 153, 0.8);
   height:500px;
   width:700px;
+  
 }
 
 .classroom_element {
   margin-top:2%;
+  margin-left:2%;
+}
+
+.delete_class a{
+  float:right;
 }

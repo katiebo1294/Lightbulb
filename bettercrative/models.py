@@ -19,8 +19,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    classrooms = db.relationship('Classroom', backref='owner', lazy=True)
-    quizzes = db.relationship('Quiz', backref='owner', lazy=True)
+    classrooms = db.relationship('Classroom', backref='owner', lazy=True, cascade="all, delete, delete-orphan")
+    quizzes = db.relationship('Quiz', backref='owner', lazy=True, cascade="all, delete, delete-orphan")
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config(['SECRET_KEY'], expires_sec))
@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
 class Classroom(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -51,8 +51,9 @@ class Classroom(db.Model):
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    questions = db.relationship('Question', backref='source', lazy=True, collection_class=list)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    questions = db.relationship('Question', backref='source', lazy=True, collection_class=list,
+                                cascade="all, delete, delete-orphan")
+    date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
@@ -61,9 +62,10 @@ class Quiz(db.Model):
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, nullable=False)
-    type = db.Column(db.String, nullable=False)
-    answers = db.relationship('Answer', backref='source', lazy=True, collection_class=list)
+    content = db.Column(db.String, nullable=False)
+    qtype = db.Column(db.Enum, nullable=False, default='MC')
+    answers = db.relationship('Answer', backref='source', lazy=True, collection_class=list,
+                              cascade="all, delete, delete-orphan")
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
 
     def __repr__(self):

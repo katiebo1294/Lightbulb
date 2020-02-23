@@ -24,15 +24,15 @@
                     {{ form.name(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <!-- user clicks on a button saying "Add Question" to add a question to the form -->
-                <a class="add btn btn-outline-success" onclick="addQuestion();" href="#">Add Question</a>
+                <!--
+                <a class="add btn btn-outline-success" href="#" onclick="addQuestion();">Add Question</a> -->
                 <form action="" id="question-form" method="POST" role="form">
                     <div class="subforms-container">
                         {% for question in form.questions %}
                         <!-- for each question, add the question content and specify a type; then add answer(s) -->
                         <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
                             <div class="form-group">
-                                {{ question.content.label(class="form-control-label") }}
+                                {{ question.content.label(class="form-control-label") }} {{ loop.index0 + 1 }}
 
                                 {% if question.content.errors %}
                                 {{ question.content(class="form-control form-control-lg is-invalid") }}
@@ -48,20 +48,22 @@
                             <!-- 4 buttons to specify question type - MC, SA, T/F, or coding -->
                             <div class="form-group">
                                 {{ question.qtype.label(class="form-control-label") }}
-                                <div class="row btn-group btn-group-toggle qtype-container">
+                                <div class="row btn-group btn-group-toggle qtype-container"> <!--
                                     {% for choice in question.qtype.choices %}
-                                        <label class="btn btn-outline-warning qtype-choice" data-toggle="button"><input type="radio">{{ choice[1] }}</input></label>
-                                    {% endfor %}
+                                    <label class="btn btn-outline-warning qtype-choice" data-toggle="button"><input
+                                            type="radio">{{ choice[1] }}</input></label>
+                                    {% endfor %} -->
+                                    <button type="button" class=" btn btn-lg disabled">Multiple Choice</button>
                                 </div>
-                            </div>
-                            <a class="add btn btn-outline-success" onclick="addAnswer();" href="#">Add Answer</a>
+                            </div> <!--
+                            <a class="add btn btn-outline-success" href="#" onclick="addAnswer();">Add Answer</a> -->
                             <form action="" id="answer-form" method="POST" role="form">
                                 <div class="subforms-container">
                                     <!-- add answer content -->
                                     {% for answer in question.answers %}
                                     <div class="subform" data-index="{{ loop.index0 }}"
                                          id="answer-{{loop.index0 }}-form">
-                                        {{ answer.content.label(class="form-control-label") }}
+                                        {{ answer.content.label(class="form-control-label") }} {{ loop.index0 + 1 }}
 
                                         {% if answer.content.errors %}
                                         {{ answer.content(class="form-control form-control-lg is-invalid") }}
@@ -73,13 +75,15 @@
                                         {% else %}
                                         {{ answer.content(class="form-control form-control-lg") }}
                                         {% endif %}
-                                        <!-- user can also remove a question or answer -->
-                                        <a class="remove btn btn-outline-danger" onclick="removeAnswer();" href="#">Remove Answer</a>
+                                        <!--
+                                        <a class="remove btn btn-outline-danger" href="#" onclick="removeAnswer();">Remove
+                                            Answer</a> -->
                                     </div>
                                     {% endfor %}
                                 </div>
-                            </form>
-                            <a class="remove btn btn-outline-danger" onclick="removeQuestion();" href="#">Remove Question</a>
+                            </form> <!--
+                            <a class="remove btn btn-outline-danger" href="#" onclick="removeQuestion();">Remove
+                                Question</a> -->
                         </div>
                         {% endfor %}
                     </div>
