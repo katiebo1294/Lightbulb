@@ -21,18 +21,6 @@ def new_classroom():
         return redirect(url_for('classrooms.classroom', id=classroom.id))
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
-''' WIP -dont yet understand fully how to implement, need some help, also dont want to accidentally break the database-
-@classrooms.route("/classroom/remove", methods=['GET', 'POST'])
-@login_required
-def delete_classroom():
-    db.session.drop(classroom)
-    db.session.commit()
-    flash(u'Classroom Removed!', 'success')
-    # TODO: have flash message say the specific classroom name
-    return redirect(url_for('users.account')
-    return render_template('create_classroom.html', title='New Classroom', form=form)
-
-'''
 
 @classrooms.route("/classroom/enter", methods=['GET', 'POST'])
 def enter_classroom():

@@ -69,6 +69,16 @@ def account():
                            image_file=image_file, form=form)
 
 
+@users.route("/account/<int:id>", methods=['GET', 'POST'])
+def delete_classroom(id):
+    classroom = Classroom.query.filter_by(id=id).first()
+    db.session.delete(classroom)
+    db.session.commit()
+    flash(u'Classroom Removed!', 'success')
+    # TODO: have flash message say the specific classroom name
+    return redirect(url_for('users.account'))
+
+
 @users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
     if current_user.is_authenticated:

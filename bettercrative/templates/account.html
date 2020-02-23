@@ -35,7 +35,7 @@
                     </a>
                 </div>
                 <div class="delete_class">
-                    <a class="btn-lg">
+                    <a href="{{ url_for('users.delete_classroom', id=classroom.id) }}" class="btn-lg">
                         Delete Classroom
                         <!--MAKE THIS ACTIVATE A FUNCTION TO REMOVE THIS SPECIFIC CLASS FROM THE DATABASE-->
                     </a>
