@@ -12,4 +12,5 @@ class QuizForm(FlaskForm):
     name = StringField('Title', validators=[InputRequired('Please fill out this field.')])
     question_content = StringField('Question', validators=[InputRequired('Please fill out this field.')])
     question_answers = FieldList(FormField(AnswerForm), min_entries=4)
+    classroom = StringField('Classroom', validators=[InputRequired('Please fill out this field.')])
     submit = SubmitField('Create Quiz')

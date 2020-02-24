@@ -16,7 +16,7 @@ def new_quiz():
         #right now classroom_belongs=default but I'm trying to figure out how to set this to a specific classroom
         #either thorugh dynamic routing, routing or at worst it needs to be specified in the form for now
         
-        quiz = Quiz(name=form.name.data, question_content=form.question_content.data, owner=current_user, classroom_belongs='default')
+        quiz = Quiz(name=form.name.data, question_content=form.question_content.data, owner=current_user, classroom_belongs=form.classroom.data)
         db.session.add(quiz)
         # add each question to the quiz
         for answer in form.question_answers.data:
