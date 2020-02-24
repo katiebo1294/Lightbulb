@@ -4,6 +4,8 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
+from flask_wtf import CSRFProtect
+
 from bettercrative.config import Config
 
 # Application factory
@@ -14,6 +16,7 @@ from bettercrative.errors.routes import not_found
 def create_app(config_class=Config):
     app = Flask(__name__)
     Bootstrap(app)
+    CSRFProtect(app)
     app.config.from_object(Config)
     db.app = app
 
@@ -38,8 +41,6 @@ def create_app(config_class=Config):
     app.register_error_handler(404, not_found)
 
     return app
-
-
 
 
 db = SQLAlchemy()

@@ -63,7 +63,7 @@ class Quiz(db.Model):
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String, nullable=False)
-    qtype = db.Column(db.Enum, nullable=False, default='MC')
+    qtype = db.Column(db.Enum, nullable=False, default=('MC', 'Multiple Choice'))
     answers = db.relationship('Answer', backref='source', lazy=True, collection_class=list,
                               cascade="all, delete, delete-orphan")
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
