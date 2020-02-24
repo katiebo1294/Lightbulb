@@ -43,6 +43,7 @@ class Classroom(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    quizzes = db.relationship('Quiz', backref='classroom', lazy=True) #needed to add so that each classroom has a quiz
 
     def __repr__(self):
         return f"Classroom('{self.name}')"
@@ -56,7 +57,8 @@ class Quiz(db.Model):
                                        cascade="all, delete, delete-orphan")
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
+    classroom_belongs = db.Column(db.String, db.ForeignKey('classroom.name'), nullable=False)
+    
     def __repr__(self):
         return f"Quiz('{self.name}')"
 

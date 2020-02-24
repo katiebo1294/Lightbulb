@@ -2,7 +2,7 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from bettercrative import db
-from bettercrative.models import Quiz, Answer
+from bettercrative.models import Quiz, Answer, Classroom, User
 from bettercrative.quizzes.forms import QuizForm
 
 quizzes = Blueprint('quizzes', __name__)
@@ -13,7 +13,10 @@ quizzes = Blueprint('quizzes', __name__)
 def new_quiz():
     form = QuizForm()
     if form.validate_on_submit():
-        quiz = Quiz(name=form.name.data, question_content=form.question_content.data, owner=current_user)
+        #right now classroom_belongs=default but I'm trying to figure out how to set this to a specific classroom
+        #either thorugh dynamic routing, routing or at worst it needs to be specified in the form for now
+        
+        quiz = Quiz(name=form.name.data, question_content=form.question_content.data, owner=current_user, classroom_belongs='default')
         db.session.add(quiz)
         # add each question to the quiz
         for answer in form.question_answers.data:
