@@ -2,8 +2,8 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from bettercrative import db
-from bettercrative.models import Quiz, Question, Answer
-from bettercrative.quizzes.forms import QuizForm, QuestionForm
+from bettercrative.models import Quiz, Answer
+from bettercrative.quizzes.forms import QuizForm
 
 quizzes = Blueprint('quizzes', __name__)
 
@@ -13,17 +13,13 @@ quizzes = Blueprint('quizzes', __name__)
 def new_quiz():
     form = QuizForm()
     if form.validate_on_submit():
-        new_quiz = Quiz(name=form.name.data, owner=current_user)
-        db.session.add(new_quiz)
+        quiz = Quiz(name=form.name.data, question_content=form.question_content.data, owner=current_user)
+        db.session.add(quiz)
         # add each question to the quiz
-        for question in form.questions.data:
-            new_question = Question(**question)
+        for answer in form.question_answers.data:
+            new_answer = Answer(**answer)
             # add each answer to the question
-            qform = QuestionForm()
-            for answer in qform.answers.data:
-                new_answer = Answer(**answer)
-                new_question.answers.append(new_answer)
-            new_quiz.questions.append(new_question)
+            quiz.question_answers.append(new_answer)
         db.session.commit()
         flash(u'New Quiz \"' + quiz.name + '\" Created!', 'success')
         return redirect(url_for('quizzes.quiz', id=quiz.id))

@@ -51,8 +51,9 @@ class Classroom(db.Model):
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    questions = db.relationship('Question', backref='source', lazy=True, collection_class=list,
-                                cascade="all, delete, delete-orphan")
+    question_content = db.Column(db.String, nullable=False)
+    question_answers = db.relationship('Answer', backref='quiz', lazy=True, collection_class=list,
+                                       cascade="all, delete, delete-orphan")
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -60,22 +61,10 @@ class Quiz(db.Model):
         return f"Quiz('{self.name}')"
 
 
-class Question(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String, nullable=False)
-    qtype = db.Column(db.Enum, nullable=False, default=('MC', 'Multiple Choice'))
-    answers = db.relationship('Answer', backref='source', lazy=True, collection_class=list,
-                              cascade="all, delete, delete-orphan")
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Question('{self.content}')"
-
-
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
 
     def __repr__(self):
         return f"Answer('{self.content}')"

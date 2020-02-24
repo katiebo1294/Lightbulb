@@ -14,37 +14,17 @@
                     {{ form.name.label }}
                     {{ form.name }}
                 </div>
-                <!--
-                <a class="add btn btn-outline-success" href="#" onclick="addQuestion();">Add Question</a> -->
+                <div class="form-group">
+                    {{ form.question_content.label }}
+                    {{ form.question_content }}
+                </div>
                 <div class="subforms-container">
-                    {% for question in form.questions %}
-                    <!-- for each question, add the question content and specify a type; then add answer(s) -->
+                    {% for answer in form.question_answers %}
                     <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
                         <div class="form-group">
-                            {{ question.content.label }} {{ loop.index0 + 1 }}
-                            {{ question.content }}
+                            {{ answer.content.label }} {{ loop.index0 + 1 }}
+                            {{ answer.content }}
                         </div>
-                        <!-- 4 buttons to specify question type - MC, SA, T/F, or coding -->
-                        <div class="form-group">
-                            {{ question.qtype.label }}
-                            {{ question.qtype }}
-                        </div> <!--
-                            <a class="add btn btn-outline-success" href="#" onclick="addAnswer();">Add Answer</a> -->
-                        <div class="subforms-container">
-                            <!-- add answer content -->
-                            {% for answer in question.answers %}
-                            <div class="subform" data-index="{{ loop.index0 }}"
-                                 id="answer-{{loop.index0 }}-form">
-                                {{ answer.content.label }} {{ loop.index0 + 1 }}
-                                {{ answer.content }}
-                                <!--
-                                <a class="remove btn btn-outline-danger" href="#" onclick="removeAnswer();">Remove
-                                    Answer</a> -->
-                            </div>
-                            {% endfor %}
-                        </div><!--
-                            <a class="remove btn btn-outline-danger" href="#" onclick="removeQuestion();">Remove
-                                Question</a> -->
                     </div>
                     {% endfor %}
                 </div>
