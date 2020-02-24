@@ -12,7 +12,7 @@
                         Name: {{ classroom.name }}
                     </a>
                     <div class="dropdown-menu">
-                        {% for quiz in current_user.classrooms.quiz %}
+                        {% for quiz in current_user.quizzes %}
                         {% if quiz.active==quiz.name %}
                         <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
                             Quiz: {{ quiz.name }}
