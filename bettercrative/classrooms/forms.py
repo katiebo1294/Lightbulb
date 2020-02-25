@@ -1,7 +1,9 @@
+from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FieldList, FormField, BooleanField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, FieldList, FormField, BooleanField, IntegerField, \
+    SelectField
 from wtforms.validators import InputRequired, Length, ValidationError
-from bettercrative.models import Classroom
+from bettercrative.models import Classroom, Quiz
 
 
 class ClassroomForm(FlaskForm):
@@ -17,5 +19,9 @@ class ClassroomForm(FlaskForm):
 
 class EnterClassroomForm(FlaskForm):
     room_id = StringField('Room ID', validators=[InputRequired()])
-
     submit = SubmitField('Enter Classroom')
+
+
+class AddQuizForm(FlaskForm):
+    quiz_name = SelectField('Quiz to add')
+# TODO quiz_name should be a SelectField containing all of the current user's quizzes

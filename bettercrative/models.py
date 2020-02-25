@@ -43,10 +43,12 @@ class Classroom(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    quizzes = db.relationship('Quiz', backref='classroom', lazy=True) #needed to add so that each classroom has a quiz
+    # Classroom can only have one active quiz at a time, specified by useList=False
+    active_quiz = db.relationship('Quiz', backref='classroom_host', uselist=False,
+                                  cascade="all, delete, delete-orphan")
 
     def __repr__(self):
-        return f"Classroom('{self.name}')"
+        return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.active_quiz}')"
 
 
 class Quiz(db.Model):
@@ -57,10 +59,11 @@ class Quiz(db.Model):
                                        cascade="all, delete, delete-orphan")
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    classroom_belongs = db.Column(db.String, db.ForeignKey('classroom.name'), nullable=False)
-    
+    # Quiz may be active in one classroom at a time, or none (specified by nullable=True)
+    classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
+
     def __repr__(self):
-        return f"Quiz('{self.name}')"
+        return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
 
 
 class Answer(db.Model):

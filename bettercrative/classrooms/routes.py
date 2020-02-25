@@ -2,8 +2,8 @@ from flask import (render_template, url_for, flash,
                    redirect, request, abort, Blueprint)
 from flask_login import current_user, login_required
 from bettercrative import db
-from bettercrative.models import Classroom
-from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
+from bettercrative.models import Classroom, Quiz
+from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
 
 classrooms = Blueprint('classrooms', __name__)
 
@@ -43,6 +43,8 @@ def classroom(id):
 
 def add_quiz(id):
     classroom = Classroom.query_or_404(id)
+    quizzes = Quiz.query.filter_by(owner=current_user)
+    form = AddQuizForm(classroom_host=classroom)
     flash(u'Quiz added to\"' + classroom.name + '\"!', 'success')
     # TODO: have flash message say the specific classroom name
     return render_template('classroom.html', title=classroom.name, classroom=classroom)
