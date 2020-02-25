@@ -2,4 +2,5 @@
 {% block content %}
 <title>{{ classroom.name }}</title>
 <!-- displays the current user's created classroom, and allows them to add a quiz to it -->
+<a href="{{ url_for('classrooms.add_quiz', id=classroom.id) }}"> Add a Quiz </a>
 {% endblock %}

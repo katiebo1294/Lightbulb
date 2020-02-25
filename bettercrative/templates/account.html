@@ -31,15 +31,13 @@
                 <div class="edit_class">
                     <a class="btn-lg" href="{{url_for('classrooms.classroom', id=classroom.id, classroom=classroom)}}">
                         Enter Classroom
-                        <!--MAKE THIS LINK TO THE CLASSROOM PAGE-->
                     </a>
                 </div>
                 <div class="delete_class">
                     <a href="{{ url_for('users.delete_classroom', id=classroom.id) }}" class="btn-lg">
                         Delete Classroom
-                        <!--MAKE THIS ACTIVATE A FUNCTION TO REMOVE THIS SPECIFIC CLASS FROM THE DATABASE-->
                     </a>
-                </div>
+                </div> <!-- TODO show list of users quizzes as well -->
             </div>
         {% endfor %}
     </div>

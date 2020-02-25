@@ -22,12 +22,11 @@ def new_quiz():
             # add each answer to the question
             quiz.question_answers.append(new_answer)
         db.session.commit()
-        flash(u'New Quiz \"' + quiz.name + '\" Created!', 'success')
+        flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         return redirect(url_for('quizzes.quiz', id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
 
-# TODO: make quiz home route page
 @quizzes.route("/quiz/<int:id>")
 @login_required
 def quiz(id):

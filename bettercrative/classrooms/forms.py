@@ -23,5 +23,5 @@ class EnterClassroomForm(FlaskForm):
 
 
 class AddQuizForm(FlaskForm):
-    quiz_name = SelectField('Quiz to add')
-# TODO quiz_name should be a SelectField containing all of the current user's quizzes
+    quiz = SelectField('Choose a Quiz', coerce=int, validators=[InputRequired('Please select a quiz.')])
+    submit = SubmitField('Add Quiz')
