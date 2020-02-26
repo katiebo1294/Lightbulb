@@ -613,7 +613,13 @@ body:after{
   background-color:rgba(71, 104, 153, 0.8);
   height:500px;
   width:700px;
+  margin-left:3rem;
+  margin-top: 5rem;
   
+}
+div.row.classroom_element{
+  font-family: 'Source Code Pro';
+
 }
 
 .classroom_element {
@@ -621,6 +627,32 @@ body:after{
   margin-left:2%;
 }
 
+div.dropdown a{
+  color: white;
+}
+div.dropdown a:hover{
+  color: #00E676;
+}
+div.dropdown.show a{
+  color: white;
+}
+div.dropdown.show a.dropdown-item{
+  color: black;
+}
+div.dropdown.show a:hover{
+  color: #00E676;
+}
+.edit_class a{
+  color: white;
+}
+.edit_class a:hover{
+  color: #00E676;
+}
+
 .delete_class a{
-  float:right;
+  color: white;
+}
+
+.delete_class a:hover{
+  color: #00E676;
 }

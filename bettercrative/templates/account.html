@@ -3,11 +3,11 @@
 
 <body class="container-fluid">
 <div class="col classroomcolumn">
-    <div class="classroomdisplay">
+    <nav class="navbar">
         {% for classroom in current_user.classrooms %}
             <div class="row classroom_element">
                 <div class="dropdown show">
-                    <a aria-expanded="false" aria-haspopup="true" class="btn-lg btn-long btn-secondary dropdown-toggle"
+                    <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle"
                     data-toggle="dropdown" id="dropdownMenuLink" role="button">
                         Name: {{ classroom.name }}
                     </a>
@@ -40,7 +40,7 @@
                 </div> <!-- TODO show list of users quizzes as well -->
             </div>
         {% endfor %}
-    </div>
+        </nav>
 </div>
 </body>
 {% endblock %}
