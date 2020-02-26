@@ -605,21 +605,37 @@ body:after{
 }
 
 /**Account**/
-.classroomdisplay {
-  background-color:rgb(121, 153, 201);
+div.quizroomcolumn{
+  width:43%;
+  background-color:#8cb4d2;
+  float:left;
+  margin-top: 5rem;
+  margin-left:5rem;
+  height:500px;
+  
 }
-
 .classroomcolumn {
-  background-color:rgba(71, 104, 153, 0.8);
+  background-color:#4257b2;
   height:500px;
   width:700px;
-  margin-left:3rem;
+  float:left;
+  margin-left:7rem;
   margin-top: 5rem;
   
 }
+
+
+div.row.quiz_element{
+  font-family: 'Source Code Pro';
+}
 div.row.classroom_element{
   font-family: 'Source Code Pro';
+  
+}
 
+.quiz_element{
+  margin-top: 2%;
+  margin-left: 2%;
 }
 
 .classroom_element {
@@ -627,8 +643,17 @@ div.row.classroom_element{
   margin-left:2%;
 }
 
+
+div.quizroomcolumn nav.navbar div.dropdown.show a{
+  text-decoration: none;
+  color:white;
+}
+div.quizroom nav.navbar div.dropdown.show a.disabled{
+  pointer-events: none;
+}
 div.dropdown a{
   color: white;
+  text-decoration: none;
 }
 div.dropdown a:hover{
   color: #00E676;
@@ -644,6 +669,7 @@ div.dropdown.show a:hover{
 }
 .edit_class a{
   color: white;
+  text-decoration: none;
 }
 .edit_class a:hover{
   color: #00E676;
@@ -651,8 +677,36 @@ div.dropdown.show a:hover{
 
 .delete_class a{
   color: white;
+  text-decoration: none;
 }
 
 .delete_class a:hover{
+  color: #00E676;
+}
+
+
+
+.enter_quiz{
+  margin-left: 3rem;
+}
+.delete_quiz{
+  margin-left: 3rem;
+}
+div.enter_quiz a{
+  color: white;
+  text-decoration: none;
+}
+
+
+div.enter_quiz a:hover{
+  color: #00E676;
+}
+
+div.delete_quiz a{
+  color:white;
+  text-decoration:none;
+}
+
+div.delete_quiz a:hover{
   color: #00E676;
 }

@@ -2,6 +2,8 @@
 {% block content %}
 
 <body class="container-fluid">
+    
+
 <div class="col classroomcolumn">
     <nav class="navbar">
         {% for classroom in current_user.classrooms %}
@@ -41,6 +43,38 @@
             </div>
         {% endfor %}
         </nav>
+</div>
+
+<div class = "col quizroomcolumn">
+    <nav class= "navbar">
+        {% for quiz in current_user.quizzes %}
+            <div class = "row quiz_element">
+                <div class ="dropdown show">
+                    <a class = "navbar-brand">
+                        Quiz: {{ quiz.name }}
+                    </a>
+                </div>
+                
+                
+                <div class ="enter_quiz">
+                    <a href = "{{ url_for('quizzes.quiz', id = quiz.id)}}" class = "btn-lg">
+                        Enter Quiz
+                    </a>
+                </div>
+                
+                
+                <div class ="delete_quiz">
+                    <a class= "btn-lg" href = "">
+                        Delete Quiz
+                    </a>
+                </div>
+                
+                
+                
+            </div>
+            
+        {% endfor %}
+    </nav>
 </div>
 </body>
 {% endblock %}
