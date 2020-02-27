@@ -9,7 +9,7 @@
         <div class="titlebar">
             Classroom Listing
         </div>
-        <a class="btn-large" href="{{ url_for('classrooms.new_classroom') }}">
+        <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}">
             Create Classroom
         </a>
         {% for classroom in current_user.classrooms %}
@@ -20,7 +20,7 @@
                         Name: {{ classroom.name }}
                     </a>
                     <div class="dropdown-menu">
-                        {% for quiz in classroom.quizzes %}
+                        {% for quiz in classroom.added_quizzes %}
                         {% if quiz.active==quiz.name %}
                         <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
                             Quiz: {{ quiz.name }}
@@ -35,12 +35,12 @@
                 </div>
                 <div class="edit_class">
                     <a class="btn-lg" href="{{url_for('classrooms.classroom', id=classroom.id )}}">
-                        Enter Classroom
+                        Enter 
                     </a>
                 </div>
                 <div class="delete_class">
                     <a href="{{ url_for('users.delete_classroom', id=classroom.id) }}" class="btn-lg">
-                        Delete Classroom
+                        Delete 
                     </a>
                 </div>
             </div>
@@ -53,7 +53,7 @@
         <div class="titlebar">
             Quiz Listing
         </div>
-        <a class="btn-large" href="{{ url_for('quizzes.new_quiz') }}">
+        <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}">
             Create Quiz
         </a>
         {% for quiz in current_user.quizzes %}
@@ -67,14 +67,14 @@
                 
                 <div class ="enter_quiz">
                     <a href = "{{ url_for('quizzes.quiz', id = quiz.id)}}" class = "btn-lg">
-                        Enter Quiz
+                        Enter 
                     </a>
                 </div>
                 
                 
                 <div class ="delete_quiz">
                     <a class= "btn-lg" href = " {{url_for('users.delete_quiz', id = quiz.id) }}">
-                        Delete Quiz
+                        Delete 
                     </a>
                 </div>
                 
