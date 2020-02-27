@@ -69,7 +69,7 @@ def account():
                            image_file=image_file, form=form)
 
 
-@users.route("/account/<int:id>", methods = ['GET', 'POST'])
+@users.route("/account/delete_classroom/<int:id>", methods = ['GET', 'POST'])
 def delete_quiz(id):
     quiz = Quiz.query.filter_by(id = id).first()
     db.session.delete(quiz)
@@ -77,7 +77,7 @@ def delete_quiz(id):
     flash(u'Quiz Removed', 'success')
     return redirect(url_for('users.account'))
 
-@users.route("/account/<int:id>", methods=['GET', 'POST'])
+@users.route("/account/delete_quiz/<int:id>", methods=['GET', 'POST'])
 def delete_classroom(id):
     classroom = Classroom.query.filter_by(id=id).first()
     db.session.delete(classroom)
