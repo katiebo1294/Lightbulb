@@ -33,6 +33,9 @@
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
+        <a href="{{ url_for('users.account') }}">
+            Cancel
+        </a>
          {% if form.errors %}
             {{ form.errors }}
         {% endif %}
