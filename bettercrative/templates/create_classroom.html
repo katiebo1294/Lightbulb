@@ -15,6 +15,9 @@
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
+        <a href="{{ url_for('users.account') }}">
+            Go To Classroom
+        </a>
         {% if form.name.errors %}
             {{ form.name.errors }}
         {% endif %}

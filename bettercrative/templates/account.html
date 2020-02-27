@@ -6,6 +6,12 @@
 
 <div class="col classroomcolumn">
     <nav class="navbar">
+        <div class="titlebar">
+            Classroom Listing
+        </div>
+        <a class="btn-large" href="{{ url_for('classrooms.new_classroom') }}">
+            Create Classroom
+        </a>
         {% for classroom in current_user.classrooms %}
             <div class="row classroom_element">
                 <div class="dropdown show">
@@ -36,14 +42,20 @@
                     <a href="{{ url_for('users.delete_classroom', id=classroom.id) }}" class="btn-lg">
                         Delete Classroom
                     </a>
-                </div> <!-- TODO show list of users quizzes as well -->
+                </div>
             </div>
         {% endfor %}
-        </nav>
+    </nav>
 </div>
 
 <div class = "col quizroomcolumn">
     <nav class= "navbar">
+        <div class="titlebar">
+            Quiz Listing
+        </div>
+        <a class="btn-large" href="{{ url_for('quizzes.new_quiz') }}">
+            Create Quiz
+        </a>
         {% for quiz in current_user.quizzes %}
             <div class = "row quiz_element">
                 <div class ="dropdown show">
