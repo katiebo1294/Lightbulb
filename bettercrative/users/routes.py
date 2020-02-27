@@ -19,7 +19,7 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash(u'Your account has been created! You are now logged in.', 'success')
+        flash(u'Your account has been created! You are now able to log in.', 'success')
         # TODO: automatically generate a classroom or not?
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
@@ -39,7 +39,7 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash(u'Login unsuccessful. Please check your email and password.', 'danger')
-    return render_template('login.html', title='Login', form=form)
+    return render_template('teacher_login.html', title='Login', form=form)
 
 
 @users.route("/logout")
@@ -68,6 +68,14 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
+
+@users.route("/account/<int:id>", methods = ['GET', 'POST'])
+def delete_quiz(id):
+    quiz = Quiz.query.filter_by(id = id).first()
+    db.session.delete(quiz)
+    db.session.commit()
+    flash(u'Quiz Removed', 'success')
+    return redirect(url_for('users.account'))
 
 @users.route("/account/<int:id>", methods=['GET', 'POST'])
 def delete_classroom(id):

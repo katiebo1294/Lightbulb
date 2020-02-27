@@ -5,90 +5,41 @@
 <script src="../static/js/QuizForm.js"></script>
 <div class="form-container">
     <div class="content-section">
-        <form action="" method="POST">
-            {{ form.hidden_tag() }} <!--adds ctrf form-->
+        <form action="{{ url_for('quizzes.new_quiz') }}" method="POST">
+            {{ form.hidden_tag() }} <!--adds csrf form-->
             <fieldset class="form-group">
                 <div class="form-group">
                     <legend class="border-bottom mb-4">Create Quiz</legend>
                     <!-- quiz title -->
-                    {{ form.name.label(class="form-control-label") }}
-
-                    {% if form.name.errors %}
-                    {{ form.name(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for errors in form.name.errors %}
-                        <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    {{ form.name(class="form-control form-control-lg") }}
-                    {% endif %}
+                    {{ form.name.label }}
+                    {{ form.name }}
                 </div>
-                <!-- user clicks on a button saying "Add Question" to add a question to the form -->
-                <a class="add btn btn-outline-success" onclick="addQuestion();" href="#">Add Question</a>
-                <form action="" id="question-form" method="POST" role="form">
-                    <div class="subforms-container">
-                        {% for question in form.questions %}
-                        <!-- for each question, add the question content and specify a type; then add answer(s) -->
-                        <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
-                            <div class="form-group">
-                                {{ question.content.label(class="form-control-label") }}
-
-                                {% if question.content.errors %}
-                                {{ question.content(class="form-control form-control-lg is-invalid") }}
-                                <div class="invalid-feedback">
-                                    {% for errors in question.content.errors %}
-                                    <span>{{ error }}</span>
-                                    {% endfor %}
-                                </div>
-                                {% else %}
-                                {{ question.content(class="form-control form-control-lg") }}
-                                {% endif %}
-                            </div>
-                            <!-- 4 buttons to specify question type - MC, SA, T/F, or coding -->
-                            <div class="form-group">
-                                {{ question.qtype.label(class="form-control-label") }}
-                                <div class="row btn-group btn-group-toggle qtype-container">
-                                    {% for choice in question.qtype.choices %}
-                                        <label class="btn btn-outline-warning qtype-choice" data-toggle="button"><input type="radio">{{ choice[1] }}</input></label>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            <a class="add btn btn-outline-success" onclick="addAnswer();" href="#">Add Answer</a>
-                            <form action="" id="answer-form" method="POST" role="form">
-                                <div class="subforms-container">
-                                    <!-- add answer content -->
-                                    {% for answer in question.answers %}
-                                    <div class="subform" data-index="{{ loop.index0 }}"
-                                         id="answer-{{loop.index0 }}-form">
-                                        {{ answer.content.label(class="form-control-label") }}
-
-                                        {% if answer.content.errors %}
-                                        {{ answer.content(class="form-control form-control-lg is-invalid") }}
-                                        <div class="invalid-feedback">
-                                            {% for errors in answer.content.errors %}
-                                            <span>{{ error }}</span>
-                                            {% endfor %}
-                                        </div>
-                                        {% else %}
-                                        {{ answer.content(class="form-control form-control-lg") }}
-                                        {% endif %}
-                                        <!-- user can also remove a question or answer -->
-                                        <a class="remove btn btn-outline-danger" onclick="removeAnswer();" href="#">Remove Answer</a>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </form>
-                            <a class="remove btn btn-outline-danger" onclick="removeQuestion();" href="#">Remove Question</a>
+                <div class="form-group">
+                    {{ form.question_content.label }}
+                    {{ form.question_content }}
+                </div>
+                <div class="subforms-container">
+                    {% for answer in form.question_answers %}
+                    <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
+                        <div class="form-group">
+                            {{ answer.content.label }} {{ loop.index0 + 1 }}
+                            {{ answer.content }}
                         </div>
-                        {% endfor %}
                     </div>
-                </form>
+                    {% endfor %}
+                </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
+         {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+
+        {% if data is defined %}
+            <p>Received data: {{ data }}</p>
+        {% endif %}
     </div>
 </div>
 {% endblock  %}

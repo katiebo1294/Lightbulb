@@ -6,17 +6,17 @@
             {{ form.hidden_tag() }} <!--adds ctrf form-->
             <fieldset class="form-group">
                 <div class="form-group">
-                    <legend class="border-bottom mb-4">Create Classroom</legend>
-                    {{ form.name.label }}
-                    {{ form.name }}
+                    <legend class="border-bottom mb-4">Add a Quiz to "{{ classroom.name }}"</legend>
+                    {{ form.quiz.label }}
+                    {{ form.quiz }}
                 </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
-        {% if form.name.errors %}
-            {{ form.name.errors }}
+        {% if form.errors %}
+            {{ form.errors }}
         {% endif %}
 
         {% if data is defined %}
@@ -25,5 +25,3 @@
     </div>
 </div>
 {% endblock  %}
-
-

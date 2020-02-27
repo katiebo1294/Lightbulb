@@ -43,39 +43,35 @@ class Classroom(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # Multiple quizzes can be attached to a classroom (only one can be active at a time)
+    added_quizzes = db.relationship('Quiz', backref='classroom_host', cascade="all, delete, delete-orphan")
 
     def __repr__(self):
-        return f"Classroom('{self.name}')"
+        return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.active_quiz}')"
 
 
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    questions = db.relationship('Question', backref='source', lazy=True, collection_class=list,
-                                cascade="all, delete, delete-orphan")
+    question_content = db.Column(db.String, nullable=False)
+    question_answers = db.relationship('Answer', backref='quiz', lazy=True, collection_class=list,
+                                       cascade="all, delete, delete-orphan")
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    # Quiz may be active in one classroom at a time, or none (specified by nullable=True)
+    classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
+    # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
+    active = db.Column(db.Boolean, nullable=True)
 
     def __repr__(self):
-        return f"Quiz('{self.name}')"
-
-
-class Question(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String, nullable=False)
-    type = db.Column(db.Enum, nullable=False)
-    answers = db.relationship('Answer', backref='source', lazy=True, collection_class=list,
-                              cascade="all, delete, delete-orphan")
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Question('{self.content}')"
+        return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
 
 
 class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    correct = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return f"Answer('{self.content}')"

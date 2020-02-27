@@ -2,17 +2,19 @@
 {% block content %}
 
 <body class="container-fluid">
+    
+
 <div class="col classroomcolumn">
-    <div class="classroomdisplay">
+    <nav class="navbar">
         {% for classroom in current_user.classrooms %}
             <div class="row classroom_element">
                 <div class="dropdown show">
-                    <a aria-expanded="false" aria-haspopup="true" class="btn-lg btn-long btn-secondary dropdown-toggle"
+                    <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle"
                     data-toggle="dropdown" id="dropdownMenuLink" role="button">
                         Name: {{ classroom.name }}
                     </a>
                     <div class="dropdown-menu">
-                        {% for quiz in current_user.classrooms.quiz %}
+                        {% for quiz in classroom.quizzes %}
                         {% if quiz.active==quiz.name %}
                         <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
                             Quiz: {{ quiz.name }}
@@ -26,20 +28,50 @@
                     </div>
                 </div>
                 <div class="edit_class">
-                    <a class="btn-lg" href="{{url_for('classrooms.classroom', id=classroom.id, classroom=classroom)}}">
+                    <a class="btn-lg" href="{{url_for('classrooms.classroom', id=classroom.id )}}">
                         Enter Classroom
-                        <!--MAKE THIS LINK TO THE CLASSROOM PAGE-->
                     </a>
                 </div>
                 <div class="delete_class">
                     <a href="{{ url_for('users.delete_classroom', id=classroom.id) }}" class="btn-lg">
                         Delete Classroom
-                        <!--MAKE THIS ACTIVATE A FUNCTION TO REMOVE THIS SPECIFIC CLASS FROM THE DATABASE-->
                     </a>
-                </div>
+                </div> <!-- TODO show list of users quizzes as well -->
             </div>
         {% endfor %}
-    </div>
+        </nav>
+</div>
+
+<div class = "col quizroomcolumn">
+    <nav class= "navbar">
+        {% for quiz in current_user.quizzes %}
+            <div class = "row quiz_element">
+                <div class ="dropdown show">
+                    <a class = "navbar-brand">
+                        Quiz: {{ quiz.name }}
+                    </a>
+                </div>
+                
+                
+                <div class ="enter_quiz">
+                    <a href = "{{ url_for('quizzes.quiz', id = quiz.id)}}" class = "btn-lg">
+                        Enter Quiz
+                    </a>
+                </div>
+                
+                
+                <div class ="delete_quiz">
+                    <a class= "btn-lg" href = " {{url_for('users.delete_quiz', id = quiz.id) }}">
+                        Delete Quiz
+                    </a>
+                </div>
+                
+                
+                
+            </div>
+            
+        {% endfor %}
+    </nav>
 </div>
 </body>
 {% endblock %}
