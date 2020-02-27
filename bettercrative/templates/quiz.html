@@ -1,4 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
+<h1> Quiz Name = {{quiz.name}}</h1>
     <!-- Display the current quiz and its content -->
+    <!--I'm not sure if just dispalying the form is the best approach, but it is the one I'm taking rn-->
+<h1> {{ quiz.question_content}}</h1>
+
+ <h1>{% for answers in quiz.question_answers %} </h1>   
+
+
+       <h2>{{ answers }} </h2> 
+
+        {% endfor %}
+
+
+
 {% endblock %}
+
