@@ -7,7 +7,7 @@ from bettercrative.models import Classroom, Quiz
 
 
 class ClassroomForm(FlaskForm):
-    name = StringField('Title', validators=[InputRequired(), Length(min=4, max=15)])
+    name = StringField('Title', validators=[InputRequired(), Length(min=4, max=15, message='Must be at least 4 chars')])
 
     def validate_name(self, name):
         name = Classroom.query.filter_by(name=name.data).first()
