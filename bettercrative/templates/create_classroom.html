@@ -15,8 +15,8 @@
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
-        {% if form.errors %}
-            {{ form.errors }}
+        {% if form.name.errors %}
+            {{ form.name.errors }}
         {% endif %}
 
         {% if data is defined %}
@@ -25,3 +25,5 @@
     </div>
 </div>
 {% endblock  %}
+
+
