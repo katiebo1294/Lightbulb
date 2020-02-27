@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FieldList, FormField, SelectField, Form
+from wtforms import StringField, SubmitField, FieldList, FormField, SelectField, Form, BooleanField
 from wtforms.validators import InputRequired
 
 
 class AnswerForm(Form):
-    # TODO will this work for all question types?
     content = StringField('Answer', validators=[InputRequired('Please fill out this field.')])
+    # TODO user must select at least one correct answer
+    correct = BooleanField('Correct?')
 
 
 class QuizForm(FlaskForm):

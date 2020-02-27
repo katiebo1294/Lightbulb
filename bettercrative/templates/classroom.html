@@ -1,6 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
 <title>{{ classroom.name }}</title>
-<!-- displays the current user's created classroom, and allows them to add a quiz to it -->
-<a href="{{ url_for('classrooms.add_quiz', id=classroom.id) }}"> Add a Quiz </a>
+<!-- displays classroom name and active quiz name, if there is one -->
+<h1>Classroom "{{ classroom.name }}"</h1>
+<h2>{% if active_quiz %}
+    Active Quiz: "{{ active_quiz.name }}"
+    {% else %}
+    No Active Quiz
+    {% endif %}</h2>
+<div>
+    <a href="{{ url_for('quizzes.new_quiz', id=classroom.id) }}">Create a Quiz</a>
+</div>
+<div>
+    <a href="{{ url_for('classrooms.add_quiz', id=classroom.id) }}">Add a Quiz</a>
+</div>
+<!-- if there are quizzes added to the classroom, list them by name -->
+{% if classroom.quizzes %}
+<h2>Currently Added Quizzes: </h2>
+<ul>
+    {% for quiz in classroom.quizzes %}
+    <li>{{ quiz.name }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

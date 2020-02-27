@@ -37,7 +37,13 @@ def enter_classroom():
 @classrooms.route("/classroom/<int:id>", methods=['GET', 'POST'])
 def classroom(id):
     classroom = Classroom.query.get_or_404(id)
-    return render_template('classroom.html', title=classroom.name, classroom=classroom, quiz=classroom.active_quiz)
+    quizzes = classroom.added_quizzes
+    # if there is an active quiz, pass it to the template; else pass None
+    active_quiz = None
+    for quiz in quizzes:
+        if quiz.active:
+            active_quiz = quiz
+    return render_template('classroom.html', title=classroom.name, classroom=classroom, active_quiz=active_quiz)
 
 
 @classrooms.route("/classroom/<int:id>/add-quiz", methods=['GET', 'POST'])

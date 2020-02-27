@@ -23,7 +23,11 @@ def new_quiz():
             quiz.question_answers.append(new_answer)
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
-        return redirect(url_for('quizzes.quiz', id=quiz.id))
+        # if a classroom id was passed in, redirect to add this new quiz to that classroom
+        if id:
+            return redirect(url_for('classrooms.add_quiz', id=id))
+        else:
+            return redirect(url_for('quizzes.quiz', id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
 
