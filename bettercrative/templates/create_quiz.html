@@ -15,11 +15,30 @@
                     {{ form.name }}
                 </div>
                 <div class="form-group">
+                    <!-- Question -->
                     {{ form.question_content.label }}
                     {{ form.question_content }}
                 </div>
                 <div class="form-group">
+                    <!-- Classroom Name -->
+                    <!-- DROPDOWN EXISTS BUT DOESNT WORK -->
                     {{ form.classroomid.label }}
+                    <div class="btn dropdown show btn-lg btn-block">
+                        <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle"
+                        data-toggle="dropdown" id="dropdownMenuLink" role="button">
+                            Pick a Classroom
+                        </a>
+                        <div class="dropdown-menu">
+                            {% for classroom in current_user.classrooms %}
+                                <a class="dropdown-item" href="">
+                                    {{ classroom.name }}
+                                </a>
+                            {% endfor %}
+                                <a class="dropdown-item" href="">
+                                    None
+                                </a>
+                        </div>
+                    </div>
                     {{ form.classroomid }}
                 </div>
 
