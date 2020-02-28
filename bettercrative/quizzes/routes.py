@@ -26,6 +26,9 @@ def new_quiz():
         # if a classroom id was passed in, redirect to add this new quiz to that classroom
         if form.classroomid:
             classroom = Classroom.query.filter_by(name=form.classroomid.data).first()
+            # Added by tim - delete once working
+            db.session.commit()
+            #
             return redirect(url_for('classrooms.add_quiz', id=classroom.id))
         else:
             return redirect(url_for('quizzes.quiz', id=quiz.id))
@@ -36,4 +39,4 @@ def new_quiz():
 @login_required
 def quiz(id):
     quiz = Quiz.query.get_or_404(id)
-    return render_template('quiz.html', title=quiz.name, quiz=quiz)
+    return render_template('account.html', title=quiz.name, quiz=quiz)

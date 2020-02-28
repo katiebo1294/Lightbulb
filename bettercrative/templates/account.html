@@ -21,15 +21,15 @@
                     </a>
                     <div class="dropdown-menu">
                         {% for quiz in classroom.added_quizzes %}
-                        {% if quiz.active==quiz.name %}
-                        <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
-                            Quiz: {{ quiz.name }}
-                        </a>
-                        {% else %}
-                        <a class="dropdown-item" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
-                            Quiz: {{ quiz.name }}
-                        </a>
-                        {% endif %}
+                            {% if quiz.active==quiz.name %}
+                            <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
+                                Quiz: {{ quiz.name }}
+                            </a>
+                            {% else %}
+                            <a class="dropdown-item" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
+                                Quiz: {{ quiz.name }}
+                            </a>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>

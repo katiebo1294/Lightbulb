@@ -56,8 +56,14 @@ def add_quiz(id):
     form = AddQuizForm()
     form.quiz.choices = quiz_list
     if form.validate_on_submit():
-        classroom.active_quiz = Quiz.query.filter_by(id=form.quiz.data).first()
-        flash(u'Quiz \"' + classroom.active_quiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
+        #gets the quiz by id through form and assigns said quiz to the active_quiz
+        quizID = form.quiz.data
+        addedQuiz = Quiz.query.filter_by(id=quizID).first()
+        classroom.added_quizzes.append(addedQuiz)
+        # Added by tim - delete once working
+        db.session.commit()
+        #
+        flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
         return redirect(url_for('classrooms.classroom', id=classroom.id))
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom

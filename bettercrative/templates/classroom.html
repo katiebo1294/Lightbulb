@@ -15,10 +15,10 @@
     <a href="{{ url_for('classrooms.add_quiz', id=classroom.id) }}">Add a Quiz</a>
 </div>
 <!-- if there are quizzes added to the classroom, list them by name -->
-{% if classroom.quizzes %}
+{% if true %} <!--classroom.quizzes-->
 <h2>Currently Added Quizzes: </h2>
 <ul>
-    {% for quiz in classroom.quizzes %}
+    {% for quiz in classroom.added_quizzes %}
     <li>{{ quiz.name }}</li>
     {% endfor %}
 </ul>

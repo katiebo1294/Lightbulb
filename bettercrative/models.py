@@ -49,7 +49,8 @@ class Classroom(db.Model):
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.active_quiz}')"
 
-
+# Quiz is a static model, once we create a quiz we do not modify the data inside when referenceing,
+# if we are using the quiz we copy contents so we can reuse the same quiz
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -61,6 +62,7 @@ class Quiz(db.Model):
     # Quiz may be active in one classroom at a time, or none (specified by nullable=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
+    # WE SHOULD MOVE THIS TO CLASSROOM TO MATCH THE FLOW CHART, HAVE CLASSROOM LIST WHICH IS THE ACTIVE QUIZ
     active = db.Column(db.Boolean, nullable=True)
 
     def __repr__(self):
