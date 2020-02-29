@@ -29,9 +29,8 @@ def new_quiz():
             # Added by tim - delete once working
             db.session.commit()
             #
-            return redirect(url_for('classrooms.add_quiz', id=classroom.id))
-        else:
-            return redirect(url_for('quizzes.quiz', id=quiz.id))
+        return redirect(url_for('quizzes.quiz', id=quiz.id))
+        
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
 

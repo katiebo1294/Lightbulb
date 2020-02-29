@@ -22,11 +22,11 @@
                     <div class="dropdown-menu">
                         {% for quiz in classroom.added_quizzes %}
                             {% if quiz.active==quiz.name %}
-                            <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
+                            <a class="dropdown-item active">
                                 Quiz: {{ quiz.name }}
                             </a>
                             {% else %}
-                            <a class="dropdown-item" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
+                            <a class="dropdown-item" id="set_active_button">
                                 Quiz: {{ quiz.name }}
                             </a>
                             {% endif %}
