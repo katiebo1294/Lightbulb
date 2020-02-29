@@ -23,7 +23,7 @@
                         {% for quiz in classroom.added_quizzes %}
                             {% if quiz.active==quiz.name %}
                             <a class="dropdown-item active">
-                                Quiz: {{ quiz.name }}
+                                *ACTIVE* Quiz: {{ quiz.name }}
                             </a>
                             {% else %}
                             <a class="dropdown-item" id="set_active_button">

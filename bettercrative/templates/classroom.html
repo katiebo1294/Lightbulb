@@ -19,7 +19,12 @@
 <h2>Currently Added Quizzes: </h2>
 <ul>
     {% for quiz in classroom.added_quizzes %}
-    <li>{{ quiz.name }}</li>
+    <li>
+        {{ quiz.name }}
+        <a class="btn-lg" id="set_active_button">
+            Set Active
+        </a>
+    </li>
     {% endfor %}
 </ul>
 {% endif %}
