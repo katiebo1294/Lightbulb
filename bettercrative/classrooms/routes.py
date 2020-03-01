@@ -60,9 +60,7 @@ def add_quiz(id):
         quizID = form.quiz.data
         addedQuiz = Quiz.query.filter_by(id=quizID).first()
         classroom.added_quizzes.append(addedQuiz)
-        # Added by tim - delete once working
         db.session.commit()
-        #
         flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
         return redirect(url_for('classrooms.classroom', id=classroom.id))
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
