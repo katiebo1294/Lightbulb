@@ -76,4 +76,4 @@ class Answer(db.Model):
     correct = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
-        return f"Answer('{self.content}')"
+        return f"{self.content}"

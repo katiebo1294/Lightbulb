@@ -1,16 +1,224 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1> Quiz Name = {{quiz.name}}</h1>
+
     <!-- Display the current quiz and its content -->
     <!--I'm not sure if just dispalying the form is the best approach, but it is the one I'm taking rn-->
-<h1> {{ quiz.question_content}}</h1>
+    <!-- <div class = "container">
+        <div class = "col-md-6 quiz-section">
+            <div class = "multipleChoice" id = "multipleChoice">
+                <div id = "letter" class= "letterChoices">A </div>
+            
+                <div id = "letter" class= "letterChoices">B </div>
+            
+                <div id = "letter" class= "letterChoices">C </div>
+            
+                <div id = "letter" class= "letterChoices">D</div>
+            </div>
+        <div class = "col-md-6 questionAnswers">
+            {% for answers in quiz.question_answers %}
+            
+            <div class= "answerOptions">
+                
+                    <h1 class = "answerInput" id ="answerInput">  {{answers}} </h1>
+                
+            </div>
+            
+            {% endfor %}
+        
+        </div>
+    </div> -->
+    
+    <style>
+        section.nav-section{
+            background-color:rgb(188, 252, 231)
+        }
+        .transparent-background{
+            background-image: none;
+        }
+        
+        .affix {
+        padding: 0;
+        font-size: 80%;
+        background-color:rgb(188, 252, 231);
+        }
+        .affix .container .logo a{
+        color: black;
+        font-size: 100%;
+        }
+        .affix .container .navlinks a{
+        color: black;
+        }
+        .nav .affix .navTrigger i{
+        font-size: 80%;
+        color: black;
+        }
+        .affix .navTrigger i{
+        background-color: black;
+        }
+        .affix .navTrigger p{
+            color: black;
+        }
+        }
+    
 
- <h1>{% for answers in quiz.question_answers %} </h1>   
+
+    </style>
+
+    
+    <div id = "quiz-content-container">
+
+        <!-- Quiz Edit Container for users -->
+        <div id = "editing-container">
+            <!--  want to change this later to classroom name  -->
+            
+            <div id = "quizTitle">  <h1 id= "quizname"></h1> </div>
+            
+            <div id = "edit-section">
+                
+
+                
+
+                
+                <div class ="headerSection">
+                    
+                    <div class = "editSign">Edit Quiz</div>
+                    <div class = "SaveExitBtn" > <a href ="#" >Save and Exit</a></div>
+                </div>
+            </div>
+
+            <!-- Quiz Title -->
+            <div id = "quiz-title">
+                <div id="quizname">
+                    {{quiz.name}}
+
+                </div>
+            </div>
 
 
-       <h2>{{ answers }} </h2> 
+            <!-- prevent things from floating after this section -->
+            <div style =" clear: both;"></div>
+            <!-- prevent things from floating after this section -->
 
-        {% endfor %}
+            <div id = "questions">
+                
+                <div id = "given-question">
+                    
+                    <!-- in the future, need to know whether a question is multiple choice, short answer or t/f -->
+                    <!-- if multiple choice, give div class multiple choice same with others -->
+                    <!-- also need to be able to add questions in one quiz -->
+                   
+                    <div id = "question">
+                        
+                        <div class = "multiple-choice">
+
+                            <!-- contents of multiple choice box -->
+                            <div class = "question-edit-header">
+                                <div class="question-number">
+                                    <label>{{quiz.id}})</label>
+                                    <a id = "Quiz-Edit" href= "#"> Edit</a>    
+                                </div>
+                                
+                            </div>
+                            <p>{{quiz.question_content}}</p>
+
+                            <div class = "answerchoices">
+                                <div class = "menu">
+                                    <div class = "answerchoices-header">
+                                        Answer Choice
+                                    </div>
+
+
+                                    <!-- prevent things from floating after this section -->
+                                    <div style =" clear: both;"></div>
+                                    <!-- prevent things from floating after this section -->
+
+                                </div>
+                            </div>
+
+                            <div class ="reset"> </div>
+                            {%for eachanswer in quiz.question_answers%}
+                            <div class = "answerContainer reset">
+                                <div class = "answerChoice">
+                                   
+                                    {%if quiz.question_answers.index(eachanswer) == 0%}
+                                    <span class = "choice"> A </span>
+                                    {%elif quiz.question_answers.index(eachanswer) == 1 %}
+                                    <span class = "choice"> B</span>
+                                    {%elif quiz.question_answers.index(eachanswer) == 2 %}
+                                    <span class = "choice"> C</span>
+                                    {%else %}
+                                    <span class = "choice"> D</span>
+                                    {%endif%}
+                                    
+                                    <div class = "answerBox">
+                                        <div class = "answerBox-answer">
+                                            {{eachanswer}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {%endfor%}
+
+                            <!-- <div class = "answerContainer reset">
+                                <div class = "answerChoice">
+                                    <span class = "choice"> A</span>
+                                    <div class = "answerBox">
+                                        <div class = "answerBox-answer">
+                                            {{quiz.question_answers}}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class = "answerChoice">
+                                    <span class = "choice"> B</span>
+                                    <div class = "answerBox">
+                                        <div class = "answerBox-answer">
+                                            
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class = "answerChoice">
+                                    <span class = "choice"> C</span>
+                                    <div class = "answerBox">
+                                        <div class = "answerBox-answer">
+                                            
+
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class = "answerChoice">
+                                    <span class = "choice"> D</span>
+                                    <div class = "answerBox">
+                                        <div class = "answerBox-answer">
+                                            
+
+                                        </div>
+                                    </div>
+                                </div> -->
+                                
+                                
+                                
+                            </div>
+
+                        </div>
+                    </div>  
+                   
+                </div>
+                
+            </div>
+
+            
+
+
+        </div>
+    </div>
+    
+    
+    
+
 
 
 
