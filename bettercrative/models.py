@@ -45,7 +45,7 @@ class Classroom(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom (only one can be active at a time)
     added_quizzes = db.relationship('Quiz', backref='classroom_host', cascade="all, delete, delete-orphan")
-    active_quiz = db.Column(db.string(20), nullable=True)
+    active_quiz = db.Column(db.String(20), nullable=True)
     
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.active_quiz}')"
