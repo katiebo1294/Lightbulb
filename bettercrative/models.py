@@ -45,7 +45,8 @@ class Classroom(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom (only one can be active at a time)
     added_quizzes = db.relationship('Quiz', backref='classroom_host', cascade="all, delete, delete-orphan")
-
+    active_quiz = db.Column(db.string(20), nullable=True)
+    
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.active_quiz}')"
 
@@ -62,9 +63,7 @@ class Quiz(db.Model):
     # Quiz may be active in one classroom at a time, or none (specified by nullable=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
-    # WE SHOULD MOVE THIS TO CLASSROOM TO MATCH THE FLOW CHART, HAVE CLASSROOM LIST WHICH IS THE ACTIVE QUIZ
-    active = db.Column(db.Boolean, nullable=True)
-
+    
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
 
