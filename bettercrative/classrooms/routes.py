@@ -39,11 +39,12 @@ def classroom(id):
     classroom = Classroom.query.get_or_404(id)
     quizzes = classroom.added_quizzes
     # if there is an active quiz, pass it to the template; else pass None
-    active_quiz = None
-    for quiz in quizzes:
-        if quiz.active:
-            active_quiz = quiz
-    return render_template('classroom.html', title=classroom.name, classroom=classroom, active_quiz=active_quiz)
+    # TIM -> "REMOVED DUE TO ACTIVE_QUIZ BEING MOVED TO CLASSROOM FOCUS, MAYBE ADD IN LATER?"
+    #active_quiz = None
+    #for quiz in quizzes:
+    #    if quiz.active:
+    #        active_quiz = quiz
+    return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
 
 
 @classrooms.route("/classroom/<int:id>/add-quiz", methods=['GET', 'POST'])
@@ -65,3 +66,11 @@ def add_quiz(id):
         return redirect(url_for('classrooms.classroom', id=classroom.id))
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom
+
+@classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
+@login_required
+def set_active(name, classroom_id):
+    classroom = Classroom.query.get(classroom_id)
+    classroom.active_quiz = name
+
+    return render_template('account.html')
