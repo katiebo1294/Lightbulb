@@ -1,5 +1,6 @@
 from flask import (render_template, url_for, flash,
-                   redirect, request, abort, Blueprint)
+                   redirect, request, abort, Blueprint,
+                   request)
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.models import Classroom, Quiz
@@ -69,8 +70,18 @@ def add_quiz(id):
 
 @classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
 @login_required
-def set_active(name, classroom_id):
-    classroom = Classroom.query.get(classroom_id)
+def set_active():
+    # gets the name and class_id from the URL params
+    name = request.args.get('name', None)
+    class_id = request.args.get('classroom_id', None)
+
+    #TODO: make custom exceptions and catch them somewhere along the line to give the user a useful error page. 
+    if name is None:
+        raise Exception('No \'name\' supplied!')
+    if class_id is None:
+        raise Exception('No \'classroom_id\' supplied!')
+
+    classroom = Classroom.query.get(class_id)
     classroom.active_quiz = name
 
     return render_template('account.html')

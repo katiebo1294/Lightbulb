@@ -26,10 +26,11 @@
                                     *ACTIVE* Quiz: {{ quiz.name }}
                             </a>
                             {% else %}
+                            <!-- TODO: change this from an anchor tag to a ul and have the set_active link be inside an li. Next, style the li to not have the dot. -->
                             <a class="dropdown-item" id="set_active_button">
-                                <form action="{{url_for('classrooms.set_active', name=quiz.name, classroom_id=classroom.id) }}" method="POST">
-                                    <input type="submit" value="Quiz: {{ quiz.name }}">
-                                </form>
+                                <a class="btn btn-lg" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                        Quiz: {{ quiz.name }}
+                                </a>
                             </a>
                             {% endif %}
                         {% endfor %}
