@@ -94,7 +94,7 @@
             </div>
 
             <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
-            {% for num in range(1, len(quiz.questions)+1) %}
+            {% for num in range(1, quiz.questions |length +1) %}
 
                 <a class="btn" >
                     {{ num }}
