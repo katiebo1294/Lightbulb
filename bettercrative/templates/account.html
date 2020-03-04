@@ -21,13 +21,16 @@
                     </a>
                     <div class="dropdown-menu">
                         {% for quiz in classroom.added_quizzes %}
-                            {% if quiz.active==quiz.name %}
-                            <a class="dropdown-item active" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
-                                Quiz: {{ quiz.name }}
+                            {% if classroom.active_quiz==quiz.name %}
+                            <a class="dropdown-item active">
+                                    *ACTIVE* Quiz: {{ quiz.name }}
                             </a>
                             {% else %}
-                            <a class="dropdown-item" href="{{ url_for('quizzes.quiz', id = quiz.id) }}">
-                                Quiz: {{ quiz.name }}
+                            <!-- TODO: change this from an anchor tag to a ul and have the set_active link be inside an li. Next, style the li to not have the dot. -->
+                            <a class="dropdown-item" id="set_active_button">
+                                <a class="btn btn-lg" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                        Quiz: {{ quiz.name }}
+                                </a>
                             </a>
                             {% endif %}
                         {% endfor %}
