@@ -14,7 +14,11 @@ quizzes = Blueprint('quizzes', __name__)
 def new_quiz():
     form = QuizForm()
     if form.validate_on_submit():
-        quiz = Quiz(name=form.name.data, question_content=form.question_content.data, owner=current_user)
+        quiz = Quiz(
+            name=form.name.data,
+            question_content=form.question_content.data, 
+            owner=current_user
+        )
         db.session.add(quiz)
         # add each question to the quiz
         for answer in form.question_answers.data:
@@ -26,12 +30,14 @@ def new_quiz():
         # if a classroom id was passed in, redirect to add this new quiz to that classroom
         if form.classroomid:
             #gets the quiz by id through form and assigns said quiz to the active_quiz
-            classroom = Classroom.query.filter_by(name=form.classroomid.data).first()
+            classroom = Classroom.query.filter_by(name=form.classroomid.data) \
+                        .first()
             addedQuiz = Quiz.query.filter_by(id=quiz.id).first()
             classroom.added_quizzes.append(addedQuiz)
             db.session.commit()
             
-            flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
+            flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + \
+                classroom.name + '\"!', 'success')
             return redirect(url_for('classrooms.classroom', id=classroom.id))
             
         else:
@@ -74,7 +80,6 @@ def remove_question():
     question_id = request.args.get('question_id', None)
 
     question = Questions.query.filter_by(id = question_id).first()
-    print(question)
     quiz = Quiz.query.filter_by(id=question.quiz_id).first()
 
     quiz.questions.remove(question)
