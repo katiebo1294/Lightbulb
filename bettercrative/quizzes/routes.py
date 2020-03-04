@@ -46,10 +46,11 @@ def quiz(id):
     return render_template('quiz.html', title=quiz.name, quiz=quiz)
 
 # Adds a new blank question to Quiz.  
-@quizzes.route("/quiz")
+@quizzes.route("/quiz/add")
 @login_required
 def add_question():
     # gets the name and class_id from the URL params
+    print("poop")
     quiz_id = request.args.get('quiz_id', None)
 
     quiz = Quiz.query.get_or_404(quiz_id)
@@ -60,6 +61,27 @@ def add_question():
     #load new question data
 
     quiz.active_question == quiz.name
+
+    db.session.commit()
+    return render_template('quiz.html', title=quiz.name, quiz=quiz)
+
+# Removes given quiz 
+@quizzes.route("/quiz/remove")
+@login_required
+def remove_question():
+    print("yay")
+    # gets the name and class_id from the URL params
+    question_id = request.args.get('question_id', None)
+
+    question = Questions.query.filter_by(id = question_id).first()
+    print(question)
+    quiz = Quiz.query.filter_by(id=question.quiz_id).first()
+
+    quiz.questions.remove(question)
+
+    db.session.delete(question)
+    
+    #load new question data
 
     db.session.commit()
     return render_template('quiz.html', title=quiz.name, quiz=quiz)

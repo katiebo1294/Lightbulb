@@ -99,10 +99,16 @@
                 {% if quiz.active_question == question.name %}
                 <a class="btn active" >
                     {{ question }}
+                    <a class="btn" href="{{ url_for('quizzes.remove_question', question_id = question.id) }}">
+                        X
+                    </a>
                 </a>
                 {% else %}
                 <a class="btn" >
-                        {{ question }}
+                    {{ question }}
+                    <a class="btn" href="{{ url_for('quizzes.remove_question', question_id = question.id) }}">
+                        X
+                    </a>
                 </a>
                 {% endif %}
 
