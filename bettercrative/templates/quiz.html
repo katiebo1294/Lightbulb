@@ -94,11 +94,17 @@
             </div>
 
             <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
-            {% for num in range(1, quiz.questions |length +1) %}
+            {% for question in quiz.questions %}
 
-                <a class="btn" >
-                    {{ num }}
+                {% if quiz.active_question == question.name %}
+                <a class="btn active" >
+                    {{ question }}
                 </a>
+                {% else %}
+                <a class="btn" >
+                        {{ question }}
+                </a>
+                {% endif %}
 
             {% endfor %}
 

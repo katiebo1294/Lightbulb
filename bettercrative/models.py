@@ -63,6 +63,7 @@ class Quiz(db.Model):
     # Quiz may be active in one classroom at a time, or none (specified by nullable=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
+    active_quiz = db.Column(db.String, nullable=True)
     questions = db.relationship('Questions', backref='quiz', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
 
     def __repr__(self):

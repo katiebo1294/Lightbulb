@@ -48,10 +48,15 @@ def quiz(id):
 @quizzes.route("/quiz/<int:id>")
 @login_required
 def add_question(id):
-    print("yay")
+    flash(u'moved')
     quiz = Quiz.query.get_or_404(id)
     question = Question(quiz_id = id)
     db.session.add(question)
     quiz.questions.append(question)
+    
+    #load new question data
+
+    quiz.active_question == quiz.name
+
     db.session.commit()
     return render_template('quiz.html', title=quiz.name, quiz=quiz)
