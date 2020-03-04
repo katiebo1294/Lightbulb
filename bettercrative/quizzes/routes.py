@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.classrooms.routes import classroom
-from bettercrative.models import Quiz, Answer, Classroom, User
+from bettercrative.models import Quiz, Answer, Classroom, User, Questions
 from bettercrative.quizzes.forms import QuizForm
 
 quizzes = Blueprint('quizzes', __name__)
@@ -25,7 +25,7 @@ def new_quiz():
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         # if a classroom id was passed in, redirect to add this new quiz to that classroom
         if form.classroomid:
-             #gets the quiz by id through form and assigns said quiz to the active_quiz
+            #gets the quiz by id through form and assigns said quiz to the active_quiz
             classroom = Classroom.query.filter_by(name=form.classroomid.data).first()
             addedQuiz = Quiz.query.filter_by(id=quiz.id).first()
             classroom.added_quizzes.append(addedQuiz)
@@ -45,12 +45,15 @@ def quiz(id):
     quiz = Quiz.query.get_or_404(id)
     return render_template('quiz.html', title=quiz.name, quiz=quiz)
 
-@quizzes.route("/quiz/<int:id>")
+# Adds a new blank question to Quiz.  
+@quizzes.route("/quiz")
 @login_required
-def add_question(id):
-    flash(u'moved')
-    quiz = Quiz.query.get_or_404(id)
-    question = Question(quiz_id = id)
+def add_question():
+    # gets the name and class_id from the URL params
+    quiz_id = request.args.get('quiz_id', None)
+
+    quiz = Quiz.query.get_or_404(quiz_id)
+    question = Questions(quiz_id = quiz_id)
     db.session.add(question)
     quiz.questions.append(question)
     

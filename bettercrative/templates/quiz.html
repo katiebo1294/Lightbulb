@@ -107,8 +107,9 @@
                 {% endif %}
 
             {% endfor %}
+            
 
-            <a class="btn" id="add_new_question" href="{{ url_for('quizzes.add_question', id = quiz.id) }}">
+            <a class="btn" id="add_new_question" href="{{ url_for('quizzes.add_question', quiz_id = quiz.id) }}">
                 +
             </a>
 
