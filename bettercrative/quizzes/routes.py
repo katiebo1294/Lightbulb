@@ -29,7 +29,6 @@ def new_quiz():
             classroom = Classroom.query.filter_by(name=form.classroomid.data).first()
             addedQuiz = Quiz.query.filter_by(id=quiz.id).first()
             classroom.added_quizzes.append(addedQuiz)
-            # Added by tim - delete once working
             db.session.commit()
             
             flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
@@ -44,4 +43,15 @@ def new_quiz():
 @login_required
 def quiz(id):
     quiz = Quiz.query.get_or_404(id)
+    return render_template('quiz.html', title=quiz.name, quiz=quiz)
+
+@quizzes.route("/quiz/<int:id>")
+@login_required
+def add_question(id):
+    print("yay")
+    quiz = Quiz.query.get_or_404(id)
+    question = Question(quiz_id = id)
+    db.session.add(question)
+    quiz.questions.append(question)
+    db.session.commit()
     return render_template('quiz.html', title=quiz.name, quiz=quiz)

@@ -63,7 +63,8 @@ class Quiz(db.Model):
     # Quiz may be active in one classroom at a time, or none (specified by nullable=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
-    
+    questions = db.relationship('Questions', backref='quiz', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
+
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
 
@@ -76,3 +77,9 @@ class Answer(db.Model):
 
     def __repr__(self):
         return f"{self.content}"
+
+# Need help implementing this, this is so we can have multiple questions to one quiz.  maybe attatch Answer to the questions?
+class Questions(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=True)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)

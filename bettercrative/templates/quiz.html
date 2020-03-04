@@ -58,7 +58,6 @@
         .affix .navTrigger p{
             color: black;
         }
-        }
     
 
 
@@ -93,6 +92,19 @@
 
                 </div>
             </div>
+
+            <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
+            {% for num in range(1, len(quiz.questions)+1) %}
+
+                <a class="btn" >
+                    {{ num }}
+                </a>
+
+            {% endfor %}
+
+            <a class="btn" id="add_new_question" href="{{ url_for('quizzes.add_question', id = quiz.id) }}">
+                +
+            </a>
 
 
             <!-- prevent things from floating after this section -->
