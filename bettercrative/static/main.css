@@ -9,8 +9,15 @@ body{
   font-size: 180%;
   
 }
+.img{
+  max-width: 100%;
+}
 *{
   box-sizing: border-box;
+}
+.wrapper{
+  margin-top:5vw;
+  width:100%;
 }
 
 section {
@@ -59,6 +66,7 @@ body:after{
 .nav div.listofcontents{
   height:65px;
   float:right;
+  font-size:1.5vw;
   
 }
 .nav div.logged_in{
@@ -463,30 +471,12 @@ body:after{
   margin-left: 10%;
   margin-top: 8%;
   box-shadow:  black 5px 5px 45px;
+  max-width: 80%;
 }
-.students-button{
-  width: 50%;
-  padding-left: 13%;
-  float:left
-}
-.teachers-button{
-  width:50%;
-  float:left;
-  padding-right:13%;
-}
-.teachers-button img{
-  display:inline-flex;
-  margin-left: 20%;
-  margin-top: 8%;
-  box-shadow: black 5px 5px 45px;
 
-}
-.students-button img{
-  margin-left: 20%;
-  margin-top: 8%;
-  box-shadow: black 5px 5px 45px;
 
-}
+
+
 
 
 /* end about-section */
@@ -609,27 +599,34 @@ div.quizroomcolumn{
   width:43%;
   background-color:#8cb4d2;
   float:left;
-  margin-top: 5rem;
-  margin-left:5rem;
+  margin-top: 4vw;
+  margin-left:5vw;
   height:52%;
   
 }
+
 .classroomcolumn {
   background-color:#8793c7;
   height:52%;
   width:43%;
   float:left;
-  margin-left:7rem;
-  margin-top: 5rem;
+  margin-left:5vw;
+  margin-top: 4vw;
   
 }
 
 
+
+nav.navbar{
+  width: 42vw;
+}
 div.row.quiz_element{
   font-family: 'Source Code Pro';
+  font-size:1.2vw;
 }
 div.row.classroom_element{
   font-family: 'Source Code Pro';
+  display:inline-flex;
 }
 
 .quiz_element{
@@ -646,6 +643,8 @@ div.row.classroom_element{
 div.quizroomcolumn nav.navbar div.dropdown.show a{
   text-decoration: none;
   color:white;
+  font-size:1.2vw;
+  display:inline-flex;
 }
 div.quizroom nav.navbar div.dropdown.show a.disabled{
   pointer-events: none;
@@ -660,6 +659,7 @@ div.dropdown.show a{
 }
 div.dropdown.show a.dropdown-item{
   color: black;
+  background-color:white;
 }
 div.dropdown.show a:hover{
   color: #00E676;
@@ -668,6 +668,7 @@ div.dropdown.show a:hover{
 .edit_class a{
   color: white;
   text-decoration: none;
+  position:relative;
 }
 .edit_class a:hover{
   color: #00E676;
@@ -676,6 +677,7 @@ div.dropdown.show a:hover{
 .delete_class a{
   color: white;
   text-decoration: none;
+  position:relative;
 }
 
 .delete_class a:hover{
@@ -685,12 +687,16 @@ div.dropdown.show a:hover{
 
 
 .enter_quiz{
-  margin-left: 3rem;
+  margin-left:5vw;
+  position:relative;
 }
 .delete_quiz{
-  margin-left: 3rem;
+  position:relative;
+  margin-top:.1vw;
+  margin-left: 4vw;
 }
 div.enter_quiz a{
+  font-size:1.2vw;
   color: white;
   text-decoration: none;
 }
@@ -701,6 +707,7 @@ div.enter_quiz a:hover{
 }
 
 div.delete_quiz a{
+  font-size:1.2vw;
   color:white;
   text-decoration:none;
 }
@@ -711,13 +718,15 @@ div.delete_quiz a:hover{
 
 .titlebar {
   border-style: solid;
-  border-width:2px;
+  border-width:1px;
   border-color:black;
   background-color:grey;
   padding:5px;
   font-family: "Source Code Pro";
-  font-size:80%;
+  font-size:2vw;
   color:white;
+  text-align:center;
+  max-width: 100%;
 }
 
 
@@ -725,6 +734,7 @@ div.col.classroomcolumn a{
   text-decoration: none;
   font-family: 'Source Code Pro';
   color: white;
+  font-size:1.2vw;
 }
 
 div.col.classroomcolumn div.edit_class a:hover{
@@ -737,23 +747,21 @@ div.col.classroomcolumn div.delete_class a:hover{
   box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
 }
 
-div.enter_quiz a.btn-lg{
-  margin-left: 6rem;
-}
-div.delete_quiz a.btn-lg{
-  margin-left: 6rem;
-}
 
 
 
-div.edit_class a.btn-lg{
+div.edit_class{
 
-  margin-left: 6rem;
+margin-left:5vw;
 
 }
 
-div.delete_class a.btn-lg{
-  margin-left: 6rem;
+div.delete_class {
+  margin-left:5vw;
+}
+
+a.btn-large.sideClick{
+  font-size:1.5vw;
 }
 .navbar a.btn-large.sideClick:hover{
   color: black;
@@ -769,6 +777,7 @@ div.col.quizroomcolumn a{
   text-decoration: none;
   font-family: 'Source Code Pro';
   color: white;
+  font-size:1.2vw;
 }
 div.col.quizroomcolumn div.enter_quiz a:hover{
   
@@ -781,6 +790,18 @@ div.col.quizroomcolumn div.delete_quiz a:hover{
 }
 
 
+@media screen and (max-width:710px){
+  div.row.classroom_element{
+    font-family: 'Source Code Pro';
+    display:inline-flex;
+  }
+  div.delete_class{
+    margin-left:0px;
+  }
+  div.edit_class{
+    margin-left:0px;
+  }
+}
 
 
 /* .questionAnswers {
@@ -823,6 +844,7 @@ div#letter.letterChoices{
   margin:auto;
   cursor: default;
   font-family: "Source Code Pro";
+  margin-top:5vw;
 }
 
 div.headerSection::before{
@@ -844,6 +866,7 @@ div.editSign{
   width:50%;
   margin:0;
   float:left;
+  font-size:2.2vw;
 }
 
 
@@ -851,6 +874,7 @@ div.SaveExitBtn{
   margin-left: 0;
   float:right;
   position: relative;
+  font-size:2.2vw;
 }
 
 div.SaveExitBtn a{
@@ -866,6 +890,7 @@ div.SaveExitBtn a:hover{
 div#quiz-title{
   margin-top: 1em;
   width: 100%;
+  font-size: 2vw;
 }
 div#quizname{
   border-width:1px;
@@ -876,6 +901,7 @@ div#quizname{
 
 div #question{
   margin-top:3%;
+  font-size: 2vw;
 }
 div#question p{
   font-size: 80%;
@@ -951,6 +977,7 @@ span.choice{
   background:rgb(113,255,187);
   border: 1px solid rgb(30,155,95);
   text-align: center;
+  font-size: 2.28vw;
 }
 
 div.answerBox{
@@ -959,9 +986,10 @@ div.answerBox{
   margin-left: 1%;
   border: 1px solid rgb(30,155,95);
   padding: .53em 0;
+  font-size: 2.28vw;
 }
 
 
 .btn {
-  border: 3px solid black;
+  border: 2px solid black;
 }

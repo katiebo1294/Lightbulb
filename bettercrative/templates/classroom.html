@@ -1,31 +1,115 @@
 {% extends "layout.html" %}
 {% block content %}
-<title>{{ classroom.name }}</title>
-<!-- displays classroom name and active quiz name, if there is one -->
-<h1>Classroom "{{ classroom.name }}"</h1>
-<h2>{% if classroom.active_quiz != None %}
-    Active Quiz: "{{ classroom.active_quiz.name }}"
-    {% else %}
-    No Active Quiz
-    {% endif %}</h2>
-<div>
-    <a href="{{ url_for('quizzes.new_quiz', id=classroom.id) }}">Create a Quiz</a>
-</div>
-<div>
-    <a href="{{ url_for('classrooms.add_quiz', id=classroom.id) }}">Add a Quiz</a>
-</div>
-<!-- if there are quizzes added to the classroom, list them by name -->
-{% if true %} <!--classroom.quizzes-->
-<h2>Currently Added Quizzes: </h2>
-<ul>
-    {% for quiz in classroom.added_quizzes %}
-    <li>
-        {{ quiz.name }}
-        <a class="btn btn-lg" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
-            Set Active
-    </a>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
+<style>
+    section.nav-section{
+        background-color:rgb(188, 252, 231)
+    }
+    .transparent-background{
+        background-image: none;
+    }
+    
+    .affix {
+    padding: 0;
+    font-size: 80%;
+    background-color:rgb(188, 252, 231);
+    }
+    .affix .container .logo a{
+    color: black;
+    font-size: 100%;
+    }
+    .affix .container .navlinks a{
+    color: black;
+    }
+    .nav .affix .navTrigger i{
+    font-size: 80%;
+    color: black;
+    }
+    .affix .navTrigger i{
+    background-color: black;
+    }
+    .affix .navTrigger p{
+        color: black;
+    }
+</style>
+
+
+<div id = "quiz-content-container">
+
+    <!-- Quiz Edit Container for users -->
+    <div id = "editing-container">
+        <!--  want to change this later to classroom name  -->
+        
+        <div id = "quizTitle">   </div>
+        
+        <div id = "edit-section">
+            
+
+            
+
+            
+            <div class ="headerSection">
+                
+                <div class = "editSign">Classroom</div>
+                <div class = "SaveExitBtn" > <a href ="#" >Save and Exit</a></div>
+            </div>
+        </div>
+
+        <!-- Classroom Title -->
+        <div id = "quiz-title">
+            <div id="quizname">
+                {{classroom.name}}
+
+            </div>
+        </div>
+
+        <!-- prevent things from floating after this section -->
+        <div style =" clear: both;"></div>
+        <!-- prevent things from floating after this section -->
+
+        
+
+        <div id = "question">
+                        
+            <div class = "multiple-choice">
+
+                <!-- contents of multiple choice box -->
+                <div class = "question-edit-header">
+                    <div class="question-number">
+                        <div class = "quizlist">
+                            {% for quiz in classroom.added_quizzes%}
+                            <div id = "ActiveRoomsHeader" style="font-size: 2.2vw;">
+                                Active Rooms
+                            </div>
+                            <li>
+                                {{ quiz.name }}
+                                <a class="btn btn-lg" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                    Set Active
+                            </a>
+                            </li>
+                            {%endfor%}
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                
+
+                <div class = "answerchoices">
+                    <div class = "menu">
+                        <div class = "answerchoices-header">
+                        
+                        </div>
+
+
+                        <!-- prevent things from floating after this section -->
+                        <div style =" clear: both;"></div>
+                        <!-- prevent things from floating after this section -->
+
+                    </div>
+                </div>
+
+
 {% endblock %}
+
+
+

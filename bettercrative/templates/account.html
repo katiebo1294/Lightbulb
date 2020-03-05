@@ -2,14 +2,14 @@
 {% block content %}
 
 
-    
+<div class = "wrapper">
 
 <div class="col classroomcolumn">
     <nav class="navbar">
         <div class="titlebar">
             Classroom Listing
         </div>
-        <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}">
+        <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}" style = "font-size:1.2vw;">
             Create Classroom
         </a>
         {% for classroom in current_user.classrooms %}
@@ -28,7 +28,7 @@
                             {% else %}
                             <!-- TODO: change this from an anchor tag to a ul and have the set_active link be inside an li. Next, style the li to not have the dot. -->
                             <a class="dropdown-item" id="set_active_button">
-                                <a class="btn btn-lg" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                <a class="btn btn-lg ActiveQuizName" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
                                         Quiz: {{ quiz.name }}
                                 </a>
                             </a>
@@ -56,16 +56,16 @@
         <div class="titlebar">
             Quiz Listing
         </div>
-        <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}">
+        <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}" >
             Create Quiz
         </a>
         {% for quiz in current_user.quizzes %}
             <div class = "row quiz_element">
-                <div class ="dropdown show">
+                
                     <a class = "navbar-brand">
                         Quiz: {{ quiz.name }}
                     </a>
-                </div>
+                
                 
                 
                 <div class ="enter_quiz">
@@ -87,6 +87,7 @@
             
         {% endfor %}
     </nav>
+</div>
 </div>
 
 {% endblock %}

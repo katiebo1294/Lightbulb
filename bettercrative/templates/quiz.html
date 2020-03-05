@@ -70,7 +70,7 @@
         <div id = "editing-container">
             <!--  want to change this later to classroom name  -->
             
-            <div id = "quizTitle">  <h1 id= "quizname"></h1> </div>
+            <div id = "quizTitle">   </div>
             
             <div id = "edit-section">
                 
@@ -97,12 +97,13 @@
             {% for question in quiz.questions %}
 
                 {% if quiz.active_question == question.name %}
-                <a class="btn active" >
+                <div>
+                <span class="btn active">
                     {{ question }}
                     <a class="btn" href="{{ url_for('quizzes.remove_question', question_id = question.id) }}">
                         X
                     </a>
-                </a>
+                </span>
                 {% else %}
                 <a class="btn" >
                     {{ question }}
@@ -118,7 +119,7 @@
             <a class="btn" id="add_new_question" href="{{ url_for('quizzes.add_question', quiz_id = quiz.id) }}">
                 +
             </a>
-
+            
 
             <!-- prevent things from floating after this section -->
             <div style =" clear: both;"></div>
@@ -139,12 +140,12 @@
                             <!-- contents of multiple choice box -->
                             <div class = "question-edit-header">
                                 <div class="question-number">
-                                    <label>{{quiz.id}})</label>
+                                    <label>{{quiz.question_content}})</label>
                                     <a id = "Quiz-Edit" href= "#"> Edit</a>    
                                 </div>
                                 
                             </div>
-                            <p>{{quiz.question_content}}</p>
+                            
 
                             <div class = "answerchoices">
                                 <div class = "menu">
@@ -161,6 +162,7 @@
                             </div>
 
                             <div class ="reset"> </div>
+
                             {%for eachanswer in quiz.question_answers%}
                             <div class = "answerContainer reset">
                                 <div class = "answerChoice">
