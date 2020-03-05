@@ -56,11 +56,7 @@ def quiz(id):
 @login_required
 def add_question():
     # gets the name and class_id from the URL params
-<<<<<<< HEAD
-
-=======
     print("adding Question")
->>>>>>> diffAppMultQ
     quiz_id = request.args.get('quiz_id', None)
     if quiz_id is None:
         return "No quiz id!", 400
@@ -90,11 +86,7 @@ def add_question():
 @quizzes.route("/quiz/remove")
 @login_required
 def remove_question():
-<<<<<<< HEAD
-
-=======
     print("Removing Question")
->>>>>>> diffAppMultQ
     # gets the name and class_id from the URL params
     question_id = request.args.get('question_id', None)
 
@@ -122,23 +114,5 @@ def remove_question():
     #load new question data
 
     db.session.commit()
-<<<<<<< HEAD
-    return render_template('quiz.html', title=quiz.name, quiz=quiz)
-
-# @quizzes.route("/quiz/edit")
-# @login_required
-# def edit_question():
-#     print("testing")
-#     #get the specific question with that id
-#     quiz_id = request.args.get('quiz_id', None)
-#     quiz = Quiz.query.get_or_404(quiz_id)
-    
-    
-
-#     if quiz.user_id != current_user:
-#         abort(403)
-#     form = Quizfor
-=======
     return "lit", 200
     # return render_template('quiz.html', title=quiz.name, quiz=quiz)
->>>>>>> diffAppMultQ
