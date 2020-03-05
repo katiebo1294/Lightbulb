@@ -37,14 +37,37 @@ function removeForm() {
 }
 
 
-function addQuestion() {
-
+function addQuestion(url, q_id) {
+    $.ajax({
+        type: "GET",
+        data: {'quiz_id': q_id},
+        url: url,
+        error: function(statusText) {
+            alert(statusText);
+            console.log(statusText);
+        },
+        success: function() {
+            refresh("#questionNav");
+        }
+    });
 }
 function addAnswer() {
 
 }
-function removeQuestion() {
-
+function removeQuestion(url, q_id) {
+    $.ajax({
+        type: "GET",
+        data: {'question_id': q_id},
+        url: url,
+        error: function(statusText) {
+            alert(statusText);
+            console.log(statusText);
+        },
+        success: function() {
+            refresh("#questionNav");
+            //$("#question-" + q_id).hide();
+        }
+    });
 }
 function removeAnswer() {
 
@@ -96,6 +119,13 @@ function addForm() {
 
 
 $(document).ready(function() {
-    $('#add').click(addForm);
-    $('.remove').click(removeForm);
+    // $('#add').click(addForm);
+    // $('.remove').click(removeForm);
 });
+
+function refresh(section)
+{
+    console.log("Beggining Refresh")
+    $(section).load(section);
+    console.log("Refreshed");
+}
