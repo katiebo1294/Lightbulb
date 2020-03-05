@@ -1,5 +1,5 @@
 from flask import (render_template, url_for, flash,
-                   redirect, request, abort, Blueprint)
+                   redirect, request, abort, Blueprint, Response)
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.classrooms.routes import classroom
@@ -78,15 +78,32 @@ def remove_question():
     print("yay")
     # gets the name and class_id from the URL params
     question_id = request.args.get('question_id', None)
+    print(f'question_id: {question_id}')
+
+    if question_id is None:
+        return "No question id!", 400
 
     question = Questions.query.filter_by(id = question_id).first()
+    if question is None:
+        return "Question not found!", 404
+    print(f'question: {question}')
+
     quiz = Quiz.query.filter_by(id=question.quiz_id).first()
+    if quiz is None:
+        return "oops fuk", 500
+
+    print(f'quiz: {quiz}')
 
     quiz.questions.remove(question)
 
+    print(f'removed')
+
     db.session.delete(question)
     
+    print(f'deleted')
+
     #load new question data
 
     db.session.commit()
-    return render_template('quiz.html', title=quiz.name, quiz=quiz)
+    return "lit", 200
+    # return render_template('quiz.html', title=quiz.name, quiz=quiz)

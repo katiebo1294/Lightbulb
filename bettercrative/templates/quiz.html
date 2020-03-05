@@ -62,7 +62,6 @@
 
 
     </style>
-
     
     <div id = "quiz-content-container">
 
@@ -97,28 +96,29 @@
             {% for question in quiz.questions %}
 
                 {% if quiz.active_question == question.name %}
-                <a class="btn active" >
+                <a class="btn active" id="question-{{ question.id }}">
                     {{ question }}
-                    <a class="btn" href="{{ url_for('quizzes.remove_question', question_id = question.id) }}">
+                    <button class="btn" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                         X
-                    </a>
+                    </button>
                 </a>
                 {% else %}
-                <a class="btn" >
+                <a class="btn" id="question-{{ question.id }}">
                     {{ question }}
-                    <a class="btn" href="{{ url_for('quizzes.remove_question', question_id = question.id) }}">
+                    <button class="btn" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                         X
-                    </a>
+                    </button>
                 </a>
                 {% endif %}
 
             {% endfor %}
             
 
-            <a class="btn" id="add_new_question" href="{{ url_for('quizzes.add_question', quiz_id = quiz.id) }}">
+            <a class="btn" id="add_new_question" href="{{ url_for('quizzes.add_question', quiz_id = quiz.id) }}")>
                 +
             </a>
 
+            <!-- style="display:none" in the section for hiding and showing in javascriptTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT -->
 
             <!-- prevent things from floating after this section -->
             <div style =" clear: both;"></div>

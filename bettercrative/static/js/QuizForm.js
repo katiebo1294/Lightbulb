@@ -43,8 +43,19 @@ function addQuestion() {
 function addAnswer() {
 
 }
-function removeQuestion() {
-
+function removeQuestion(url, q_id) {
+    $.ajax({
+        type: "GET",
+        data: {'question_id': q_id},
+        url: url,
+        error: function(statusText) {
+            alert(statusText);
+            console.log(statusText)
+        },
+        success: function() {
+            $("#question-" + q_id).hide();
+        }
+    });
 }
 function removeAnswer() {
 
@@ -96,6 +107,6 @@ function addForm() {
 
 
 $(document).ready(function() {
-    $('#add').click(addForm);
-    $('.remove').click(removeForm);
+    // $('#add').click(addForm);
+    // $('.remove').click(removeForm);
 });
