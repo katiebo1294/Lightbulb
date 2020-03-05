@@ -37,8 +37,19 @@ function removeForm() {
 }
 
 
-function addQuestion() {
-
+function addQuestion(url, q_id) {
+    $.ajax({
+        type: "GET",
+        data: {'quiz_id': q_id},
+        url: url,
+        error: function(statusText) {
+            alert(statusText);
+            console.log(statusText);
+        },
+        success: function() {
+            refresh("#questionNav");
+        }
+    });
 }
 function addAnswer() {
 
@@ -50,10 +61,11 @@ function removeQuestion(url, q_id) {
         url: url,
         error: function(statusText) {
             alert(statusText);
-            console.log(statusText)
+            console.log(statusText);
         },
         success: function() {
-            $("#question-" + q_id).hide();
+            refresh("#questionNav");
+            //$("#question-" + q_id).hide();
         }
     });
 }
@@ -110,3 +122,10 @@ $(document).ready(function() {
     // $('#add').click(addForm);
     // $('.remove').click(removeForm);
 });
+
+function refresh(section)
+{
+    console.log("Beggining Refresh")
+    $(section).load(section);
+    console.log("Refreshed");
+}
