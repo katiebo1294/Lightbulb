@@ -62,7 +62,6 @@
 
 
     </style>
-
     
     <div id = "quiz-content-container">
 
@@ -94,32 +93,34 @@
             </div>
 
             <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
-            {% for question in quiz.questions %}
+            <div>
+                {% for question in quiz.questions %}
 
-                {% if quiz.active_question == question.name %}
-                <div>
-                <span class="btn active">
-                    {{ question }}
-                    <a class="btn" href="{{ url_for('quizzes.remove_question', question_id = question.id) }}">
-                        X
+                    {% if quiz.active_question == question.name %}
+                    <a class="btn active" id="question-{{ question.id }}">
+                        {{ question }}
+                        <button class="btn" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
+                            X
+                        </button>
                     </a>
-                </span>
-                {% else %}
-                <a class="btn" >
-                    {{ question }}
-                    <a class="btn" href="{{ url_for('quizzes.remove_question', question_id = question.id) }}">
-                        X
+                    {% else %}
+                    <a class="btn" id="question-{{ question.id }}">
+                        {{ question }}
+                        <button class="btn" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
+                            X
+                        </button>
                     </a>
-                </a>
-                {% endif %}
+                    {% endif %}
 
-            {% endfor %}
-            
+                {% endfor %}
+                
 
-            <a class="btn" id="add_new_question" href="{{ url_for('quizzes.add_question', quiz_id = quiz.id) }}">
-                +
-            </a>
-            
+                <button class="btn" onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
+                    +
+                </button>
+
+            </div>
+            <!-- style="display:none" in the section for hiding and showing in javascriptTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT -->
 
             <!-- prevent things from floating after this section -->
             <div style =" clear: both;"></div>
