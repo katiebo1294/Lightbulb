@@ -88,6 +88,11 @@ def set_active():
         raise Exception('No \'classroom_id\' supplied!')
 
     classroom = Classroom.query.get(class_id)
+    if classroom is None:
+        return "No Classroom Found", 404
     classroom.active_quiz = name
+    db.session.commit()
+    print(name)
+    print(classroom.active_quiz)
 
     return "set Active", 200
