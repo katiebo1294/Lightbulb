@@ -733,7 +733,7 @@ div.delete_quiz a:hover{
 div.col.classroomcolumn a{
   text-decoration: none;
   font-family: 'Source Code Pro';
-  color: white;
+  color: black;
   font-size:1.2vw;
 }
 
@@ -790,6 +790,7 @@ div.col.quizroomcolumn div.delete_quiz a:hover{
 }
 
 
+
 @media screen and (max-width:710px){
   div.row.classroom_element{
     font-family: 'Source Code Pro';
@@ -804,38 +805,7 @@ div.col.quizroomcolumn div.delete_quiz a:hover{
 }
 
 
-/* .questionAnswers {
-  margin-left: 30%;
-}
 
-#multipleChoice{
-  width:25%;
-  margin:0;
- 
-  border:0;
-  padding:0;
-  float:left;
-  font-size: 125%;
- 
-}
-div.col-md-6.quiz-section{
-  font-family: 'Source Code Pro';
-
-}
-
-div#letter.letterChoices{
-  width:3rem;
-  height:3rem;
-  border: 1px solid;
-  border-radius: 50%;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 23%;
-  
-} */
 
 /* Quiz Section (quiz.html)*/
 #editing-container{
@@ -941,21 +911,7 @@ a#Quiz-Edit:hover{
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
-/* 
-div.choices{
-  background-color: rgb(113, 255, 187);
-  margin-bottom:.25em;
-  position: relative;
-  width: 5%;
-  border: 1px solid rgb(30, 155, 95);
-  text-align:center;
-  justify-content: center;
-}
-div.choices p{
-  background-color:none;
-  margin-top: .5em;
-  
-} */
+
 
 div.reset::after{
   content: "";
@@ -992,4 +948,26 @@ div.answerBox{
 
 .btn {
   border: 2px solid black;
+}
+.btn.btn-lg.set-active{
+  font-size:1vw;
+
+}
+.btn.btn-lg.set-active:hover{
+  font-size:1.5vw;
+  color: rgb(2, 132, 69);
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+}
+
+
+a.Add-A-Quiz{
+  float:right;
+  font-size:1.8vw;
+  
+}
+
+a.Add-A-Quiz:hover{
+  font-size:2vw;
+  color: rgb(2, 132, 69);
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }

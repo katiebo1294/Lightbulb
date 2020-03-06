@@ -20,7 +20,7 @@
     font-size: 100%;
     }
     .affix .container .navlinks a{
-    color: black;
+    color: white;
     }
     .nav .affix .navTrigger i{
     font-size: 80%;
@@ -80,11 +80,14 @@
                         <div class = "quizlist">
                             {% for quiz in classroom.added_quizzes%}
                             <div id = "ActiveRoomsHeader" style="font-size: 2.2vw;">
-                                Active Rooms
+                                <span class ="Active-Rooms" >Active Rooms</span>
+                                <a class = "btn Add-A-Quiz" href = "{{url_for('classrooms.add_quiz', name=quiz.name, id=classroom.id) }}">Add a Quiz</a>
+                                
                             </div>
+                            
                             <li>
                                 {{ quiz.name }}
-                                <a class="btn btn-lg" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                <a class="btn btn-lg set-active" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
                                     Set Active
                             </a>
                             </li>
@@ -114,6 +117,10 @@
                     <button class="btn" onclick="create_chart();">
                             Show student response
                     </button>
+            </div>
+        </div>
+    </div>
+</div>
 
                     <script src="/static/js/data_visualization.js" ></script>
                 </div>
