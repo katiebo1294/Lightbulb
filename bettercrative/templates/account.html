@@ -22,15 +22,25 @@
                     <div class="dropdown-menu">
                         {% for quiz in classroom.added_quizzes %}
                             {% if classroom.active_quiz==quiz.name %}
-                            <button class="dropdown-item active">
-                                    *ACTIVE* Quiz: {{ quiz.name }}
-                            </button>
+                                <button class="dropdown-item active">
+                                        *ACTIVE* Quiz: {{ quiz.name }}
+                                </button>
                             {% else %}
-                            <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_activejs('{{ url_for('classrooms.set_active')}}', name = '{{quiz.name}}', classroom_id = '{{classroom.id}}')" method="POST">
-                                    Quiz: {{ quiz.name }}
-                            </button>
+                                <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active')}}', name = '{{quiz.name}}', classroom_id = '{{classroom.id}}')" method="POST">
+                                        Quiz: {{ quiz.name }}
+                                </button>
                             {% endif %}
                         {% endfor %}
+
+                        {% if classroom.active_quiz==None %}
+                            <button class="dropdown-item btn btn-lg active">
+                                None
+                            </button>
+                        {% else %}
+                            <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="remove_active('{{ url_for('classrooms.remove_active')}}', classroom_id = '{{classroom.id}}')" method="POST">
+                                None
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="edit_class">

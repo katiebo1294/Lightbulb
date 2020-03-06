@@ -96,3 +96,27 @@ def set_active():
     print(classroom.active_quiz)
 
     return "set Active", 200
+
+   
+# Removes the active quiz for a class
+@classrooms.route("/classroom/remove_active", methods=['GET', 'POST'])
+@login_required
+def remove_active():
+    # gets the name and class_id from the URL params
+    class_id = request.args.get('classroom_id', None)
+    print(class_id)
+
+    #TODO: make custom exceptions and catch them somewhere along the line to give the user a useful error page. 
+    # if name is None:
+    #     raise Exception('No \'name\' supplied!')
+    if class_id is None:
+        raise Exception('No \'classroom_id\' supplied!')
+
+    classroom = Classroom.query.get(class_id)
+    if classroom is None:
+        return "No Classroom Found", 404
+    classroom.active_quiz = None
+    db.session.commit()
+    print(classroom.active_quiz)
+
+    return "set Empty", 200
