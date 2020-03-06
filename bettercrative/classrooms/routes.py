@@ -90,4 +90,4 @@ def set_active():
     classroom = Classroom.query.get(class_id)
     classroom.active_quiz = name
 
-    return render_template('account.html')
+    return "set Active", 200

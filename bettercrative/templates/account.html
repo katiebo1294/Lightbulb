@@ -28,9 +28,9 @@
                             {% else %}
                             <!-- TODO: change this from an anchor tag to a ul and have the set_active link be inside an li. Next, style the li to not have the dot. -->
                             <a class="dropdown-item" id="set_active_button">
-                                <a class="btn btn-lg ActiveQuizName" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                <button class="btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active')}}' q_id = {{quiz.id}}, classroom_id = {{classroom.id}})" method="POST">
                                         Quiz: {{ quiz.name }}
-                                </a>
+                                </button>
                             </a>
                             {% endif %}
                         {% endfor %}
@@ -89,5 +89,7 @@
     </nav>
 </div>
 </div>
+
+<script src="/static/js/set_active.js" ></script>
 
 {% endblock %}
