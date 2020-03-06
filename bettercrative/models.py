@@ -54,7 +54,7 @@ class Classroom(db.Model):
 # if we are using the quiz we copy contents so we can reuse the same quiz
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
+    name = db.Column(db.String(50), unique=True, nullable=False)
     question_content = db.Column(db.String, nullable=False)
     question_answers = db.relationship('Answer', backref='quiz', lazy=True, collection_class=list,
                                        cascade="all, delete, delete-orphan")
