@@ -108,16 +108,19 @@
                     </div>
                 </div>
 
+                <div style="height:40vh; width:40vw;">
+                    <!-- Temporary area to display charts of student data -->
+                    <canvas id="basicChart"></canvas>
+                    <button class="btn" onclick="create_chart();">
+                            Show student response
+                    </button>
 
-                <!-- Temporary area to display charts of student data -->
-                <canvas id="basicChart"></canvas>
-                <button class="btn" onclick="create_chart();">
-                        Show student response
-                </button>
-
-                <script src="/static/js/data_visualization.js" ></script>
+                    <script src="/static/js/data_visualization.js" ></script>
+                </div>
 
 
+
+                
 {% endblock %}
 
 

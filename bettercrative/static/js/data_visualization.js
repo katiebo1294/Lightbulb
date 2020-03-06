@@ -29,6 +29,7 @@ var data = {
   }]
 };
 
+
 var options = {
     scales: {
       yAxes: [{
@@ -47,6 +48,7 @@ var options = {
 
 init();
 
+//initiates myBasicChart with its type, data and options
 function init() {
     myBasicChart = new Chart(ctx, {
         type: chartType,
@@ -55,6 +57,8 @@ function init() {
       });
 };
 
+//refreshes the chart, later to be changed to auto update either after every
+//submit or every 10 sec or 1 min
 function create_chart() {
         console.log('Attempting to create a chart');
         init();

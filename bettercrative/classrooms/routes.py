@@ -68,6 +68,12 @@ def add_quiz(id):
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom
 
+
+
+# sets a quiz to the active classroom
+# !currently there is a bug where if you click on the nav bar the change gets 
+# !reset, however, routing to the page separately or refreshing the page does
+# !not break the active-ness
 @classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
 @login_required
 def set_active():
