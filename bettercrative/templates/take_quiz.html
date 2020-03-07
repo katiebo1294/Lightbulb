@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<h1>Taking a quiz </h1>
+<!--Need to rework so that 1 is = to <int: id> I got error before-->
+<form action='/classroom/1/take', method='POST'> 
+<h2 > Question: {{ question_content }} </h2>
+
+<h3> Options: </h3>
+    {% for prompt in question_answers%}
+        <input type="checkbox" name='studentResponse' value ='{{prompt}}' /> {{prompt}}
+        <h4></h4>
+    {% endfor %}
+
+    <input type="submit" value="submit"/>
+
+</form>
+
+
+{% endblock  %}
