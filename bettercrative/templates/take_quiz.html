@@ -5,7 +5,7 @@
 
 <h1>Taking a quiz </h1>
 <!--Need to rework so that 1 is = to <int: id> I got error before-->
-<form action='/classroom/1/take', method='POST'> 
+<form action='/classroom/{{classroomid}}/take', method='POST'> 
 <h2 > Question: {{ question_content }} </h2>
 
 <h3> Options: </h3>
