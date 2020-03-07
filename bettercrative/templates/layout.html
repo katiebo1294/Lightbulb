@@ -129,6 +129,15 @@
 
 </script>
 <script>
+    $('.navTrigger').click(function () {
+    $(this).toggleClass('active');
+    console.log("Clicked hamburger");
+    $("#navlistcontents").toggleClass("show_list");
+    $("#navlistcontents").fadeIn();
+
+});
+</script>
+<script>
         function dropDown() {
             var x = document.getElementById("navlistofcontents");
             if (x.className === "listofcontents") {

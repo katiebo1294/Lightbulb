@@ -163,7 +163,7 @@ body:after{
   }
   .nav div.show_list{
     height: auto;
-    display: auto ;
+    display: inline-flex ;
 }
   .nav div.listofcontents ul{
     flex-direction: column;
