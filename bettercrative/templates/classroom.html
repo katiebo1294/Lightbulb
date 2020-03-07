@@ -118,6 +118,12 @@
                     </div>
 
                 </div>
+                
+                <!--Will be made only visible to those not log in later. Also, having issues getting 
+                specifically the active quiz s-->
+                <div>
+                  <a href="{{ url_for('classrooms.take_quiz', id=classroom.id) }}"> Take active Quiz</a>
+                </div>
 
 
                 <div class="answerchoices">
