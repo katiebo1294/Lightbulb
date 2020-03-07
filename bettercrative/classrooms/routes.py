@@ -175,14 +175,14 @@ def view_results(id):
     classroom = Classroom.query.get_or_404(id)
     
     print("WRONG ANSWERS-------------")
-    correct_responses = Response.query.filter_by(classroom_host_id=id, isCorrect='False')
-    for y in correct_responses:
+    wrong_answers = Response.query.filter_by(classroom_host_id=id, isCorrect='False')
+    for y in wrong_answers:
         print(y)
 
 
     print("RIGHT ANSWERS ----------------")
-    wrong_answers = Response.query.filter_by(classroom_host_id=id, isCorrect='True')
-    for z in wrong_answers:
+    correct_responses = Response.query.filter_by(classroom_host_id=id, isCorrect='True')
+    for z in correct_responses:
         print(z)
 
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses, wrongAnswers=wrong_answers, classroomid=id)
