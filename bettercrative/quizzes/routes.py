@@ -27,21 +27,7 @@ def new_quiz():
             quiz.question_answers.append(new_answer)
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
-        # if a classroom id was passed in, redirect to add this new quiz to that classroom
-        if form.classroomid:
-            #gets the quiz by id through form and assigns said quiz to the active_quiz
-            classroom = Classroom.query.filter_by(name=form.classroomid.data) \
-                        .first()
-            addedQuiz = Quiz.query.filter_by(id=quiz.id).first()
-            classroom.added_quizzes.append(addedQuiz)
-            db.session.commit()
-            
-            flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + \
-                classroom.name + '\"!', 'success')
-            return redirect(url_for('classrooms.classroom', id=classroom.id))
-            
-        else:
-            return redirect(url_for('quizzes.quiz', id=quiz.id))
+        return redirect(url_for('quizzes.quiz', id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
 
