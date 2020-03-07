@@ -161,5 +161,5 @@ def take_quiz(id):
     db.session.add(response)
     db.session.commit()
     
-    return render_template('take_quiz.html', title='TakeQuiz', question_answers = quiz.question_answers, question_content=quiz.question_content, classroom_host_id=classroom.id)
+    return render_template('take_quiz.html', title='TakeQuiz', classroomid=id, question_answers=quiz.question_answers, question_content=quiz.question_content, classroom_host_id=classroom.id)
   
