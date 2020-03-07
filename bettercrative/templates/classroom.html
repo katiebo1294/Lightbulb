@@ -125,6 +125,10 @@
                   <a href="{{ url_for('classrooms.take_quiz', id=classroom.id) }}"> Take active Quiz</a>
                 </div>
 
+                  <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
+                <div>
+                    <a href="{{ url_for('classrooms.view_results', id=classroom.id) }}"> View Results </a>
+                </div>
 
                 <div class="answerchoices">
                     <div class="menu">
