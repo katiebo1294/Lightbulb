@@ -5,7 +5,7 @@
 
 <h1>Taking a quiz </h1>
 <!--Need to rework so that 1 is = to <int: id> I got error before-->
-<form action='/classroom/{{classroomid}}/take', method='POST'> 
+<form action='/classroom/{{classroomid}}/take', method=['GET','POST']> 
 <h2 > Question: {{ question_content }} </h2>
 
 <h3> Options: </h3>
@@ -14,7 +14,9 @@
         <h4></h4>
     {% endfor %}
 
-    <input type="submit" value="submit"/>
+    
+    <!--Redirects to home which goes to account, might need to change later
+    <input type="submit" value="submit" formaction='/home'/> 
 
 </form>
 
