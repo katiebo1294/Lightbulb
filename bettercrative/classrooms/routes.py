@@ -68,6 +68,12 @@ def add_quiz(id):
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom
 
+
+
+# sets a quiz to the active classroom
+# !currently there is a bug where if you click on the nav bar the change gets 
+# !reset, however, routing to the page separately or refreshing the page does
+# !not break the active-ness
 @classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
 @login_required
 def set_active():
@@ -82,6 +88,35 @@ def set_active():
         raise Exception('No \'classroom_id\' supplied!')
 
     classroom = Classroom.query.get(class_id)
+    if classroom is None:
+        return "No Classroom Found", 404
     classroom.active_quiz = name
+    db.session.commit()
+    print(name)
+    print(classroom.active_quiz)
 
-    return render_template('account.html')
+    return "set Active", 200
+
+   
+# Removes the active quiz for a class
+@classrooms.route("/classroom/remove_active", methods=['GET', 'POST'])
+@login_required
+def remove_active():
+    # gets the name and class_id from the URL params
+    class_id = request.args.get('classroom_id', None)
+    print(class_id)
+
+    #TODO: make custom exceptions and catch them somewhere along the line to give the user a useful error page. 
+    # if name is None:
+    #     raise Exception('No \'name\' supplied!')
+    if class_id is None:
+        raise Exception('No \'classroom_id\' supplied!')
+
+    classroom = Classroom.query.get(class_id)
+    if classroom is None:
+        return "No Classroom Found", 404
+    classroom.active_quiz = None
+    db.session.commit()
+    print(classroom.active_quiz)
+
+    return "set Empty", 200

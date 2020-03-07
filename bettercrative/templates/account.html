@@ -22,18 +22,25 @@
                     <div class="dropdown-menu">
                         {% for quiz in classroom.added_quizzes %}
                             {% if classroom.active_quiz==quiz.name %}
-                            <a class="dropdown-item active">
-                                    *ACTIVE* Quiz: {{ quiz.name }}
-                            </a>
+                                <button class="dropdown-item active">
+                                        *ACTIVE* Quiz: {{ quiz.name }}
+                                </button>
                             {% else %}
-                            <!-- TODO: change this from an anchor tag to a ul and have the set_active link be inside an li. Next, style the li to not have the dot. -->
-                            <a class="dropdown-item" id="set_active_button">
-                                <a class="btn btn-lg ActiveQuizName" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active')}}', name = '{{quiz.name}}', classroom_id = '{{classroom.id}}')" method="POST">
                                         Quiz: {{ quiz.name }}
-                                </a>
-                            </a>
+                                </button>
                             {% endif %}
                         {% endfor %}
+
+                        {% if classroom.active_quiz==None %}
+                            <button class="dropdown-item btn btn-lg active">
+                                None
+                            </button>
+                        {% else %}
+                            <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="remove_active('{{ url_for('classrooms.remove_active')}}', classroom_id = '{{classroom.id}}')" method="POST">
+                                None
+                            </button>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="edit_class">
@@ -89,5 +96,7 @@
     </nav>
 </div>
 </div>
+
+<script src="/static/js/set_active.js" ></script>
 
 {% endblock %}

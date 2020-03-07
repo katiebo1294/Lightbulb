@@ -47,7 +47,7 @@ function addQuestion(url, q_id) {
             console.log(statusText);
         },
         success: function() {
-            refresh("#questionNav");
+            refresh("#body");
         }
     });
 }
@@ -64,7 +64,7 @@ function removeQuestion(url, q_id) {
             console.log(statusText);
         },
         success: function() {
-            refresh("#questionNav");
+            refresh("#body");
             //$("#question-" + q_id).hide();
         }
     });

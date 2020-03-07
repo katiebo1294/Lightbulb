@@ -1,61 +1,75 @@
 {% extends "layout.html" %}
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+    integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+
 <style>
-    section.nav-section{
-        background-color:rgb(188, 252, 231)
+    section.nav-section {
+        background-color: rgb(188, 252, 231)
     }
-    .transparent-background{
+
+    .transparent-background {
         background-image: none;
     }
-    
+
     .affix {
-    padding: 0;
-    font-size: 80%;
-    background-color:rgb(188, 252, 231);
+        padding: 0;
+        font-size: 80%;
+        background-color: rgb(188, 252, 231);
     }
-    .affix .container .logo a{
-    color: black;
-    font-size: 100%;
+
+    .affix .container .logo a {
+        color: black;
+        font-size: 100%;
     }
+<<<<<<< HEAD
     .affix .container .navlinks a{
     color: black;
+=======
+
+    .affix .container .navlinks a {
+        color: white;
+>>>>>>> 0c84503e1bf67affb13f7ffa2b8852e041962611
     }
-    .nav .affix .navTrigger i{
-    font-size: 80%;
-    color: black;
+
+    .nav .affix .navTrigger i {
+        font-size: 80%;
+        color: black;
     }
-    .affix .navTrigger i{
-    background-color: black;
+
+    .affix .navTrigger i {
+        background-color: black;
     }
-    .affix .navTrigger p{
+
+    .affix .navTrigger p {
         color: black;
     }
 </style>
 
 
-<div id = "quiz-content-container">
+<div id="quiz-content-container">
 
     <!-- Quiz Edit Container for users -->
-    <div id = "editing-container">
+    <div id="editing-container">
         <!--  want to change this later to classroom name  -->
-        
-        <div id = "quizTitle">   </div>
-        
-        <div id = "edit-section">
-            
 
-            
+        <div id="quizTitle"> </div>
 
-            
-            <div class ="headerSection">
-                
-                <div class = "editSign">Classroom</div>
-                <div class = "SaveExitBtn" > <a href ="#" >Save and Exit</a></div>
+        <div id="edit-section">
+
+
+
+
+
+            <div class="headerSection">
+
+                <div class="editSign">Classroom</div>
+                <div class="SaveExitBtn"> <a href="#">Save and Exit</a></div>
             </div>
         </div>
 
         <!-- Classroom Title -->
-        <div id = "quiz-title">
+        <div id="quiz-title">
             <div id="quizname">
                 {{classroom.name}}
 
@@ -63,60 +77,76 @@
         </div>
 
         <!-- prevent things from floating after this section -->
-        <div style =" clear: both;"></div>
+        <div style=" clear: both;"></div>
         <!-- prevent things from floating after this section -->
 
-        
 
-        <div id = "question">
-                        
-            <div class = "multiple-choice">
+
+        <div id="question">
+
+            <div class="multiple-choice">
 
                 <!-- contents of multiple choice box -->
-                <div class = "question-edit-header">
+                <div class="question-edit-header">
                     <div class="question-number">
+<<<<<<< HEAD
                         
                         <div class = "quizlist">
+=======
+                        <div class="quizlist">
+>>>>>>> 0c84503e1bf67affb13f7ffa2b8852e041962611
                             {% for quiz in classroom.added_quizzes%}
-                            <div id = "ActiveRoomsHeader" style="font-size: 2.2vw;">
-                                <span class ="Active-Rooms" >Active Rooms</span>
-                                <a class = "btn Add-A-Quiz" href = "{{url_for('classrooms.add_quiz', name=quiz.name, id=classroom.id) }}">Add a Quiz</a>
-                                
+                            <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
+                                <span class="Active-Rooms">Active Rooms</span>
+                                <a class="btn Add-A-Quiz"
+                                    href="{{url_for('classrooms.add_quiz', name=quiz.name, id=classroom.id) }}">Add a
+                                    Quiz</a>
+
                             </div>
-                            
+
                             <li>
                                 {{ quiz.name }}
-                                <a class="btn btn-lg set-active" href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}" method="POST">
+                                <a class="btn btn-lg set-active"
+                                    href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}"
+                                    method="POST">
                                     Set Active
-                            </a>
+                                </a>
                             </li>
                             {%endfor%}
                         </div>
-                        
+
                     </div>
-                    
+
                 </div>
-                
 
-                <div class = "answerchoices">
-                    <div class = "menu">
-                        <div class = "answerchoices-header">
-                        
+
+                <div class="answerchoices">
+                    <div class="menu">
+                        <div class="answerchoices-header">
+
                         </div>
-
-
-                        <!-- prevent things from floating after this section -->
-                        <div style =" clear: both;"></div>
+                        <!-- prevent things from floatt ing after this section -->
+                        <div style=" clear: both;"></div>
                         <!-- prevent things from floating after this section -->
 
                     </div>
+                </div>
+
+                <div style="height:40vh; width:40vw;">
+                    <!-- Temporary area to display charts of student data -->
+                    <canvas id="basicChart"></canvas>
+                    <button class="btn" onclick="create_chart();">
+                        Show student response
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="/static/js/data_visualization.js"></script>
+
+
+
+
 {% endblock %}
-
-
-
