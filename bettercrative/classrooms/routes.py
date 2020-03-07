@@ -144,7 +144,6 @@ def take_quiz(id):
     
     
     print(dicts)
-    print(dicts['Lebron'])
     answered = request.form.getlist('studentResponse') #gets a list of what the student respondeed with
     print(answered) 
 
