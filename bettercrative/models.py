@@ -84,3 +84,14 @@ class Questions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    
+    
+class Response(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
+    quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    isCorrect = db.Column(db.Enum("True", "False"))
+    
+
+    def __repr__(self):
+            return f"{self.isCorrect}"
