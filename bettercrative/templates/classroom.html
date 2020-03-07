@@ -22,9 +22,14 @@
         color: black;
         font-size: 100%;
     }
+<<<<<<< HEAD
+    .affix .container .navlinks a{
+    color: black;
+=======
 
     .affix .container .navlinks a {
         color: white;
+>>>>>>> 0c84503e1bf67affb13f7ffa2b8852e041962611
     }
 
     .nav .affix .navTrigger i {
@@ -84,7 +89,12 @@
                 <!-- contents of multiple choice box -->
                 <div class="question-edit-header">
                     <div class="question-number">
+<<<<<<< HEAD
+                        
+                        <div class = "quizlist">
+=======
                         <div class="quizlist">
+>>>>>>> 0c84503e1bf67affb13f7ffa2b8852e041962611
                             {% for quiz in classroom.added_quizzes%}
                             <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
                                 <span class="Active-Rooms">Active Rooms</span>
@@ -108,7 +118,17 @@
                     </div>
 
                 </div>
+                
+                <!--Will be made only visible to those not log in later. Also, having issues getting 
+                specifically the active quiz s-->
+                <div>
+                  <a href="{{ url_for('classrooms.take_quiz', id=classroom.id) }}"> Take active Quiz</a>
+                </div>
 
+                  <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
+                <div>
+                    <a href="{{ url_for('classrooms.view_results', id=classroom.id) }}"> View Results </a>
+                </div>
 
                 <div class="answerchoices">
                     <div class="menu">

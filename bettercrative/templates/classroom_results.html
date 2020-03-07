@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<h1>Results of quiz </h1>
+
+<form action='/classroom/{{classroomid}}/results', method=['GET', 'POST']> 
+
+
+
+<!--This is mostly like this so its easier for the frontend team to use these values and 
+use chart.js to make it look pretty -->   
+
+<!--The backend queries for all right answers and wrong answer
+It returns I think a list of them that are variables rightAnswers and wrongAnswers-->
+
+
+<h3> Correct: </h3>
+    {% for response in rightAnswers %}
+        <h4> {{ response }} </h4>
+    {% endfor %}
+
+<h3> Wrong: </h3>
+    {% for response in wrongAnswers %}
+        <h4> {{ response }} </h4>
+
+    {% endfor %}
+
+    <!--Right now redirects to classroom and kinda funky, change as you please-->
+    <input type="submit" value="Go back" formaction="/classroom/{{classroomid}}"> 
+</form>
+
+
+{% endblock  %}

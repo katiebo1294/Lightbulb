@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
                    request)
 from flask_login import current_user, login_required
 from bettercrative import db
-from bettercrative.models import Classroom, Quiz
+from bettercrative.models import Classroom, Quiz, Answer, Response
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
 
 classrooms = Blueprint('classrooms', __name__)
@@ -96,3 +96,94 @@ def set_active():
     print(classroom.active_quiz)
 
     return "set Active", 200
+
+   
+# Removes the active quiz for a class
+@classrooms.route("/classroom/remove_active", methods=['GET', 'POST'])
+@login_required
+def remove_active():
+    # gets the name and class_id from the URL params
+    class_id = request.args.get('classroom_id', None)
+    print(class_id)
+
+    #TODO: make custom exceptions and catch them somewhere along the line to give the user a useful error page. 
+    # if name is None:
+    #     raise Exception('No \'name\' supplied!')
+    if class_id is None:
+        raise Exception('No \'classroom_id\' supplied!')
+
+    classroom = Classroom.query.get(class_id)
+    if classroom is None:
+        return "No Classroom Found", 404
+    classroom.active_quiz = None
+    db.session.commit()
+    print(classroom.active_quiz)
+
+    return "set Empty", 200
+  
+  
+  
+  
+#Allows user to take an active quiz 
+#The stuff that is printed is displayed in the terminal and is for testing purposes
+#this is still a work in progress but it does stuff rn
+@classrooms.route("/classroom/<int:id>/take", methods=['GET', 'POST'])
+def take_quiz(id):
+    classroom = Classroom.query.get_or_404(id)
+    quiz = Quiz.query.filter_by(classroom_host_id=id).first() #add active=True arg later
+    #print("This is the question: " + quiz.question_content)
+    
+    #dictionary of true and false for each input
+    dicts = {}
+    keys = len(quiz.question_answers)
+    print(keys)
+    i = 0
+    for option in quiz.question_answers:
+        print(option.content)
+        dicts[option.content] = option.correct
+    
+    
+    print(dicts)
+    answered = request.form.getlist('studentResponse') #gets a list of what the student respondeed with
+    print(answered) 
+
+
+    result = True
+    for studentResponse in answered:
+        if dicts[studentResponse]==False:
+            result = False
+        else:
+            result = True
+
+
+    print(result)
+    response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, isCorrect=str(result))
+    db.session.add(response)
+    db.session.commit()
+    
+    return render_template('take_quiz.html', title='TakeQuiz', classroomid=id, question_answers=quiz.question_answers, question_content=quiz.question_content, classroom_host_id=classroom.id)
+  
+
+#Need to query the databases for all the student responses based on a classroom id
+#Get all the falses and true
+#Send that information to the front to display as lists
+
+@login_required
+@classrooms.route("/classroom/<int:id>/results", methods=['GET', 'POST'])
+def view_results(id):
+
+    classroom = Classroom.query.get_or_404(id)
+    
+    print("WRONG ANSWERS-------------")
+    wrong_answers = Response.query.filter_by(classroom_host_id=id, isCorrect='False')
+    for y in wrong_answers:
+        print(y)
+
+
+    print("RIGHT ANSWERS ----------------")
+    correct_responses = Response.query.filter_by(classroom_host_id=id, isCorrect='True')
+    for z in correct_responses:
+        print(z)
+
+    return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses, wrongAnswers=wrong_answers, classroomid=id)
+
