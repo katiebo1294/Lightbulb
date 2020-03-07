@@ -49,6 +49,10 @@
                             {{ answer.content.label }} {{ loop.index0 + 1 }}
                             {{ answer.content }}
                         </div>
+                         <div class="form-group">
+                            {{ answer.correct.label }}
+                            {{ answer.correct }}
+                        </div>
                     </div>
                     {% endfor %}
                 </div>
