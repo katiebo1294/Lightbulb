@@ -163,3 +163,27 @@ def take_quiz(id):
     
     return render_template('take_quiz.html', title='TakeQuiz', classroomid=id, question_answers=quiz.question_answers, question_content=quiz.question_content, classroom_host_id=classroom.id)
   
+
+#Need to query the databases for all the student responses based on a classroom id
+#Get all the falses and true
+#Send that information to the front to display as lists
+
+@login_required
+@classrooms.route("/classroom/<int:id>/results", methods=['GET', 'POST'])
+def view_results(id):
+
+    classroom = Classroom.query.get_or_404(id)
+    
+    print("WRONG ANSWERS-------------")
+    correct_responses = Response.query.filter_by(classroom_host_id=id, isCorrect='False')
+    for y in correct_responses:
+        print(y)
+
+
+    print("RIGHT ANSWERS ----------------")
+    wrong_answers = Response.query.filter_by(classroom_host_id=id, isCorrect='True')
+    for z in wrong_answers:
+        print(z)
+
+    return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses, wrongAnswers=wrong_answers, classroomid=id)
+
