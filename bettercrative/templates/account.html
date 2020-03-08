@@ -58,7 +58,44 @@
     </nav>
 </div>
 
-<div class = "col quizroomcolumn">
+<div class="col quizcolumn">
+    <nav class="navbar">
+        <div class="titlebar">
+            Quiz Listing
+        </div>
+        <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}" style = "font-size:1.2vw;">
+            Create Quiz
+        </a>
+        {% for quiz in current_user.quizzes %}
+            <div class="row classroom_element">
+                <div class="dropdown show">
+                    <a  class="navbar-brand"
+                    >
+                        Name: {{ quiz.name }}
+                    </a>
+                    <div class="dropdown-menu">
+                        
+
+                        
+                    </div>
+                </div>
+                <div class="edit_class">
+                    <a href = "{{ url_for('quizzes.quiz', id = quiz.id)}}" class = "btn-lg">
+                        Enter 
+                    </a>
+                </div>
+                <div class="delete_class">
+                    <a class= "btn-lg" href = " {{url_for('users.delete_quiz', id = quiz.id) }}">
+                        Delete 
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </nav>
+</div>
+
+
+<!-- <div class = "col quizroomcolumn">
     <nav class= "navbar">
         <div class="titlebar">
             Quiz Listing
@@ -95,7 +132,7 @@
         {% endfor %}
     </nav>
 </div>
-</div>
+</div> -->
 
 <script src="/static/js/set_active.js" ></script>
 
