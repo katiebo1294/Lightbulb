@@ -1,15 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
-html{
-  background-image: url("images/laptopmono.jpg");
-}
+
 body{
   
   background-attachment: fixed;
   font-family: 'Open Sans Condensed';
   font-size: 180%;
-  
+  background-image: url("images/laptopmono.jpg");
 }
 .img{
   max-width: 100%;
