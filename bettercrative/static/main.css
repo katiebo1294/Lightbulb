@@ -595,15 +595,7 @@ body:after{
 }
 
 /**Account**/
-div.quizroomcolumn{
-  width:43%;
-  background-color:#8cb4d2;
-  float:left;
-  margin-top: 4vw;
-  margin-left:5vw;
-  height:52%;
-  
-}
+
 
 .classroomcolumn {
   background-color:#8793c7;
@@ -614,7 +606,18 @@ div.quizroomcolumn{
   margin-top: 4vw;
   
 }
+div.col.quizcolumn {
+  background-color:#8cb4d2;
+  height:52%;
+  width:43%;
+  float:left;
+  margin-left:5vw;
+  margin-top: 4vw;
+}
 
+div.col.quizcolumn div.delete_class{
+  margin-left: 10vw;
+}
 
 
 nav.navbar{
@@ -640,15 +643,7 @@ div.row.classroom_element{
 }
 
 
-div.quizroomcolumn nav.navbar div.dropdown.show a{
-  text-decoration: none;
-  color:white;
-  font-size:1.2vw;
-  display:inline-flex;
-}
-div.quizroom nav.navbar div.dropdown.show a.disabled{
-  pointer-events: none;
-}
+
 div.dropdown a{
   color: white;
   text-decoration: none;
@@ -736,7 +731,21 @@ div.col.classroomcolumn a{
   color: black;
   font-size:1.2vw;
 }
+div.col.quizcolumn a{
+  text-decoration: none;
+  font-family: 'Source Code Pro';
+  color: black;
+  font-size:1.2vw;
+}
 
+div.col.quizcolumn div.edit_class a:hover{
+  color: black;
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+}
+div.col.quizcolumn div.delete_class a:hover{
+  color: rgb(237, 74, 74);
+  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
+}
 div.col.classroomcolumn div.edit_class a:hover{
   color: black;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
@@ -773,21 +782,7 @@ a.btn-large.sideClick{
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
-div.col.quizroomcolumn a{
-  text-decoration: none;
-  font-family: 'Source Code Pro';
-  color: white;
-  font-size:1.2vw;
-}
-div.col.quizroomcolumn div.enter_quiz a:hover{
-  
-  color: black;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-div.col.quizroomcolumn div.delete_quiz a:hover{
-  color: rgb(237, 74, 74);
-  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
-}
+
 
 
 
@@ -801,6 +796,12 @@ div.col.quizroomcolumn div.delete_quiz a:hover{
   }
   div.edit_class{
     margin-left:0px;
+  }
+}
+
+@media screen and (max-width: 934px){
+  div.col.quizcolumn div.delete_class{
+    margin-left: 5vw;
   }
 }
 
