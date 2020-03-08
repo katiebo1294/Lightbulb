@@ -510,7 +510,44 @@ body:after{
   font-size: 30px;
 }
 /* end about section */
+/* form boxes */
 
+input#name{
+  width:28vw;
+}
+
+legend.border-bottom.mb-4{
+  font-size:2vw;
+}
+
+#Create-Button{
+  font-family: "Source Code Pro";
+  color : white;
+}
+a#Cancel-Button{
+  font-size: 1.8vw; text-decoration: none; font-family:'Source Code Pro'; color: white;
+}
+
+a#Cancel-Button:hover{
+  color: pink;
+  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
+  border-radius: 5px;
+}
+
+input#submit.btn.btn-lg.btn-outline-info{
+  font-size:1.8vw;
+  font-family: "Source Code Pro";
+  color: white;
+}
+
+/* form boxes end*/
+
+div.content-section{
+  font-size:1vw;
+  font-family: 'Source Code Pro';
+  color: white;
+  
+}
 .room_id{
   position: right;
   background-color: white;
@@ -538,6 +575,9 @@ body:after{
   }
 }
 
+a#dropdownMenuLink.navbar-brand.dropdown-toggle{
+  font-size: 1.7vw;
+}
 @media(max-width: 320px){
   .nav div.logo a{
 
@@ -606,7 +646,12 @@ body:after{
   margin-top: 4vw;
   
 }
+<<<<<<< Updated upstream
 .quizcolumn {
+=======
+
+div.col.quizcolumn {
+>>>>>>> Stashed changes
   background-color:#8cb4d2;
   height:52%;
   width:43%;
@@ -618,7 +663,6 @@ body:after{
 div.col.quizcolumn div.delete_class{
   margin-left: 10vw;
 }
-
 
 nav.navbar{
   width: 42vw;

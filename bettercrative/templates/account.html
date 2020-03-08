@@ -95,44 +95,7 @@
 </div>
 
 
-<!-- <div class = "col quizroomcolumn">
-    <nav class= "navbar">
-        <div class="titlebar">
-            Quiz Listing
-        </div>
-        <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}" >
-            Create Quiz
-        </a>
-        {% for quiz in current_user.quizzes %}
-            <div class = "row quiz_element">
-                
-                    <a class = "navbar-brand">
-                        Quiz: {{ quiz.name }}
-                    </a>
-                
-                
-                
-                <div class ="enter_quiz">
-                    <a href = "{{ url_for('quizzes.quiz', id = quiz.id)}}" class = "btn-lg">
-                        Enter 
-                    </a>
-                </div>
-                
-                
-                <div class ="delete_quiz">
-                    <a class= "btn-lg" href = " {{url_for('users.delete_quiz', id = quiz.id) }}">
-                        Delete 
-                    </a>
-                </div>
-                
-                
-                
-            </div>
-            
-        {% endfor %}
-    </nav>
-</div>
-</div> -->
+
 
 <script src="{{ url_for('static', filename='js/set_active.js') }}" ></script>
 
