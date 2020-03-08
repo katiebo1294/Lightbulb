@@ -37,7 +37,7 @@
                                 None
                             </button>
                         {% else %}
-                            <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="remove_active('{{ url_for('classrooms.remove_active')}}', classroom_id = '{{classroom.id}}')" method="POST">
+                            <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id = '{{classroom.id}}')" method="POST">
                                 None
                             </button>
                         {% endif %}
@@ -63,7 +63,7 @@
         <div class="titlebar">
             Quiz Listing
         </div>
-        <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}" style = "font-size:1.2vw;">
+        <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}" style = "font-size:1.2vw;">
             Create Quiz
         </a>
         {% for quiz in current_user.quizzes %}
