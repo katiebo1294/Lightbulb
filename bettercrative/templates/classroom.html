@@ -22,14 +22,8 @@
         color: black;
         font-size: 100%;
     }
-<<<<<<< HEAD
     .affix .container .navlinks a{
     color: black;
-=======
-
-    .affix .container .navlinks a {
-        color: white;
->>>>>>> 0c84503e1bf67affb13f7ffa2b8852e041962611
     }
 
     .nav .affix .navTrigger i {
@@ -89,12 +83,7 @@
                 <!-- contents of multiple choice box -->
                 <div class="question-edit-header">
                     <div class="question-number">
-<<<<<<< HEAD
-                        
-                        <div class = "quizlist">
-=======
                         <div class="quizlist">
->>>>>>> 0c84503e1bf67affb13f7ffa2b8852e041962611
                             {% for quiz in classroom.added_quizzes%}
                             <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
                                 <span class="Active-Rooms">Active Rooms</span>
@@ -119,16 +108,21 @@
 
                 </div>
                 
+                <div>
+                    <a href="{{ url_for('classrooms.add_quiz', id=classroom.id)}}">Add a Quiz</a>
+                </div>
                 <!--Will be made only visible to those not log in later. Also, having issues getting 
                 specifically the active quiz s-->
+                {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
                 <div>
-                  <a href="{{ url_for('classrooms.take_quiz', id=classroom.id) }}"> Take active Quiz</a>
+                  <a href="{{ url_for('classrooms.take_quiz', id=classroom.id) }}">Take active Quiz</a>
                 </div>
 
                   <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
                 <div>
-                    <a href="{{ url_for('classrooms.view_results', id=classroom.id) }}"> View Results </a>
+                    <a href="{{ url_for('classrooms.view_results', id=classroom.id) }}">View Results</a>
                 </div>
+                {% endif %}
 
                 <div class="answerchoices">
                     <div class="menu">
@@ -154,7 +148,7 @@
     </div>
 </div>
 
-<script src="/static/js/data_visualization.js"></script>
+<script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
 
 
 

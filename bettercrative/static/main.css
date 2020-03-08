@@ -455,7 +455,7 @@ body:after{
 }
 /* transparent-background */
 .transparent-background{
-  background-image: url("../static/images/laptopmono.jpg");
+  background-image: url("{{ url_for('static', filename='images/laptopmono.jpg') }}");
   background-size: cover;
 }
 /* end transparent-background */
@@ -487,7 +487,7 @@ body:after{
   padding-top: 40px;
    /* background-color: green;  */
   height: 1000px;
-  background-image: url('../static/images/login-section-bg.png');
+  background-image: url("{{ url_for('static', filename='images/login-section-bg.png') }}");
   
 
   

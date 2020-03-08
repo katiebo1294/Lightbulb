@@ -48,7 +48,7 @@ def classroom(id):
     return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
 
 
-@classrooms.route("/classroom/<int:id>/add-quiz", methods=['GET', 'POST'])
+@classrooms.route("/classroom/<int:id>/add_quiz", methods=['GET', 'POST'])
 @login_required
 def add_quiz(id):
     classroom = Classroom.query.get_or_404(id)
@@ -130,6 +130,7 @@ def remove_active():
 @classrooms.route("/classroom/<int:id>/take", methods=['GET', 'POST'])
 def take_quiz(id):
     classroom = Classroom.query.get_or_404(id)
+    # TODO maybe try filtering by name=classroom.active_quiz
     quiz = Quiz.query.filter_by(classroom_host_id=id).first() #add active=True arg later
     #print("This is the question: " + quiz.question_content)
     
@@ -150,7 +151,7 @@ def take_quiz(id):
 
     result = True
     for studentResponse in answered:
-        if dicts[studentResponse]==False:
+        if dicts.get(studentResponse)==False:
             result = False
         else:
             result = True
@@ -160,8 +161,7 @@ def take_quiz(id):
     response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, isCorrect=str(result))
     db.session.add(response)
     db.session.commit()
-    
-    return render_template('take_quiz.html', title='TakeQuiz', classroomid=id, question_answers=quiz.question_answers, question_content=quiz.question_content, classroom_host_id=classroom.id)
+    return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
   
 
 #Need to query the databases for all the student responses based on a classroom id

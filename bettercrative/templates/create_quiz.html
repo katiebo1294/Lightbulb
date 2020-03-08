@@ -2,7 +2,7 @@
 {% block content %}
 <!-- Scripts for adding and removing questions and answers -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="../static/js/QuizForm.js"></script>
+<script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 <div class="form-container">
     <div class="content-section">
         <form action="{{ url_for('quizzes.new_quiz') }}" method="POST">

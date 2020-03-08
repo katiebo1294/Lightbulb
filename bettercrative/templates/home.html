@@ -7,11 +7,11 @@
             <div class="col-md-6 student">
                 <!-- Student login box -->
                 <a href="{{ url_for('classrooms.enter_classroom') }}"><img
-                        src='../static/images/Student.png'></a>
+                        src="{{url_for('static', filename='images/Student.png') }}"></a>
             </div>
             <div class="col-md-6 teacher">
                 <!-- Teacher login box -->
-                <a href="{{ url_for('users.login') }}"><img src='../static/images/Teacher.png'></a>
+                <a href="{{ url_for('users.login') }}"><img src="{{url_for('static', filename='images/Teacher.png') }}"></a>
             </div>
         </div>
     </div>

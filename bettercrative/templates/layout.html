@@ -22,11 +22,11 @@
 
 
     <!-- Custom fonts for this template -->
-    <link href="../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    <link href="/static/main.css" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- <script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
@@ -107,13 +107,13 @@
 
 
 <!-- makes collapse icon clickable w/ animation -->
-<script src="../static/js/scripts.js"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 <!--End Of NavBar-->
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
-<script src="../static/js/scripts.js"></script>
-<script src="../static/js/QuizForm.js"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 <!-- navbar pop script -->
 <script>
         $(window).scroll(function () {

@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.classrooms.routes import classroom
-from bettercrative.models import Quiz, Answer, Classroom, User, Questions
+from bettercrative.models import Quiz, Answer, Classroom, User, Question
 from bettercrative.quizzes.forms import QuizForm
 
 quizzes = Blueprint('quizzes', __name__)
@@ -51,7 +51,7 @@ def add_question():
     if quiz is None:
         return "Quiz not found!", 404
 
-    question = Questions(quiz_id = quiz_id)
+    question = Question(quiz_id=quiz_id)
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
 
@@ -79,7 +79,7 @@ def remove_question():
     if question_id is None:
         return "No question id!", 400
 
-    question = Questions.query.filter_by(id = question_id).first()
+    question = Question.query.filter_by(id = question_id).first()
     if question is None:
         return "Question not found!", 404
     print(f'question: {question}')
