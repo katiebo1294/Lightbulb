@@ -29,6 +29,9 @@
     </div> -->
     
     <style>
+        body{
+            background-image: none;
+        }
         section.nav-section{
             background-color:rgb(188, 252, 231)
         }
@@ -46,7 +49,7 @@
         font-size: 100%;
         }
         .affix .container .navlinks a{
-        color: white;
+        color: black;
         }
         .nav .affix .navTrigger i{
         font-size: 80%;
@@ -80,7 +83,7 @@
                 <div class ="headerSection">
                     
                     <div class = "editSign">Edit Quiz</div>
-                    <div class = "SaveExitBtn" > <a href ="#" >Save and Exit</a></div>
+                    <div class = "SaveExitBtn" > <a href ="{{ url_for('users.account')}}" >Save and Exit</a></div>
                 </div>
             </div>
 
