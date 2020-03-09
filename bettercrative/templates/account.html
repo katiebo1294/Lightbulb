@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-
+<script src="{{ url_for('static', filename='js/set_active.js') }}" ></script>
 
 <div class = "wrapper">
 
@@ -21,7 +21,7 @@
                     </a>
                     <div class="dropdown-menu">
                         {% for quiz in classroom.added_quizzes %}
-                            {% if classroom.active_quiz==quiz.name %}
+                            {% if classroom.active_quiz %}
                                 <button class="dropdown-item active">
                                         *ACTIVE* Quiz: {{ quiz.name }}
                                 </button>
@@ -32,7 +32,7 @@
                             {% endif %}
                         {% endfor %}
 
-                        {% if classroom.active_quiz==None %}
+                        {% if not classroom.active_quiz %}
                             <button class="dropdown-item btn btn-lg active">
                                 None
                             </button>
@@ -93,47 +93,6 @@
         {% endfor %}
     </nav>
 </div>
-
-
-<!-- <div class = "col quizroomcolumn">
-    <nav class= "navbar">
-        <div class="titlebar">
-            Quiz Listing
-        </div>
-        <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}" >
-            Create Quiz
-        </a>
-        {% for quiz in current_user.quizzes %}
-            <div class = "row quiz_element">
-                
-                    <a class = "navbar-brand">
-                        Quiz: {{ quiz.name }}
-                    </a>
-                
-                
-                
-                <div class ="enter_quiz">
-                    <a href = "{{ url_for('quizzes.quiz', id = quiz.id)}}" class = "btn-lg">
-                        Enter 
-                    </a>
-                </div>
-                
-                
-                <div class ="delete_quiz">
-                    <a class= "btn-lg" href = " {{url_for('users.delete_quiz', id = quiz.id) }}">
-                        Delete 
-                    </a>
-                </div>
-                
-                
-                
-            </div>
-            
-        {% endfor %}
-    </nav>
 </div>
-</div> -->
-
-<script src="{{ url_for('static', filename='js/set_active.js') }}" ></script>
 
 {% endblock %}

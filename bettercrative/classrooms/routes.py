@@ -27,7 +27,7 @@ def enter_classroom():
     form = EnterClassroomForm()
     if form.validate_on_submit():
         classroom = Classroom.query.filter_by(name=form.room_id.data).first()
-        if classroom:
+        if classroom and classroom.active_quiz:
             return redirect(url_for('classrooms.classroom', id=classroom.id))
         else:
             flash(u'A classroom does not exist with that name. Please try again.', 'danger')
@@ -45,7 +45,12 @@ def classroom(id):
     #for quiz in quizzes:
     #    if quiz.active:
     #        active_quiz = quiz
-    return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
+    if current_user.is_authenticated:
+        return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
+    else:
+
+        print(id)
+        return render_template('take_quiz.html', id=id)  
 
 
 @classrooms.route("/classroom/<int:id>/add_quiz", methods=['GET', 'POST'])
@@ -151,7 +156,7 @@ def take_quiz(id):
 
     result = True
     for studentResponse in answered:
-        if dicts.get(studentResponse)==False:
+        if dicts[studentResponse]==False:
             result = False
         else:
             result = True

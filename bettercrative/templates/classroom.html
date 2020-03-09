@@ -58,7 +58,7 @@
             <div class="headerSection">
 
                 <div class="editSign">Classroom</div>
-                <div class="SaveExitBtn"> <a href="#">Save and Exit</a></div>
+                <div class="SaveExitBtn"> <a href="{{ url_for('main.home') }}">Save and Exit</a></div>
             </div>
         </div>
 
@@ -84,15 +84,13 @@
                 <div class="question-edit-header">
                     <div class="question-number">
                         <div class="quizlist">
-                            {% for quiz in classroom.added_quizzes%}
                             <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
                                 <span class="Active-Rooms">Active Rooms</span>
                                 <a class="btn Add-A-Quiz"
-                                    href="{{url_for('classrooms.add_quiz', name=quiz.name, id=classroom.id) }}">Add a
-                                    Quiz</a>
+                                    href="{{url_for('classrooms.add_quiz', id=classroom.id) }}">Add a Quiz</a>
 
                             </div>
-
+                            {% for quiz in classroom.added_quizzes%}
                             <li>
                                 {{ quiz.name }}
                                 <a class="btn btn-lg set-active"
@@ -107,14 +105,9 @@
                     </div>
 
                 </div>
-                {% if current_user.quizzes %}
-                <div>
-                    <a href="{{ url_for('classrooms.add_quiz', id=classroom.id)}}">Add a Quiz</a>
-                </div>
-                {% endif %}
                 <!--Will be made only visible to those not log in later. Also, having issues getting 
                 specifically the active quiz s-->
-                {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes) and (classroom.active_quiz) %}
+                {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes) %}
                 <div>
                   <a href="{{ url_for('classrooms.take_quiz', id=classroom.id) }}">Take active Quiz</a>
                 </div>

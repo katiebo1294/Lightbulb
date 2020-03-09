@@ -141,7 +141,8 @@
                             <!-- contents of multiple choice box -->
                             <div class = "question-edit-header">
                                 <div class="question-number">
-                                    <label>{{quiz.question_content}}</label>
+                                    <!-- TODO make this show the correct question number -->
+                                    <label>1) {{quiz.question_content}}</label>
                                     <a id = "Quiz-Edit" href= "#"> Edit</a>    
                                 </div>
                                 
@@ -180,7 +181,7 @@
                                     
                                     <div class = "answerBox">
                                         <div class = "answerBox-answer">
-                                            {{eachanswer}}
+                                            {{eachanswer.content}}
                                         </div>
                                     </div>
                                 </div>

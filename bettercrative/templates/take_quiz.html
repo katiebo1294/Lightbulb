@@ -5,13 +5,13 @@
 
 <h1>Taking a quiz </h1>
 <!--Need to rework so that 1 is = to <int: id> I got error before-->
-<form action="{{ url_for('classrooms.take_quiz', id=classroom.id) }}" method='POST'> 
+<form action="" method='POST'> 
 <h2 > Question: {{ quiz.question_content }} </h2>
 
 <h3> Options: </h3>
-    {% for prompt in quiz.question_answers %}
-        <input type="checkbox" name='studentResponse' value ='{{prompt}}' /> {{prompt}}
-        <h4></h4>
+    {% for answer in quiz.question_answers %}
+    <h4><input type="checkbox" name='studentResponse' value ='{{answer.content}}' /> 
+        {{ answer.content }}</h4>
     {% endfor %}
 
     
