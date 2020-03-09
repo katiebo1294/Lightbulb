@@ -66,7 +66,7 @@ class Quiz(db.Model):
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
     active_question = db.Column(db.String, nullable=True)
-    #questions = db.relationship('Question', backref='quiz', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
+    questions = db.relationship('Question', backref='quiz', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
@@ -87,8 +87,8 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
     ''' (For future when we switch to having a quiz with a list of questions that each has 4 answers)
-    answers = db.relationship('Answer', backref='question', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False) '''
+    answers = db.relationship('Answer', backref='question', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")'''
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     
     
 class Response(db.Model):
