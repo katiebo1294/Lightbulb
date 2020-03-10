@@ -65,10 +65,7 @@ def add_quiz(classroom_id):
     quizzes = Quiz.query.filter_by(user_id=current_user.id).all()
     if quizzes:
         quiz_list = [(q.id, q.name) for q in quizzes]
-        print(create_option)
-        print(quiz_list)
-        choices.append(quiz_list)
-    form.quiz.choices = choices
+    form.quiz.choices = choices + quiz_list
     if form.validate_on_submit():
         #gets the quiz by id through form and assigns said quiz to the active_quiz
         quiz_id = form.quiz.data
