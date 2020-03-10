@@ -18,7 +18,7 @@ def new_classroom():
         db.session.add(classroom)
         db.session.commit()
         flash(u'New classroom \"' + classroom.name + '\" created!', 'success')
-        return redirect(url_for('classrooms.classroom', id=classroom.id))
+        return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
 
@@ -28,16 +28,16 @@ def enter_classroom():
     if form.validate_on_submit():
         classroom = Classroom.query.filter_by(name=form.room_id.data).first()
         if classroom and classroom.active_quiz:
-            return redirect(url_for('classrooms.classroom', id=classroom.id))
+            return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
         else:
             flash(u'A classroom does not exist with that name. Please try again.', 'danger')
     return render_template('enter_classroom.html', title='get in chief', form=form)
 
 
 # displays a specific classroom TODO if logged in and classroom owner, add option to edit/add a quiz
-@classrooms.route("/classroom/<int:id>", methods=['GET', 'POST'])
-def classroom(id):
-    classroom = Classroom.query.get_or_404(id)
+@classrooms.route("/classroom/<int:classroom_id>", methods=['GET', 'POST'])
+def classroom(classroom_id):
+    classroom = Classroom.query.get_or_404(classroom_id)
     quizzes = classroom.added_quizzes
     # if there is an active quiz, pass it to the template; else pass None
     # TIM -> "REMOVED DUE TO ACTIVE_QUIZ BEING MOVED TO CLASSROOM FOCUS, MAYBE ADD IN LATER?"
@@ -49,14 +49,14 @@ def classroom(id):
         return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
     else:
 
-        print(id)
-        return render_template('take_quiz.html', id=id)  
+        print(classroom_id)
+        return render_template('take_quiz.html', classroom_id=classroom_id)  
 
 
-@classrooms.route("/classroom/<int:id>/add_quiz", methods=['GET', 'POST'])
+@classrooms.route("/classroom/<int:classroom_id>/add_quiz", methods=['GET', 'POST'])
 @login_required
-def add_quiz(id):
-    classroom = Classroom.query.get_or_404(id)
+def add_quiz(classroom_id):
+    classroom = Classroom.query.get_or_404(classroom_id)
     # retrieve the current user's quizzes, create tuples with (id, name) as choices for the form
     quizzes = Quiz.query.filter_by(user_id=current_user.id).all()
     quiz_list = [(q.id, q.name) for q in quizzes]
@@ -69,7 +69,7 @@ def add_quiz(id):
         classroom.added_quizzes.append(addedQuiz)
         db.session.commit()
         flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
-        return redirect(url_for('classrooms.classroom', id=classroom.id))
+        return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom
 
@@ -79,28 +79,16 @@ def add_quiz(id):
 # !currently there is a bug where if you click on the nav bar the change gets 
 # !reset, however, routing to the page separately or refreshing the page does
 # !not break the active-ness
-@classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
+@classrooms.route("/classroom/<int:quiz_id>/set_active", methods=['GET', 'POST'])
 @login_required
-def set_active():
-    # gets the name and class_id from the URL params
-    name = request.args.get('name', None)
-    class_id = request.args.get('classroom_id', None)
-
-    #TODO: make custom exceptions and catch them somewhere along the line to give the user a useful error page. 
-    if name is None:
-        raise Exception('No \'name\' supplied!')
-    if class_id is None:
-        raise Exception('No \'classroom_id\' supplied!')
-
-    classroom = Classroom.query.get(class_id)
-    if classroom is None:
-        return "No Classroom Found", 404
-    classroom.active_quiz = name
+def set_active(quiz_id):
+    quiz = Quiz.query.get_or_404(quiz_id)
+    classroom.active_quiz = quiz.name
     db.session.commit()
-    print(name)
+    print(quiz.name)
     print(classroom.active_quiz)
 
-    return "set Active", 200
+    return render_template('account.html', quiz_id=quiz_id)
 
    
 # Removes the active quiz for a class
@@ -132,11 +120,11 @@ def remove_active():
 #Allows user to take an active quiz 
 #The stuff that is printed is displayed in the terminal and is for testing purposes
 #this is still a work in progress but it does stuff rn
-@classrooms.route("/classroom/<int:id>/take", methods=['GET', 'POST'])
-def take_quiz(id):
-    classroom = Classroom.query.get_or_404(id)
+@classrooms.route("/classroom/<int:classroom_id>/take", methods=['GET', 'POST'])
+def take_quiz(classroom_id):
+    classroom = Classroom.query.get_or_404(classroom_id)
     # TODO maybe try filtering by name=classroom.active_quiz
-    quiz = Quiz.query.filter_by(classroom_host_id=id).first() #add active=True arg later
+    quiz = Quiz.query.filter_by(classroom_host_id=classroom_id).first() #add active=True arg later
     #print("This is the question: " + quiz.question_content)
     
     #dictionary of true and false for each input
@@ -174,21 +162,21 @@ def take_quiz(id):
 #Send that information to the front to display as lists
 
 @login_required
-@classrooms.route("/classroom/<int:id>/results", methods=['GET', 'POST'])
-def view_results(id):
+@classrooms.route("/classroom/<int:classroom_id>/results", methods=['GET', 'POST'])
+def view_results(classroom_id):
 
-    classroom = Classroom.query.get_or_404(id)
+    classroom = Classroom.query.get_or_404(classroom_id)
     
     print("WRONG ANSWERS-------------")
-    wrong_answers = Response.query.filter_by(classroom_host_id=id, isCorrect='False')
+    wrong_answers = Response.query.filter_by(classroom_host_id=classroom_id, isCorrect='False')
     for y in wrong_answers:
         print(y)
 
 
     print("RIGHT ANSWERS ----------------")
-    correct_responses = Response.query.filter_by(classroom_host_id=id, isCorrect='True')
+    correct_responses = Response.query.filter_by(classroom_host_id=classroom_id, isCorrect='True')
     for z in correct_responses:
         print(z)
 
-    return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses, wrongAnswers=wrong_answers, classroomid=id)
+    return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses, wrongAnswers=wrong_answers, classroomid=classroom_id)
 

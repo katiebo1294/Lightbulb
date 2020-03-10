@@ -90,15 +90,14 @@
                             <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
                                 <span class="Active-Rooms">Active Rooms</span>
                                 <a class="btn Add-A-Quiz"
-                                    href="{{url_for('classrooms.add_quiz', id=classroom.id) }}">Add a Quiz</a>
+                                    href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
 
                             </div>
-                            {% for quiz in classroom.added_quizzes%}
+                            {% for quiz in classroom.added_quizzes %}
                             <li>
                                 {{ quiz.name }}
                                 <a class="btn btn-lg set-active"
-                                    href="{{ url_for('classrooms.set_active', name = quiz.name, classroom_id = classroom.id) }}"
-                                    method="POST">
+                                    href="{{ url_for('classrooms.set_active', quiz_id=quiz.id, classroom=classroom) }}">
                                     Set Active
                                 </a>
                             </li>
@@ -112,12 +111,12 @@
                 specifically the active quiz s-->
                 {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes) %}
                 <div>
-                  <a href="{{ url_for('classrooms.take_quiz', id=classroom.id) }}">Take active Quiz</a>
+                  <a href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
                 </div>
 
                   <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
                 <div>
-                    <a href="{{ url_for('classrooms.view_results', id=classroom.id) }}">View Results</a>
+                    <a href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
                 </div>
                 {% endif %}
 

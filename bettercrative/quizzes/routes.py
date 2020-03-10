@@ -27,14 +27,14 @@ def new_quiz():
             quiz.question_answers.append(new_answer)
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
-        return redirect(url_for('quizzes.quiz', id=quiz.id))
+        return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
 
-@quizzes.route("/quiz/<int:id>")
+@quizzes.route("/quiz/<int:quiz_id>")
 @login_required
-def quiz(id):
-    quiz = Quiz.query.get_or_404(id)
+def quiz(quiz_id):
+    quiz = Quiz.query.get_or_404(quiz_id)
     return render_template('quiz.html', title=quiz.name, quiz=quiz)
 
 # Adds a new blank question to Quiz.  
@@ -79,7 +79,7 @@ def remove_question():
     if question_id is None:
         return "No question id!", 400
 
-    question = Question.query.filter_by(id = question_id).first()
+    question = Question.query.filter_by(id=question_id).first()
     if question is None:
         return "Question not found!", 404
     print(f'question: {question}')
