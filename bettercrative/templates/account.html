@@ -26,7 +26,7 @@
                                         *ACTIVE* Quiz: {{ quiz.name }}
                                 </button>
                             {% else %}
-                                <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active')}}', name = '{{quiz.name}}', classroom_id = '{{classroom.id}}')" method="POST">
+                                <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active', quiz_id=quiz.id)}}', name = '{{quiz.name}}', classroom_id = '{{classroom.id}}')" method="POST">
                                         Quiz: {{ quiz.name }}
                                 </button>
                             {% endif %}
@@ -44,12 +44,12 @@
                     </div>
                 </div>
                 <div class="edit_class">
-                    <a class="btn-lg" href="{{url_for('classrooms.classroom', id=classroom.id )}}">
+                    <a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
                         Enter 
                     </a>
                 </div>
                 <div class="delete_class">
-                    <a href="{{ url_for('users.delete_classroom', id=classroom.id) }}" class="btn-lg">
+                    <a href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}" class="btn-lg">
                         Delete 
                     </a>
                 </div>
@@ -80,12 +80,12 @@
                     </div>
                 </div>
                 <div class="edit_class">
-                    <a href = "{{ url_for('quizzes.quiz', id = quiz.id)}}" class = "btn-lg">
+                    <a href = "{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}" class = "btn-lg">
                         Enter 
                     </a>
                 </div>
                 <div class="delete_class">
-                    <a class= "btn-lg" href = " {{url_for('users.delete_quiz', id = quiz.id) }}">
+                    <a class= "btn-lg" href = " {{url_for('users.delete_quiz', quiz_id=quiz.id) }}">
                         Delete 
                     </a>
                 </div>
