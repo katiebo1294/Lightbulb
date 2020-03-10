@@ -51,11 +51,8 @@ def classroom(classroom_id):
         quiz = Quiz.query.filter_by(classroom_host_id=id).first()
         return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
 
-<<<<<<< HEAD
-=======
         print(classroom_id)
         return render_template('take_quiz.html', classroom_id=classroom_id)  
->>>>>>> 3de5e72ff50b05d02afe6ab60134a1863de445f7
 
 
 @classrooms.route("/classroom/<int:classroom_id>/add_quiz", methods=['GET', 'POST'])
