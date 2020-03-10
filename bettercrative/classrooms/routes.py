@@ -87,9 +87,11 @@ def add_quiz(classroom_id):
 # !currently there is a bug where if you click on the nav bar the change gets 
 # !reset, however, routing to the page separately or refreshing the page does
 # !not break the active-ness
-@classrooms.route("/classroom/<int:quiz_id>/set_active", methods=['GET', 'POST'])
+@classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
 @login_required
-def set_active(quiz_id):
+def set_active():
+    quiz_id = request.args.get('quiz_id', None)
+    print(quiz_id)
     quiz = Quiz.query.get_or_404(quiz_id)
     classroom = Classroom.query.get_or_404(quiz.classroom_host_id)
     print(quiz)

@@ -101,7 +101,7 @@
                             <li>
                                 {{ quiz.name }}
                                 <a class="btn btn-lg set-active"
-                                    href="{{ url_for('classrooms.set_active', quiz_id=quiz.id) }}">
+                                onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
                                     Set Active
                                 </a>
                             </li>
