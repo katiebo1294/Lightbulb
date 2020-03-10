@@ -812,6 +812,7 @@ div.delete_class {
 a.btn-large.sideClick{
   font-size:1.5vw;
 }
+
 .navbar a.btn-large.sideClick:hover{
   color: black;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
@@ -952,6 +953,14 @@ a#Quiz-Edit:hover{
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
+a:not([href]){
+  font-size:1.2vw;
+  color:black;
+}
+
+button.btn.Remove-Button{
+  font-size: 1.2vw;
+}
 
 
 div.reset::after{

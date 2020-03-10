@@ -102,14 +102,14 @@
                     {% if quiz.active_question == question.name %}
                     <a class="btn active" id="question-{{ question.id }}">
                         {{ loop.index0 }}+1
-                        <button class="btn" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
+                        <button class="btn Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
                         </button>
                     </a>
                     {% else %}
                     <a class="btn" id="question-{{ question.id }}">
                         Question {{ loop.index0 + 1 }}
-                        <button class="btn" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
+                        <button class="btn  Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
                         </button>
                     </a>
