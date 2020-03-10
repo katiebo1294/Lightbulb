@@ -65,8 +65,9 @@ body:after{
 }
 .nav div.listofcontents{
   height:65px;
-  float:right;
+  
   font-size:1.5vw;
+  overflow: hidden;
   
 }
 .nav div.logged_in{
@@ -88,6 +89,7 @@ body:after{
   list-style: none;
   margin: 0;
   padding: 0;
+  font-size: 1.2vw;
   
   
 }
