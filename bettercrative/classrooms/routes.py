@@ -48,6 +48,8 @@ def classroom(classroom_id):
     if current_user.is_authenticated:
         return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
     else:
+        quiz = Quiz.query.filter_by(classroom_host_id=classroom_id).first()
+        return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
 
         print(classroom_id)
         return render_template('take_quiz.html', classroom_id=classroom_id)  
