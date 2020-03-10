@@ -911,23 +911,42 @@ div.editSign{
 }
 
 
-div.SaveExitBtn{
-  margin-left: 0;
+
+div.SaveExitBtn.btn{
   float:right;
-  position: relative;
-  font-size:2.2vw;
+  font-size:1.5vw;
 }
-
-div.SaveExitBtn a{
-  color: black;
-  text-decoration: none;
-
+div.SaveExitBtn.btn a{
+  color:black;
+  text-decoration:none;
 }
-
-div.SaveExitBtn a:hover{
-  color: rgb(10, 82, 47);
+div.SaveExitBtn.btn a:hover{
+  color: rgb(2, 132, 69);
+}
+div.SaveExitBtn.btn:hover{
+  
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+  font-size:1.8vw;
 }
+
+div.QuizSaveExitBtn.btn{
+  float:right;
+  font-size:1.5vw;
+}
+div.QuizSaveExitBtn.btn a{
+  color:black;
+  text-decoration:none;
+}
+div.QuizSaveExitBtn.btn a:hover{
+  color: rgb(2, 132, 69);
+}
+div.QuizSaveExitBtn.btn:hover{
+  
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+  font-size:1.8vw;
+}
+
+
 div#quiz-title{
   margin-top: 1em;
   width: 100%;
@@ -952,7 +971,7 @@ div.multiple-choice{
   padding: 1em;
   position: relative;
   
-  background-color: rgb(223, 255, 244);
+  background-color: rgb(187, 238, 220);
   border-top: 3px solid rgb(250, 146, 61);
   padding-right: 4.6em;
   min-height:15em;
@@ -1050,4 +1069,31 @@ a.Add-A-Quiz:hover{
   font-size:2vw;
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+}
+
+/*Taking a quiz section*/
+
+span.Taking-a-Quiz{
+  font-size:3vw;
+  margin-left:38vw;
+}
+
+button.btn.Taking-a-Quiz-Submit{
+  font-size:1.5vw;
+}
+button.btn.Taking-a-Quiz-Submit:hover{
+  color: rgb(213, 219, 216);
+}
+
+
+
+div.options{
+  font-size:3vw;
+  margin-top:2vw;
+}
+
+.response{
+  background:transparent;
+  font-size:2vw;
+  border:none;
 }

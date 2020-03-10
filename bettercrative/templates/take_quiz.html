@@ -1,27 +1,85 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<style>
 
-
-
-<h1>Taking a quiz </h1>
-<!--Need to rework so that 1 is = to <int: id> I got error before-->
-<form action="" method='POST'> 
-<h2 > Question: {{ quiz.question_content }} </h2>
-
-<h3> Options: </h3>
-    {% for answer in quiz.question_answers %}
-    <h4><input type="checkbox" name='studentResponse' value ='{{answer.content}}' /> 
-        {{ answer.content }}</h4>
-    {% endfor %}
-
+div.multiple-choice{
+    color:rgb(3, 8, 80);
+    font-family: "Source Code Pro";
+    font-size:1.2vw;
+    height:60vw;
+}
+div.headerSection{
+    font-family:'Source Code Pro';
+    font-size:1.5vw;
     
-    <button type="submit" class="btn btn-primary">Submit</button>
-           
-           
-          <!-- formaction='/classroom/{{classroomid}}'>  -->
+    color: rgb(3,8,80);
+}
 
-</form>
+div.multiple-choice{
+    margin-top: 7vw;
+}
+
+
+
+</style>
+
+
+
+
+<div class = "multiple-choice">
+         <span class = "Taking-a-Quiz">Taking a Quiz</span>
+            
+        <div class = "answerchoices">
+            <div class = "menu" style = "margin-left:15vw; margin-top: ">
+                
+                <!--Need to rework so that 1 is = to <int: id> I got error before-->
+                <form action="" method='POST'> 
+                        <span class = "btn" style = "font-size:1.7vw; margin-top:3vw;"> Question: {{ quiz.question_content }} </span>
+                        
+                        <div class =  "options"> 
+                            <span> Options:</span>
+                                <div class ="Student-Answers">
+                                    
+                                <!-- {% for answer in quiz.question_answers %}
+                                <h4><input type="checkbox" name='studentResponse' value ='{{answer.content}}' /> 
+                                    {{ answer.content }}</h4>
+                                {% endfor %} -->
+                                    
+
+
+                                {%for eachanswer in quiz.question_answers%}
+                                <div class = "answerContainer reset">
+                                    <div class = "answerChoice">
+                                        
+                                        <span class = "choice"> <input type = "button" name="studentResponse" value = '{{"ABCD"[loop.index0]}}' class ="response"></span>
+                                        
+                                        <div class = "answerBox">
+                                            <div class = "answerBox-answer">
+                                                {{eachanswer.content}}
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                {%endfor%}
+                                
+                                <button type="submit" class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);">Submit</button>
+                                </div>   
+                        </div>        
+                                <!-- formaction='/classroom/{{classroomid}}'>  -->
+                        
+                </form>
+                <!-- prevent things from floating after this section -->
+                <div style =" clear: both;"></div>
+                <!-- prevent things from floating after this section -->
+
+            </div>
+        </div>
+
+        <div class ="reset"> </div>
+
+
+
 
 
 {% endblock  %}
