@@ -41,7 +41,7 @@ var options = {
     title: {
       fontSize: 18,
       display: true,
-      text: 'Look How Dumb',
+      text: 'Demo',
       position: 'bottom'
     }
   };

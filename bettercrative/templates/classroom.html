@@ -115,12 +115,12 @@
                 specifically the active quiz s-->
                 {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes) %}
                 <div>
-                  <a href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
+                  <a class = "Take-Active-Quiz btn " href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
                 </div>
 
                   <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
                 <div>
-                    <a href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
+                    <a class = "View-Results btn" href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
                 </div>
                 {% endif %}
 
@@ -139,7 +139,7 @@
                 <div style="height:40vh; width:40vw;">
                     <!-- Temporary area to display charts of student data -->
                     <canvas id="basicChart"></canvas>
-                    <button class="btn" onclick="create_chart();">
+                    <button class="Show-Student-Response btn" onclick="create_chart();">
                         Show student response
                     </button>
                 </div>
