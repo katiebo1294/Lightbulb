@@ -63,6 +63,7 @@ def add_quiz(classroom_id):
     form = AddQuizForm()
     choices = [(0, "Create a Quiz")]
     quizzes = Quiz.query.filter_by(user_id=current_user.id).filter(Quiz.classroom_host_id.isnot(classroom_id)).all()
+    quiz_list = []
     if quizzes:
         quiz_list = [(q.id, q.name) for q in quizzes]
     form.quiz.choices = choices + quiz_list
