@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+    integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
 
 
 <h1>Results of quiz </h1>
@@ -30,10 +32,48 @@ It returns I think a list of them that are variables rightAnswers and wrongAnswe
 <h4>Number of Correct Answers: {{ sumRight }}</h4>
 <h2>    </h2>
 <h4>Number of Wrong Answers: {{ sumWrong }}</h4>
-
-    <!--Right now redirects to classroom and kinda funky, change as you please-->
-    <input type="submit" value="Go back" formaction="/classroom/{{classroomid}}"> 
+<!--Right now redirects to classroom and kinda funky, change as you please-->
+<input type="submit" value="Go back" formaction="/classroom/{{classroomid}}"> 
 </form>
+<!-- Chart.js area -->
 
+<!-- Original loading of chart -->
+<script>
+        var data = {
+            labels: ["True", "False"],
+            datasets: [{
+              label: "Student Scores",
+              fill: true,
+              lineTension: 0.1,
+              backgroundColor: "rgba(0,255,0,0.4)",
+              borderColor: "green", // The main line color
+              borderCapStyle: 'square',
+              pointBorderColor: "white",
+              pointBackgroundColor: "green",
+              pointBorderWidth: 1,
+              pointHoverRadius: 8,
+              pointHoverBackgroundColor: "yellow",
+              pointHoverBorderColor: "green",
+              pointHoverBorderWidth: 2,
+              pointRadius: 4,
+              pointHitRadius: 10,
+              data: [0, 0],
+              spanGaps: true,
+              }]
+            };
+</script>
+
+<div style="height:40vh; width:40vw;">
+        <!-- Temporary area to display charts of student data -->
+        <canvas id="basicChart"></canvas>
+        <button class="Show-Student-Response btn" onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
+            Show student response {{ sumRight }}
+        </button>
+    </div>
+
+    
+
+
+<script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
 
 {% endblock  %}

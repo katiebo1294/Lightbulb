@@ -6,7 +6,7 @@ var chartType = 'bar';
 var myBasicChart;
 
 //temp data
-var data = {
+var tempdata = {
     labels: ["student1", "student2", "student3", "student4", "student5", "student6", "student7", "student8", "student9", "student10", "student11", "student12"],
     datasets: [{
       label: "Student Scores",
@@ -28,6 +28,8 @@ var data = {
       spanGaps: true,
   }]
 };
+
+
 
 
 var options = {
@@ -59,9 +61,32 @@ function init() {
 
 //refreshes the chart, later to be changed to auto update either after every
 //submit or every 10 sec or 1 min
-function create_chart() {
+function create_chart(numTrue, numFalse) {
+  data = {
+  labels: ["True", "False"],
+  datasets: [{
+    label: "Student Scores",
+    fill: true,
+    lineTension: 0.1,
+    backgroundColor: "rgba(0,255,0,0.4)",
+    borderColor: "green", // The main line color
+    borderCapStyle: 'square',
+    pointBorderColor: "white",
+    pointBackgroundColor: "green",
+    pointBorderWidth: 1,
+    pointHoverRadius: 8,
+    pointHoverBackgroundColor: "yellow",
+    pointHoverBorderColor: "green",
+    pointHoverBorderWidth: 2,
+    pointRadius: 4,
+    pointHitRadius: 10,
+    data: [numTrue, numFalse],
+    spanGaps: true,
+    }]
+  };
         console.log('Attempting to create a chart');
         init();
+        console.log('success');
 
 };
 //
