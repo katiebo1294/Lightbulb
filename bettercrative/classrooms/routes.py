@@ -48,9 +48,9 @@ def classroom(id):
     if current_user.is_authenticated:
         return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
     else:
+        quiz = Quiz.query.filter_by(classroom_host_id=id).first()
+        return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
 
-        print(id)
-        return render_template('take_quiz.html', id=id)  
 
 
 @classrooms.route("/classroom/<int:id>/add_quiz", methods=['GET', 'POST'])

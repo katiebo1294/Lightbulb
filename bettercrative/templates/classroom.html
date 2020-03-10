@@ -43,7 +43,6 @@
     }
 </style>
 
-
 <div id="quiz-content-container">
 
     <!-- Quiz Edit Container for users -->
@@ -51,6 +50,8 @@
         <!--  want to change this later to classroom name  -->
 
         <div id="quizTitle"> </div>
+
+        {% if current_user.is_authenticated %}
 
         <div id="edit-section">
 
@@ -64,6 +65,8 @@
                 <div class="SaveExitBtn"> <a href="{{ url_for('main.home') }}">Save and Exit</a></div>
             </div>
         </div>
+        
+        {% endif %}
 
         <!-- Classroom Title -->
         <div id="quiz-title">
