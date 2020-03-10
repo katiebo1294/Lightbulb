@@ -20,12 +20,16 @@ It returns I think a list of them that are variables rightAnswers and wrongAnswe
     {% for response in rightAnswers %}
         <h4> {{ response }} </h4>
     {% endfor %}
-
+<br> </br>
 <h3> Wrong: </h3>
     {% for response in wrongAnswers %}
         <h4> {{ response }} </h4>
 
     {% endfor %}
+<br></br>
+<h4>Number of Correct Answers: {{ sumRight }}</h4>
+<h2>    </h2>
+<h4>Number of Wrong Answers: {{ sumWrong }}</h4>
 
     <!--Right now redirects to classroom and kinda funky, change as you please-->
     <input type="submit" value="Go back" formaction="/classroom/{{classroomid}}"> 
