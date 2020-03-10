@@ -194,5 +194,8 @@ def view_results(id):
         sumRight +=1
         print(z)
 
+    print(sumRight)
+    print(sumWrong)
+
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses, wrongAnswers=wrong_answers, classroomid=id, sumWrong=sumWrong, sumRight=sumRight)
 
