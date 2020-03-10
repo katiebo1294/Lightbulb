@@ -824,8 +824,37 @@ a.btn-large.sideClick{
 }
 
 
+a.Take-Active-Quiz.btn{
+  float:right;
+  font-size:1.5vw;
+}
+
+a.Take-Active-Quiz.btn:hover{
+  color: rgb(2, 132, 69);
+  font-size: 1.7vw;
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+}
+
+a.View-Results.btn{
+  font-size:1.5vw;
+}
+
+a.View-Results.btn:hover{
+  color: rgb(2, 132, 69);
+  font-size: 1.7vw;
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+}
 
 
+button.Show-Student-Response.btn{
+  font-size:1.2vw;
+}
+
+button.Show-Student-Response.btn:hover{
+  color: rgb(2, 132, 69);
+  font-size: 1.5vw;
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+}
 
 @media screen and (max-width:710px){
   div.row.classroom_element{
@@ -927,6 +956,7 @@ div.multiple-choice{
   border-top: 3px solid rgb(250, 146, 61);
   padding-right: 4.6em;
   min-height:15em;
+  height: 50vw;
 }
 
 div.question-number::before{
