@@ -7,7 +7,7 @@ div.multiple-choice{
     color:rgb(3, 8, 80);
     font-family: "Source Code Pro";
     font-size:1.2vw;
-    height:80rem;
+    height:60rem;
 }
 div.headerSection{
     font-family:'Source Code Pro';
@@ -51,8 +51,13 @@ div.multiple-choice{
                                 {%for eachanswer in quiz.question_answers%}
                                 <div class = "answerContainer reset">
                                     <div class = "answerChoice">
-                                        
-                                        <span class = "choice"> <input type = "button" name="studentResponse" value = '{{"ABCD"[loop.index0]}}' class ="response"></span>
+
+                                        <div class = "btn-group-toggle" data-toggle="buttons">
+                                            <label class = "btn btn-secondary active button-choices">
+                                                <input type = "checkbox" name = "studentResponse" value = '{{eachanswer.content}}' class = "response">{{"ABCD"[loop.index0]}} 
+                                            </label>
+                                        </div>
+                                        <!-- <span class = "choice"> <input type = "button" name="studentResponse" value = '{{"ABCD"[loop.index0]}}' class ="response"></span> -->
                                         
                                         <div class = "answerBox">
                                             <div class = "answerBox-answer">
@@ -75,7 +80,7 @@ div.multiple-choice{
 
             </div>
         </div>
-    </div>
+
         <div class ="reset"> </div>
 
 

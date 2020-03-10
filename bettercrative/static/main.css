@@ -1021,11 +1021,13 @@ div.reset::after{
 }
 
 div.answerChoice{
+  display: inline-flex;
   margin-bottom: .5em;
   position: relative;
   float: left;
   width: 100%;
 }
+
 
 span.choice{
   float: left;
@@ -1099,4 +1101,8 @@ div.options{
   background:transparent;
   font-size:2vw;
   border:none;
+}
+
+label.btn.btn-secondary.active.button-choices{
+  font-size:3.38vw;
 }
