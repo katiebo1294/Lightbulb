@@ -28,7 +28,7 @@ def enter_classroom():
     if form.validate_on_submit():
         classroom = Classroom.query.filter_by(name=form.room_id.data).first()
         if classroom and classroom.active_quiz:
-            return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
+            return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id))
         else:
             flash(u'A classroom does not exist with that name. Please try again.', 'danger')
     return render_template('enter_classroom.html', title='get in chief', form=form)
@@ -83,12 +83,14 @@ def add_quiz(classroom_id):
 @login_required
 def set_active(quiz_id):
     quiz = Quiz.query.get_or_404(quiz_id)
-    classroom.active_quiz = quiz.name
+    classroom = Classroom.query.get_or_404(quiz.classroom_host_id)
+    print(quiz)
+    print(classroom)
+    classroom.active_quiz = quiz_id
     db.session.commit()
-    print(quiz.name)
     print(classroom.active_quiz)
 
-    return render_template('account.html', quiz_id=quiz_id)
+    return render_template('classroom.html', classroom=classroom)
 
    
 # Removes the active quiz for a class

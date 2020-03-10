@@ -26,7 +26,7 @@
                                         *ACTIVE* Quiz: {{ quiz.name }}
                                 </button>
                             {% else %}
-                                <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active', quiz_id=quiz.id)}}', name = '{{quiz.name}}', classroom_id = '{{classroom.id}}')" method="POST">
+                                <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active', quiz_id=quiz.id)}}', quiz_id = '{{quiz.id}}', classroom_id = '{{classroom.id}}')" method="POST">
                                         Quiz: {{ quiz.name }}
                                 </button>
                             {% endif %}

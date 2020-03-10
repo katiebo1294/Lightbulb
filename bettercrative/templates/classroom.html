@@ -2,6 +2,7 @@
 {% block content %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
     integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 
 <style>
     body{
@@ -97,7 +98,7 @@
                             <li>
                                 {{ quiz.name }}
                                 <a class="btn btn-lg set-active"
-                                    href="{{ url_for('classrooms.set_active', quiz_id=quiz.id, classroom=classroom) }}">
+                                    href="{{ url_for('classrooms.set_active', quiz_id=quiz.id) }}">
                                     Set Active
                                 </a>
                             </li>

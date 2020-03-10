@@ -1,9 +1,9 @@
 //sets the value of a quiz to active and resets the section of the page, later we should change this refresh portion however for now it works.
-function set_active(url, name, classroom_id) {
+function set_active(url, quiz_id, classroom_id) {
     console.log("setting active...");
     $.ajax({
         type: "GET",
-        data: {'name': name, 'classroom_id' : classroom_id},
+        data: {'quiz_id': quiz_id, 'classroom_id' : classroom_id},
         url: url,
         error: function(statusText) {
             console.log(fail);
