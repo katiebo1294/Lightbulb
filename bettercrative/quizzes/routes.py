@@ -11,7 +11,7 @@ quizzes = Blueprint('quizzes', __name__)
 
 @quizzes.route("/quiz/new", methods=['GET', 'POST'])
 @login_required
-def new_quiz():
+def new_quiz(classroom_id=None):
     form = QuizForm()
     if form.validate_on_submit():
         quiz = Quiz(
@@ -27,6 +27,8 @@ def new_quiz():
             quiz.question_answers.append(new_answer)
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
+        if classroom_id:
+            classroom.added_quizzes.append(quiz)
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 

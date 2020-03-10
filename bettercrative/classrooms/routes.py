@@ -60,18 +60,26 @@ def classroom(classroom_id):
 def add_quiz(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
     # retrieve the current user's quizzes, create tuples with (id, name) as choices for the form
-    quizzes = Quiz.query.filter_by(user_id=current_user.id).all()
-    quiz_list = [(q.id, q.name) for q in quizzes]
     form = AddQuizForm()
-    form.quiz.choices = quiz_list
+    choices = [(0, "Create a Quiz")]
+    quizzes = Quiz.query.filter_by(user_id=current_user.id).all()
+    if quizzes:
+        quiz_list = [(q.id, q.name) for q in quizzes]
+        print(create_option)
+        print(quiz_list)
+        choices.append(quiz_list)
+    form.quiz.choices = choices
     if form.validate_on_submit():
         #gets the quiz by id through form and assigns said quiz to the active_quiz
-        quizID = form.quiz.data
-        addedQuiz = Quiz.query.filter_by(id=quizID).first()
-        classroom.added_quizzes.append(addedQuiz)
-        db.session.commit()
-        flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
-        return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
+        quiz_id = form.quiz.data
+        if quiz_id == 0:
+            return redirect(url_for('quizzes.new_quiz'))
+        else:
+            addedQuiz = Quiz.query.filter_by(id=quiz_id).first()
+            classroom.added_quizzes.append(addedQuiz)
+            db.session.commit()
+            flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
+            return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom
 
