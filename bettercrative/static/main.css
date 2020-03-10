@@ -65,7 +65,7 @@ body:after{
 }
 .nav div.listofcontents{
   height:65px;
-  
+  float:right;
   font-size:1.5vw;
   overflow: hidden;
   
