@@ -644,6 +644,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   float:left;
   margin-left:5vw;
   margin-top: 4vw;
+  height:30vw;
   
 }
 
@@ -654,6 +655,7 @@ div.col.quizcolumn {
   float:left;
   margin-left:5vw;
   margin-top: 4vw;
+  height:30vw;
 }
 
 div.col.quizcolumn div.delete_class{
