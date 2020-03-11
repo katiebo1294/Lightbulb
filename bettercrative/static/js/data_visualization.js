@@ -1,7 +1,7 @@
-//Code for data_visualization
+//get id of chart
 var canvas = document.getElementById("basicChart");
+//type of chart
 var ctx = canvas.getContext('2d');
-
 var chartType = 'bar';
 var myBasicChart;
 
@@ -29,9 +29,31 @@ var tempdata = {
   }]
 };
 
+//data
+var data = {
+  labels: ["True", "False"],
+  datasets: [{
+    label: "Student Scores",
+    fill: true,
+    lineTension: 0.1,
+    backgroundColor: "rgba(0,255,0,0.4)",
+    borderColor: "green", // The main line color
+    borderCapStyle: 'square',
+    pointBorderColor: "white",
+    pointBackgroundColor: "green",
+    pointBorderWidth: 1,
+    pointHoverRadius: 8,
+    pointHoverBackgroundColor: "yellow",
+    pointHoverBorderColor: "green",
+    pointHoverBorderWidth: 2,
+    pointRadius: 4,
+    pointHitRadius: 10,
+    data: [0, 0],
+    spanGaps: true,
+    }]
+  };
 
-
-
+//options for chart
 var options = {
     scales: {
       yAxes: [{
@@ -48,6 +70,7 @@ var options = {
     }
   };
 
+//initial initialization
 init();
 
 //initiates myBasicChart with its type, data and options
@@ -61,6 +84,8 @@ function init() {
 
 //refreshes the chart, later to be changed to auto update either after every
 //submit or every 10 sec or 1 min
+//Parameters: numTrue: number of true responses
+//            numFalse: number of false responses
 function create_chart(numTrue, numFalse) {
   data = {
   labels: ["True", "False"],
@@ -89,14 +114,3 @@ function create_chart(numTrue, numFalse) {
         console.log('success');
 
 };
-//
-
-
-// function toggleChart() {
-//   //destroy chart:
-//   myBarChart.destroy();
-//   //change chart type: 
-//   this.chartType = (this.chartType == 'bar') ? 'line' : 'bar';
-//   //restart chart:
-//   init();
-// }

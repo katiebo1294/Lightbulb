@@ -97,8 +97,6 @@ QuizForm.js - remove unneeded functions, specifically: Katie and Tim should
               mainly review these as they have both been the ones to mainly 
               contribute to them.  Communicate internally over what to keep 
               and what to remove.
-data_visualization.js - add comments to options
-button_quiz_active.js - REMOVE
 
 Any files not listed are seen as redundant and should be removed.  Please only
 remove files that you have added yourself, or check with last known editor.
