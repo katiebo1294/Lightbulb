@@ -13,6 +13,7 @@
         <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}" style = "font-size:1.2vw;">
             Create Classroom
         </a>
+
         {% for classroom in current_user.classrooms %}
             <div class="row classroom_element">
                 <div class="dropdown show">
@@ -22,11 +23,18 @@
                     </a>
                     <div class="dropdown-menu">
                         <!-- dropdown for a classroom's added quizzes and which one if any is active -->
+
+
                         {% for quiz in classroom.added_quizzes %}
                             {% if classroom.active_quiz %}
+                            <!--  
+                            quiz property:
+                                    quiz('name', date_created, user_id, classroom_host_id) 
+                        -->
                                 <button class="dropdown-item active">
                                         *ACTIVE* Quiz: {{ quiz.name }}
                                 </button>
+
                             {% else %}
                             <!-- links to JavaScript file to set the active quiz -->
                                 <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active', quiz_id=quiz.id)}}', quiz_id = '{{quiz.id}}', classroom_id = '{{classroom.id}}')" method="POST">
@@ -35,6 +43,7 @@
                             {% endif %}
                         {% endfor %}
 
+                        
                         {% if not classroom.active_quiz %}
                             <button class="dropdown-item btn btn-lg active">
                                 None
@@ -47,6 +56,8 @@
                         {% endif %}
                     </div>
                 </div>
+
+
                 <!-- can enter a class to view details, or delete it -->
                 <div class="edit_class">
                     <a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
@@ -62,6 +73,8 @@
         {% endfor %}
     </nav>
 </div>
+
+
 <!-- displays the user's quizzes -->
 <div class="col quizcolumn">
     <nav class="navbar">
