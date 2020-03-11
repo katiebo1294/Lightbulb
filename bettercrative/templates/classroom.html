@@ -98,6 +98,7 @@
 
                             </div>
                             {% for quiz in classroom.added_quizzes %}
+                            <!-- JavaScript option to set the current quiz in the list to active -->
                             <li>
                                 {{ quiz.name }}
                                 <a class="btn btn-lg set-active"
@@ -111,8 +112,7 @@
                     </div>
 
                 </div>
-                <!--Will be made only visible to those not log in later. Also, having issues getting 
-                specifically the active quiz s-->
+                <!-- TODO having issues getting specifically the active quiz s-->
                 {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes) %}
                 <div>
                   <a class = "Take-Active-Quiz btn " href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>

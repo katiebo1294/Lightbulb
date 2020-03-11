@@ -8,7 +8,7 @@ from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, Ad
 
 classrooms = Blueprint('classrooms', __name__)
 
-
+# Teacher fills out form to create a new classroom, then is redirected to the classroom's dashboard
 @classrooms.route("/classroom/new", methods=['GET', 'POST'])
 @login_required
 def new_classroom():
@@ -21,7 +21,7 @@ def new_classroom():
         return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
-
+# Student inputs the name of a classroom with an active quiz and is redirected to take that quiz
 @classrooms.route("/classroom/enter", methods=['GET', 'POST'])
 def enter_classroom():
     form = EnterClassroomForm()
@@ -34,11 +34,13 @@ def enter_classroom():
     return render_template('enter_classroom.html', title='get in chief', form=form)
 
 
-# displays a specific classroom TODO if logged in and classroom owner, add option to edit/add a quiz
+# displays a specific classroom and its quizzes and response data
 @classrooms.route("/classroom/<int:classroom_id>", methods=['GET', 'POST'])
 def classroom(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
     quizzes = classroom.added_quizzes
+    for quiz in quizzes:
+        print(quiz.classroom_host_id)
     # if there is an active quiz, pass it to the template; else pass None
     # TIM -> "REMOVED DUE TO ACTIVE_QUIZ BEING MOVED TO CLASSROOM FOCUS, MAYBE ADD IN LATER?"
     #active_quiz = None
@@ -54,13 +56,14 @@ def classroom(classroom_id):
         print(classroom_id)
         return render_template('take_quiz.html', classroom_id=classroom_id)  
 
-
+# Teacher can choose an existing quiz from dropdown or create a new one to add to this specific classroom
 @classrooms.route("/classroom/<int:classroom_id>/add_quiz", methods=['GET', 'POST'])
 @login_required
 def add_quiz(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
     # retrieve the current user's quizzes, create tuples with (id, name) as choices for the form
     form = AddQuizForm()
+    # add default option to "create a quiz" in the dropdown
     choices = [(0, "Create a Quiz")]
     quizzes = Quiz.query.filter_by(user_id=current_user.id).filter(Quiz.classroom_host_id.isnot(classroom_id)).all()
     quiz_list = []
@@ -73,10 +76,10 @@ def add_quiz(classroom_id):
         if quiz_id == 0:
             return redirect(url_for('quizzes.new_quiz'))
         else:
-            addedQuiz = Quiz.query.filter_by(id=quiz_id).first()
-            classroom.added_quizzes.append(addedQuiz)
+            quiz = Quiz.query.filter_by(id=quiz_id).first()
+            classroom.added_quizzes.append(quiz)
             db.session.commit()
-            flash(u'Quiz \"' + addedQuiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
+            flash(u'Quiz \"' + quiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
             return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
     # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom

@@ -20,6 +20,7 @@
                     {{ form.question_content }}
                 </div>
                 <div class="subforms-container">
+                    <!-- a loop to create each new answer and name them uniquely using loop.index0 -->
                     {% for answer in form.question_answers %}
                     <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
                         <span class="form-group">

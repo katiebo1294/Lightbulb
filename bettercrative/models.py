@@ -43,19 +43,19 @@ class Classroom(db.Model):
     name = db.Column(db.String(20), unique=True, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # Multiple quizzes can be attached to a classroom (only one can be active at a time)
-    added_quizzes = db.relationship('Quiz', backref='classroom_host', cascade="all, delete, delete-orphan")
+    # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
+    added_quizzes = db.relationship('Quiz', secondary='assoc', lazy='subquery', backref=db.backref('classroom_host', lazy=True))
     # active quiz ID is stored here, or NULL if no active quiz
     active_quiz = db.Column(db.Integer, nullable=True, default=None)
     
     def __repr__(self):
-        return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.active_quiz}')"
+        return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.added_quizzes}', '{self.active_quiz}')"
 
 # Quiz is a static model, once we create a quiz we do not modify the data inside when referenceing,
 # if we are using the quiz we copy contents so we can reuse the same quiz
 class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
+    name = db.Column(db.String, unique=True, nullable=False)
     # currently, a classroom has just one question with a list of answers attached to it
     question_content = db.Column(db.String, nullable=False)
     question_answers = db.relationship('Answer', backref='quiz', lazy=True, collection_class=list,
@@ -63,13 +63,19 @@ class Quiz(db.Model):
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # each quiz in a classroom is a copy of the base quiz, so each copy can be active in one classroom
-    classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
+    #classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
     active_question = db.Column(db.String, nullable=True)
     questions = db.relationship('Question', backref='quiz', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
+
+# helper table for the many-to-many relationship between classrooms and quizzes
+assoc = db.Table('assoc', 
+    db.Column('classroom_id', db.Integer, db.ForeignKey('classroom.id'), primary_key=True),
+    db.Column('quiz_id', db.Integer, db.ForeignKey('quiz.id'), primary_key=True)
+    )
 
 
 class Answer(db.Model):
@@ -90,7 +96,7 @@ class Question(db.Model):
     answers = db.relationship('Answer', backref='question', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")'''
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     
-    
+# stores a student's response to a quiz question
 class Response(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
@@ -99,4 +105,4 @@ class Response(db.Model):
     
 
     def __repr__(self):
-            return f"Response('{self.isCorrect}')"
+            return f"Response('{self.quiz_reference}', '{self.isCorrect}')"
