@@ -11,6 +11,7 @@ quizzes = Blueprint('quizzes', __name__)
 
 @quizzes.route("/quiz/new", methods=['GET', 'POST'])
 @login_required
+#if a classroom ID is supplied, the newly created quiz will be added to it
 def new_quiz(classroom_id=None):
     form = QuizForm()
     if form.validate_on_submit():
@@ -20,10 +21,9 @@ def new_quiz(classroom_id=None):
             owner=current_user
         )
         db.session.add(quiz)
-        # add each question to the quiz
+        # add each answer to the question
         for answer in form.question_answers.data:
             new_answer = Answer(**answer)
-            # add each answer to the question
             quiz.question_answers.append(new_answer)
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
@@ -32,7 +32,7 @@ def new_quiz(classroom_id=None):
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
-
+# displays a specific quiz (the editing view)
 @quizzes.route("/quiz/<int:quiz_id>")
 @login_required
 def quiz(quiz_id):
@@ -43,7 +43,7 @@ def quiz(quiz_id):
 @quizzes.route("/quiz/add")
 @login_required
 def add_question():
-    # gets the name and class_id from the URL params
+    # gets the name and class_id from the URL params in the JavaScript file
     print("adding Question")
     quiz_id = request.args.get('quiz_id', None)
     if quiz_id is None:
@@ -70,7 +70,7 @@ def add_question():
     return "addedQuestion - Success", 200
     #return render_template('quiz.html', title=quiz.name, quiz=quiz)
 
-# Removes given quiz 
+# Removes given question 
 @quizzes.route("/quiz/remove")
 @login_required
 def remove_question():

@@ -98,10 +98,11 @@
 
                             </div>
                             {% for quiz in classroom.added_quizzes %}
+                            <!-- JavaScript option to set the current quiz in the list to active -->
                             <li>
                                 {{ quiz.name }}
                                 <a class="btn btn-lg set-active"
-                                    href="{{ url_for('classrooms.set_active', quiz_id=quiz.id) }}">
+                                onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
                                     Set Active
                                 </a>
                             </li>
@@ -111,8 +112,7 @@
                     </div>
 
                 </div>
-                <!--Will be made only visible to those not log in later. Also, having issues getting 
-                specifically the active quiz s-->
+                <!-- TODO having issues getting specifically the active quiz s-->
                 {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes) %}
                 <div>
                   <a class = "Take-Active-Quiz btn " href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
@@ -136,13 +136,13 @@
                     </div>
                 </div>
 
-                <div style="height:40vh; width:40vw;">
-                    <!-- Temporary area to display charts of student data -->
+                <!-- <div style="height:40vh; width:40vw;">
+                   Temporary area to display charts of student data 
                     <canvas id="basicChart"></canvas>
-                    <button class="Show-Student-Response btn" onclick="create_chart();">
-                        Show student response
+                    <button class="Show-Student-Response btn" onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
+                        Show student response {{ sumRight }}
                     </button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
