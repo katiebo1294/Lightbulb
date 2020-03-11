@@ -39,7 +39,7 @@ def quiz(quiz_id):
     quiz = Quiz.query.get_or_404(quiz_id)
     return render_template('quiz.html', title=quiz.name, quiz=quiz)
 
-# Adds a new blank question to Quiz.  
+# Adds a new blank question to Quiz 
 @quizzes.route("/quiz/add")
 @login_required
 def add_question():
@@ -63,19 +63,16 @@ def add_question():
     
     #load new question data
 
-    #quiz.active_question == quiz.name
-
     db.session.commit()
     print("success")
     return "addedQuestion - Success", 200
-    #return render_template('quiz.html', title=quiz.name, quiz=quiz)
 
 # Removes given question 
 @quizzes.route("/quiz/remove")
 @login_required
 def remove_question():
     print("Removing Question")
-    # gets the name and class_id from the URL params
+    # gets the name and class_id from the URL params (necessary for JavaScript to work)
     question_id = request.args.get('question_id', None)
 
     if question_id is None:
@@ -103,4 +100,3 @@ def remove_question():
 
     db.session.commit()
     return "lit", 200
-    # return render_template('quiz.html', title=quiz.name, quiz=quiz)

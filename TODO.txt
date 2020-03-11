@@ -71,24 +71,12 @@ add_quiz.html - commenting
  with the Visual Studio Code python extension.
 -sort the imports, this can be done by selecting and right clicking all imports
 
-models.py - comment every class
-tables.py - remove - this is redundant code
-classrooms.forms.py - comments needed
-                    - needs exception handling
-classrooms.routes.py - comments needed
-                     - needs exception handling
-                     - remove unnecessary TODO's and commented code
-quizzes.forms.py - comments needed
-                 - needs exception handling
-                 - check TODO, is it still needed? if so leave, if not remove
-quizzes.routes.py - comments needed
-                  - needs exception handling
-users.forms.py - comments needed
-               - needs exception handling
-               - check TODO, is it still needed? if so leave, if not remove
-users.routes.py - comments needed
-                - needs exception handling
-                - check TODO, is it still needed? if so leave, if not remove
+classrooms.forms.py - needs exception handling
+classrooms.routes.py - needs exception handling
+quizzes.forms.py - needs exception handling
+quizzes.routes.py - needs exception handling
+users.forms.py - needs exception handling
+users.routes.py - needs exception handling
 -----<JAVASCRIPT Files>-----
 files to be kept for sure, please review these.  Add if there are any more that
 need to be reviewed that are not on the list:

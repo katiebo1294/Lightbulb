@@ -14,7 +14,6 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[InputRequired(), EqualTo('password')])
-    # TODO: add classroom name?
     profile_pic = FileField('(Optional) Choose a Profile Picture', validators=[FileAllowed('jpg', 'png')])
     submit = SubmitField('Sign Up')
 

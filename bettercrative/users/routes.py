@@ -20,7 +20,6 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash(u'Your account has been created! You are now able to log in.', 'success')
-        # TODO: automatically generate a classroom or not?
         return redirect(url_for('users.login'))
     return render_template('register.html', title='Register', form=form)
 
@@ -68,7 +67,7 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-
+# TODO move to classroom/routes.py
 @users.route("/account/delete_classroom/<int:quiz_id>", methods = ['GET', 'POST'])
 def delete_quiz(quiz_id):
     quiz = Quiz.query.filter_by(id=quiz_id).first()
@@ -77,13 +76,13 @@ def delete_quiz(quiz_id):
     flash(u'Quiz Removed', 'success')
     return redirect(url_for('users.account'))
 
+# TODO move to quiz/routes.py
 @users.route("/account/delete_quiz/<int:classroom_id>", methods=['GET', 'POST'])
 def delete_classroom(classroom_id):
     classroom = Classroom.query.filter_by(id=classroom_id).first()
     db.session.delete(classroom)
     db.session.commit()
     flash(u'Classroom Removed!', 'success')
-    # TODO: have flash message say the specific classroom name
     return redirect(url_for('users.account'))
 
 

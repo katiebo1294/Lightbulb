@@ -41,14 +41,8 @@ def classroom(classroom_id):
     quizzes = classroom.added_quizzes
     for quiz in quizzes:
         print(quiz.classroom_host_id)
-    # if there is an active quiz, pass it to the template; else pass None
-    # TIM -> "REMOVED DUE TO ACTIVE_QUIZ BEING MOVED TO CLASSROOM FOCUS, MAYBE ADD IN LATER?"
-    #active_quiz = None
-    #for quiz in quizzes:
-    #    if quiz.active:
-    #        active_quiz = quiz
     if current_user.is_authenticated:
-        return render_template('classroom.html', title=classroom.name, classroom=classroom) #, active_quiz=active_quiz <- THIS WAS REMOVED FROM END OF THIS LINE
+        return render_template('classroom.html', title=classroom.name, classroom=classroom)
     else:
         quiz = Quiz.query.filter_by(classroom_host_id=classroom_id).first()
         return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
@@ -71,7 +65,7 @@ def add_quiz(classroom_id):
         quiz_list = [(q.id, q.name) for q in quizzes]
     form.quiz.choices = choices + quiz_list
     if form.validate_on_submit():
-        #gets the quiz by id through form and assigns said quiz to the active_quiz
+        # get chosen quiz's ID from the form, grab that quiz and attach it to the current classroom
         quiz_id = form.quiz.data
         if quiz_id == 0:
             return redirect(url_for('quizzes.new_quiz'))
@@ -82,7 +76,6 @@ def add_quiz(classroom_id):
             flash(u'Quiz \"' + quiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
             return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
-    # TODO allow user to select a quiz they have already made, or create a new one, to be put into this classroom
 
 
 
@@ -110,13 +103,11 @@ def set_active():
 @classrooms.route("/classroom/remove_active", methods=['GET', 'POST'])
 @login_required
 def remove_active():
-    # gets the name and class_id from the URL params
+    # gets the name and class_id from the URL params (necessary for set_active.js to do its thing)
     class_id = request.args.get('classroom_id', None)
     print(class_id)
 
-    #TODO: make custom exceptions and catch them somewhere along the line to give the user a useful error page. 
-    # if name is None:
-    #     raise Exception('No \'name\' supplied!')
+    #TODO: custom error handling
     if class_id is None:
         raise Exception('No \'classroom_id\' supplied!')
 
@@ -138,9 +129,8 @@ def remove_active():
 @classrooms.route("/classroom/<int:classroom_id>/take", methods=['GET', 'POST'])
 def take_quiz(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
-    # TODO maybe try filtering by name=classroom.active_quiz
-    quiz = Quiz.query.filter_by(classroom_host_id=classroom_id).first() #add active=True arg later
-    #print("This is the question: " + quiz.question_content)
+    quiz_id = classroom.active_quiz
+    quiz = Quiz.query.get_or_404(quiz_id)
     
     #dictionary of true and false for each input
     dicts = {}
@@ -151,9 +141,9 @@ def take_quiz(classroom_id):
         print(option.content)
         dicts[option.content] = option.correct
     
-    
+    #gets a list of what the student responded with
     print(dicts)
-    answered = request.form.getlist('studentResponse') #gets a list of what the student respondeed with
+    answered = request.form.getlist('studentResponse') 
     print(answered) 
 
 
@@ -172,9 +162,8 @@ def take_quiz(classroom_id):
     return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
   
 
-#Need to query the databases for all the student responses based on a classroom id
-#Get all the falses and true
-#Send that information to the front to display as lists
+
+# query database for all responses from this specific classroom, send lists of right and wrong answers to front
 
 @login_required
 @classrooms.route("/classroom/<int:classroom_id>/results", methods=['GET', 'POST'])
