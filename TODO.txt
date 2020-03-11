@@ -108,3 +108,15 @@ files a day at minimum and this should be cleared up quickly
 Thanks!
 
 -Tim
+
+<<Katie>>
+There's also some changes to the database that we really need to do ASAP, since everything else depends on the db and how its's set up. This is what needs to be done/changed:
+
+- change quiz to classroom relationship from "a classroom has many quizzes, but a quiz only has one classroom" (one-to-many) to "a classroom has many quizzes, and a quiz has many classrooms" (many-to-many). This requires creating a separate table in the db to link them together which is actually a pretty major change to how we access those objects in the db.
+- change the structure of quizzes from "a quiz has one question and a list of Answer objects attached to it" to "a quiz has a list of Question objects attached to it that each have four answers". This will make it so we can easily add questions to a quiz, although each question will only have four multiple choice answers for the time being.
+- add a Student model that will have Response objects attached to it, and possibly other fields, like student ID or classroom ID. This will make it easier to track student's answers/progress and organize the responses to a specific quiz.
+- maybe making the Response objects use a Boolean instead of Enum field? I'm not sure exactly how Hansel has it set up right now but it might be something to consider as we make these other changes.
+
+A lot of this is stuff that will mess up our other stuff, so that stuff needs to be changed too, and so on. I think having a meeting with everyone to discuss how the database works so everyone is on the same page and understand what needs to be done would be a good idea. 
+
+Thanks guys! We're crushing it
