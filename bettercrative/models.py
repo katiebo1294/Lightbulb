@@ -44,7 +44,7 @@ class Classroom(db.Model):
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
-    added_quizzes = db.relationship('Quiz', secondary='assoc', lazy='subquery', backref=db.backref('classroom_host', lazy=True))
+    added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', lazy='subquery', backref=db.backref('classroom_host', lazy=True))
     # active quiz ID is stored here, or NULL if no active quiz
     active_quiz = db.Column(db.Integer, nullable=True, default=None)
     
@@ -72,29 +72,23 @@ class Quiz(db.Model):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
 
 # helper table for the many-to-many relationship between classrooms and quizzes
-assoc = db.Table('assoc', 
+assoc = db.Table('cl_qz_link', 
     db.Column('classroom_id', db.Integer, db.ForeignKey('classroom.id'), primary_key=True),
     db.Column('quiz_id', db.Integer, db.ForeignKey('quiz.id'), primary_key=True)
     )
 
 
-class Answer(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text, nullable=False)
-    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-    #question_id = db.Column(db.Integer, db.ForeignKey('question.id), nullable=False)
-    correct = db.Column(db.Boolean, nullable=False, default=False)
-
-    def __repr__(self):
-        return f"Answer('{self.content}', '{self.correct}')"
-
-
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
-    ''' (For future when we switch to having a quiz with a list of questions that each has 4 answers)
-    answers = db.relationship('Answer', backref='question', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")'''
+    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE'))
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    #answers = an array of tuples, once we migrate to PostgreSQL: (content, correctness)
+
+class Student(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    responses = db.relationship('Response', backref='student', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
+    # roster?
     
 # stores a student's response to a quiz question
 class Response(db.Model):
@@ -103,6 +97,5 @@ class Response(db.Model):
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     isCorrect = db.Column(db.Enum("True", "False"))
     
-
     def __repr__(self):
             return f"Response('{self.quiz_reference}', '{self.isCorrect}')"
