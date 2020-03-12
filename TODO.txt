@@ -33,21 +33,13 @@ main.css - remove clutter and unneeded declarations
          remove if you are certain it is not being used.  if it is being used 
          but is overcomplicating feel free to edit to simplify it down)
 -----<HTML Files>-----
-layout.html - cleaning <link>'s at the top and bottom, organize and comment
-            - move javascript to separate file (located at bottom of layout)
-            - improve comments, refrain from overcommenting
-account.html - comment sections
-teacher_login.html - comment sections
+layout.html - move javascript to separate file (located at bottom of layout)
 take_quiz.html - move css to main.css
-               - there is some commented out code, is it needed? if not remove
-               - comment sections, remove duplicate comments
-register.html - improve commenting and spacing
 quiz.html - there is some commented out code, is it needed? if not remove
           - move css to main.css or utilize existing css
           - improve spacing
 login.html - improve comments
            - improve spacing
-enter_classroom.html - improve commenting
 create_quiz.html - scripts located at top if they are globally used then put in
                    layout, if not then comment properly and separate from html 
                    area for clarity

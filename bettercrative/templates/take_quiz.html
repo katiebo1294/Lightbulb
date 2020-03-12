@@ -1,90 +1,67 @@
 {% extends "layout.html" %}
-
 {% block content %}
+
 <style>
+    div.multiple-choice {
+        color: rgb(3, 8, 80);
+        font-family: "Source Code Pro";
+        font-size: 1.2vw;
+        height: 60rem;
+    }
 
-div.multiple-choice{
-    color:rgb(3, 8, 80);
-    font-family: "Source Code Pro";
-    font-size:1.2vw;
-    height:60rem;
-}
-div.headerSection{
-    font-family:'Source Code Pro';
-    font-size:1.5vw;
-    
-    color: rgb(3,8,80);
-}
+    div.headerSection {
+        font-family: 'Source Code Pro';
+        font-size: 1.5vw;
 
-div.multiple-choice{
-    margin-top: 7vw;
-}
+        color: rgb(3, 8, 80);
+    }
 
-
-
+    div.multiple-choice {
+        margin-top: 7vw;
+    }
 </style>
 
-
-
-
-<div class = "multiple-choice">
-         <span class = "Taking-a-Quiz">Taking a Quiz</span>
-            
-        <div class = "answerchoices">
-            <div class = "menu" style = "margin-left:15vw; margin-top: ">
-                
-                <!--Need to rework so that 1 is = to <int: id> I got error before-->
-                <form action="" method='POST'> 
-                        <span class = "btn" style = "font-size:1.7vw; margin-top:3vw;"> Question: {{ quiz.question_content }} </span>
-                        
-                        <div class =  "options"> 
-                            <span> Options:</span>
-                                <div class ="Student-Answers">
-                                    
-                                <!-- {% for answer in quiz.question_answers %}
-                                <h4><input type="checkbox" name='studentResponse' value ='{{answer.content}}' /> 
-                                    {{ answer.content }}</h4>
-                                {% endfor %} -->
-                                    
-
-
-                                {%for eachanswer in quiz.question_answers%}
-                                <div class = "answerContainer reset">
-                                    <div class = "answerChoice">
-
-                                        <div class = "btn-group-toggle" data-toggle="buttons">
-                                            <label class = "btn btn-secondary active button-choices">
-                                                <input type = "checkbox" name = "studentResponse" value = '{{eachanswer.content}}' class = "response">{{"ABCD"[loop.index0]}} 
-                                            </label>
-                                        </div>
-                                        <!-- <span class = "choice"> <input type = "button" name="studentResponse" value = '{{"ABCD"[loop.index0]}}' class ="response"></span> -->
-                                        
-                                        <div class = "answerBox">
-                                            <div class = "answerBox-answer">
-                                                {{eachanswer.content}}
-                                            </div>
-                                        </div>
+<div class="multiple-choice">
+    <span class="Taking-a-Quiz">Taking a Quiz</span>
+    <div class="answerchoices">
+        <div class="menu" style="margin-left:15vw; margin-top: ">
+            <!--Need to rework so that 1 is = to <int: id> I got error before-->
+            <form action="" method='POST'>
+                <span class="btn" style="font-size:1.7vw; margin-top:3vw;"> Question: {{ quiz.question_content }}</span>
+                <div class="options">
+                    <span> Options:</span>
+                    <!-- Answer Section -->
+                    <div class="Student-Answers">
+                        {%for eachanswer in quiz.question_answers%}
+                        <div class="answerContainer reset">
+                            <div class="answerChoice">
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-secondary active button-choices">
+                                        <input type="checkbox" name="studentResponse" value='{{eachanswer.content}}'
+                                            class="response">{{"ABCD"[loop.index0]}}
+                                    </label>
+                                </div>
+                                <div class="answerBox">
+                                    <div class="answerBox-answer">
+                                        {{eachanswer.content}}
                                     </div>
-    
-                                {%endfor%}
-                                
-                                <button type="submit" class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);">Submit</button>
-                                </div>   
-                        </div>        
-                                <!-- formaction='/classroom/{{classroomid}}'>  -->
-                        
-                </form>
-                <!-- prevent things from floating after this section -->
-                <div style =" clear: both;"></div>
-                <!-- prevent things from floating after this section -->
+                                </div>
+                            </div>
 
-            </div>
+                            {%endfor%}
+
+                            <button type="submit" class="btn Taking-a-Quiz-Submit"
+                                style="background-color:rgb(137, 160, 209);">Submit</button>
+                        </div>
+                    </div>
+            </form>
+            <!-- prevent things from floating after this section -->
+            <div style=" clear: both;"></div>
+
         </div>
+    </div>
 
-        <div class ="reset"> </div>
+    <div class="reset">
 
-
-
-
-
-{% endblock  %}
+    </div>
+    {% endblock  %}
