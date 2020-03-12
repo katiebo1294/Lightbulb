@@ -10,7 +10,7 @@
                 <legend class="border-bottom mb-4">Enter Classroom</legend>
                 <!-- student can input the name of an active classroom to sign in and take the active quiz -->
                 {{ form.room_id.label(class="form-control-label") }}
-
+                <!-- classroom id -->
                 {% if form.room_id.errors %}
                     {{ form.room_id(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">

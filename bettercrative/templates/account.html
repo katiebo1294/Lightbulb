@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-<script src="{{ url_for('static', filename='js/set_active.js') }}" ></script>
 
 <div class = "wrapper">
 <!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
@@ -16,27 +15,20 @@
 
         {% for classroom in current_user.classrooms %}
             <div class="row classroom_element">
+                <!-- dropdown for a classroom's added quizzes and which one if any is active -->
                 <div class="dropdown show">
-                    <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle"
-                    data-toggle="dropdown" id="dropdownMenuLink" role="button">
+                    <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink" role="button">
                         Name: {{ classroom.name }}
                     </a>
                     <div class="dropdown-menu">
-                        <!-- dropdown for a classroom's added quizzes and which one if any is active -->
-
-
                         {% for quiz in classroom.added_quizzes %}
                             {% if classroom.active_quiz %}
-                            <!--  
-                            quiz property:
-                                    quiz('name', date_created, user_id, classroom_host_id) 
-                        -->
                                 <button class="dropdown-item active">
                                         *ACTIVE* Quiz: {{ quiz.name }}
                                 </button>
 
                             {% else %}
-                            <!-- links to JavaScript file to set the active quiz -->
+                        <!-- links to JavaScript file to set the active quiz -->
                                 <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active', quiz_id=quiz.id)}}', quiz_id = '{{quiz.id}}', classroom_id = '{{classroom.id}}')" method="POST">
                                         Quiz: {{ quiz.name }}
                                 </button>
@@ -49,7 +41,7 @@
                                 None
                             </button>
                         {% else %}
-                        <!-- links to JavaScript file to un-set the active quiz -->
+                        <!-- deactivate active quiz, set to None -->
                             <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id = '{{classroom.id}}')" method="POST">
                                 None
                             </button>
@@ -116,7 +108,7 @@
 
 
 
-
+<!-- Local Javascript -->
 <script src="{{ url_for('static', filename='js/set_active.js') }}" ></script>
 
 {% endblock %}
