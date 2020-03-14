@@ -11,6 +11,7 @@ users = Blueprint('users', __name__)
 
 @users.route('/register', methods=['GET', 'POST'])
 def register():
+    """ Register a new (teacher) account. """
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     form = RegistrationForm()
@@ -26,6 +27,7 @@ def register():
 
 @users.route("/login", methods=['GET', 'POST'])
 def login():
+    """ Log in to an existing (teacher) account. """
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     form = LoginForm()
@@ -43,6 +45,7 @@ def login():
 
 @users.route("/logout")
 def logout():
+    """ Log out of the current (teacher) account. """
     logout_user()
     return redirect(url_for('main.home'))
 
@@ -50,6 +53,7 @@ def logout():
 @users.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
+    """ Display the current user's account page. Shows a list of their created classrooms and quizzes. """
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.picture.data:
@@ -70,6 +74,11 @@ def account():
 # TODO move to classroom/routes.py
 @users.route("/account/delete_classroom/<int:quiz_id>", methods = ['GET', 'POST'])
 def delete_quiz(quiz_id):
+    """ Delete the specified quiz owned by the current user. 
+    
+        Parameters:
+                quiz_id (int): the ID of the quiz to be deleted.
+    """
     quiz = Quiz.query.filter_by(id=quiz_id).first()
     db.session.delete(quiz)
     db.session.commit()
@@ -79,6 +88,11 @@ def delete_quiz(quiz_id):
 # TODO move to quiz/routes.py
 @users.route("/account/delete_quiz/<int:classroom_id>", methods=['GET', 'POST'])
 def delete_classroom(classroom_id):
+    """ Delete the specified classroom owned by the current user. 
+    
+        Parameters:
+                classroom_id (int): the ID of the classroom to be deleted.
+    """
     classroom = Classroom.query.filter_by(id=classroom_id).first()
     db.session.delete(classroom)
     db.session.commit()
@@ -88,6 +102,7 @@ def delete_classroom(classroom_id):
 
 @users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
+    """ Request a password reset for the current user. """
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     form = RequestResetForm()
@@ -101,6 +116,11 @@ def reset_request():
 
 @users.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
+    """ Resets the password based on the given token.
+    
+        Parameters:
+                token (int): the token created during the reset request.
+    """
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
     user = User.verify_reset_token(token)

@@ -11,8 +11,12 @@ quizzes = Blueprint('quizzes', __name__)
 
 @quizzes.route("/quiz/new", methods=['GET', 'POST'])
 @login_required
-#if a classroom ID is supplied, the newly created quiz will be added to it
 def new_quiz(classroom_id=None):
+    """ Create a new quiz.
+
+        Optional parameters:
+            classroom_id (int): ID for a classroom. If supplied, add this new quiz to that classroom.
+    """
     form = QuizForm()
     if form.validate_on_submit():
         quiz = Quiz(
@@ -32,18 +36,27 @@ def new_quiz(classroom_id=None):
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
-# displays a specific quiz (the editing view)
+
 @quizzes.route("/quiz/<int:quiz_id>")
 @login_required
 def quiz(quiz_id):
+    """ Display the given quiz. Teacher's editing view. 
+
+        Parameters: 
+                quiz_id (int): The ID of the quiz to display.
+    """
     quiz = Quiz.query.get_or_404(quiz_id)
     return render_template('quiz.html', title=quiz.name, quiz=quiz)
 
-# Adds a new blank question to Quiz 
+
 @quizzes.route("/quiz/add")
 @login_required
 def add_question():
-    # gets the name and class_id from the URL params in the JavaScript file
+    """ Add a blank question to the given quiz.
+
+        Parameters: 
+                quiz_id (int): The ID of the quiz to add the question to.
+    """
     print("adding Question")
     quiz_id = request.args.get('quiz_id', None)
     if quiz_id is None:
@@ -67,12 +80,16 @@ def add_question():
     print("success")
     return "addedQuestion - Success", 200
 
-# Removes given question 
+
 @quizzes.route("/quiz/remove")
 @login_required
 def remove_question():
+    """ Remove a question from the given quiz.
+        Parameters: 
+                question_id (int): the ID of the question to be removed.
+                quiz_id (int): the quiz to remove the question from.
+    """
     print("Removing Question")
-    # gets the name and class_id from the URL params (necessary for JavaScript to work)
     question_id = request.args.get('question_id', None)
 
     if question_id is None:

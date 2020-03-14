@@ -11,7 +11,7 @@ main = Blueprint('main', __name__)
 @main.route('/')
 @main.route('/home')
 def home():
-    # A logged-in user's homepage is their account page; otherwise it's the sign-in page
+    """ Displays the "home" page. If the user is signed in, this becomes their "account" page. """
     if current_user.is_authenticated:
         redirect(url_for('users.account'))
         return render_template('account.html')
@@ -21,16 +21,19 @@ def home():
 
 @main.route('/about')
 def about():
+    """ Displays the "about" page. """
     return render_template('about.html')
 
-# For testing CodeMirror
+
 @main.route('/test')
 def test():
+    """ Page to test CodeMirror (embedded IDE) """
     return render_template('test.html')
 
-# Routing for 404 errors
+
 @main.route("/<page_name>")
 def other_page(page_name):
+    """ 404 error routes """
     response = make_response(render_template('404.html'), 404)
     return render_template('404.html')
 

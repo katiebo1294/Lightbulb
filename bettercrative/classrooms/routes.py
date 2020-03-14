@@ -8,10 +8,11 @@ from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, Ad
 
 classrooms = Blueprint('classrooms', __name__)
 
-# Teacher fills out form to create a new classroom, then is redirected to the classroom's dashboard
+
 @classrooms.route("/classroom/new", methods=['GET', 'POST'])
 @login_required
 def new_classroom():
+    """ Create a new classroom. """
     form = ClassroomForm()
     if form.validate_on_submit():
         classroom = Classroom(name=form.name.data, owner=current_user)
@@ -21,9 +22,10 @@ def new_classroom():
         return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
     return render_template('create_classroom.html', title='New Classroom', form=form)
 
-# Student inputs the name of a classroom with an active quiz and is redirected to take that quiz
+# TODO exception handling for student enter classroom w/o active quiz
 @classrooms.route("/classroom/enter", methods=['GET', 'POST'])
 def enter_classroom():
+    """ Student sign-in to classroom. Classroom must have an active quiz. """
     form = EnterClassroomForm()
     if form.validate_on_submit():
         classroom = Classroom.query.filter_by(name=form.room_id.data).first()
@@ -34,9 +36,15 @@ def enter_classroom():
     return render_template('enter_classroom.html', title='get in chief', form=form)
 
 
-# displays a specific classroom and its quizzes and response data
+
 @classrooms.route("/classroom/<int:classroom_id>", methods=['GET', 'POST'])
 def classroom(classroom_id):
+    """ 
+    Display the given classroom's dashboard.
+
+    Parameters:
+            classroom_id (int): the ID of the classroom to display
+    """
     classroom = Classroom.query.get_or_404(classroom_id)
     quizzes = classroom.added_quizzes
     for quiz in quizzes:
@@ -50,10 +58,16 @@ def classroom(classroom_id):
         print(classroom_id)
         return render_template('take_quiz.html', classroom_id=classroom_id)  
 
-# Teacher can choose an existing quiz from dropdown or create a new one to add to this specific classroom
+
 @classrooms.route("/classroom/<int:classroom_id>/add_quiz", methods=['GET', 'POST'])
 @login_required
 def add_quiz(classroom_id):
+    """
+    Add a quiz to a classroom. Can choose an existing quiz that belongs to the user or create a new one.
+
+    Parameters:
+            classroom_id (int): the ID of the classroom to add a quiz to
+    """
     classroom = Classroom.query.get_or_404(classroom_id)
     # retrieve the current user's quizzes, create tuples with (id, name) as choices for the form
     form = AddQuizForm()
@@ -78,14 +92,19 @@ def add_quiz(classroom_id):
     return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
 
 
-
-# sets a quiz to the active classroom
 # !currently there is a bug where if you click on the nav bar the change gets 
 # !reset, however, routing to the page separately or refreshing the page does
 # !not break the active-ness
 @classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
 @login_required
 def set_active():
+    """
+    Sets the given quiz as active in the classroom it's in.
+    
+    Parameters: 
+            quiz_id (int): the ID of the quiz to set active
+            classroom_id (int): the ID of the classroom to make it active in
+    """
     quiz_id = request.args.get('quiz_id', None)
     print(quiz_id)
     quiz = Quiz.query.get_or_404(quiz_id)
@@ -98,12 +117,15 @@ def set_active():
 
     return render_template('classroom.html', classroom=classroom)
 
-   
-# Removes the active quiz for a class
+
 @classrooms.route("/classroom/remove_active", methods=['GET', 'POST'])
 @login_required
 def remove_active():
-    # gets the name and class_id from the URL params (necessary for set_active.js to do its thing)
+    """ Sets the given quiz to inactive in the current classroom.
+    
+        Parameters: 
+                classroom_id (int): the ID of the classroom to inactive the quiz in
+    """
     class_id = request.args.get('classroom_id', None)
     print(class_id)
 
@@ -120,14 +142,14 @@ def remove_active():
 
     return "set Empty", 200
   
-  
-  
-  
-#Allows user to take an active quiz 
-#The stuff that is printed is displayed in the terminal and is for testing purposes
-#this is still a work in progress but it does stuff rn
+
 @classrooms.route("/classroom/<int:classroom_id>/take", methods=['GET', 'POST'])
 def take_quiz(classroom_id):
+    """ Student takes the given quiz.
+
+        Parameters:
+                classroom_id (int): the ID of the classroom the student is signed in to
+    """
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
@@ -168,7 +190,11 @@ def take_quiz(classroom_id):
 @login_required
 @classrooms.route("/classroom/<int:classroom_id>/results", methods=['GET', 'POST'])
 def view_results(classroom_id):
+    """ View the student responses from the given classroom.
 
+        Parameters: 
+                classroom_id (int): the ID of the classroom to retrieve answers from
+    """
     classroom = Classroom.query.get_or_404(classroom_id)
     
     print("WRONG ANSWERS-------------")
