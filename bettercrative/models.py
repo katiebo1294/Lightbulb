@@ -58,14 +58,12 @@ class Quiz(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     # currently, a classroom has just one question with a list of answers attached to it
     question_content = db.Column(db.String, nullable=False)
-    question_answers = db.relationship('Answer', backref='quiz', lazy=True, collection_class=list,
-                                       cascade="all, delete, delete-orphan")
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # each quiz in a classroom is a copy of the base quiz, so each copy can be active in one classroom
     #classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
-    active_question = db.Column(db.String, nullable=True)
+    #active_question = db.Column(db.String, nullable=True)
     questions = db.relationship('Question', backref='quiz', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
 
     def __repr__(self):
@@ -79,10 +77,12 @@ assoc = db.Table('cl_qz_link',
 
 
 class Question(db.Model):
+   
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
-    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE'))
+    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name = 'question_types'))
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    
     #answers = an array of tuples, once we migrate to PostgreSQL: (content, correctness)
 
 class Student(db.Model):
@@ -95,7 +95,7 @@ class Response(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-    isCorrect = db.Column(db.Enum("True", "False"))
+    isCorrect = db.Column(db.Enum("True", "False", name = "isCorrect"))
     
     def __repr__(self):
             return f"Response('{self.quiz_reference}', '{self.isCorrect}')"

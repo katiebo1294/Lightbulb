@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.classrooms.routes import classroom
-from bettercrative.models import Quiz, Answer, Classroom, User, Question
+from bettercrative.models import Quiz, Classroom, User, Question
 from bettercrative.quizzes.forms import QuizForm
 
 quizzes = Blueprint('quizzes', __name__)
