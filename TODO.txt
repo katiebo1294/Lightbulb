@@ -69,6 +69,8 @@ quizzes.forms.py - needs exception handling
 quizzes.routes.py - needs exception handling
 users.forms.py - needs exception handling
 users.routes.py - needs exception handling
+
+HANSEL - I'll do error handling
 -----<JAVASCRIPT Files>-----
 files to be kept for sure, please review these.  Add if there are any more that
 need to be reviewed that are not on the list:
@@ -102,4 +104,8 @@ A lot of this is stuff that will mess up our other stuff, so that stuff needs to
 Thanks guys! We're crushing it
 
 - To fix the many to many issue you create a weak entity table that links the two. I'll send some database videos that were very good as I was studying for my final that would be good for everyone to take a look at 
-    - Hansel March 19 2020
+  Also, I agree that the response object should use a boolean for specifically if the student response were correct or not strictly. But the reason I'd say wait on it is that when we
+  want to store variable responses, i.e how correct they were or something like that then an Enum would be better. Its a minor thing so I wouldn't change it just yet tho I do agree
+    - Hansel March 19 2020 - I can take care of the weak entity thing
+  
+    
