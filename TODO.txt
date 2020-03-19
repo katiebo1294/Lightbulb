@@ -1,3 +1,8 @@
+Server url - https://gentle-caverns-60163.herokuapp.com
+Does not run right now because there is an issue with the database. I deployed it b/c postgre requires 
+the database to operate remotely and so I'm thinking ahead
+
+
 Okay guys, this is a long one but please review the whole document and start 
 ASAP.  As you solve issues please add an X or remove them from the list and 
 push them to git.  Removing files permenantly from git can be weird so it may 
