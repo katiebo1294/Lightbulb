@@ -100,3 +100,6 @@ There's also some changes to the database that we really need to do ASAP, since 
 A lot of this is stuff that will mess up our other stuff, so that stuff needs to be changed too, and so on. I think having a meeting with everyone to discuss how the database works so everyone is on the same page and understand what needs to be done would be a good idea. 
 
 Thanks guys! We're crushing it
+
+- To fix the many to many issue you create a weak entity table that links the two. I'll send some database videos that were very good as I was studying for my final that would be good for everyone to take a look at 
+    - Hansel March 19 2020
