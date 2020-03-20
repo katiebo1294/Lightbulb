@@ -23,10 +23,11 @@ def create_app(config_class=Config):
 
     app.app_context().push()
     db.init_app(app)
-    migrate = Migrate(app, db.app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+
+    migrate.init_app(app, db)
 
   #  app.config.from_object(os.environ['APP_SETTINGS'])
    # app.config['SQALCHEMY_TRACK_MODIFICATIONS'] = False
