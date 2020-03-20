@@ -169,7 +169,7 @@ class Question(db.Model):
     
     #answers = an array of tuples, once we migrate to PostgreSQL: (content, correctness)
 
-class Student(db.Model):
+#class Student(db.Model):
     """ Represents a student user.
 
         ...
@@ -180,8 +180,8 @@ class Student(db.Model):
         responses: list(Response)
             a list of responses the student has made to quiz questions (see Response below).
     """
-    id = db.Column(db.Integer, primary_key=True)
-    responses = db.relationship('Response', backref='student', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
+#    id = db.Column(db.Integer, primary_key=True)
+ #   responses = db.relationship('Response', backref='student', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
     # TODO roster? maybe in classroom/user models too
     
 

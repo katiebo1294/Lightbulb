@@ -26,3 +26,4 @@ db.session.add(adrian)
 adrian_classroom = Classroom(name='cs497')
 adrian.classrooms.append(adrian_classroom)
 db.session.commit()
+

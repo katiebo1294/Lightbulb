@@ -1,11 +1,14 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 
 from bettercrative.config import Config
+
 
 # Application factory
 # Blueprint registration
@@ -20,9 +23,13 @@ def create_app(config_class=Config):
 
     app.app_context().push()
     db.init_app(app)
+    migrate = Migrate(app, db.app)
     bcrypt.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
+
+  #  app.config.from_object(os.environ['APP_SETTINGS'])
+   # app.config['SQALCHEMY_TRACK_MODIFICATIONS'] = False
 
     from bettercrative.users.routes import users
     from bettercrative.classrooms.routes import classrooms
@@ -42,6 +49,7 @@ def create_app(config_class=Config):
 
 
 db = SQLAlchemy()
+migrate = Migrate()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 login_manager.login_view = 'users.login'
