@@ -18,7 +18,7 @@ from bettercrative.errors.routes import not_found
 def create_app(config_class=Config):
     app = Flask(__name__)
     Bootstrap(app)
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
     db.app = app
 
     app.app_context().push()
