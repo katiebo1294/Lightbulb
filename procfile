@@ -1,2 +1,2 @@
-web gunicorn wsgi:bettercrative
+web gunicorn wsgi:app
 
