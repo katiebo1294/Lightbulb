@@ -1,1 +1,1 @@
-web: gunicorn wsgi:bettercrative
+web: flask init-db; gunicorn wsgi:bettercrative
