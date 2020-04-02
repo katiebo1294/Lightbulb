@@ -60,4 +60,3 @@ wcwidth==0.1.8
 Werkzeug==0.16.0
 wrapt==1.11.2
 WTForms==2.2.1
-zope.interface==4.7.1
