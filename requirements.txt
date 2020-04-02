@@ -11,7 +11,6 @@ cffi==1.13.2
 chardet==3.0.4
 Click==7.0
 coverage==5.0.3
-Django==3.0.1
 dominate==2.4.0
 Flask==1.1.1
 Flask-Bcrypt==0.7.1
