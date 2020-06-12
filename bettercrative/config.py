@@ -3,7 +3,7 @@ basedir = os.path.abspath(os.path.dirname(__file__)) #creates a basedirectory fo
 
 class Config(object):
     SECRET_KEY = 'a7fc44f15ab68e45d593cf6f03197c50'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:juanito2@localhost/postgres'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:postgres@localhost/bettercrative_db'
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
