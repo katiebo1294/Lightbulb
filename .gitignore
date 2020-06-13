@@ -139,3 +139,6 @@ dmypy.json
 
 # database
 site.db
+
+# config
+config.py

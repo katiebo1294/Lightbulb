@@ -2,38 +2,25 @@
 {% block content %}
 <div class="form-container">
     <div class="content-section">
+        <!-- debugging check -->
+        {% if form.errors %}
+        {{form.errors}}
+        {%endif%}
         <form action="{{ url_for('quizzes.new_quiz') }}" method="POST">
             {{ form.hidden_tag() }} <!--adds csrf form-->
             <fieldset class="form-group">
                 <div class="form-group">
+                    
                     <legend class="border-bottom mb-4">Create Quiz</legend>
                     <!-- quiz title -->
                     {{ form.name.label }}
                     {{ form.name }}
+
+
+
+                    
                 </div>
-                <div class="subforms-container">
-                    <!-- a loop to create each new answer and name them uniquely using loop.index0 -->
-                    {% for question in form.questions %}
-                    <div class="subform" data-index="{{ loop.index0 }}" id="question-{{ loop.index0 }}-form">
-                        <span class="form-group">
-                            {{ question.content.label }} {{ loop.index0 + 1 }}
-                            {{ question.content }}
-                        </span>
-                        {% for answer in subform.answers %}
-                            <div class="subform" data-index="{{ loop.index0 }}" id="answer-{{ loop.index0 }}-form">
-                                <span class="form-group">
-                                    {{ answer.content.label }} {{ loop.index0 + 1 }}
-                                    {{ answer.content }}
-                                </span>
-                                <span class="form-group">
-                                    {{ answer.correct.label }}
-                                    {{ answer.correct }}
-                                </span>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    {% endfor %}
-                </div>
+                
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}

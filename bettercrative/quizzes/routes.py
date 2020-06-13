@@ -19,8 +19,11 @@ def new_quiz(classroom_id=None):
             classroom_id (int): ID for a classroom. If supplied, add this new quiz to that classroom.
     """
     form = QuizForm()
-    subform = QuestionForm()
-    subsubform = AnswerForm()
+
+    if form.validate_on_submit():
+        print("yup")
+    else:
+        print("NOPE")
     if form.validate_on_submit():
         quiz = Quiz(
             name=form.name.data,
@@ -28,21 +31,13 @@ def new_quiz(classroom_id=None):
             owner=current_user
         )
         db.session.add(quiz)
-        # add questions
-        for question in form.questions.data:
-            new_question = Question(content=subform.content.data)
-            # add answers to the question
-            for answer in subform.answers.data:
-                question.answers.append(answer)
-                answer.content = subsubform.content.data
-                answer.correctness = subsubform.correct.data
-            quiz.questions.append(new_question)
+       
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         if classroom_id:
             classroom.added_quizzes.append(quiz)
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
-    return render_template('create_quiz.html', title='New Quiz', form=form, subform=subform, subsubform=subsubform)
+    return render_template('create_quiz.html', title='New Quiz', form=form)
 
 
 @quizzes.route("/quiz/<int:quiz_id>")
