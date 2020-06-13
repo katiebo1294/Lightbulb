@@ -95,8 +95,7 @@ class Classroom(db.Model):
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
-    added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', lazy='subquery',
-                                    backref=db.backref('classroom_host', lazy=True))
+    added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', lazy='subquery')
     # active quiz ID is stored here, or NULL if no active quiz
     active_quiz = db.Column(db.Integer, nullable=True, default=None)
 
@@ -128,9 +127,9 @@ class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     # currently, a classroom has just one question with a list of answers attached to it
-    question_content = db.Column(db.String, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', lazy='subquery')
     # each quiz in a classroom is a copy of the base quiz, so each copy can be active in one classroom
     # classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz

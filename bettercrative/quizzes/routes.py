@@ -4,7 +4,8 @@ from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.classrooms.routes import classroom
 from bettercrative.models import Quiz, Classroom, User, Question
-from bettercrative.quizzes.forms import QuizForm
+from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm
+from datetime import date
 
 quizzes = Blueprint('quizzes', __name__)
 
@@ -18,23 +19,30 @@ def new_quiz(classroom_id=None):
             classroom_id (int): ID for a classroom. If supplied, add this new quiz to that classroom.
     """
     form = QuizForm()
+    subform = QuestionForm()
+    subsubform = AnswerForm()
     if form.validate_on_submit():
         quiz = Quiz(
             name=form.name.data,
-            question_content=form.question_content.data, 
+            date_created=date.today(),
             owner=current_user
         )
         db.session.add(quiz)
-        # add each answer to the question
-        for answer in form.question_answers.data:
-            new_answer = Answer(**answer)
-            quiz.question_answers.append(new_answer)
+        # add questions
+        for question in form.questions.data:
+            new_question = Question(content=subform.content.data)
+            # add answers to the question
+            for answer in subform.answers.data:
+                question.answers.append(answer)
+                answer.content = subsubform.content.data
+                answer.correctness = subsubform.correct.data
+            quiz.questions.append(new_question)
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         if classroom_id:
             classroom.added_quizzes.append(quiz)
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
-    return render_template('create_quiz.html', title='New Quiz', form=form)
+    return render_template('create_quiz.html', title='New Quiz', form=form, subform=subform, subsubform=subsubform)
 
 
 @quizzes.route("/quiz/<int:quiz_id>")
@@ -73,8 +81,8 @@ def add_question():
     db.session.add(question)
 
     quiz.questions.append(question)
-    
-    #load new question data
+
+    # load new question data
 
     db.session.commit()
     print("success")
@@ -104,16 +112,15 @@ def remove_question():
     if quiz is None:
         return "oops fuk", 500
 
-
     quiz.questions.remove(question)
 
     print(f'removed')
 
     db.session.delete(question)
-    
+
     print(f'deleted')
 
-    #load new question data
+    # load new question data
 
     db.session.commit()
     return "lit", 200
