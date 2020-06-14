@@ -98,7 +98,7 @@
             <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
             <div>
                 {% for question in quiz.questions %}
-                    <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ quiz.questions.index(question) }}" onclick="changeActiveQuestion(this)">
+                    <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ quiz.questions.index(question) + 1 }}" onclick="changeActiveQuestion(this)">
                         Question {{ loop.index0 + 1 }}
                         <button class="btn  Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
@@ -121,7 +121,7 @@
 
             <div id = "questions">
                 {% for question in quiz.questions %}
-                <div id = "question-{{ quiz.questions.index(question) }}" {% if quiz.questions.index(question) != 1 %} style="display: none;" {% endif %}>
+                <div id = "question-{{ quiz.questions.index(question) + 1 }}" {% if quiz.questions.index(question) != 0 %} style="display: none;" {% endif %}>
                     
                     <!-- in the future, need to know whether a question is multiple choice, short answer or t/f -->
                     <!-- if multiple choice, give div class multiple choice same with others -->
@@ -134,8 +134,7 @@
                             <!-- contents of multiple choice box -->
                             <div class = "question-edit-header">
                                 <div class="question-number">
-                                    <!-- TODO make this show the correct question number -->
-                                    <label>{{ loop.index0 + 1 }}) <!--{{quiz.question_content}}--></label>
+                                    <label>{{ quiz.questions.index(question) + 1 }}) <!--{{quiz.question_content}}--></label>
                                     <a id = "Quiz-Edit" href= "#"> Edit</a>    
                                 </div>
                                 
@@ -195,8 +194,10 @@
     var previous = 1;
     function changeActiveQuestion(elem) {
         var index = elem.id.slice(-1);
-        document.getElementById("question-" + index).style.display = "block";
-        document.getElementById("question-" + previous).style.display = "none";
+        if(index != previous) {
+            document.getElementById("question-" + index).style.display = "block";
+            document.getElementById("question-" + previous).style.display = "none";
+        }
         previous = index;
     }
 </script>
