@@ -128,7 +128,7 @@
                     <!-- also need to be able to add questions in one quiz -->
                    
                     <div id = "question">
-                        
+                        {% if question.category == 'Multiple Choice' %}
                         <div class = "multiple-choice">
 
                             <!-- contents of multiple choice box -->
@@ -176,6 +176,13 @@
                             {%endfor%}
                             </span>
                         </div>
+                        {% elif question.category == 'True/False' %}
+                        <!-- Put true/false answer format here -->
+                        {% elif question.category == 'Short Answer' %}
+                        <!-- Put short answer format here -->
+                        {% elif question.category == 'IDE' %}
+                        <!-- Put IDE format here -->
+                        {% endif %}
                     </div>
                 </div>
                 {% endfor %}

@@ -172,7 +172,7 @@ class Question(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
-    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'))
+    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'), default='Multiple Choice')
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     answers = db.Column(CompositeType(
         'answer_tuple',
