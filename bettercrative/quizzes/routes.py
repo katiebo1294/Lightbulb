@@ -30,6 +30,8 @@ def new_quiz(classroom_id=None):
             date_created=date.today(),
             owner=current_user
         )
+        default_question = Question(quiz_id=quiz.id, index=(len(quiz.questions)+1))
+        quiz.questions.append(default_question)
         db.session.add(quiz)
        
         db.session.commit()
@@ -69,7 +71,7 @@ def add_question():
     if quiz is None:
         return "Quiz not found!", 404
 
-    question = Question(quiz_id=quiz_id)
+    question = Question(quiz_id=quiz_id, index=(len(quiz.questions) + 1))
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
 

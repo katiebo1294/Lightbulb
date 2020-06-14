@@ -100,8 +100,8 @@
                 {% for question in quiz.questions %}
 
                     {% if quiz.active_question == question.name %}
-                    <a class="btn active" id="question-{{ question.id }}">
-                        {{ loop.index0 }}+1
+                    <a class="btn active" id="question-{{ question.id - 1 }}">
+                        {{ loop.index0 + 1 }}
                         <button class="btn Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
                         </button>
@@ -145,7 +145,7 @@
                             <div class = "question-edit-header">
                                 <div class="question-number">
                                     <!-- TODO make this show the correct question number -->
-                                    <label>1) {{quiz.question_content}}</label>
+                                    <label>1) <!--{{quiz.question_content}}--></label>
                                     <a id = "Quiz-Edit" href= "#"> Edit</a>    
                                 </div>
                                 

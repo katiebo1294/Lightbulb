@@ -45,7 +45,6 @@ class User(db.Model, UserMixin):
         verify_reset_token(token):
             verifies the token supplied in order to reset the password.
     """
-    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -89,11 +88,10 @@ class Classroom(db.Model):
         active_quiz: int
             the ID of the quiz that is currently active in this classroom (see Quiz below).
     """
-    __tablename__ = 'Classroom'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
     added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', lazy='subquery')
     # active quiz ID is stored here, or NULL if no active quiz
@@ -122,13 +120,12 @@ class Quiz(db.Model):
         questions: list(Question)
             a list of the questions that are in the quiz (see Question below.)
     """
-    __tablename__ = 'Quiz'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     # currently, a classroom has just one question with a list of answers attached to it
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
-    user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', lazy='subquery')
     # each quiz in a classroom is a copy of the base quiz, so each copy can be active in one classroom
     # classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
@@ -153,8 +150,8 @@ class Quiz(db.Model):
 
 
 assoc = db.Table('cl_qz_link',
-                 db.Column('classroom_id', db.Integer, db.ForeignKey('Classroom.id'), primary_key=True),
-                 db.Column('quiz_id', db.Integer, db.ForeignKey('Quiz.id'), primary_key=True)
+                 db.Column('classroom_id', db.Integer, db.ForeignKey('classroom.id'), primary_key=True),
+                 db.Column('quiz_id', db.Integer, db.ForeignKey('quiz.id'), primary_key=True)
                  )
 
 
@@ -173,12 +170,11 @@ class Question(db.Model):
         quiz_id: int
             the ID of the quiz this question belongs to.
     """
-    __tablename__ = 'Question'
-
     id = db.Column(db.Integer, primary_key=True)
+    index = db.Column(db.Integer, nullable=False)
     content = db.Column(db.Text, nullable=True)
     category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'))
-    quiz_id = db.Column(db.Integer, db.ForeignKey('Quiz.id'), nullable=False)
+    quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     answers = db.Column(CompositeType(
         'answer_tuple',
         [
@@ -221,11 +217,9 @@ class Response(db.Model):
         isCorrect: str
             whether or not the answer is correct. Can be true or false.
         """
-    __tablename__ = 'Response'
-
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    classroom_host_id = db.Column(db.Integer, db.ForeignKey('Classroom.id'), nullable=False)
-    quiz_reference = db.Column(db.Integer, db.ForeignKey('Quiz.id'), nullable=False)
+    classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
+    quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     isCorrect = db.Column(db.Enum("True", "False", name="isCorrect"))
 
     def __repr__(self):
