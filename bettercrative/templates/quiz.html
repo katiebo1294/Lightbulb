@@ -98,7 +98,7 @@
             <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
             <div>
                 {% for question in quiz.questions %}
-                    <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ question.index }}" onclick="changeActiveQuestion(this)">
+                    <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ quiz.questions.index(question) }}" onclick="changeActiveQuestion(this)">
                         Question {{ loop.index0 + 1 }}
                         <button class="btn  Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
@@ -121,7 +121,7 @@
 
             <div id = "questions">
                 {% for question in quiz.questions %}
-                <div id = "question-{{ question.index }}" {% if question.index != 1 %} style="display: none;" {% endif %}>
+                <div id = "question-{{ quiz.questions.index(question) }}" {% if quiz.questions.index(question) != 1 %} style="display: none;" {% endif %}>
                     
                     <!-- in the future, need to know whether a question is multiple choice, short answer or t/f -->
                     <!-- if multiple choice, give div class multiple choice same with others -->

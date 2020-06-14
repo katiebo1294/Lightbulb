@@ -171,7 +171,6 @@ class Question(db.Model):
             the ID of the quiz this question belongs to.
     """
     id = db.Column(db.Integer, primary_key=True)
-    index = db.Column(db.Integer, nullable=False)
     content = db.Column(db.Text, nullable=True)
     category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'))
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
