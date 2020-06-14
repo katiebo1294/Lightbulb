@@ -98,8 +98,8 @@
             <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
             <div>
                 {% for question in quiz.questions %}
-                    <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ quiz.questions.index(question) + 1 }}" onclick="changeActiveQuestion(this)">
-                        Question {{ loop.index0 + 1 }}
+                    <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ loop.index }}" onclick="changeActiveQuestion(this)">
+                        Question {{ loop.index }}
                         <button class="btn  Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
                         </button>
@@ -121,7 +121,7 @@
 
             <div id = "questions">
                 {% for question in quiz.questions %}
-                <div id = "question-{{ quiz.questions.index(question) + 1 }}" {% if quiz.questions.index(question) != 0 %} style="display: none;" {% endif %}>
+                <div id = "question-{{ loop.index }}" {% if not loop.first %} style="display: none;" {% endif %}>
                     
                     <!-- in the future, need to know whether a question is multiple choice, short answer or t/f -->
                     <!-- if multiple choice, give div class multiple choice same with others -->
@@ -132,30 +132,30 @@
                         <div class = "multiple-choice">
 
                             <!-- contents of multiple choice box -->
-                            <div class = "question-edit-header">
-                                <div class="question-number">
-                                    <label>{{ quiz.questions.index(question) + 1 }}) <!--{{quiz.question_content}}--></label>
+                            <span class = "question-edit-header">
+                                <span class="question-number">
+                                    <label>{{ loop.index }}) <!--{{quiz.question_content}}--></label>
                                     <a id = "Quiz-Edit" href= "#"> Edit</a>    
-                                </div>
+                                </span>
                                 
-                            </div>
+                            </span>
                             
 
-                            <div class = "answerchoices">
-                                <div class = "menu">
+                            <span class = "answerchoices">
+                                <span class = "menu">
                                     
                                     <!-- prevent things from floating after this section -->
-                                    <div style =" clear: both;"></div>
+                                    <span style =" clear: both;"></span>
                                     <!-- prevent things from floating after this section -->
 
-                                </div>
-                            </div>
+                                </span>
+                            </span>
 
-                            <div class ="reset"> </div>
+                            <span class ="reset"> </span>
 
                             {%for eachanswer in quiz.question_answers%}
-                            <div class = "answerContainer reset">
-                                <div class = "answerChoice">
+                            <span class = "answerContainer reset">
+                                <span class = "answerChoice">
                                    
                                     {%if quiz.question_answers.index(eachanswer) == 0%}
                                     <span class = "choice"> A </span>
@@ -167,27 +167,19 @@
                                     <span class = "choice"> D</span>
                                     {%endif%}
                                     
-                                    <div class = "answerBox">
-                                        <div class = "answerBox-answer">
+                                    <span class = "answerBox">
+                                        <span class = "answerBox-answer">
                                             {{eachanswer.content}}
-                                        </div>
-                                    </div>
-                                </div>
-
+                                        </span>
+                                    </span>
+                                </span>
                             {%endfor%}
-
-                            </div>
+                            </span>
                         </div>
-                    </div>  
-                   
+                    </div>
                 </div>
                 {% endfor %}
-                
             </div>
-
-            
-
-
         </div>
     </div>
 <script>
