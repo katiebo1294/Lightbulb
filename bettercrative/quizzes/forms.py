@@ -3,15 +3,16 @@ from wtforms import StringField, SubmitField, FieldList, FormField, SelectField,
 from wtforms.validators import InputRequired
 
 # Each answer has some content and whether or not it is correct
-class AnswerForm(Form):
+class AnswerForm(FlaskForm):
     content = StringField('Answer', validators=[InputRequired('Please fill out this field.')])
     correct = BooleanField('Correct?')
 
 # Currently, a quiz has one question with a list of answers attached to it
-class QuestionForm(Form):
+class QuestionForm(FlaskForm):
     content = StringField('Question', validators=[InputRequired('Please fill out this field.')])
-    # TODO category
-    answers = FieldList(FormField(AnswerForm), min_entries=4)
+    category = SelectField('Type', choices = [('Multiple Choice', 'Multiple Choice'), ('True/False', 'True/False'), ('Short Answer', 'Short Answer')])
+    answers = StringField('Correct Answer', validators=[InputRequired('Please fill out this field.')] )
+    submit = SubmitField('Add Question')
 
 class QuizForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired('Please fill out this field.')])

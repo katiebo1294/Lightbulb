@@ -20,10 +20,7 @@ def new_quiz(classroom_id=None):
     """
     form = QuizForm()
 
-    if form.validate_on_submit():
-        print("yup")
-    else:
-        print("NOPE")
+    
     if form.validate_on_submit():
         quiz = Quiz(
             name=form.name.data,
@@ -85,7 +82,6 @@ def add_question():
     print("success")
     return "addedQuestion - Success", 200
 
-
 @quizzes.route("/quiz/remove")
 @login_required
 def remove_question():
@@ -121,3 +117,33 @@ def remove_question():
 
     db.session.commit()
     return "lit", 200
+
+@quizzes.route("/quiz/add_content", methods = ['GET', 'POST'])
+@login_required
+def add_question_content():
+
+    """ Adds question content within the question in the quiz.
+        Paramters:
+            question_id (int): the ID of the question for content to be added.
+    """
+    print(request.args)
+    question_id = request.args.get('question_id',None)
+
+    #Find the current question and then update it's value by showing the form
+    current_question = Question.query.filter_by(id = question_id).first()
+    form = QuestionForm()
+    
+    #handle POST request
+    if form.validate_on_submit():
+        flash(f'IT VALIDATED')
+        current_question.content = form.content.data
+        current_question.category = form.category.data
+        current_question.answers = form.answers.data
+    
+        db.session.commit()
+        return redirect(url_for('home'))
+    #handle GET Request
+    print('rendering template')
+    return render_template('add_question.html', title = 'question', form = form)
+
+

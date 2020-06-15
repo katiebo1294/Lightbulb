@@ -38,6 +38,7 @@ function removeForm() {
 
 
 function addQuestion(url, q_id) {
+    
     $.ajax({
         type: "GET",
         data: {'quiz_id': q_id},
@@ -117,6 +118,22 @@ function addForm() {
     $newForm.find('.remove').click(removeForm);
 }
 
+function addQuestionContent(url, question_id){
+    $.ajax({
+        type:"GET",
+        data: {'question_id': question_id},
+        url:"/quiz/add_content",
+        error: function(statusText) {
+            alert(statusText);
+            alert("Error Occured");
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
+    
+};
+
 
 $(document).ready(function() {
     // $('#add').click(addForm);
@@ -128,4 +145,7 @@ function refresh(section)
     console.log("Beggining Refresh")
     $(section).load(section);
     console.log("Refreshed");
-}
+};
+
+
+
