@@ -121,7 +121,7 @@
 
             <div id = "questions">
                 {% for question in quiz.questions %}
-                <div id = "question-{{ loop.index }}" {% if not loop.first %} style="display: none;" {% endif %}>
+                <span id = "question-{{ loop.index }}" {% if not loop.first %} style="display: none;" {% endif %}>
                     
                     <!-- in the future, need to know whether a question is multiple choice, short answer or t/f -->
                     <!-- if multiple choice, give div class multiple choice same with others -->
@@ -162,7 +162,7 @@
                             <span class ="reset"> </span>
                             {% if question.answers %}
                             {%for answer in question.answers %}
-                            <div class = "answerContainer reset">
+                            <span class = "answerContainer reset">
                                 <span class = "answerChoice">
                                     <span class = "choice"> {{ "abcdefghijklmnopqrstuvwxyz"[loop.index0] }} </span>
                                     
@@ -174,7 +174,7 @@
                                 </span>
                             {%endfor%}
                                 {% endif %}
-                            </div>
+                            </span>
                         </div>
                         {% elif question.category == 'True/False' %}
                         <!-- Put true/false answer format here -->
@@ -184,7 +184,7 @@
                         <!-- Put IDE format here -->
                         {% endif %}
                     </div>
-                </div>
+                </span>
                 {% endfor %}
             </div>
         </div>
