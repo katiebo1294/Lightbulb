@@ -51,8 +51,9 @@ def quiz(quiz_id):
         Parameters: 
                 quiz_id (int): The ID of the quiz to display.
     """
+    form = QuestionForm()
     quiz = Quiz.query.get_or_404(quiz_id)
-    return render_template('quiz.html', title=quiz.name, quiz=quiz)
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, form = form)
 
 
 @quizzes.route("/quiz/add")
@@ -145,6 +146,8 @@ def add_question_content():
 
     #Find the current question and then update it's value by showing the form
     current_question = Question.query.filter_by(id = question_id).first()
+    current_quiz = current_question.quiz_id
+
     form = QuestionForm()
     
     #handle POST request
@@ -155,9 +158,9 @@ def add_question_content():
         current_question.answers = form.answers.data
     
         db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for('quizzes.current_quiz'))
     #handle GET Request
     print('rendering template')
-    return render_template('add_question.html', title = 'question', form = form)
+    return render_template('quiz.html', title = 'question', quiz = current_quiz , form = form)
 
 

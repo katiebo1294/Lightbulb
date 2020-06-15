@@ -135,15 +135,29 @@
                             <span class = "question-edit-header">
                                 <span class="question-number">
                                     <label>{{ loop.index }}) <!--{{quiz.question_content}}--></label>
-                                    {% if question.content is none %}
                                     
                                     <!-- Sending in route for modifying the Question -->
-                                    <a id = "Quiz-Edit" onclick="addQuestionContent('{{ url_for('quizzes.add_question')}}', question_id = {{question.id}}"> Add Question </a>
+                                    <a id = "Quiz-Edit" onclick="addQuestionContent('{{ url_for('quizzes.add_question')}}', question_id = {{question.id}})"> Edit Question </a>
 
+                                    <div class= "form-container" id=question-form style = "display : none;">
+                                        <div class = "content-section">
+                                            <form action = "" method = "POST">
+                                                {{ form.hidden_tag() }}
+                                            </form>
                                     
-                                    {% else %}
-                                    <a id = "Quiz-Edit" href= "#"> Edit</a>
-                                    {%endif%}    
+                                            <fieldset class ="form-group">
+                                                <div class ="form-group">
+                                                    {{ form.content.label }} -> {{form.content}}
+                                                    {{ form.category.label}} -> {{form.category}}
+                                                    {{ form.answers.label }} -> {{form.answers}}
+                                                </div>
+                                            </fieldset>
+                                            <div class ="form-group">
+                                                {{ form.submit(class="btn btn-lg btn-outline-info") }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
                                 </span>
                                 
                             </span>
@@ -189,6 +203,7 @@
             </div>
         </div>
     </div>
+
 <script>
     var previous = 1;
     function changeActiveQuestion(elem) {
@@ -198,7 +213,9 @@
             document.getElementById("question-" + previous).style.display = "none";
         }
         previous = index;
-    }
+    };
+
+    
 </script>
     
     
