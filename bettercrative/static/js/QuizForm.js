@@ -121,7 +121,7 @@ function addForm() {
 function addQuestionContent(url, question_id){
     
     document.getElementById("question-form").style.display = "block";
-
+    
     $.ajax({
         type:"GET",
         data: {'question_id': question_id},

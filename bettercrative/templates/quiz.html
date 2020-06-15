@@ -139,22 +139,23 @@
                                     <!-- Sending in route for modifying the Question -->
                                     <a id = "Quiz-Edit" onclick="addQuestionContent('{{ url_for('quizzes.add_question')}}', question_id = {{question.id}})"> Edit Question </a>
 
-                                    <div class= "form-container" id=question-form style = "display : none;">
+                                    <div class= "form-container" id=question-form style = "display : block;">
                                         <div class = "content-section">
                                             <form action = "" method = "POST">
                                                 {{ form.hidden_tag() }}
-                                            </form>
+                                            
                                     
-                                            <fieldset class ="form-group">
+                                                <fieldset class ="form-group">
+                                                    <div class ="form-group">
+                                                        {{ form.content.label }} -> {{form.content}}
+                                                        {{ form.category.label}} -> {{form.category}}
+                                                    </div>
+                                                </fieldset>
+
                                                 <div class ="form-group">
-                                                    {{ form.content.label }} -> {{form.content}}
-                                                    {{ form.category.label}} -> {{form.category}}
-                                                    {{ form.answers.label }} -> {{form.answers}}
+                                                    {{ form.submit(class="btn btn-lg btn-outline-info") }}
                                                 </div>
-                                            </fieldset>
-                                            <div class ="form-group">
-                                                {{ form.submit(class="btn btn-lg btn-outline-info") }}
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                     
