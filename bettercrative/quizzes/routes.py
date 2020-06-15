@@ -109,10 +109,12 @@ def remove_question():
     if quiz is None:
         return "oops fuk", 500
 
-    quiz.questions.remove(question)
+    if(quiz is not None):
+        quiz.questions.remove(question)
 
     print(f'removed')
-
+    db.session.flush()
+    
     db.session.delete(question)
 
     print(f'deleted')
