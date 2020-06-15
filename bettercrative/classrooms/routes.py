@@ -48,11 +48,11 @@ def classroom(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
     quizzes = classroom.added_quizzes
     for quiz in quizzes:
-        print(quiz.classroom_host_id)
+        print(quiz.classroom_hosts)
     if current_user.is_authenticated:
         return render_template('classroom.html', title=classroom.name, classroom=classroom)
     else:
-        quiz = Quiz.query.filter_by(classroom_host_id=classroom_id).first()
+        quiz = Quiz.query.filter_by(quiz.classroom_hosts.contains(classroom_id)).first()
         return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
 
         print(classroom_id)
@@ -73,7 +73,8 @@ def add_quiz(classroom_id):
     form = AddQuizForm()
     # add default option to "create a quiz" in the dropdown
     choices = [(0, "Create a Quiz")]
-    quizzes = Quiz.query.filter_by(user_id=current_user.id).filter(Quiz.classroom_host_id.isnot(classroom_id)).all()
+    quizzes = Quiz.query.filter_by(user_id=current_user.id).filter(
+        not Quiz.classroom_hosts.contains(classroom_id)).all()
     quiz_list = []
     if quizzes:
         quiz_list = [(q.id, q.name) for q in quizzes]
@@ -108,7 +109,7 @@ def set_active():
     quiz_id = request.args.get('quiz_id', None)
     print(quiz_id)
     quiz = Quiz.query.get_or_404(quiz_id)
-    classroom = Classroom.query.get_or_404(quiz.classroom_host_id)
+    classroom = request.args.get('classroom_id', None)
     print(quiz)
     print(classroom)
     classroom.active_quiz = quiz_id

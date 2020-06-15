@@ -152,29 +152,21 @@
                             </span>
 
                             <span class ="reset"> </span>
-
-                            {%for eachanswer in quiz.question_answers%}
-                            <span class = "answerContainer reset">
+                            {% if question.answers %}
+                            {%for answer in question.answers %}
+                            <div class = "answerContainer reset">
                                 <span class = "answerChoice">
-                                   
-                                    {%if quiz.question_answers.index(eachanswer) == 0%}
-                                    <span class = "choice"> A </span>
-                                    {%elif quiz.question_answers.index(eachanswer) == 1 %}
-                                    <span class = "choice"> B</span>
-                                    {%elif quiz.question_answers.index(eachanswer) == 2 %}
-                                    <span class = "choice"> C</span>
-                                    {%else %}
-                                    <span class = "choice"> D</span>
-                                    {%endif%}
+                                    <span class = "choice"> {{ "abcdefghijklmnopqrstuvwxyz"[loop.index0] }} </span>
                                     
                                     <span class = "answerBox">
                                         <span class = "answerBox-answer">
-                                            {{eachanswer.content}}
+                                            {{answer.content}}
                                         </span>
                                     </span>
                                 </span>
                             {%endfor%}
-                            </span>
+                                {% endif %}
+                            </div>
                         </div>
                         {% elif question.category == 'True/False' %}
                         <!-- Put true/false answer format here -->
