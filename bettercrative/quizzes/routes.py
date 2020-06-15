@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.classrooms.routes import classroom
-from bettercrative.models import Quiz, Classroom, User, Question
+from bettercrative.models import Quiz, Classroom, User, Question, Answer
 from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm
 from datetime import date
 
@@ -27,8 +27,12 @@ def new_quiz(classroom_id=None):
             date_created=date.today(),
             owner=current_user
         )
+        # for testing purposes
         default_question = Question(quiz_id=quiz.id)
         quiz.questions.append(default_question)
+        a1 = Answer(question_id=default_question.id)
+        default_question.answers.append(a1)
+        #default_question.answers.append(("first answer", "True"))
         db.session.add(quiz)
        
         db.session.commit()

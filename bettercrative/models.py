@@ -1,7 +1,7 @@
 import enum
 from datetime import datetime
 
-from sqlalchemy_utils import CompositeType
+from sqlalchemy_utils import CompositeType, CompositeArray
 
 from bettercrative import db, login_manager
 from flask import current_app
@@ -123,19 +123,16 @@ class Quiz(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
-    # currently, a classroom has just one question with a list of answers attached to it
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', lazy='subquery')
-    # each quiz in a classroom is a copy of the base quiz, so each copy can be active in one classroom
-    # classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=True)
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
     # active_question = db.Column(db.String, nullable=True)
     questions = db.relationship('Question', backref='quiz', lazy=True, collection_class=list,
                                 cascade="all, delete, delete-orphan")
 
     def __repr__(self):
-        return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_host_id}')"
+        return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
     """ A helper table to link the Quiz and Classroom models above in a many-to-many relationship.
 
@@ -172,16 +169,18 @@ class Question(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
-    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'), default='Multiple Choice')
+    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'),
+                         default='Multiple Choice')
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-    answers = db.Column(CompositeType(
-        'answer_tuple',
-        [
-            db.Column('content', db.Text),
-            db.Column('correctness', db.Boolean)
-        ]
-    )
-    )
+    answers = db.relationship('Answer', backref='question', lazy=True, collection_class=list,
+                              cascade="all, delete, delete-orphan")
+
+
+class Answer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=True)
+    correctness = db.Column(db.Boolean, nullable=False, default=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
 
     # class Student(db.Model):
     """ Represents a student user.
