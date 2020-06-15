@@ -28,10 +28,10 @@ def new_quiz(classroom_id=None):
             owner=current_user
         )
         # for testing purposes
-        default_question = Question(quiz_id=quiz.id)
-        quiz.questions.append(default_question)
-        a1 = Answer(question_id=default_question.id)
-        default_question.answers.append(a1)
+        # default_question = Question(quiz_id=quiz.id)
+        # quiz.questions.append(default_question)
+        # a1 = Answer(question_id=default_question.id)
+        # default_question.answers.append(a1)
         #default_question.answers.append(("first answer", "True"))
         db.session.add(quiz)
        
@@ -75,6 +75,14 @@ def add_question():
     question = Question(quiz_id=quiz_id)
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
+
+    sql = "select count(question.id) from question, quiz where quiz.id = question.quiz_id"
+    numQuestions = db.session.execute(sql).first()[0] + 1
+
+    question.name = "Question " + str(numQuestions)
+    if question.name is None:
+        return "Question name creation fail, something went wrong with counting the quiz questions!", 500
+    print(numQuestions);
 
     db.session.add(question)
 

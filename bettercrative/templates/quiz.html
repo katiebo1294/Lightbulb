@@ -99,7 +99,7 @@
             <div>
                 {% for question in quiz.questions %}
                     <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ loop.index }}" onclick="changeActiveQuestion(this)">
-                        Question {{ loop.index }}
+                        {{question.name}}
                         <button class="btn  Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
                         </button>
