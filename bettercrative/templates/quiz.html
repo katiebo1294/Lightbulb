@@ -82,7 +82,7 @@
                 
                 <div class ="headerSection">
                     
-                    <div class = "editSign">Edit Quiz</div>
+                    <div class = "editSign">Quiz</div>
                     <div class = "QuizSaveExitBtn btn" > <a href ="{{ url_for('users.account')}}" >Save and Exit</a></div>
                 </div>
             </div>
@@ -135,7 +135,15 @@
                             <span class = "question-edit-header">
                                 <span class="question-number">
                                     <label>{{ loop.index }}) <!--{{quiz.question_content}}--></label>
-                                    <a id = "Quiz-Edit" href= "#"> Edit</a>    
+                                    {% if question.content is none %}
+                                    
+                                    <!-- Sending in route for modifying the Question -->
+                                    <a id = "Quiz-Edit" onclick="addQuestionContent('{{ url_for('quizzes.add_question')}}', question_id = {{question.id}}"> Add Question </a>
+
+                                    
+                                    {% else %}
+                                    <a id = "Quiz-Edit" href= "#"> Edit</a>
+                                    {%endif%}    
                                 </span>
                                 
                             </span>
