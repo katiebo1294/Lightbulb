@@ -118,9 +118,9 @@ function addForm() {
     $newForm.find('.remove').click(removeForm);
 }
 
-function addQuestionContent(){
+function addQuestionContent(q_id){
     
-    document.getElementById("question-form").style.display = "block";
+    document.getElementById("question-form-" + q_id).style.display = "block";
 };
 
 function shiftQuestion(url, q_id, direction) {

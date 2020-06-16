@@ -147,14 +147,14 @@
                                     <label>{{ loop.index }}) {{ question.content }}</label>
                                     
                                     <!-- Sending in route for modifying the Question -->
-                                    <a id = "Quiz-Edit" onclick="addQuestionContent()"> Edit Question </a>
+                                    <a id = "Quiz-Edit" onclick="addQuestionContent('{{ question.id }}')"> Add Question Content </a>
 
-                                    <div class= "form-container" id="question-form" style = "display: none;">
+                                    <div class= "form-container" id="question-form-{{ question.id }}" style = "display: none;">
                                         <div class = "content-section">
                                             <form action = "{{ url_for('quizzes.add_question_content', question_id=question.id) }}" method = "POST">
                                                 {{ form.hidden_tag() }}
-                                            
-                                    
+
+
                                                 <fieldset class ="form-group">
                                                     <div class ="form-group">
                                                         {{ form.content.label }} -> {{form.content}}
@@ -225,6 +225,7 @@
         var index = elem.id.slice(-1);
         if(index != previous) {
             document.getElementById("question-" + index).style.display = "block";
+            document.getElementById("question-form-" + index).style.display = "none";
             document.getElementById("question-" + previous).style.display = "none";
         }
         previous = index;

@@ -10,7 +10,7 @@ class AnswerForm(FlaskForm):
 # Currently, a quiz has one question with a list of answers attached to it
 class QuestionForm(FlaskForm):
     content = StringField('Question', validators=[InputRequired('Please fill out this field.')])
-    category = SelectField('Type', choices=[('MC', 'Multiple Choice'), ('TF', 'True/False'), ('SA', 'Short Answer'), ('IDE', 'Code')])
+    category = SelectField('Type', choices=[('Multiple Choice', 'Multiple Choice'), ('True/False', 'True/False'), ('Short Answer', 'Short Answer'), ('IDE', 'IDE')])
     submit = SubmitField('Add Question')
 
 class QuizForm(FlaskForm):
