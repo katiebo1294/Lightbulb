@@ -52,17 +52,28 @@ function addQuestion(url, q_id) {
         }
     });
 }
-function addAnswer() {
-
+function addAnswer(url, q_id) {
+    $.ajax({
+        type: "GET",
+        data: {'question_id': q_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
 }
 function removeQuestion(url, q_id) {
     $.ajax({
         type: "GET",
         data: {'question_id': q_id},
         url: url,
-        error: function(statusText) {
-            alert(statusText);
-            console.log(statusText);
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
         },
         success: function() {
             refresh("#body");
@@ -70,8 +81,19 @@ function removeQuestion(url, q_id) {
         }
     });
 }
-function removeAnswer() {
-
+function removeAnswer(url, a_id) {
+     $.ajax({
+        type: "GET",
+        data: {'answer_id': a_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
 }
 //add a subform
 function addForm() {
@@ -130,9 +152,9 @@ function shiftQuestion(url, q_id, direction) {
         data: {'question_id': q_id,
                 'direction': direction},
         url: url,
-        error: function(statusText) {
-            alert(statusText);
-            console.log(statusText);
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
         },
         success: function() {
             refresh("#body");

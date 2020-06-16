@@ -83,7 +83,7 @@ def add_question():
     question.name = "Question " + str(numQuestions)
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
-    print(numQuestions);
+    print(numQuestions)
 
     db.session.add(question)
 
@@ -94,6 +94,39 @@ def add_question():
     db.session.commit()
     print("success")
     return "addedQuestion - Success", 200
+
+
+@quizzes.route("/quiz/add-answer")
+@login_required
+def add_answer():
+    """ Add a blank answer to the given question.
+
+        Parameters:
+                question_id (int): The ID of the question to add the answer to.
+    """
+    print("adding Answer")
+    question_id = request.args.get('question_id', None)
+    if question_id is None:
+        return "No quiz id!", 400
+
+    question = Question.query.get_or_404(question_id)
+    if question is None:
+        return "Question not found!", 404
+
+    answer = Answer(question_id=question_id)
+    if answer is None:
+        return "Answer creation fail - If you see this something is very wrong", 500
+
+    db.session.add(answer)
+
+    question.answers.append(answer)
+
+    # load new answer data
+
+    db.session.commit()
+    print("success")
+    return "addedAnswer - Success", 200
+
 
 @quizzes.route("/quiz/remove")
 @login_required
@@ -118,7 +151,7 @@ def remove_question():
     if quiz is None:
         return "oops fuk", 500
 
-    if(quiz is not None):
+    if quiz is not None:
         quiz.questions.remove(question)
 
     print(f'removed')
@@ -132,6 +165,45 @@ def remove_question():
 
     db.session.commit()
     return "lit", 200
+
+
+@quizzes.route("/quiz/remove-answer")
+@login_required
+def remove_answer():
+    """ Remove an answer from the given question.
+        Parameters:
+                answer_id (int): the ID of the answer to be removed.
+    """
+    print("Removing Answer")
+    answer_id = request.args.get('answer_id', None)
+
+    if answer_id is None:
+        return "No answer id!", 400
+
+    answer = Answer.query.filter_by(id=answer_id).first()
+    if answer is None:
+        return "Question not found!", 404
+    print(f'question: {answer}')
+
+    question = Question.query.filter_by(id=answer.question_id).first()
+    if question is None:
+        return "oops fuk", 500
+
+    if question is not None:
+        question.answers.remove(answer)
+
+    print(f'removed')
+    db.session.flush()
+
+    db.session.delete(answer)
+
+    print(f'deleted')
+
+    # load new answer data
+
+    db.session.commit()
+    return "lit", 200
+
 
 @quizzes.route("/quiz/shift_question")
 @login_required
