@@ -99,10 +99,20 @@
             <div>
                 {% for question in quiz.questions %}
                     <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ loop.index }}" onclick="changeActiveQuestion(this)">
+                        {% if not loop.first %}
+                        <button class="btn  shift-Button" onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
+                            <-
+                        </button>
+                        {% endif %}
                         {{question.name}}
                         <button class="btn  Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
                         </button>
+                        {% if not loop.last %}
+                        <button class="btn  shift-Button" onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='right')">
+                            ->
+                        </button>
+                        {% endif %}
                     </a>
 
                 {% endfor %}

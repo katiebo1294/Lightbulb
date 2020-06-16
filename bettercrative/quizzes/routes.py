@@ -132,6 +132,53 @@ def remove_question():
     db.session.commit()
     return "lit", 200
 
+@quizzes.route("/quiz/shift_question")
+@login_required
+def shift_question():
+    """ Remove a question from the given quiz.
+        Parameters: 
+                question_id (int): the ID of the question to be removed.
+                quiz_id (int): the quiz to remove the question from.
+    """
+    print("Shifting Question")
+    question_id = request.args.get('question_id', None)
+    direction = request.args.get('direction', None)
+
+    if direction is None:
+        return "No direction given!", 400
+    if question_id is None:
+        return "No question id!", 400
+
+    question = Question.query.filter_by(id=question_id).first()
+    if question is None:
+        return "Question not found!", 404
+    print(f'question: {question}')
+
+    quiz = Quiz.query.filter_by(id=question.quiz_id).first()
+    if quiz is None:
+        return "oops fuk", 500
+
+    # target is the question that we want to swap in a direction
+    targetIdx = quiz.questions.index(question)
+
+    if(direction == "left"):
+        destinationIdx = targetIdx - 1
+    else:
+        destinationIdx = targetIdx + 1
+
+    # quiz.questions.remove(question)
+    # quiz.questions.insert(question,destinationIdx)
+
+    # tmp = quiz.questions.index(destinationIdx)
+    # quiz.questions.index(destinationIdx) = question
+    # question = tmp
+    
+
+    # load new question data
+
+    db.session.commit()
+    return "lit", 200
+
 @quizzes.route("/quiz/add_content", methods = ['GET', 'POST'])
 @login_required
 def add_question_content():

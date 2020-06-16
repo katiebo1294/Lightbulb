@@ -134,6 +134,22 @@ function addQuestionContent(url, question_id){
     
 };
 
+function shiftQuestion(url, q_id, direction) {
+    
+    $.ajax({
+        type: "GET",
+        data: {'question_id': q_id,
+                'direction': direction},
+        url: url,
+        error: function(statusText) {
+            alert(statusText);
+            console.log(statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
+}
 
 $(document).ready(function() {
     // $('#add').click(addForm);
