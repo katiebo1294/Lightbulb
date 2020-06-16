@@ -141,9 +141,9 @@ def shift_question():
                 question_id (int): the ID of the question to be removed.
                 quiz_id (int): the quiz to remove the question from.
     """
-    print("Shifting Question")
     question_id = request.args.get('question_id', None)
     direction = request.args.get('direction', None)
+    print("Shifting Question " + direction)
 
     if direction is None:
         return "No direction given!", 400
@@ -153,7 +153,6 @@ def shift_question():
     question = Question.query.filter_by(id=question_id).first()
     if question is None:
         return "Question not found!", 404
-    print(f'question: {question}')
 
     quiz = Quiz.query.filter_by(id=question.quiz_id).first()
     if quiz is None:
@@ -167,14 +166,8 @@ def shift_question():
     else:
         destinationIdx = targetIdx + 1
 
-    # quiz.questions.remove(question)
-    # quiz.questions.insert(question,destinationIdx)
-
-    # tmp = quiz.questions.index(destinationIdx)
-    # quiz.questions.index(destinationIdx) = question
-    # question = tmp
+    quiz.questions.insert(destinationIdx, quiz.questions.pop(targetIdx))
     
-
     # load new question data
 
     db.session.commit()
