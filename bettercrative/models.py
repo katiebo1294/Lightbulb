@@ -167,6 +167,10 @@ class Question(db.Model):
             the type of question. Can be multiple choice, true or false, short answer, or IDE (coding).
         quiz_id: int
             the ID of the quiz this question belongs to.
+        index: int
+            the index of the question in the list.
+        answers: Answer[]
+            a list of Answer objects (see Answer below).
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -180,6 +184,20 @@ class Question(db.Model):
 
 
 class Answer(db.Model):
+    """ Represents an answer to a quiz question.
+
+        ...
+        Attributes
+        ----------
+        id: int
+            the answer's ID in the database.
+        content: str
+            the content of the answer.
+        correctness: boolean
+            whether or not the answer is correct.
+        question_id: int
+            the ID of the question this answer belongs to.
+    """
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
     correctness = db.Column(db.Boolean, nullable=False, default=False)
