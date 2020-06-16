@@ -173,34 +173,34 @@ def shift_question():
     db.session.commit()
     return "lit", 200
 
-@quizzes.route("/quiz/add_content", methods = ['GET', 'POST'])
+
+@quizzes.route("/quiz/<int:question_id>/add_content", methods=['GET', 'POST'])
 @login_required
-def add_question_content():
+def add_question_content(question_id):
 
     """ Adds question content within the question in the quiz.
         Paramters:
             question_id (int): the ID of the question for content to be added.
     """
-    print(request.args)
-    question_id = request.args.get('question_id',None)
 
-    #Find the current question and then update it's value by showing the form
-    current_question = Question.query.filter_by(id = question_id).first()
-    current_quiz = current_question.quiz_id
+    # Find the current question and then update it's value by showing the form
+    current_question = Question.query.filter_by(id=question_id).first()
+    print(current_question)
+    current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
 
     form = QuestionForm()
     
-    #handle POST request
+    # handle POST request
     if form.validate_on_submit():
         flash(f'IT VALIDATED')
         current_question.content = form.content.data
         current_question.category = form.category.data
-        current_question.answers = form.answers.data
+        print(current_quiz)
     
         db.session.commit()
-        return redirect(url_for('quizzes.current_quiz'))
-    #handle GET Request
+        return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
+    # handle GET Request
     print('rendering template')
-    return render_template('quiz.html', title = 'question', quiz = current_quiz , form = form)
+    return render_template('quiz.html', title='question', quiz=current_quiz, form=form)
 
 

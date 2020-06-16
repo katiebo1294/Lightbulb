@@ -144,14 +144,14 @@
                             <!-- contents of multiple choice box -->
                             <span class = "question-edit-header">
                                 <span class="question-number">
-                                    <label>{{ loop.index }}) <!--{{quiz.question_content}}--></label>
+                                    <label>{{ loop.index }}) {{ question.content }}</label>
                                     
                                     <!-- Sending in route for modifying the Question -->
-                                    <a id = "Quiz-Edit" onclick="addQuestionContent('{{ url_for('quizzes.add_question')}}', question_id = {{question.id}})"> Edit Question </a>
+                                    <a id = "Quiz-Edit" onclick="addQuestionContent()"> Edit Question </a>
 
-                                    <div class= "form-container" id=question-form style = "display : block;">
+                                    <div class= "form-container" id="question-form" style = "display: none;">
                                         <div class = "content-section">
-                                            <form action = "" method = "POST">
+                                            <form action = "{{ url_for('quizzes.add_question_content', question_id=question.id) }}" method = "POST">
                                                 {{ form.hidden_tag() }}
                                             
                                     
@@ -166,6 +166,10 @@
                                                     {{ form.submit(class="btn btn-lg btn-outline-info") }}
                                                 </div>
                                             </form>
+                                            <!-- debugging check -->
+                                            {% if form.errors %}
+                                            {{form.errors}}
+                                            {%endif%}
                                         </div>
                                     </div>
                                     

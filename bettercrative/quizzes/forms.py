@@ -11,7 +11,6 @@ class AnswerForm(FlaskForm):
 class QuestionForm(FlaskForm):
     content = StringField('Question', validators=[InputRequired('Please fill out this field.')])
     category = SelectField('Type', choices = [('Multiple Choice', 'Multiple Choice'), ('True/False', 'True/False'), ('Short Answer', 'Short Answer')])
-    answers = StringField('Correct Answer', validators=[InputRequired('Please fill out this field.')] )
     submit = SubmitField('Add Question')
 
 class QuizForm(FlaskForm):

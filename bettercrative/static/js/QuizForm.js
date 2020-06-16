@@ -118,24 +118,9 @@ function addForm() {
     $newForm.find('.remove').click(removeForm);
 }
 
-function addQuestionContent(url, question_id){
+function addQuestionContent(){
     
     document.getElementById("question-form").style.display = "block";
-    
-    $.ajax({
-        type:"GET",
-        data: {'question_id': question_id},
-        url:"/quiz/add_content",
-        error: function(statusText) {
-            alert(statusText);
-            alert("Error Occured");
-        },
-        success: function() {
-            refresh("#body");
-        }
-    });
-
-    document.getElementById("question-form").style.display = "none";
 };
 
 function shiftQuestion(url, q_id, direction) {
