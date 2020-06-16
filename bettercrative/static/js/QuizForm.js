@@ -77,7 +77,6 @@ function removeQuestion(url, q_id) {
         },
         success: function() {
             refresh("#body");
-            //$("#question-" + q_id).hide();
         }
     });
 }
@@ -143,6 +142,10 @@ function addForm() {
 function addQuestionContent(q_id){
     
     document.getElementById("question-form-" + q_id).style.display = "block";
+};
+
+function addAnswerContent(q_id, a_id){
+    document.getElementById("answer-form-" + q_id + "-" + a_id).style.display = "block";
 };
 
 function shiftQuestion(url, q_id, direction) {

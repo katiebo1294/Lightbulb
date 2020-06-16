@@ -993,13 +993,13 @@ div.question-number{
   margin-bottom:3%;
 }
 
-a#Quiz-Edit{
+a#Question-Edit, a#Answer-Edit{
   float:right;
   text-decoration: none;
   color:black;
 }
 
-a#Quiz-Edit:hover{
+a#Question-Edit:hover, a#Answer-Edit:hover{
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }

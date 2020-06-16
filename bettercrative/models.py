@@ -193,14 +193,14 @@ class Answer(db.Model):
             the answer's ID in the database.
         content: str
             the content of the answer.
-        correctness: boolean
+        correct: boolean
             whether or not the answer is correct.
         question_id: int
             the ID of the question this answer belongs to.
     """
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=True)
-    correctness = db.Column(db.Boolean, nullable=False, default=False)
+    correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
 
     # class Student(db.Model):

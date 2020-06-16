@@ -51,9 +51,10 @@ def quiz(quiz_id):
         Parameters: 
                 quiz_id (int): The ID of the quiz to display.
     """
-    form = QuestionForm()
+    qform = QuestionForm()
+    aform = AnswerForm()
     quiz = Quiz.query.get_or_404(quiz_id)
-    return render_template('quiz.html', title=quiz.name, quiz=quiz, form = form)
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qform=qform, aform=aform)
 
 
 @quizzes.route("/quiz/add")
@@ -246,7 +247,7 @@ def shift_question():
     return "lit", 200
 
 
-@quizzes.route("/quiz/<int:question_id>/add_content", methods=['GET', 'POST'])
+@quizzes.route("/quiz/question/<int:question_id>/add_content", methods=['GET', 'POST'])
 @login_required
 def add_question_content(question_id):
 
@@ -260,18 +261,49 @@ def add_question_content(question_id):
     print(current_question)
     current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
 
-    form = QuestionForm()
+    qform = QuestionForm()
+    aform = AnswerForm()
     
     # handle POST request
-    if form.validate_on_submit():
+    if qform.validate_on_submit():
         flash(f'IT VALIDATED')
-        current_question.content = form.content.data
-        current_question.category = form.category.data
+        current_question.content = qform.content.data
+        current_question.category = qform.category.data
         print(current_quiz)
         db.session.commit()
         return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
     # handle GET Request
     print('rendering template')
-    return render_template('quiz.html', title='question', quiz=current_quiz, form=form)
+    return render_template('quiz.html', title='question', quiz=current_quiz, qform=qform, aform=aform)
+
+
+@quizzes.route("/quiz/answer/<int:answer_id>/add_content", methods=['GET', 'POST'])
+@login_required
+def add_answer_content(answer_id):
+    """ Adds answer content within the answer in the question.
+        Paramters:
+            answer_id (int): the ID of the answer for content to be added.
+    """
+
+    # Find the current answer and then update it's value by showing the form
+    current_answer = Answer.query.filter_by(id=answer_id).first()
+    print(current_answer)
+    current_question = Question.query.filter_by(id=current_answer.question_id).first()
+    current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
+
+    qform = QuestionForm()
+    aform = AnswerForm()
+
+    # handle POST request
+    if aform.validate_on_submit():
+        flash(f'IT VALIDATED')
+        current_answer.content = aform.content.data
+        current_answer.correct = aform.correct.data
+        print(current_question)
+        db.session.commit()
+        return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
+    # handle GET Request
+    print('rendering template')
+    return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform)
 
 
