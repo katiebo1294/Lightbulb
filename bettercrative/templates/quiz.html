@@ -147,9 +147,9 @@
                                     <label>{{ loop.index }}) {{ question.content }}</label>
                                     
                                     <!-- Sending in route for modifying the Question -->
-                                    <a id = "Quiz-Edit" onclick="addQuestionContent('{{ question.id }}')"> Add Question Content </a>
+                                    <a id = "Quiz-Edit" onclick="addQuestionContent('{{ loop.index }}')"> Add Question Content </a>
 
-                                    <div class= "form-container" id="question-form-{{ question.id }}" style = "display: none;">
+                                    <div class= "form-container" id="question-form-{{ loop.index }}" style = "display: none;">
                                         <div class = "content-section">
                                             <form action = "{{ url_for('quizzes.add_question_content', question_id=question.id) }}" method = "POST">
                                                 {{ form.hidden_tag() }}
@@ -225,7 +225,7 @@
         var index = elem.id.slice(-1);
         if(index != previous) {
             document.getElementById("question-" + index).style.display = "block";
-            document.getElementById("question-form-" + index).style.display = "none";
+            document.getElementById("question-form-" + previous).style.display = "none";
             document.getElementById("question-" + previous).style.display = "none";
         }
         previous = index;
