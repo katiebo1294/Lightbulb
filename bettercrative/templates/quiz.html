@@ -104,7 +104,7 @@
                             <-
                         </button>
                         {% endif %}
-                        {{question.name}}
+                        {{question.id}}
                         <button class="btn  Remove-Button" onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
                             X
                         </button>

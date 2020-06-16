@@ -1,6 +1,7 @@
 import enum
 from datetime import datetime
 
+from sqlalchemy.ext.orderinglist import ordering_list
 from sqlalchemy_utils import CompositeType, CompositeArray
 
 from bettercrative import db, login_manager
@@ -128,7 +129,7 @@ class Quiz(db.Model):
     classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', lazy='subquery')
     # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
     # active_question = db.Column(db.String, nullable=True)
-    questions = db.relationship('Question', backref='quiz', lazy=True, collection_class=list,
+    questions = db.relationship('Question', backref='quiz', lazy=True, order_by="Question.index", collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
 
     def __repr__(self):
@@ -173,6 +174,7 @@ class Question(db.Model):
     category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'),
                          default='Multiple Choice')
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
+    index = db.Column(db.Integer)
     answers = db.relationship('Answer', backref='question', lazy=True, collection_class=list,
                               cascade="all, delete, delete-orphan")
 

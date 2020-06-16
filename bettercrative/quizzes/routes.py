@@ -196,7 +196,6 @@ def add_question_content(question_id):
         current_question.content = form.content.data
         current_question.category = form.category.data
         print(current_quiz)
-    
         db.session.commit()
         return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
     # handle GET Request
