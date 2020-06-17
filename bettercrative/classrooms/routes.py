@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 from bettercrative import db
 from bettercrative.models import Classroom, Quiz, Response
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
-
+from typing import List
 classrooms = Blueprint('classrooms', __name__)
 
 
@@ -69,16 +69,19 @@ def add_quiz(classroom_id):
             classroom_id (int): the ID of the classroom to add a quiz to
     """
     classroom = Classroom.query.get_or_404(classroom_id)
-    # retrieve the current user's quizzes, create tuples with (id, name) as choices for the form
+
+    # Seting up the form
     form = AddQuizForm()
+
     # add default option to "create a quiz" in the dropdown
     choices = [(0, "Create a Quiz")]
-    quizzes = Quiz.query.filter_by(user_id=current_user.id).filter(
-        not Quiz.classroom_hosts.contains(classroom_id)).all()
-    quiz_list = []
-    if quizzes:
-        quiz_list = [(q.id, q.name) for q in quizzes]
-    form.quiz.choices = choices + quiz_list
+    quizzes = Quiz.query.filter_by(user_id = current_user.id).all()
+
+    # putting all quizzes of that user in the list
+    quiz_list = [ (quiz.id, quiz.name) for quiz in quizzes]
+    form.quiz.choices = quiz_list
+
+    # Handle POST request
     if form.validate_on_submit():
         # get chosen quiz's ID from the form, grab that quiz and attach it to the current classroom
         quiz_id = form.quiz.data
@@ -90,7 +93,9 @@ def add_quiz(classroom_id):
             db.session.commit()
             flash(u'Quiz \"' + quiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
             return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
-    return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form)
+    
+    # Handle GET request
+    return render_template('add_quiz.html', title=classroom.name, classroom=classroom, form=form, quiz_list = quiz_list)
 
 
 # !currently there is a bug where if you click on the nav bar the change gets 
@@ -217,4 +222,5 @@ def view_results(classroom_id):
     print(sumWrong)
 
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses, wrongAnswers=wrong_answers, classroomid=classroom_id, sumWrong=sumWrong, sumRight=sumRight)
+
 
