@@ -64,9 +64,9 @@
         </div>
 
         <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
-        <div>
+        <div class="scrollmenu items">
             {% for question in quiz.questions %}
-            <a class="btn {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ loop.index }}"
+            <a class="btn item {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ loop.index }}"
                onclick="changeActiveQuestion(this)">
                 {% if not loop.first %}
                 <button class="btn  shift-Button"
@@ -89,7 +89,7 @@
 
             {% endfor %}
 
-            <button class="btn" onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
+            <button class="btn item" onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
                 +
             </button>
 
