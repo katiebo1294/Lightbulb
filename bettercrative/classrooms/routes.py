@@ -113,11 +113,10 @@ def set_active():
             classroom_id (int): the ID of the classroom to make it active in
     """
     quiz_id = request.args.get('quiz_id', None)
-    print(quiz_id)
     quiz = Quiz.query.get_or_404(quiz_id)
-    classroom = request.args.get('classroom_id', None)
-    print(quiz)
-    print(classroom)
+    classroom_id= request.args.get('classroom_id', None)
+    classroom = Classroom.query.get_or_404(classroom_id)
+    
     classroom.active_quiz = quiz_id
     db.session.commit()
     print(classroom.active_quiz)
