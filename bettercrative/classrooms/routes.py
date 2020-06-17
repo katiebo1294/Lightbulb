@@ -74,11 +74,12 @@ def add_quiz(classroom_id):
     form = AddQuizForm()
 
     # add default option to "create a quiz" in the dropdown
-    choices = [(0, "Create a Quiz")]
+    default_choice = (0, "Create a Quiz")
     quizzes = Quiz.query.filter_by(user_id = current_user.id).all()
 
     # putting all quizzes of that user in the list
     quiz_list = [ (quiz.id, quiz.name) for quiz in quizzes]
+    quiz_list.append(default_choice)
     form.quiz.choices = quiz_list
 
     # Handle POST request
