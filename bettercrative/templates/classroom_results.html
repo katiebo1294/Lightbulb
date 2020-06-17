@@ -1,52 +1,50 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-    integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+<script crossorigin="anonymous"
+        integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
 
 <h1>Results of quiz </h1>
 
-<form action="/classroom/{{classroomid}}/results" method="GET POST"> 
+<form action="/classroom/{{classroomid}}/results" method="GET POST">
 
 
+    <!--This is mostly like this so its easier for the frontend team to use these values and
+    use chart.js to make it look pretty -->
 
-<!--This is mostly like this so its easier for the frontend team to use these values and 
-use chart.js to make it look pretty -->   
-
-<!--The backend queries for all right answers and wrong answer
-It returns I think a list of them that are variables rightAnswers and wrongAnswers-->
+    <!--The backend queries for all right answers and wrong answer
+    It returns I think a list of them that are variables rightAnswers and wrongAnswers-->
 
 
-<h3> Correct: </h3>
+    <h3> Correct: </h3>
     {% for response in rightAnswers %}
-        <h4> {{ response }} </h4>
+    <h4> {{ response }} </h4>
     {% endfor %}
-<br> </br>
-<h3> Wrong: </h3>
+    <br> </br>
+    <h3> Wrong: </h3>
     {% for response in wrongAnswers %}
-        <h4> {{ response }} </h4>
+    <h4> {{ response }} </h4>
 
     {% endfor %}
-<br></br>
-<h4>Number of Correct Answers: {{ sumRight }}</h4>
-<h2>    </h2>
-<h4>Number of Wrong Answers: {{ sumWrong }}</h4>
-<!--Right now redirects to classroom and kinda funky, change as you please-->
-<input type="submit" value="Go back" formaction="/classroom/{{classroomid}}"> 
+    <br></br>
+    <h4>Number of Correct Answers: {{ sumRight }}</h4>
+    <h2></h2>
+    <h4>Number of Wrong Answers: {{ sumWrong }}</h4>
+    <!--Right now redirects to classroom and kinda funky, change as you please-->
+    <input formaction="/classroom/{{classroomid}}" type="submit" value="Go back">
 </form>
 <!-- Chart.js area -->
 
 
 <div style="height:40vh; width:40vw;">
-        <!-- Temporary area to display charts of student data -->
-        <canvas id="basicChart"></canvas>
-        <button class="Show-Student-Response btn" onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
-            Show student response {{ sumRight }}
-        </button>
-    </div>
-
-    
+    <!-- Temporary area to display charts of student data -->
+    <canvas id="basicChart"></canvas>
+    <button class="Show-Student-Response btn"
+            onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
+        Show student response {{ sumRight }}
+    </button>
+</div>
 
 
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>

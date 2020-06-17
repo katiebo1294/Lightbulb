@@ -1,15 +1,11 @@
-import enum
 from datetime import datetime
 
-from sqlalchemy.ext.orderinglist import ordering_list
-from sqlalchemy_utils import CompositeType, CompositeArray
-
-from bettercrative import db, login_manager
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.ext.orderinglist import ordering_list
+
+from bettercrative import db, login_manager
 
 
 @login_manager.user_loader
@@ -94,12 +90,29 @@ class Classroom(db.Model):
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
-    added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', lazy='subquery')
-    # active quiz ID is stored here, or NULL if no active quiz
+    added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', backref='classrooms')
+    # active quiz ID is stored here, or None if no active quiz
     active_quiz = db.Column(db.Integer, nullable=True, default=None)
 
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.added_quizzes}', '{self.active_quiz}')"
+
+    """ A helper table to link the Quiz and Classroom models above in a many-to-many relationship.
+
+        ...
+        Attributes
+        ----------
+        classroom_id: int
+            the ID of a classroom in the database.
+        quiz_id: int
+            the ID of a quiz in the database.
+    """
+
+
+assoc = db.Table('cl_qz_link',
+                 db.Column('classroom_id', db.Integer, db.ForeignKey('classroom.id')),
+                 db.Column('quiz_id', db.Integer, db.ForeignKey('quiz.id'))
+                 )
 
 
 # Quiz is a static model, once we create a quiz we do not modify the data inside when referenceing,
@@ -126,31 +139,13 @@ class Quiz(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', lazy='subquery')
-    # if a quiz is not in a classroom, value is none; otherwise True/False depending on if it is the active quiz
-    # active_question = db.Column(db.String, nullable=True)
-    questions = db.relationship('Question', backref='quiz', lazy=True, order_by="Question.index", collection_class=ordering_list('index'),
+    classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', backref='quizzes')
+    questions = db.relationship('Question', backref='quiz', lazy=True, order_by="Question.index",
+                                collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
-
-    """ A helper table to link the Quiz and Classroom models above in a many-to-many relationship.
-
-        ...
-        Attributes
-        ----------
-        classroom_id: int
-            the ID of a classroom in the database.
-        quiz_id: int
-            the ID of a quiz in the database.
-    """
-
-
-assoc = db.Table('cl_qz_link',
-                 db.Column('classroom_id', db.Integer, db.ForeignKey('classroom.id'), primary_key=True),
-                 db.Column('quiz_id', db.Integer, db.ForeignKey('quiz.id'), primary_key=True)
-                 )
 
 
 class Question(db.Model):

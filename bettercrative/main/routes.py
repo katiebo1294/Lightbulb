@@ -1,9 +1,5 @@
-from flask import render_template, request, Blueprint, make_response, url_for, flash, redirect
-from flask_login import current_user, login_user
-
-from bettercrative import bcrypt
-from bettercrative.classrooms.forms import EnterClassroomForm
-from bettercrative.users.forms import LoginForm
+from flask import render_template, Blueprint, make_response, url_for, redirect
+from flask_login import current_user
 
 main = Blueprint('main', __name__)
 
@@ -25,15 +21,8 @@ def about():
     return render_template('about.html')
 
 
-@main.route('/test')
-def test():
-    """ Page to test CodeMirror (embedded IDE) """
-    return render_template('test.html')
-
-
 @main.route("/<page_name>")
 def other_page(page_name):
     """ 404 error routes """
     response = make_response(render_template('404.html'), 404)
     return render_template('404.html')
-

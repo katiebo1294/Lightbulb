@@ -1,11 +1,13 @@
+from datetime import date
+
 from flask import (render_template, url_for, flash,
-                   redirect, request, abort, Blueprint, Response)
+                   redirect, request, Blueprint)
 from flask_login import current_user, login_required
+
 from bettercrative import db
 from bettercrative.classrooms.routes import classroom
-from bettercrative.models import Quiz, Classroom, User, Question, Answer
+from bettercrative.models import Quiz, Question, Answer
 from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm
-from datetime import date
 
 quizzes = Blueprint('quizzes', __name__)
 
@@ -20,21 +22,13 @@ def new_quiz(classroom_id=None):
     """
     form = QuizForm()
 
-    
     if form.validate_on_submit():
         quiz = Quiz(
             name=form.name.data,
-            date_created=date.today(),
             owner=current_user
         )
-        # for testing purposes
-        # default_question = Question(quiz_id=quiz.id)
-        # quiz.questions.append(default_question)
-        # a1 = Answer(question_id=default_question.id)
-        # default_question.answers.append(a1)
-        #default_question.answers.append(("first answer", "True"))
         db.session.add(quiz)
-       
+
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         if classroom_id:
@@ -78,13 +72,10 @@ def add_question():
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
 
-    sql = "select count(question.id) from question, quiz where quiz.id = question.quiz_id"
-    numQuestions = db.session.execute(sql).first()[0] + 1
-
-    question.name = "Question " + str(numQuestions)
+    question.name = "Question " + question.index
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
-    print(numQuestions)
+    print(question.index)
 
     db.session.add(question)
 
@@ -157,7 +148,7 @@ def remove_question():
 
     print(f'removed')
     db.session.flush()
-    
+
     db.session.delete(question)
 
     print(f'deleted')
@@ -234,13 +225,13 @@ def shift_question():
     # target is the question that we want to swap in a direction
     targetIdx = quiz.questions.index(question)
 
-    if(direction == "left"):
+    if direction == "left":
         destinationIdx = targetIdx - 1
     else:
         destinationIdx = targetIdx + 1
 
     quiz.questions.insert(destinationIdx, quiz.questions.pop(targetIdx))
-    
+
     # load new question data
 
     db.session.commit()
@@ -250,7 +241,6 @@ def shift_question():
 @quizzes.route("/quiz/question/<int:question_id>/add_content", methods=['GET', 'POST'])
 @login_required
 def add_question_content(question_id):
-
     """ Adds question content within the question in the quiz.
         Paramters:
             question_id (int): the ID of the question for content to be added.
@@ -263,7 +253,7 @@ def add_question_content(question_id):
 
     qform = QuestionForm()
     aform = AnswerForm()
-    
+
     # handle POST request
     if qform.validate_on_submit():
         flash(f'IT VALIDATED')
@@ -305,5 +295,3 @@ def add_answer_content(answer_id):
     # handle GET Request
     print('rendering template')
     return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform)
-
-

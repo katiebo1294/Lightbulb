@@ -2,7 +2,9 @@ import os
 import tempfile
 
 import pytest
-from bettercrative import create_app, db
+
+from bettercrative import create_app
+
 
 @pytest.fixture
 def app():

@@ -7,27 +7,27 @@
             <fieldset class="form-group">
                 <div class="form-group">
                     <!-- create a classroom by inputting a unique name for it -->
-                    <legend class="border-bottom mb-4" id = "Create-Button">Create Classroom</legend>
-                    <span style ="font-size: 2vw">
+                    <legend class="border-bottom mb-4" id="Create-Button">Create Classroom</legend>
+                    <span style="font-size: 2vw">
                     {{ form.name }}
                     </span>
                 </div>
             </fieldset>
             <div class="form-group">
-                
+
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
-                
+
             </div>
         </form>
-        <a href="{{ url_for('users.account') }}" id = "Cancel-Button">
+        <a href="{{ url_for('users.account') }}" id="Cancel-Button">
             Cancel
         </a>
         {% if form.name.errors %}
-            {{ form.name.errors }}
+        {{ form.name.errors }}
         {% endif %}
 
         {% if data is defined %}
-            <p>Received data: {{ data }}</p>
+        <p>Received data: {{ data }}</p>
         {% endif %}
     </div>
 </div>

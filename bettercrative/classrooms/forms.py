@@ -1,9 +1,9 @@
-from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FieldList, FormField, BooleanField, IntegerField, \
-    SelectField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import InputRequired, Length, ValidationError
-from bettercrative.models import Classroom, Quiz
+
+from bettercrative.models import Classroom
+
 
 # Teacher can create an empty classroom with a unique name
 class ClassroomForm(FlaskForm):
@@ -16,10 +16,12 @@ class ClassroomForm(FlaskForm):
 
     submit = SubmitField('Create Classroom')
 
+
 # Student enters a classroom by inputting the unique classroom name
 class EnterClassroomForm(FlaskForm):
     room_id = StringField('Room ID', validators=[InputRequired()])
     submit = SubmitField('Enter Classroom')
+
 
 # Teacher can add an existing quiz or create a new one to be added to the current classroom
 class AddQuizForm(FlaskForm):

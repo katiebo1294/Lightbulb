@@ -1,18 +1,17 @@
-from bettercrative import create_app, bcrypt
-from bettercrative.models import User, Classroom, Quiz, Question, Answer
-
+# test user
+from bettercrative import bcrypt, db, create_app
+from bettercrative.models import User, Classroom, Answer, Quiz, Question
 app = create_app()
 app.app_context().push()
-from bettercrative import db
 
-db.drop_all()
-db.create_all()
-# Katie's test account
-katie_password = bcrypt.generate_password_hash('testing').decode('utf-8')
-katie = User(username='testuser', email='test@email.com', password=katie_password)
-db.session.add(katie)
-katie_classroom = Classroom(name='testclass')
-katie.classrooms.append(katie_classroom)
+test_password = bcrypt.generate_password_hash('password').decode('utf-8')
+testuser = User(username='user', email='user@email.com', password=test_password)
+db.session.add(testuser)
+# two classrooms
+classroom_1 = Classroom(name='CSCI 497')
+testuser.classrooms.append(classroom_1)
+classroom_2 = Classroom(name='MATH 341')
+testuser.classrooms.append(classroom_2)
 # two quizzes, each with 2 MC questions and 4 answers to each
 quiz_1 = Quiz(name='Computer Science Quiz')
 question_1 = Question(name='Question 1', content='Who is the best CS professor?', category='Multiple Choice')
@@ -35,7 +34,7 @@ question_2.answers.append(answer_2_1)
 question_2.answers.append(answer_2_2)
 question_2.answers.append(answer_2_3)
 question_2.answers.append(answer_2_4)
-katie.quizzes.append(quiz_1)
+testuser.quizzes.append(quiz_1)
 quiz_2 = Quiz(name='Math Quiz')
 question_1 = Question(name='Question 1', content='What is 2 + 2?', category='Multiple Choice')
 quiz_2.questions.append(question_1)
@@ -57,19 +56,13 @@ question_2.answers.append(answer_2_1)
 question_2.answers.append(answer_2_2)
 question_2.answers.append(answer_2_3)
 question_2.answers.append(answer_2_4)
-katie.quizzes.append(quiz_2)
-db.session.commit()
-# Tim's test account
-tim_password = bcrypt.generate_password_hash('test').decode('utf-8')
-tim = User(username='test', email='test@test.com', password=tim_password)
-db.session.add(tim)
-tim_classroom = Classroom(name='test')
-tim.classrooms.append(tim_classroom)
-db.session.commit()
-# Adrians's test account
-adrian_password = bcrypt.generate_password_hash('steel123').decode('utf-8')
-adrian = User(username='steel', email='steel@gmail.com', password=adrian_password)
-db.session.add(adrian)
-adrian_classroom = Classroom(name='cs497')
-adrian.classrooms.append(adrian_classroom)
+testuser.quizzes.append(quiz_2)
+# Add both quizzes to first classroom, second quiz to second classroom, make first active in c1 and second active in c2
+classroom_1.added_quizzes.append(quiz_1)
+classroom_1.added_quizzes.append(quiz_2)
+classroom_1.active_quiz = quiz_1.id
+quiz_1.active = True
+classroom_2.added_quizzes.append(quiz_1)
+classroom_2.active_quiz = quiz_2.id
+quiz_2.active = True
 db.session.commit()

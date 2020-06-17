@@ -15,57 +15,61 @@
     {% endif %}
 
     <!-- Bootstrap core CSS -->
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
-    <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
+    <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <!-- Custom fonts for this template -->
-    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet"
+          type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    
+
     <!-- CSS -->
     <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
-    
-   
+
+
     <!-- Popper -->
-    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    
+    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
 </head>
 
-<body id = "body">
+<body id="body">
 <div class="transparent-background">
     <!--NavBar-->
-        <header>
-            <nav class="nav">
-                <div class="container">
-                    <div class="logo">
-                        <a href="{{ url_for('main.home') }}">Bettercrative</a>
-                    </div>
+    <header>
+        <nav class="nav">
+            <div class="container">
+                <div class="logo">
+                    <a href="{{ url_for('main.home') }}">Bettercrative</a>
+                </div>
 
 
-                    <div class="listofcontents" id="navlistcontents">
-                        <ul class="navlinks">
-                            {% if current_user.is_authenticated %}
-                            <li><a href="{{ url_for('main.about') }}"> About </a></li>
-                            <li><a href="{{ url_for('users.account') }}"> Account </a></li>
-                            <li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
-                            {% else %}
-                            
-                            <li><a href="{{ url_for('users.register') }}"> Register </a></li>
-                            <li><a href="{{ url_for('main.about') }}"> About </a></li>
-                            
-                            </li>
-                            {% endif %}
+                <div class="listofcontents" id="navlistcontents">
+                    <ul class="navlinks">
+                        {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('main.about') }}"> About </a></li>
+                        <li><a href="{{ url_for('users.account') }}"> Account </a></li>
+                        <li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
+                        {% else %}
 
-                        </ul>
-                    </div>
+                        <li><a href="{{ url_for('users.register') }}"> Register </a></li>
+                        <li><a href="{{ url_for('main.about') }}"> About </a></li>
 
-                    <!-- Collapse for mobile-->
-                    <span class=navTrigger>
+                        </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+
+                <!-- Collapse for mobile-->
+                <span class=navTrigger>
                             <i>
                                 <p>B</p>
                             </i>
@@ -75,10 +79,10 @@
                             <i> </i>
                         </span>
 
-                </div> <!-- container close tag-->
+            </div> <!-- container close tag-->
 
-            </nav>
-        </header>
+        </nav>
+    </header>
     <!--End Of NavBar-->
 
     <!-- Home section -->
@@ -103,6 +107,7 @@
 
 <!-- Global Javascript -->
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 <script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 <script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
@@ -117,6 +122,7 @@
                 $('.nav').removeClass('affix');
             }
         });
+
 </script>
 <script>
     $('.navTrigger').click(function () {
@@ -126,6 +132,7 @@
     $("#navlistcontents").fadeIn();
 
 });
+
 </script>
 
 <script>
@@ -138,6 +145,7 @@
                 x.className = "listofcontents";
             }
         }
+
 </script>
 </body>
 

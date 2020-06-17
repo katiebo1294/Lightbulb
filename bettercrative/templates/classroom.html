@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
-    integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
+<script crossorigin="anonymous"
+        integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 
 <style>
     body{
@@ -42,6 +42,7 @@
     .affix .navTrigger p {
         color: black;
     }
+
 </style>
 
 <div id="quiz-content-container">
@@ -50,23 +51,20 @@
     <div id="editing-container">
         <!--  want to change this later to classroom name  -->
 
-        <div id="quizTitle"> </div>
+        <div id="quizTitle"></div>
 
         {% if current_user.is_authenticated %}
 
         <div id="edit-section">
 
 
-
-
-
             <div class="headerSection">
 
                 <div class="editSign">Classroom</div>
-                <div class="SaveExitBtn btn"> <a href="{{ url_for('main.home') }}">Save and Exit</a></div>
+                <div class="SaveExitBtn btn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
             </div>
         </div>
-        
+
         {% endif %}
 
         <!-- Classroom Title -->
@@ -82,7 +80,6 @@
         <!-- prevent things from floating after this section -->
 
 
-
         <div id="question">
 
             <div class="multiple-choice">
@@ -94,7 +91,7 @@
                             <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
                                 <span class="Active-Rooms">Active Rooms</span>
                                 <a class="btn Add-A-Quiz"
-                                    href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
+                                   href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
 
                             </div>
                             {% for quiz in classroom.added_quizzes %}
@@ -102,7 +99,7 @@
                             <li>
                                 {{ quiz.name }}
                                 <a class="btn btn-lg set-active"
-                                onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+                                   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
                                     Set Active
                                 </a>
                             </li>
@@ -113,14 +110,17 @@
 
                 </div>
                 <!-- TODO having issues getting specifically the active quiz s-->
-                {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes) %}
+                {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes)
+                %}
                 <div>
-                  <a class = "Take-Active-Quiz btn " href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
+                    <a class="Take-Active-Quiz btn "
+                       href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
                 </div>
 
-                  <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
+                <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
                 <div>
-                    <a class = "View-Results btn" href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
+                    <a class="View-Results btn"
+                       href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
                 </div>
                 {% endif %}
 
@@ -149,8 +149,6 @@
 </div>
 
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
-
-
 
 
 {% endblock %}

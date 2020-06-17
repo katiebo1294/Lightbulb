@@ -10,23 +10,21 @@
             {{ form.hidden_tag() }} <!--adds csrf form-->
             <fieldset class="form-group">
                 <div class="form-group">
-                    
+
                     <legend class="border-bottom mb-4">Create Quiz</legend>
                     <!-- quiz title -->
                     {{ form.name.label }}
                     {{ form.name }}
 
 
-
-                    
                 </div>
-                
+
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
-        <a href="{{ url_for('users.account') }}" id = "Cancel-Button">
+        <a href="{{ url_for('users.account') }}" id="Cancel-Button">
             Cancel
         </a>
     </div>

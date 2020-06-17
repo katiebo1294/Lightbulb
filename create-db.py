@@ -1,5 +1,4 @@
-from bettercrative import create_app, bcrypt
-import bettercrative.models
+from bettercrative import create_app
 
 app = create_app()
 app.app_context().push()

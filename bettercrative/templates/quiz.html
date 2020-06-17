@@ -36,6 +36,7 @@
         }
 
 
+
 </style>
 
 <div id="quiz-content-container">
@@ -66,7 +67,8 @@
         <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
         <div class="scrollmenu items">
             {% for question in quiz.questions %}
-            <a class="btn item {% if quiz.active_question == question.name %} active {% endif %}" id="qbtn-{{ loop.index }}"
+            <a class="btn item {% if quiz.active_question == question.name %} active {% endif %}"
+               id="qbtn-{{ loop.index }}"
                onclick="changeActiveQuestion(this)">
                 {% if not loop.first %}
                 <button class="btn  shift-Button"
@@ -94,7 +96,6 @@
             </button>
 
         </div>
-        <!-- style="display:none" in the section for hiding and showing in javascript -->
 
         <!-- prevent things from floating after this section -->
         <div style=" clear: both;"></div>
@@ -159,8 +160,9 @@
                                 {% set outer_loop = loop %}
                                 {% for answer in question.answers %}
                                 <div class="answerChoice">
-                                    <span class="choice">ID: {{ answer.id }}<!-- {{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }} --><button class="btn"
-                                        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
+                                    <span class="choice">ID: {{ answer.id }}
+                                        <!-- {{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }} --><button class="btn"
+                                                                                                        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
                                             X
                                 </button></span>
                                     
@@ -168,9 +170,11 @@
                                         <span class="answerBox-answer">
                                             {{answer.content}} {% if answer.correct %}(Correct){% endif %}
                                         </span>
-                                        <a id="Answer-Edit" onclick="addAnswerContent('{{ outer_loop.index }}', '{{ loop.index }}')"> Add Answer Content </a>
-                                        <div class="form-container" id="answer-form-{{ outer_loop.index }}-{{ loop.index }}"
-                                         style="display: none;">
+                                        <a id="Answer-Edit"
+                                           onclick="addAnswerContent('{{ outer_loop.index }}', '{{ loop.index }}')"> Add Answer Content </a>
+                                        <div class="form-container"
+                                             id="answer-form-{{ outer_loop.index }}-{{ loop.index }}"
+                                             style="display: none;">
                                         <div class="content-section">
                                             <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
                                                   method="POST">
@@ -228,6 +232,7 @@
     };
 
     
+
 
 </script>
 

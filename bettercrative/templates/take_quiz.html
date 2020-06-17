@@ -19,6 +19,7 @@
     div.multiple-choice {
         margin-top: 7vw;
     }
+
 </style>
 
 <div class="multiple-choice">
@@ -27,7 +28,8 @@
         <div class="menu" style="margin-left:15vw; margin-top: ">
             <!--Need to rework so that 1 is = to <int: id> I got error before-->
             <form action="" method='POST'>
-                <span class="btn" style="font-size:1.7vw; margin-top:3vw;"> Question: <!--{{ quiz.question_content }}--></span>
+                <span class="btn" style="font-size:1.7vw; margin-top:3vw;"> Question:
+                    <!--{{ quiz.question_content }}--></span>
                 <div class="options">
                     <span> Options:</span>
                     <!-- Answer Section -->
@@ -37,8 +39,8 @@
                             <div class="answerChoice">
                                 <div class="btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-secondary active button-choices">
-                                        <input type="checkbox" name="studentResponse" value='{{eachanswer.content}}'
-                                            class="response">{{"ABCD"[loop.index0]}}
+                                        <input class="response" name="studentResponse" type="checkbox"
+                                               value='{{eachanswer.content}}'>{{"ABCD"[loop.index0]}}
                                     </label>
                                 </div>
                                 <div class="answerBox">
@@ -50,8 +52,9 @@
 
                             {%endfor%}
 
-                            <button type="submit" class="btn Taking-a-Quiz-Submit"
-                                style="background-color:rgb(137, 160, 209);">Submit</button>
+                            <button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
+                                    type="submit">Submit
+                            </button>
                         </div>
                     </div>
             </form>
@@ -64,5 +67,5 @@
     <div class="reset">
 
     </div>
-    {% endblock  %}
+    {% endblock %}
 </div>

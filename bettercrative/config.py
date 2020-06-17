@@ -1,5 +1,7 @@
 import os
-basedir = os.path.abspath(os.path.dirname(__file__)) #creates a basedirectory for environemnt
+
+basedir = os.path.abspath(os.path.dirname(__file__))  # creates a base directory for environment
+
 
 class Config(object):
     SECRET_KEY = 'a7fc44f15ab68e45d593cf6f03197c50'
@@ -11,15 +13,17 @@ class Config(object):
     MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
 
 
-#For production server
+# For production server
 class ProductionConfig(Config):
     DEBUG = False
 
-#Where we work on things
+
+# Where we work on things
 class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = False
 
-#where we test things
+
+# where we test things
 class TestingConfig(Config):
     TESTING = True
