@@ -204,7 +204,6 @@
         var index = elem.id.slice(-1);
         if(index != previous) {
             document.getElementById("question-" + index).style.display = "block";
-            document.getElementById("question-form-" + previous).style.display = "none";
             document.getElementById("question-" + previous).style.display = "none";
         }
         previous = index;
