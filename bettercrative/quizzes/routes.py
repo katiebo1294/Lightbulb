@@ -82,10 +82,7 @@ def add_question():
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
  
-    printQuestion(question)
-    print("-------------------------------------------------------------------")
-    print("DEBUGGING LINE HERE")
-    print("-------------------------------------------------------------------")
+    
     db.session.add(question)
 
     quiz.questions.append(question)
