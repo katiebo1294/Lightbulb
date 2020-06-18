@@ -59,8 +59,12 @@ def add_question():
         Parameters: 
                 quiz_id (int): The ID of the quiz to add the question to.
     """
+
+    #Get the id from the GET request
     print("adding Question")
     quiz_id = request.args.get('quiz_id', None)
+
+    
     if quiz_id is None:
         return "No quiz id!", 400
 
@@ -69,14 +73,19 @@ def add_question():
         return "Quiz not found!", 404
 
     question = Question(quiz_id=quiz_id)
+    
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
-    print(question.index)
+    
 
-    question.name = "Question " + question.index
+    question.name = "Question " 
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
-
+ 
+    printQuestion(question)
+    print("-------------------------------------------------------------------")
+    print("DEBUGGING LINE HERE")
+    print("-------------------------------------------------------------------")
     db.session.add(question)
 
     quiz.questions.append(question)
@@ -84,6 +93,12 @@ def add_question():
     # load new question data
 
     db.session.commit()
+
+    question.name+= str(question.index + 1)
+
+    db.session.commit()
+
+    printQuestion(question)
     print("success")
     return "addedQuestion - Success", 200
 
@@ -295,3 +310,17 @@ def add_answer_content(answer_id):
     # handle GET Request
     print('rendering template')
     return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform)
+
+
+
+"""
+-------------------------------------------------------------------
+DEBUGGING FUNCTIONS SECTION [REMOVE LATER]
+-------------------------------------------------------------------
+"""
+
+def printQuestion(question : Question) -> None:
+    print(f'question id: {question.id} | question name: {question.name} | \
+        question content: {question.content} | question category: {question.category} \
+            | quiz_id(FOREIGN KEY): {question.quiz_id} | \
+                question index : {question.index}')
