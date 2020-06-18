@@ -977,7 +977,6 @@ div.multiple-choice{
   border-top: 3px solid rgb(250, 146, 61);
   padding-right: 4.6em;
   min-height:15em;
-  height: 50vw;
 }
 
 div.question-number::before{
