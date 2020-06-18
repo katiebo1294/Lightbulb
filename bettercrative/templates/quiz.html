@@ -117,7 +117,7 @@
                                           method="POST">
                                           {{ qform.hidden_tag() }}
                                         <fieldset class="form-group">
-                                            <label>{{ question.name }}) {{ qform.content(placeholder=question.content) }}</label>
+                                            <label>{{ question.name }}) {{ qform.content(value=question.content) }}</label>
                                             {{ qform.category.label}} -> {{ qform.category }}
                                         </fieldset>
                                         <!-- submit button -->
@@ -155,14 +155,6 @@
                                 </button></span>
                                     
                                     <div class="answerBox">
-                                        <span class="answerBox-answer">
-                                            {{answer.content}} {% if answer.correct %}(Correct){% endif %}
-                                        </span>
-                                        <a id="Answer-Edit"
-                                           onclick="addAnswerContent('{{ outer_loop.index }}', '{{ loop.index }}')"> Add Answer Content </a>
-                                        <div class="form-container"
-                                             id="answer-form-{{ outer_loop.index }}-{{ loop.index }}"
-                                             style="display: none;">
                                         <div class="content-section">
                                             <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
                                                   method="POST">
@@ -170,8 +162,8 @@
 
                                                 <fieldset class="form-group">
                                                     <div class="form-group">
-                                                        {{ aform.content.label }} -> {{ aform.content }}
-                                                        {{ aform.correct.label}} -> {{ aform.correct }}
+                                                        {{ aform.content.label }} -> {{ aform.content(value=answer.content) }}
+                                                        {{ aform.correct.label}} -> {{ aform.correct(checked=answer.correct) }}
                                                     </div>
                                                 </fieldset>
 
@@ -183,7 +175,6 @@
                                                 {{ aform.errors }}
                                             {%endif%}
                                         </div>
-                                    </div>
                                     </div>
                                 </div>
                                 {% endfor %}
