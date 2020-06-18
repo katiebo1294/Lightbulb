@@ -43,9 +43,9 @@ function addQuestion(url, q_id) {
         type: "GET",
         data: {'quiz_id': q_id},
         url: url,
-        error: function(statusText) {
-            alert(statusText);
-            console.log(statusText);
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
         },
         success: function() {
             refresh("#body");

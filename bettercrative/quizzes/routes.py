@@ -71,11 +71,11 @@ def add_question():
     question = Question(quiz_id=quiz_id)
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
+    print(question.index)
 
     question.name = "Question " + question.index
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
-    print(question.index)
 
     db.session.add(question)
 
