@@ -29,23 +29,23 @@
             <!--Need to rework so that 1 is = to <int: id> I got error before-->
             <form action="" method='POST'>
                 <span class="btn" style="font-size:1.7vw; margin-top:3vw;"> Question:
-                    <!--{{ quiz.question_content }}--></span>
+                    {{ quiz.questions[0].content }}</span>
                 <div class="options">
                     <span> Options:</span>
                     <!-- Answer Section -->
                     <div class="Student-Answers">
-                        {%for eachanswer in quiz.question_answers%}
+                        {%for answer in quiz.questions[0].answers %}
                         <div class="answerContainer reset">
                             <div class="answerChoice">
                                 <div class="btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-secondary active button-choices">
                                         <input class="response" name="studentResponse" type="checkbox"
-                                               value='{{eachanswer.content}}'>{{"ABCD"[loop.index0]}}
+                                               value='{{ answer.content }}'>{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}
                                     </label>
                                 </div>
                                 <div class="answerBox">
                                     <div class="answerBox-answer">
-                                        {{eachanswer.content}}
+                                        {{ answer.content }}
                                     </div>
                                 </div>
                             </div>

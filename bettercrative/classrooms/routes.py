@@ -152,7 +152,7 @@ def take_quiz(classroom_id):
     # dictionary of true and false for each input
     dicts = {}
     i = 0
-    for option in quiz.question_answers:
+    for option in quiz.questions[0].answers:
         dicts[option.content] = option.correct
 
     # gets a list of what the student responded with
