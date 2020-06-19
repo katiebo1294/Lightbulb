@@ -950,7 +950,7 @@ div.QuizSaveExitBtn.btn:hover{
 
 
 div#quiz-title{
-  margin-top: 1em;
+  margin: 1em 0em;
   width: 100%;
   font-size: 2vw;
 }
@@ -1043,7 +1043,7 @@ div.answerBox{
   float: left;
   margin-left: 1%;
   border: 1px solid rgb(30,155,95);
-  padding: .53em 0;
+  padding-top: 0.75vw;
   font-size: 2.28vw;
 }
 
@@ -1200,8 +1200,18 @@ div.scrollmenu a:hover {
     justify-content: center;
 }
 
-.delete-answer-button {
+.answer-delete-button, .answer-edit-button {
     float: right;
     margin-right: 10px;
-    font-weight: 9000;
+    margin-bottom: 5px;
 }
+
+.answer-content {
+    margin-left: 10px;
+}
+
+.question-edit-header {
+    margin-bottom: 5px;
+    font-size: 2vw;
+}
+

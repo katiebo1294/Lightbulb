@@ -117,7 +117,7 @@
                                     <!-- set form -->
                                     <span id="question-content-display-{{ loop.index }}">
                                         <label>{{ question.name }}) {{ question.content }}</label>
-                                        <span class="btn btn-outline-info" style="color: white;" onclick="showEditQuestionContainer(index={{loop.index}})">Edit</span>
+                                        <span class="btn btn-sm btn-outline-info" style="color: white;" onclick="showEditQuestionContainer(index={{loop.index}})">Edit</span>
                                     </span>
                                     <form style="display: none;" id="question-content-edit-form-{{ loop.index }}" action="{{ url_for('quizzes.add_question_content', question_id=question.id) }}"
                                           method="POST">
@@ -153,13 +153,15 @@
                                 {% set outer_loop = loop %}
                                 {% for answer in question.answers %}
                                 <div class="answerChoice">
-                                    <span class="btn btn-secondary active button-choices">{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}
-                                        <!-- {{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }} --></span>
+                                    <span class="btn btn-secondary active button-choices">{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}</span>
                                     <div class="answerBox">
                                         <span class="content-section">
+                                            <button class="btn btn-sm btn-outline-danger answer-delete-button" onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
+                                            <i class="fa fa-times fa-lg"></i>
+                                        </button>
                                             <span id="answer-content-display-{{ loop.index }}">
-                                                <label>{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
-                                                <span class="btn btn-outline-info" style="color: white;" onclick="showEditAnswerContainer(index={{loop.index}})">Edit</span>
+                                                <label class="answer-content">{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
+                                                <span class="btn btn-sm btn-outline-info answer-edit-button" style="color: white;" onclick="showEditAnswerContainer(index={{loop.index}})">Edit</span>
                                             </span>
                                             <form style="display: none;" id="answer-content-edit-form-{{ loop.index }}" action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
                                                   method="POST">
@@ -182,9 +184,6 @@
                                                 {{ aform.errors }}
                                             {% endif %}
                                         </span>
-                                        <button class="btn btn-outline-danger delete-answer-button" onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
-                                            <i class="fa fa-times fa-lg"></i>
-                                        </button>
                                     </div>
                                 </div>
                                 {% endfor %}
