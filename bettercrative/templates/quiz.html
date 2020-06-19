@@ -34,13 +34,12 @@
         .affix .navTrigger p{
             color: black;
         }
-
-
-
-
-
-
-
+        div.multiple-choice {
+            margin-top: 7vw;
+            color: rgb(3, 8, 80);
+            font-family: "Source Code Pro";
+            font-size: 1.2vw;
+        }
 </style>
 
 <div id="quiz-content-container">
@@ -75,29 +74,29 @@
                id="qbtn-{{ loop.index }}"
                onclick="changeActiveQuestion(this)">
                 {% if not loop.first %}
-                <button class="btn  shift-Button"
+                <button class="btn btn-outline-info shift-Button"
                         onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
-                    <-
+                    <i class="fa fa-arrow-left"></i>
                 </button>
                 {% endif %}
                 ID: {{question.id}}
-                <button class="btn  Remove-Button"
+                <button class="btn btn-outline-danger Remove-Button"
                         onclick="removeQuestion('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
-                    X
+                    <i class="fa fa-times fa-2x"></i>
                 </button>
                 {% if not loop.last %}
-                <button class="btn  shift-Button"
+                <button class="btn btn-outline-info shift-Button"
                         onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='right')">
-                    ->
+                    <i class="fa fa-arrow-right"></i>
                 </button>
                 {% endif %}
             </a>
 
             {% endfor %}
 
-            <button class="btn .item .slide"
+            <button class="btn btn-outline-success .item .slide"
                     onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
-                +
+                <i class="fa fa-plus"></i>
             </button>
 
         </div>
@@ -154,14 +153,10 @@
                                 {% set outer_loop = loop %}
                                 {% for answer in question.answers %}
                                 <div class="answerChoice">
-                                    <span class="choice">ID: {{ answer.id }}
-                                        <!-- {{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }} --><button class="btn"
-                                                                                                        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
-                                            X
-                                </button></span>
-                                    
+                                    <span class="btn btn-secondary active button-choices">{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}
+                                        <!-- {{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }} --></span>
                                     <div class="answerBox">
-                                        <div class="content-section">
+                                        <span class="content-section">
                                             <span id="answer-content-display-{{ loop.index }}">
                                                 <label>{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
                                                 <span class="btn btn-outline-info" style="color: white;" onclick="showEditAnswerContainer(index={{loop.index}})">Edit</span>
@@ -185,19 +180,21 @@
                                             </form>
                                             {% if aform.errors %}
                                                 {{ aform.errors }}
-                                            {%endif%}
-                                        </div>
+                                            {% endif %}
+                                        </span>
+                                        <button class="btn btn-outline-danger delete-answer-button" onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
+                                            <i class="fa fa-times fa-lg"></i>
+                                        </button>
                                     </div>
                                 </div>
                                 {% endfor %}
-                                <button class="btn"
+                                <button class="btn btn-outline-success"
                                         onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }})">
-                                            Add Answer
+                                    <i class="fa fa-plus"></i>
                                 </button>
                             </span>
                         {% elif question.category == 'True/False' %}
                             <!-- Put true/false answer format here -->
-
                         {% elif question.category == 'Short Answer' %}
                             <!-- Put short answer format here -->
                         {% elif question.category == 'IDE' %}
@@ -208,13 +205,13 @@
                 {% else %}
                 <!-- four buttons to choose question type -->
                 <div class="question-type-container">
-                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                    <div class="question-type-choice-box btn-outline-info"><a class="question-type-choice-box"
                                                              href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Multiple Choice') }}">Multiple Choice</a></div>
-                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                    <div class="question-type-choice-box btn-outline-danger"><a class="question-type-choice-box"
                                                              href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='True-False') }}">True or False</a></div>
-                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                    <div class="question-type-choice-box btn-outline-warning"><a class="question-type-choice-box"
                                                              href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Short Answer') }}">Short Answer</a></div>
-                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                    <div class="question-type-choice-box btn-outline-secondary"><a class="question-type-choice-box"
                                                              href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='IDE') }}">Coding</a></div>
                 </div>
                 {% endif %}

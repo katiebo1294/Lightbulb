@@ -1199,3 +1199,9 @@ div.scrollmenu a:hover {
     align-items: center;
     justify-content: center;
 }
+
+.delete-answer-button {
+    float: right;
+    margin-right: 10px;
+    font-weight: 9000;
+}
