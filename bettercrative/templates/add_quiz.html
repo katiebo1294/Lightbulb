@@ -18,8 +18,8 @@
                     {% else %}
                     {{ form.submit(class="btn btn-lg btn-outline-info") }}
                     {% endif %}
-
                 </div>
+                <button href="{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}">Cancel</button>
 
             </fieldset>
         </form>

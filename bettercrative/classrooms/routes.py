@@ -1,11 +1,14 @@
+import this
+
 from flask import (render_template, url_for, flash,
                    redirect, Blueprint,
                    request)
 from flask_login import current_user, login_required
+from sqlalchemy import exists, and_
 
 from bettercrative import db
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
-from bettercrative.models import Classroom, Quiz, Response, Question
+from bettercrative.models import Classroom, Quiz, Response, Question, assoc
 
 classrooms = Blueprint('classrooms', __name__)
 
@@ -70,7 +73,7 @@ def add_quiz(classroom_id):
 
     # add default option to "create a quiz" in the dropdown
     default_choice = (0, "Create a Quiz")
-    quizzes = Quiz.query.filter_by(user_id=current_user.id).all()
+    quizzes = Quiz.query.filter_by(user_id=current_user.id).filter(~exists().where(and_(assoc.c.quiz_id == Quiz.id, assoc.c.classroom_id == classroom.id)))
 
     # putting all quizzes of that user in the list
     quiz_list = [(quiz.id, quiz.name) for quiz in quizzes]

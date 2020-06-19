@@ -96,7 +96,7 @@
                             </div>
                             {% for quiz in classroom.added_quizzes %}
                             <!-- JavaScript option to set the current quiz in the list to active -->
-                            <li>
+                            <li {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>
                                 {{ quiz.name }}
                                 {% if quiz.id != classroom.active_quiz %}
                                 <a class="btn btn-lg set-active"
