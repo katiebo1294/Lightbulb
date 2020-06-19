@@ -171,8 +171,7 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     content = db.Column(db.Text, nullable=True)
-    category = db.Column(db.Enum('Multiple Choice', 'True/False', 'Short Answer', 'IDE', name='question_types'),
-                         default='Multiple Choice')
+    category = db.Column(db.Enum('Multiple Choice', 'True-False', 'Short Answer', 'IDE', name='question_types'))
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     index = db.Column(db.Integer)
     answers = db.relationship('Answer', backref='question', collection_class=list,

@@ -91,7 +91,7 @@ def add_question():
 
     db.session.commit()
 
-    question.name+= str(question.index + 1)
+    question.name += str(question.index + 1)
 
     db.session.commit()
 
@@ -250,6 +250,20 @@ def shift_question():
     return "lit", 200
 
 
+@quizzes.route("/quiz/question/<int:question_id>/set_type/<string:qtype>", methods=['GET', 'POST'])
+@login_required
+def set_question_type(question_id, qtype):
+    print(question_id)
+    current_question = Question.query.filter_by(id=question_id).first()
+    print(current_question)
+    quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
+    print(quiz)
+
+    current_question.category = qtype
+    db.session.commit()
+    return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
+
+
 @quizzes.route("/quiz/question/<int:question_id>/add_content", methods=['GET', 'POST'])
 @login_required
 def add_question_content(question_id):
@@ -270,7 +284,6 @@ def add_question_content(question_id):
     if qform.validate_on_submit():
         flash(f'IT VALIDATED')
         current_question.content = qform.content.data
-        current_question.category = qform.category.data
         print(current_quiz)
         db.session.commit()
         return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))

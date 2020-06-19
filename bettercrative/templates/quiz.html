@@ -38,6 +38,8 @@
 
 
 
+
+
 </style>
 
 <div id="quiz-content-container">
@@ -106,10 +108,9 @@
         <div id="questions">
             {% for question in quiz.questions %}
             <span id="question-{{ loop.index }}" {% if not loop.first %} style="display: none;" {% endif %}>
-                   
+                    {% if question.category %}
                     <div id="question">
                         <div class="multiple-choice">
-
                             <!-- contents of multiple choice box -->
                             <div class="question-edit-header">
                                 <span class="question-number">
@@ -119,7 +120,6 @@
                                           {{ qform.hidden_tag() }}
                                         <fieldset class="form-group">
                                             <label>{{ question.name }}) {{ qform.content(value=question.content) }}</label>
-                                            {{ qform.category.label}} -> {{ qform.category }}
                                         </fieldset>
                                         <!-- submit button -->
                                         <div class="form-group">
@@ -194,6 +194,15 @@
                         {% endif %}
                         </div>
                     </div>
+                {% else %}
+                <!-- four buttons to choose question type -->
+                <div class="question-type-container">
+                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Multiple Choice') }}">Multiple Choice</a></div>
+                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='True-False') }}">True or False</a></div>
+                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Short Answer') }}">Short Answer</a></div>
+                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='IDE') }}">Coding</a></div>
+                </div>
+                {% endif %}
                 </span>
             {% endfor %}
         </div>
@@ -212,6 +221,8 @@
     };
 
     
+
+
 
 
 
