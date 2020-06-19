@@ -47,8 +47,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    classrooms = db.relationship('Classroom', backref='owner', lazy=True, cascade="all, delete, delete-orphan")
-    quizzes = db.relationship('Quiz', backref='owner', lazy=True, cascade="all, delete, delete-orphan")
+    classrooms = db.relationship('Classroom', backref='owner', cascade="all, delete, delete-orphan")
+    quizzes = db.relationship('Quiz', backref='owner', cascade="all, delete, delete-orphan")
 
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(current_app.config(['SECRET_KEY'], expires_sec))
@@ -90,7 +90,7 @@ class Classroom(db.Model):
     date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
-    added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', backref='classrooms')
+    added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', back_populates='classroom_hosts', cascade='none')
     # active quiz ID is stored here, or None if no active quiz
     active_quiz = db.Column(db.Integer, nullable=True, default=None)
 
@@ -111,7 +111,8 @@ class Classroom(db.Model):
 
 assoc = db.Table('cl_qz_link',
                  db.Column('classroom_id', db.Integer, db.ForeignKey('classroom.id')),
-                 db.Column('quiz_id', db.Integer, db.ForeignKey('quiz.id'))
+                 db.Column('quiz_id', db.Integer, db.ForeignKey('quiz.id')),
+                 db.UniqueConstraint('classroom_id', 'quiz_id', name='cl_qz')
                  )
 
 
@@ -139,8 +140,8 @@ class Quiz(db.Model):
     name = db.Column(db.String, unique=True, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', backref='quizzes')
-    questions = db.relationship('Question', backref='quiz', lazy=True, order_by="Question.index",
+    classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', back_populates='added_quizzes', cascade='none')
+    questions = db.relationship('Question', backref='quiz', order_by="Question.index",
                                 collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
 
@@ -174,7 +175,7 @@ class Question(db.Model):
                          default='Multiple Choice')
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     index = db.Column(db.Integer)
-    answers = db.relationship('Answer', backref='question', lazy=True, collection_class=list,
+    answers = db.relationship('Answer', backref='question', collection_class=list,
                               cascade="all, delete, delete-orphan")
 
 
