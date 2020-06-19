@@ -130,10 +130,8 @@
                                         </span>
                                             <span class="btn btn-outline-info" style="color: white;" onclick="resetEditQuestionContainer(index={{loop.index}})">Cancel</span>
                                         </fieldset>
-                                        <!-- submit button -->
 
                                     </form>
-                                    <!-- <a id="Question-Edit" onclick="addQuestionContent('{{ loop.index }}')"> Edit Question </a> -->
                                     {% if qform.errors %}
                                         {{ qform.errors }}
                                     {%endif%}
@@ -164,20 +162,26 @@
                                     
                                     <div class="answerBox">
                                         <div class="content-section">
-                                            <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
+                                            <span id="answer-content-display-{{ loop.index }}">
+                                                <label>{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
+                                                <span class="btn btn-outline-info" style="color: white;" onclick="showEditAnswerContainer(index={{loop.index}})">Edit</span>
+                                            </span>
+                                            <form style="display: none;" id="answer-content-edit-form-{{ loop.index }}" action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
                                                   method="POST">
                                                 {{ aform.hidden_tag() }}
 
                                                 <fieldset class="form-group">
-                                                    <div class="form-group">
+                                                    <span class="form-group">
                                                         {{ aform.content.label }} -> {{ aform.content(value=answer.content) }}
                                                         {{ aform.correct.label }} -> {{ aform.correct(checked=answer.correct) }}
-                                                    </div>
+                                                    </span>
+                                                    <span>
+                                                        {{ qform.submit(class="btn btn-lg btn-outline-info") }}
+                                                    </span>
+                                                    <span class="btn btn-outline-info" style="color: white;" onclick="resetEditAnswerContainer(index={{loop.index}})">
+                                                        Cancel
+                                                    </span>
                                                 </fieldset>
-
-                                                <div class="form-group">
-                                                    {{ aform.submit(class="btn btn-lg btn-outline-info") }}
-                                                </div>
                                             </form>
                                             {% if aform.errors %}
                                                 {{ aform.errors }}

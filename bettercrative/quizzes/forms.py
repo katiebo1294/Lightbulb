@@ -6,7 +6,7 @@ from wtforms.validators import InputRequired
 class AnswerForm(FlaskForm):
     content = StringField('Answer', validators=[InputRequired('Please fill out this field.')])
     correct = BooleanField('Correct?')
-    submit = SubmitField('Add Answer')
+    submit = SubmitField('Save')
 
 
 class QuestionForm(FlaskForm):

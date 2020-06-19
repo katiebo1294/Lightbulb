@@ -186,3 +186,11 @@ function resetEditQuestionContainer(index) {
     refresh("#body");
 };
 
+function showEditAnswerContainer(index) {
+    document.getElementById("answer-content-display-" + index).style.display = "none";
+    document.getElementById("answer-content-edit-form-" + index).style.display = "block";
+};
+
+function resetEditAnswerContainer(index) {
+    refresh("#body");
+};
