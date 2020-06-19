@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 
 from bettercrative import db
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
-from bettercrative.models import Classroom, Quiz, Response
+from bettercrative.models import Classroom, Quiz, Response, Question
 
 classrooms = Blueprint('classrooms', __name__)
 
@@ -148,6 +148,8 @@ def take_quiz(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
+    page = request.args.get('page', 1, type=int)
+    questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
 
     # dictionary of true and false for each input
     dicts = {}
@@ -165,7 +167,7 @@ def take_quiz(classroom_id):
     response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, isCorrect=str(result))
     db.session.add(response)
     db.session.commit()
-    return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
+    return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions)
 
 
 # query database for all responses from this specific classroom, send lists of right and wrong answers to front

@@ -20,27 +20,30 @@
         margin-top: 7vw;
     }
 
+
+
 </style>
 
 <div class="multiple-choice">
-    <span class="Taking-a-Quiz">Taking a Quiz</span>
+    <span class="Taking-a-Quiz">{{ quiz.name }}</span>
     <div class="answerchoices">
         <div class="menu" style="margin-left:15vw; margin-top: ">
             <!--Need to rework so that 1 is = to <int: id> I got error before-->
+            {% for question in questions.items %}
             <form action="" method='POST'>
-                <span class="btn" style="font-size:1.7vw; margin-top:3vw;"> Question:
-                    {{ quiz.questions[0].content }}</span>
+                <span class="btn" style="font-size:2.7vw; margin-top:3vw;">
+                    {{ question.content }}</span>
                 <div class="options">
-                    <span> Options:</span>
                     <!-- Answer Section -->
                     <div class="Student-Answers">
-                        {%for answer in quiz.questions[0].answers %}
+                        {%for answer in question.answers %}
                         <div class="answerContainer reset">
                             <div class="answerChoice">
                                 <div class="btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-secondary active button-choices">
                                         <input class="response" name="studentResponse" type="checkbox"
-                                               value='{{ answer.content }}'>{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}
+                                               value='{{ answer.content }}'>{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0]
+                                        }}
                                     </label>
                                 </div>
                                 <div class="answerBox">
@@ -57,7 +60,18 @@
                             </button>
                         </div>
                     </div>
+                </div>
             </form>
+            {% endfor %}
+            {% for page_num in questions.iter_pages() %}
+                {% if page_num %}
+                    {% if questions.page == page_num %} <!-- current page -->
+                        <a class="btn btn-info mb-4" href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-info mb-4" href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
             <!-- prevent things from floating after this section -->
             <div style=" clear: both;"></div>
 
