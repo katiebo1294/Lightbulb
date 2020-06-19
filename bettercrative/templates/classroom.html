@@ -89,7 +89,7 @@
                     <div class="question-number">
                         <div class="quizlist">
                             <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
-                                <span class="Active-Rooms">Active Rooms</span>
+                                <span class="Active-Rooms">Added Quizzes</span>
                                 <a class="btn Add-A-Quiz"
                                    href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
 
@@ -98,10 +98,12 @@
                             <!-- JavaScript option to set the current quiz in the list to active -->
                             <li>
                                 {{ quiz.name }}
+                                {% if quiz.id != classroom.active_quiz %}
                                 <a class="btn btn-lg set-active"
                                    onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
                                     Set Active
                                 </a>
+                                {% endif %}
                             </li>
                             {%endfor%}
                         </div>

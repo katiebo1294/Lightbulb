@@ -37,6 +37,7 @@
 
 
 
+
 </style>
 
 <div id="quiz-content-container">
@@ -91,7 +92,8 @@
 
             {% endfor %}
 
-            <button class="btn .item .slide" onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
+            <button class="btn .item .slide"
+                    onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
                 +
             </button>
 
@@ -106,7 +108,6 @@
             <span id="question-{{ loop.index }}" {% if not loop.first %} style="display: none;" {% endif %}>
                    
                     <div id="question">
-                        {% if question.category == 'Multiple Choice' %}
                         <div class="multiple-choice">
 
                             <!-- contents of multiple choice box -->
@@ -132,7 +133,7 @@
                                 </span>
                                 
                             </div>
-
+                            {% if question.category == 'Multiple Choice' %}
                             <div class="answerchoices">
                                 <span class="menu">
                                     
@@ -163,7 +164,7 @@
                                                 <fieldset class="form-group">
                                                     <div class="form-group">
                                                         {{ aform.content.label }} -> {{ aform.content(value=answer.content) }}
-                                                        {{ aform.correct.label}} -> {{ aform.correct(checked=answer.correct) }}
+                                                        {{ aform.correct.label }} -> {{ aform.correct(checked=answer.correct) }}
                                                     </div>
                                                 </fieldset>
 
@@ -183,14 +184,15 @@
                                             Add Answer
                                 </button>
                             </span>
-                        </div>
                         {% elif question.category == 'True/False' %}
-                        <!-- Put true/false answer format here -->
+                            <!-- Put true/false answer format here -->
+
                         {% elif question.category == 'Short Answer' %}
-                        <!-- Put short answer format here -->
+                            <!-- Put short answer format here -->
                         {% elif question.category == 'IDE' %}
-                        <!-- Put IDE format here -->
+                            <!-- Put IDE format here -->
                         {% endif %}
+                        </div>
                     </div>
                 </span>
             {% endfor %}
@@ -210,6 +212,7 @@
     };
 
     
+
 
 
 </script>
