@@ -11,7 +11,7 @@ class AnswerForm(FlaskForm):
 
 class QuestionForm(FlaskForm):
     content = StringField('Question', validators=[InputRequired('Please fill out this field.')])
-    submit = SubmitField('Add Question')
+    submit = SubmitField('Save')
 
 
 class QuizForm(FlaskForm):

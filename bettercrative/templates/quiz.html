@@ -40,6 +40,7 @@
 
 
 
+
 </style>
 
 <div id="quiz-content-container">
@@ -115,16 +116,22 @@
                             <div class="question-edit-header">
                                 <span class="question-number">
                                     <!-- set form -->
-                                    <form action="{{ url_for('quizzes.add_question_content', question_id=question.id) }}"
+                                    <span id="question-content-display-{{ loop.index }}">
+                                        <label>{{ question.name }}) {{ question.content }}</label>
+                                        <span class="btn btn-outline-info" style="color: white;" onclick="showEditQuestionContainer(index={{loop.index}})">Edit</span>
+                                    </span>
+                                    <form style="display: none;" id="question-content-edit-form-{{ loop.index }}" action="{{ url_for('quizzes.add_question_content', question_id=question.id) }}"
                                           method="POST">
                                           {{ qform.hidden_tag() }}
                                         <fieldset class="form-group">
                                             <label>{{ question.name }}) {{ qform.content(value=question.content) }}</label>
+                                            <span>
+                                            {{ qform.submit(class="btn btn-lg btn-outline-info") }}
+                                        </span>
+                                            <span class="btn btn-outline-info" style="color: white;" onclick="resetEditQuestionContainer(index={{loop.index}})">Cancel</span>
                                         </fieldset>
                                         <!-- submit button -->
-                                        <div class="form-group">
-                                            {{ qform.submit(class="btn btn-lg btn-outline-info") }}
-                                        </div>
+
                                     </form>
                                     <!-- <a id="Question-Edit" onclick="addQuestionContent('{{ loop.index }}')"> Edit Question </a> -->
                                     {% if qform.errors %}
@@ -197,10 +204,14 @@
                 {% else %}
                 <!-- four buttons to choose question type -->
                 <div class="question-type-container">
-                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Multiple Choice') }}">Multiple Choice</a></div>
-                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='True-False') }}">True or False</a></div>
-                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Short Answer') }}">Short Answer</a></div>
-                    <div class="question-type-choice-box"><a class="question-type-choice-box" href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='IDE') }}">Coding</a></div>
+                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Multiple Choice') }}">Multiple Choice</a></div>
+                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='True-False') }}">True or False</a></div>
+                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Short Answer') }}">Short Answer</a></div>
+                    <div class="question-type-choice-box"><a class="question-type-choice-box"
+                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='IDE') }}">Coding</a></div>
                 </div>
                 {% endif %}
                 </span>
@@ -221,6 +232,7 @@
     };
 
     
+
 
 
 

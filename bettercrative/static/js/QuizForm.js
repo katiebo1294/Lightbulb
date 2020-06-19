@@ -163,7 +163,7 @@ function shiftQuestion(url, q_id, direction) {
             refresh("#body");
         }
     });
-}
+};
 
 $(document).ready(function() {
     // $('#add').click(addForm);
@@ -177,5 +177,12 @@ function refresh(section)
     console.log("Refreshed");
 };
 
+function showEditQuestionContainer(index) {
+    document.getElementById("question-content-display-" + index).style.display = "none";
+    document.getElementById("question-content-edit-form-" + index).style.display = "block";
+};
 
+function resetEditQuestionContainer(index) {
+    refresh("#body");
+};
 
