@@ -204,14 +204,10 @@
                 {% else %}
                 <!-- four buttons to choose question type -->
                 <div class="question-type-container">
-                    <div class="question-type-choice-box btn-outline-info"><a class="question-type-choice-box"
-                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Multiple Choice') }}">Multiple Choice</a></div>
-                    <div class="question-type-choice-box btn-outline-danger"><a class="question-type-choice-box"
-                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='True-False') }}">True or False</a></div>
-                    <div class="question-type-choice-box btn-outline-warning"><a class="question-type-choice-box"
-                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='Short Answer') }}">Short Answer</a></div>
-                    <div class="question-type-choice-box btn-outline-secondary"><a class="question-type-choice-box"
-                                                             href="{{ url_for('quizzes.set_question_type', question_id=question.id, qtype='IDE') }}">Coding</a></div>
+                    <button class="question-type-choice-box btn-primary" onclick="setQType(question_id=question.id, qtype='Multiple Choice')">Multiple Choice</button>
+                    <button class="question-type-choice-box btn-danger" onclick="setQType(question_id=question.id, qtype='True-False')">True or False</button>
+                    <button class="question-type-choice-box btn-warning" onclick="setQType(question_id=question.id, qtype='Short Answer')">Short Answer</button>
+                    <button class="question-type-choice-box btn-secondary" onclick="setQType(question_id=question.id, qtype='IDE')">Coding</button>
                 </div>
                 {% endif %}
                 </span>

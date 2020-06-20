@@ -1102,7 +1102,7 @@ div.options{
   border:none;
 }
 
-label.btn.btn-secondary.active.button-choices{
+label.btn.btn-secondary.active.button-choices {
   font-size:3.38vw;
 }
 
@@ -1193,11 +1193,16 @@ div.scrollmenu a:hover {
 .question-type-choice-box {
     padding: 20px;
     border-radius: 10px;
-    background-color: #333;
-    color: #fff;
+    border: solid black;
+    color: black;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.question-type-choice-box hover {
+    border: solid white;
 }
 
 .answer-delete-button, .answer-edit-button {

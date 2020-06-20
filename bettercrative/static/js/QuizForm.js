@@ -194,3 +194,19 @@ function showEditAnswerContainer(index) {
 function resetEditAnswerContainer(index) {
     refresh("#body");
 };
+
+function setQType(question_id, qtype) {
+    $.ajax({
+        type: "GET",
+        data: {'question_id': question_id,
+                'qtype': qtype},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
+};
