@@ -195,7 +195,7 @@ function resetEditAnswerContainer(index) {
     refresh("#body");
 };
 
-function setQType(question_id, qtype) {
+function setQType(url,question_id, qtype) {
     $.ajax({
         type: "GET",
         data: {'question_id': question_id,

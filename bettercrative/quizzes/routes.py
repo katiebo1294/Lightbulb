@@ -250,9 +250,11 @@ def shift_question():
     return "lit", 200
 
 
-@quizzes.route("/quiz/question/<int:question_id>/set_type/<string:qtype>", methods=['GET', 'POST'])
+@quizzes.route("/quiz/set_question_type")
 @login_required
-def set_question_type(question_id, qtype):
+def set_question_type():
+    question_id = request.args.get('question_id', None)
+    qtype = request.args.get('qtype', None)
     print(question_id)
     current_question = Question.query.filter_by(id=question_id).first()
     print(current_question)
