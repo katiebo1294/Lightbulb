@@ -877,8 +877,19 @@ button.Show-Student-Response.btn:hover{
   }
 }
 
+/* footer */
+.page-footer{
+  background-color:#D4D4D4;
+  font-size:1vw;
+}
 
+.footer-element{
+  margin-top:0;
+}
 
+.footer-cont{
+
+}
 
 /* Quiz Section (quiz.html)*/
 #editing-container{
