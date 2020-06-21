@@ -16,8 +16,8 @@
     <!--The backend queries for all right answers and wrong answer
     It returns I think a list of them that are variables rightAnswers and wrongAnswers-->
 
-
-    <h3> Correct: </h3>
+    <!-- this is the original setup, changing from response oriented to student oriented -->
+    <!-- <h3> Correct: </h3>
     {% for response in rightAnswers %}
     <h4> {{ response }} </h4>
     {% endfor %}
@@ -30,7 +30,37 @@
     <br></br>
     <h4>Number of Correct Answers: {{ sumRight }}</h4>
     <h2></h2>
-    <h4>Number of Wrong Answers: {{ sumWrong }}</h4>
+    <h4>Number of Wrong Answers: {{ sumWrong }}</h4> -->
+
+    <!-- Create a basic table template -->
+    <div>
+        <h2>Responses</h2>
+        <table class="table-striped">
+            <thead>
+                <th>Response ID</th>
+                {% for question in quiz.questions %}
+                <th>{{ question.name }}</th>
+                {% endfor %}
+                <th>Total Correc</th>
+            </thead>
+            <thead>
+                <!-- Response ID's -->
+                {% for response in quiz.responses %}
+                    <tr>
+                        <th>response.id</th>
+                        <!-- iterate through all question responses for this responseID -->
+                        {% for question in quiz.questions %}
+                            <th class="{% if response.{{ question }} != quiz.question.correct %} danger {% endif %}">{{ response.{{ question }} }}</th>
+                        {% endfor %}
+                        <th>
+                            {{ numCorrect }} / {{ quiz.questions|length }}
+                        </th>
+                    </tr>
+                {% endfor %}
+            </thead>
+        </table>
+    </div>
+
     <!--Right now redirects to classroom and kinda funky, change as you please-->
     <input formaction="/classroom/{{classroomid}}" type="submit" value="Go back">
 </form>
