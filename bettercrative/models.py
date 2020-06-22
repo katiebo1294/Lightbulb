@@ -174,8 +174,8 @@ class Question(db.Model):
     category = db.Column(db.Enum('Multiple Choice', 'True-False', 'Short Answer', 'IDE', name='question_types'))
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     index = db.Column(db.Integer)
-    answers = db.relationship('Answer', backref='question', collection_class=list,
-                              cascade="all, delete, delete-orphan")
+    answers = db.relationship('Answer', backref='question', collection_class=ordering_list('index'),
+                              cascade="all, delete, delete-orphan", order_by ="Answer.index" )
 
 
 class Answer(db.Model):
@@ -197,7 +197,8 @@ class Answer(db.Model):
     content = db.Column(db.Text, nullable=True)
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
-
+    index = db.Column(db.Integer, autoincrement=True)
+    
     # class Student(db.Model):
     """ Represents a student user.
 

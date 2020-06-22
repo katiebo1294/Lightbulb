@@ -303,6 +303,7 @@ def add_answer_content(answer_id):
     """
 
     # Find the current answer and then update it's value by showing the form
+    
     current_answer = Answer.query.filter_by(id=answer_id).first()
     print(current_answer)
     current_question = Question.query.filter_by(id=current_answer.question_id).first()
