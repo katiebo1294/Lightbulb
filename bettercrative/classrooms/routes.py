@@ -148,6 +148,7 @@ def take_quiz(classroom_id):
         Parameters:
                 classroom_id (int): the ID of the classroom the student is signed in to
     """
+    
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
@@ -156,13 +157,15 @@ def take_quiz(classroom_id):
 
     # dictionary of true and false for each input
     dicts = {}
-    i = 0
-    for option in quiz.questions[0].answers:
+    
+    i = page - 1
+    
+    for option in quiz.questions[i].answers:
+        
         dicts[option.content] = option.correct
-
+    
     # gets a list of what the student responded with
     answered = request.form.getlist('studentResponse')
-
     result = True
     for studentResponse in answered:
         result = dicts[studentResponse]
