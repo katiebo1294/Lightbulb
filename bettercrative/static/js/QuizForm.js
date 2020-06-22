@@ -210,3 +210,13 @@ function setQType(url,question_id, qtype) {
         }
     });
 };
+
+var previous = 1;
+function changeActiveQuestion(elem) {
+    var index = elem.id.slice(-1);
+    if(index != previous) {
+        document.getElementById("question-" + index).style.display = "block";
+        document.getElementById("question-" + previous).style.display = "none";
+    }
+    previous = index;
+};
