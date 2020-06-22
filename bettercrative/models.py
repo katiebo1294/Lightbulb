@@ -234,7 +234,8 @@ class Response(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-    question_num = db.Column()
+    isCorrect = db.Column(db.Enum("True", "False", name = "isCorrect"))
+    question_num = db.Column(db.Integer)
 
     def __repr__(self):
         return f"Response('{self.quiz_reference}', '{self.isCorrect}')"
