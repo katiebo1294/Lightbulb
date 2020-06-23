@@ -36,14 +36,14 @@
     <div>
         <h2>Correct Answers</h2>
         <ul>
-            {% for answer in correctAnswers %}
+            {% for answer in rightAnswers %}
             <li style="color: green;">Question {{ answer.question_num}}: {{ answer.value }}</li>
             {% endfor %}
         </ul>
         <h2>Wrong Answers</h2>
         <ul>
             {% for answer in wrongAnswers %}
-            <li style="color: red;">{{ answer.value }}</li>
+            <li style="color: red;">Question {{ answer.question_num}}: {{ answer.value }}</li>
             {% endfor %}
         </ul>
     </div>

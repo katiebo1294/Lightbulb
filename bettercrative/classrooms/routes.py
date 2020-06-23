@@ -1,8 +1,8 @@
 import this
 
 from flask import (render_template, url_for, flash,
-                   redirect, Blueprint,
-                   request)
+                   redirect, Blueprint,session,
+                   request, make_response)
 from flask_login import current_user, login_required
 from sqlalchemy import exists, and_
 
@@ -148,24 +148,30 @@ def take_quiz(classroom_id):
         Parameters:
                 classroom_id (int): the ID of the classroom the student is signed in to
     """
-    
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
-
+    
     # dictionary of true and false for each input
     dicts = {}
     
     i = page - 1
     
     for option in quiz.questions[i].answers:
-        
         dicts[option.content] = option.correct
-    
+
     # gets a list of what the student responded with
     answered = request.form.getlist('studentResponse')
+    response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id,question_num = page)
+
+    # cookies
+    if current_user.is_anonymous:
+        cookie = request.cookies.get('session')
+        print(f'COOKIE IS {cookie}')
+        response.student_id = cookie
+        print(type(cookie))
     for studentResponse in answered:
         result = dicts[studentResponse]
         response = Response.query.filter_by(classroom_host_id=classroom.id, quiz_reference=quiz.id, question_num=page).first()
@@ -175,7 +181,7 @@ def take_quiz(classroom_id):
         else:
             response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, value=studentResponse, question_num=page, correct=result)
             db.session.add(response)
-        db.session.commit()
+    db.session.commit()
     return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions)
 
 
@@ -207,3 +213,4 @@ def view_results(classroom_id):
 
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
                            wrongAnswers=wrong_answers, classroomid=classroom_id, sumWrong=sum_wrong, sumRight=sum_right)
+
