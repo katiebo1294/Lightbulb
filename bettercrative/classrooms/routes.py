@@ -8,7 +8,7 @@ from sqlalchemy import exists, and_
 
 from bettercrative import db
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
-from bettercrative.models import Classroom, Quiz, Response, Question, assoc
+from bettercrative.models import Classroom, Quiz, Response, Question, assoc, Answer
 
 classrooms = Blueprint('classrooms', __name__)
 
@@ -166,13 +166,16 @@ def take_quiz(classroom_id):
     
     # gets a list of what the student responded with
     answered = request.form.getlist('studentResponse')
-    result = True
     for studentResponse in answered:
         result = dicts[studentResponse]
-
-    response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, isCorrect=str(result))
-    db.session.add(response)
-    db.session.commit()
+        response = Response.query.filter_by(classroom_host_id=classroom.id, quiz_reference=quiz.id, question_num=page).first()
+        if response:
+            response.value = studentResponse
+            response.correct = dicts[response.value]
+        else:
+            response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, value=studentResponse, question_num=page, correct=result)
+            db.session.add(response)
+        db.session.commit()
     return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions)
 
 
@@ -185,23 +188,22 @@ def view_results(classroom_id):
         Parameters: 
                 classroom_id (int): the ID of the classroom to retrieve answers from
     """
-
     print("WRONG ANSWERS-------------")
     sum_wrong = 0
-    wrong_answers = Response.query.filter_by(classroom_host_id=classroom_id, isCorrect='False')
+    wrong_answers = Response.query.filter_by(classroom_host_id=classroom_id, correct=False)
     for y in wrong_answers:
         sum_wrong += 1
         print(y)
 
+    print(sum_wrong)
     print("RIGHT ANSWERS ----------------")
     sum_right = 0
-    correct_responses = Response.query.filter_by(classroom_host_id=classroom_id, isCorrect='True')
+    correct_responses = Response.query.filter_by(classroom_host_id=classroom_id, correct=True)
     for z in correct_responses:
         sum_right += 1
         print(z)
 
     print(sum_right)
-    print(sum_wrong)
 
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
                            wrongAnswers=wrong_answers, classroomid=classroom_id, sumWrong=sum_wrong, sumRight=sum_right)

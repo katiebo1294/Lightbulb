@@ -34,31 +34,18 @@
 
     <!-- Create a basic table template -->
     <div>
-        <h2>Responses</h2>
-        <table class="table-striped">
-            <thead>
-                <th>Response ID</th>
-                {% for question in quiz.questions %}
-                <th>{{ question.name }}</th>
-                {% endfor %}
-                <th>Total Correc</th>
-            </thead>
-            <thead>
-                <!-- Response ID's -->
-                {% for response in quiz.responses %}
-                    <tr>
-                        <th>response.id</th>
-                        <!-- iterate through all question responses for this responseID -->
-                        {% for question in quiz.questions %}
-                            <th class="{% if response.{{ question }} != quiz.question.correct %} danger {% endif %}">{{ response.{{ question }} }}</th>
-                        {% endfor %}
-                        <th>
-                            {{ numCorrect }} / {{ quiz.questions|length }}
-                        </th>
-                    </tr>
-                {% endfor %}
-            </thead>
-        </table>
+        <h2>Correct Answers</h2>
+        <ul>
+            {% for answer in correctAnswers %}
+            <li style="color: green;">Question {{ answer.question_num}}: {{ answer.value }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Wrong Answers</h2>
+        <ul>
+            {% for answer in wrongAnswers %}
+            <li style="color: red;">{{ answer.value }}</li>
+            {% endfor %}
+        </ul>
     </div>
 
     <!--Right now redirects to classroom and kinda funky, change as you please-->

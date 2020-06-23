@@ -27,7 +27,7 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
 
     #  app.config.from_object(os.environ['APP_SETTINGS'])
-    # app.config['SQALCHEMY_TRACK_MODIFICATIONS'] = False
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     from bettercrative.users.routes import users
     from bettercrative.classrooms.routes import classrooms

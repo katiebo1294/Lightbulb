@@ -175,7 +175,10 @@ class Question(db.Model):
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     index = db.Column(db.Integer)
     answers = db.relationship('Answer', backref='question', collection_class=ordering_list('index'),
-                              cascade="all, delete, delete-orphan", order_by ="Answer.index" )
+                              cascade="all, delete, delete-orphan", order_by ="Answer.index")
+
+    def __repr__(self):
+        return f"Question('{self.name}', '{self.content}', '{self.category}', '{self.quiz_id}', '{self.index}')"
 
 
 class Answer(db.Model):
@@ -198,6 +201,9 @@ class Answer(db.Model):
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     index = db.Column(db.Integer, autoincrement=True)
+
+    def __repr__(self):
+        return f"Answer('{self.content}', '{self.correct}', '{self.question_id}', '{self.index}')"
     
     # class Student(db.Model):
     """ Represents a student user.
@@ -235,8 +241,9 @@ class Response(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
-    isCorrect = db.Column(db.Enum("True", "False", name = "isCorrect"))
-    question_num = db.Column(db.Integer)
+    value = db.Column(db.Text, nullable=False)
+    question_num = db.Column(db.Integer, nullable=False)
+    correct = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
-        return f"Response('{self.quiz_reference}', '{self.isCorrect}')"
+        return f"Response('{self.classroom_host_id}', '{self.quiz_reference}', '{self.question_num}', '{self.value}', '{self.correct}')"

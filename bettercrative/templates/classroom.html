@@ -103,6 +103,11 @@
                                    onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
                                     Set Active
                                 </a>
+                                {% else %}
+                                <a class="btn btn-lg remove-active"
+                                   onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+                                    Remove Active
+                                </a>
                                 {% endif %}
                             </li>
                             {%endfor%}
@@ -111,13 +116,13 @@
                     </div>
 
                 </div>
-                <!-- TODO having issues getting specifically the active quiz s-->
-                {% if (current_user.is_authenticated) and (classroom.owner == current_user) and (current_user.quizzes)
-                %}
+                {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
+                {% if classroom.active_quiz %}
                 <div>
                     <a class="Take-Active-Quiz btn "
                        href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
                 </div>
+                {% endif %}
 
                 <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
                 <div>

@@ -58,6 +58,8 @@ question_2.answers.append(answer_2_2)
 question_2.answers.append(answer_2_3)
 question_2.answers.append(answer_2_4)
 katie.quizzes.append(quiz_2)
+katie_classroom.added_quizzes.append(quiz_1)
+katie_classroom.active_quiz = quiz_1.id
 db.session.commit()
 # Tim's test account
 tim_password = bcrypt.generate_password_hash('test').decode('utf-8')
