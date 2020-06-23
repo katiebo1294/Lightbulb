@@ -196,7 +196,7 @@ def view_results(classroom_id):
     """
     print("WRONG ANSWERS-------------")
     sum_wrong = 0
-    wrong_answers = Response.query.filter_by(classroom_host_id=classroom_id, correct=False)
+    wrong_answers = Response.query.filter_by(classroom_host_id=classroom_id, correct=False).all()
     for y in wrong_answers:
         sum_wrong += 1
         print(y)
@@ -204,13 +204,17 @@ def view_results(classroom_id):
     print(sum_wrong)
     print("RIGHT ANSWERS ----------------")
     sum_right = 0
-    correct_responses = Response.query.filter_by(classroom_host_id=classroom_id, correct=True)
+    correct_responses = Response.query.filter_by(classroom_host_id=classroom_id, correct=True).all()
     for z in correct_responses:
         sum_right += 1
         print(z)
 
     print(sum_right)
 
+    responses = Response.query.filter_by(classroom_host_id=classroom_id).all()
+    classroom = Classroom.query.filter_by(id=classroom_id).first()
+    quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
+
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
-                           wrongAnswers=wrong_answers, classroomid=classroom_id, sumWrong=sum_wrong, sumRight=sum_right)
+                           wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz)
 

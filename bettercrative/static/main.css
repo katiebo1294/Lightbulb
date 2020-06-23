@@ -1232,3 +1232,8 @@ div.scrollmenu a:hover {
     font-size: 2vw;
 }
 
+/* For displaying the quiz results */
+table, th, td {
+    border: 1px solid black;
+}
+
