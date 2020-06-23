@@ -233,6 +233,7 @@ class Response(db.Model):
             whether or not the answer is correct. Can be true or false.
         """
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    student_id = db.Column(db.Text, nullable = True)
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     isCorrect = db.Column(db.Enum("True", "False", name = "isCorrect"))
