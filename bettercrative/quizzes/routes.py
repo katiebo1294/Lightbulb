@@ -81,6 +81,8 @@ def add_question():
     question.name = "Question " 
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
+
+    quiz.active = question.name;
  
     
     db.session.add(question)
@@ -212,10 +214,10 @@ def remove_answer():
 @quizzes.route("/quiz/shift_question")
 @login_required
 def shift_question():
-    """ Remove a question from the given quiz.
+    """ shift a question to a given location.
         Parameters: 
                 question_id (int): the ID of the question to be removed.
-                quiz_id (int): the quiz to remove the question from.
+                direction (String): direction to shift
     """
     question_id = request.args.get('question_id', None)
     direction = request.args.get('direction', None)
@@ -325,6 +327,29 @@ def add_answer_content(answer_id):
     return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform)
 
 
+@quizzes.route("/quiz/changeActiveQuestion")
+@login_required
+def changeActiveQuestion():
+    """ Sets the active question of a provided quiz to the provided question
+        Parameters:
+            question_id (int): the ID of the question
+            quiz (int): the ID of the quiz
+    """
+    question_id = request.args.get('question_id', None)
+    quiz_id = request.args.get('quiz_id', None)
+    
+    question = Question.query.filter_by(id=question_id).first()
+    if question is None:
+        return "oops fuk", 500
+
+    quiz = Quiz.query.filter_by(id=quiz_id).first()
+    if quiz is None:
+        return "oops fuk", 500
+
+    quiz.active = question.name
+
+    db.session.commit()
+    return "lit", 200
 
 """
 -------------------------------------------------------------------

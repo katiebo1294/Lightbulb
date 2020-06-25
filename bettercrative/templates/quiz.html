@@ -72,7 +72,7 @@
             {% for question in quiz.questions %}
             <a class="btn item {% if quiz.active_question == question.name %} active {% endif %}"
                id="qbtn-{{ loop.index }}"
-               onclick="changeActiveQuestion(this)">
+               onclick="changeActiveQuestion('{{ url_for('quizzes.changeActiveQuestion') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }})">
                 {% if not loop.first %}
                 <button class="btn btn-outline-info shift-Button"
                         onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
@@ -107,7 +107,7 @@
 
         <div id="questions">
             {% for question in quiz.questions %}
-            <span id="question-{{ loop.index }}" {% if not loop.first %} style="display: none;" {% endif %}>
+            <span id="question-{{ loop.index }}" {% if quiz.active != question.name %} style="display: none;" {% endif %}>
                     {% if question.category %}
                     <div id="question">
                         <div class="multiple-choice">

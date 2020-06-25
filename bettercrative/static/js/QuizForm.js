@@ -213,12 +213,25 @@ function setQType(url,question_id, qtype) {
     });
 };
 
-var previous = 1;
-function changeActiveQuestion(elem) {
-    var index = elem.id.slice(-1);
-    if(index != previous) {
-        document.getElementById("question-" + index).style.display = "block";
-        document.getElementById("question-" + previous).style.display = "none";
-    }
-    previous = index;
+// var previous = 1;
+function changeActiveQuestion(url,question_id,quiz_id) {
+    $.ajax({
+        type: "GET",
+        data: {'question_id': question_id,
+                'quiz_id': quiz_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
+    // var index = elem.id.slice(-1);
+    // if(index != previous) {
+    //     document.getElementById("question-" + index).style.display = "block";
+    //     document.getElementById("question-" + previous).style.display = "none";
+    // }
+    // previous = index;
 };
