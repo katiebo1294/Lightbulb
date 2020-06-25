@@ -107,7 +107,7 @@
 
         <div id="questions">
             {% for question in quiz.questions %}
-            <span id="question-{{ loop.index }}" {% if quiz.active != question.name %} style="display: none;" {% endif %}>
+            <span id="question-{{ loop.index }}" {% if quiz.active != question.id %} style="display: none;" {% endif %}>
                     {% if question.category %}
                     <div id="question">
                         <div class="multiple-choice">

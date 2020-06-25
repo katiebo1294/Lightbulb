@@ -81,9 +81,6 @@ def add_question():
     question.name = "Question " 
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
-
-    quiz.active = question.name;
- 
     
     db.session.add(question)
 
@@ -92,6 +89,8 @@ def add_question():
     # load new question data
 
     db.session.commit()
+    
+    quiz.active = question.id;
 
     question.name += str(question.index + 1)
 
@@ -346,7 +345,7 @@ def changeActiveQuestion():
     if quiz is None:
         return "oops fuk", 500
 
-    quiz.active = question.name
+    quiz.active = question.id
 
     db.session.commit()
     return "lit", 200
