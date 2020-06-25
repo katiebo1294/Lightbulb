@@ -89,7 +89,7 @@ def add_question():
     # load new question data
 
     db.session.commit()
-    
+
     quiz.active = question.id;
 
     question.name += str(question.index + 1)
@@ -159,6 +159,9 @@ def remove_question():
     if quiz is not None:
         quiz.questions.remove(question)
 
+    position = question.index
+
+
     print(f'removed')
     db.session.flush()
 
@@ -167,6 +170,14 @@ def remove_question():
     print(f'deleted')
 
     # load new question data
+
+    # change activequiz to first quiz
+    if (len(quiz.questions) == 0):
+        quiz.active = None
+    elif ((position + 1) > len(quiz.questions)):
+        quiz.active = quiz.questions[0].id
+    else:
+        quiz.active = quiz.questions[position].id
 
     db.session.commit()
     return "lit", 200
