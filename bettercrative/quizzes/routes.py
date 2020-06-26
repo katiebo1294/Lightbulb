@@ -160,11 +160,10 @@ def remove_question():
         quiz.questions.remove(question)
 
     #setting active question
-    current_active_question = 0
+    current_active_question = quiz.active
     if(current_active_question == question.id):
         current_active_question = quiz.questions[-1].id
-    else:
-        current_active_question = quiz.active
+    
 
     print(f'removed')
     db.session.flush()
