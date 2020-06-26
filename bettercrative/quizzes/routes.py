@@ -159,26 +159,26 @@ def remove_question():
     if quiz is not None:
         quiz.questions.remove(question)
 
-    position = question.index
-
+    #setting active question
+    current_active_question = 0
+    if(current_active_question == question.id):
+        current_active_question = quiz.questions[-1].id
+    else:
+        current_active_question = quiz.active
 
     print(f'removed')
     db.session.flush()
 
     db.session.delete(question)
 
+    
     print(f'deleted')
 
-    # load new question data
-
-    # change activequiz to first quiz
-    if (len(quiz.questions) == 0):
-        quiz.active = None
-    elif ((position + 1) > len(quiz.questions)):
-        quiz.active = quiz.questions[0].id
-    else:
-        quiz.active = quiz.questions[position].id
-
+    db.session.commit()
+    
+    quiz.active = current_active_question
+    
+    db.session.flush()
     db.session.commit()
     return "lit", 200
 
