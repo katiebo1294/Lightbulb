@@ -980,6 +980,10 @@ div#question p{
   font-size: 80%;
 }
 
+.activeQuestion{
+  background-color:#A2A2A2;
+}
+
 div.multiple-choice{
   padding: 1em;
   position: relative;

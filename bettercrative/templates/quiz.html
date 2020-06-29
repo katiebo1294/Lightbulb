@@ -70,7 +70,7 @@
         <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
         <div class="scrollmenu .all-items .slides">
             {% for question in quiz.questions %}
-            <a class="btn item {% if quiz.active_question == question.name %} active {% endif %}"
+            <a class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
                id="qbtn-{{ loop.index }}"
                onclick="changeActiveQuestion('{{ url_for('quizzes.changeActiveQuestion') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }})">
                 {% if not loop.first %}
