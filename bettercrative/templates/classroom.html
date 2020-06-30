@@ -109,6 +109,10 @@
                                     Remove Active
                                 </a>
                                 {% endif %}
+                                <a class="btn btn-lg edit-quiz"
+                                href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+                                 Edit Quiz
+                             </a>
                             </li>
                             {%endfor%}
                         </div>
