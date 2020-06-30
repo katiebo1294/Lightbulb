@@ -166,12 +166,7 @@ def take_quiz(classroom_id):
     answered = request.form.getlist('studentResponse')
     response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id,question_num = page)
 
-    # cookies
-    if current_user.is_anonymous:
-        cookie = request.cookies.get('session')
-        print(f'COOKIE IS {cookie}')
-        response.student_id = cookie
-        print(type(cookie))
+    
     for studentResponse in answered:
         result = dicts[studentResponse]
         response = Response.query.filter_by(classroom_host_id=classroom.id, quiz_reference=quiz.id, question_num=page).first()
@@ -181,6 +176,12 @@ def take_quiz(classroom_id):
         else:
             response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, value=studentResponse, question_num=page, correct=result)
             db.session.add(response)
+    # cookies
+    if current_user.is_anonymous:
+        cookie = request.cookies.get('session')
+        response.student_id = cookie
+        
+    
     db.session.commit()
     return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions)
 
