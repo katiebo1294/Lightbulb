@@ -1121,6 +1121,11 @@ label.btn.btn-secondary.active.button-choices {
   font-size:3.38vw;
 }
 
+label.btn.btn-secondary.button-choices.clicked {
+  background-color: rgb(51, 122, 183);
+}
+
+
 /* Horizontal scroll menu for Questions */
 div.scrollmenu {
   /* background-color: #333;  */
