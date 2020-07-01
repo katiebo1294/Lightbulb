@@ -235,3 +235,18 @@ function changeActiveQuestion(url,question_id,quiz_id) {
     // }
     // previous = index;
 };
+
+function setAnswer(id){
+    console.log("gets here");
+    var label = document.getElementById('question-' + id);
+    console.log(label);
+    //if it's already blue then change it back to gray else change it to blue
+    if(label.classList.contains('clicked')){
+        console.log('removing clicked');
+        label.classList.remove('clicked');
+    }
+    else{
+        label.classList.add('clicked');
+    }
+    event.preventDefault();
+}
