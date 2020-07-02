@@ -38,12 +38,14 @@
         <h2>Correct Answers</h2>
         <table>
             <tr>
+                <th>ID</th>
                 <th>Question Number</th>
                 <th>Student's Answer</th>
                 <th>Correct Answer</th>
             </tr>
             {% for response in responses %}
             <tr>
+                <td>{{ response.student_id }} </td>
                 <td>{{ response.question_num }}</td>
                 <td id="student-response-{{ loop.index0 }}">{{ response.value }}</td>
                 <td id="correct-answer-{{ loop.index0 }}">{% for answer in quiz.questions[response.question_num -
