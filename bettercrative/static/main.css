@@ -1099,6 +1099,7 @@ span.Taking-a-Quiz{
 button.btn.Taking-a-Quiz-Submit{
   font-size:1.5vw;
 }
+
 button.btn.Taking-a-Quiz-Submit:hover{
   color: rgb(213, 219, 216);
   font-size:1.7vw;

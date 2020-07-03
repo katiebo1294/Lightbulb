@@ -201,9 +201,10 @@ class Answer(db.Model):
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     index = db.Column(db.Integer, autoincrement=True)
+    clicked = db.Column(db.Boolean, nullable = False, default=False)
 
     def __repr__(self):
-        return f"Answer('{self.content}', '{self.correct}', '{self.question_id}', '{self.index}')"
+        return f"Answer('content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}', clicked: {self.clicked}')"
     
     # class Student(db.Model):
     """ Represents a student user.

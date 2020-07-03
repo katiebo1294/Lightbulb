@@ -213,7 +213,6 @@ function setQType(url,question_id, qtype) {
     });
 };
 
-// var previous = 1;
 function changeActiveQuestion(url,question_id,quiz_id) {
     $.ajax({
         type: "GET",
@@ -228,25 +227,20 @@ function changeActiveQuestion(url,question_id,quiz_id) {
             refresh("#body");
         }
     });
-    // var index = elem.id.slice(-1);
-    // if(index != previous) {
-    //     document.getElementById("question-" + index).style.display = "block";
-    //     document.getElementById("question-" + previous).style.display = "none";
-    // }
-    // previous = index;
 };
 
-function setAnswer(id){
-    console.log("gets here");
-    var label = document.getElementById('question-' + id);
-    console.log(label);
-    //if it's already blue then change it back to gray else change it to blue
-    if(label.classList.contains('clicked')){
-        console.log('removing clicked');
-        label.classList.remove('clicked');
-    }
-    else{
-        label.classList.add('clicked');
-    }
-    event.preventDefault();
+function setAnswer(url,answer_id){
+    $.ajax({
+        type: "GET",
+        data: {'answer_id': answer_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+            event.preventDefault();
+        }
+    });
 }

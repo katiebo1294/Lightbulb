@@ -39,12 +39,21 @@
                         {%for answer in question.answers %}
                         <div class="answerContainer reset">
                             <div class="answerChoice">
-                                <div class="btn-group-toggle" data-toggle="buttons">
-                                    <label class="btn btn-secondary button-choices" id = "question-{{answer.index+1}}" onclick=setAnswer({{answer.index+1}})>
-                                        <input class="response" name="studentResponse" type="checkbox"
+                                <div class="btn-group-toggle" data-toggle="buttons"> 
+                                    {% if answer.clicked %}
+                                    <label class="btn btn-secondary button-choices clicked" id = "question-{{answer.index+1}}" onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}', answer_id = {{ answer.id}})" >
+                                        <input class="response" name="studentResponse" type="checkbox" 
                                                value='{{ answer.content }}'>{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0]
                                         }}
                                     </label>
+
+                                    {% else %}
+                                    <label class="btn btn-secondary button-choices" id = "question-{{answer.index+1}}" onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}', answer_id = {{ answer.id}})" >
+                                        <input class="response" name="studentResponse" type="checkbox" 
+                                               value='{{ answer.content }}'>{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0]
+                                        }}
+                                    </label>
+                                    {%endif%}
                                 </div>
                                 <div class="answerBox">
                                     <div class="answerBox-answer">
@@ -56,7 +65,7 @@
                             {%endfor%}
 
                             <button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
-                                    type="submit">Submit
+                                    type="submit" onclick="">Submit
                             </button>
                         </div>
                     </div>

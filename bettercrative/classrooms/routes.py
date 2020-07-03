@@ -154,6 +154,7 @@ def take_quiz(classroom_id):
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
     
+    
     # dictionary of true and false for each input
     dicts = {}
     
@@ -180,7 +181,7 @@ def take_quiz(classroom_id):
     if current_user.is_anonymous:
         cookie = request.cookies.get('session')
         response.student_id = cookie
-        
+      
     
     db.session.commit()
     return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions)
@@ -219,3 +220,23 @@ def view_results(classroom_id):
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
                            wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz)
 
+
+#Answers of each student 
+@classrooms.route("/classroom/received_answer", methods=['GET', 'POST'])
+def received_answer():
+
+    
+    # Grabbing the answer of the user 
+    received_answer_id = request.args.get('answer_id')
+    current_answer = Answer.query.filter_by(id= received_answer_id).first()
+
+    # mark user's clicked answer
+    if current_answer.clicked is True:
+        current_answer.clicked = False
+    else:
+        current_answer.clicked = True
+
+    #update database
+    db.session.commit()
+ 
+    return "nice!"
