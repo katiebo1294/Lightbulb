@@ -231,6 +231,7 @@ function changeActiveQuestion(url,question_id,quiz_id) {
 };
 
 function setAnswer(url,answer_id){
+    event.preventDefault();
     $.ajax({
         type: "GET",
         data: {'answer_id': answer_id},
