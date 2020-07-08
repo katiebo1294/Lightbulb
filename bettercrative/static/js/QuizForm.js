@@ -230,11 +230,13 @@ function changeActiveQuestion(url,question_id,quiz_id) {
     });
 };
 
-function setAnswer(url,answer_id){
+function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
     event.preventDefault();
+    alert('inside the function');
     $.ajax({
         type: "GET",
-        data: {'answer_id': answer_id},
+        data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
+        'page_num': page_num, 'quiz_id':quiz_id, 'value':value},
         url: url,
         error: function(response) {
             alert(response.statusText);

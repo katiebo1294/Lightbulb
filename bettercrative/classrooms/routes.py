@@ -225,18 +225,59 @@ def view_results(classroom_id):
 @classrooms.route("/classroom/received_answer", methods=['GET', 'POST'])
 def received_answer():
 
-    
     # Grabbing the answer of the user 
+    received_classroom_id = request.args.get('classroom_id')
+    received_quiz_id = request.args.get('quiz_id')
     received_answer_id = request.args.get('answer_id')
+    received_page_num = int(request.args.get('page_num'))    
+    received_value = request.args.get('value')
+    
+    # Current quiz, questions, answer
+    quiz = Quiz.query.filter_by(id = received_quiz_id).first()
+    questions = Question.query.filter_by(quiz = quiz).paginate(page=received_page_num, per_page = 1)
     current_answer = Answer.query.filter_by(id= received_answer_id).first()
 
+    # Checking the user's answer
+    
+    dicts = {}
+    i = received_page_num - 1
+
+    for option in quiz.questions[i].answers:
+        dicts[option.content] = option.correct
+    print("-------------------------------------------------------------------")
+    print("DEBUGGING LINE FOR PRINTING THE ANSWER KEY HERE DELETE LATER")
+    print(dicts)
+    print("-------------------------------------------------------------------")
     # mark user's clicked answer
     if current_answer.clicked is True:
         current_answer.clicked = False
     else:
         current_answer.clicked = True
 
+    # Creating the response object of the user
+    response = Response(
+        classroom_host_id = received_classroom_id,
+        quiz_reference = received_quiz_id,
+        question_num = received_page_num,
+        value = received_value,
+        correct = dicts[current_answer.content]
+    )
+    
+    # cookies(session ID of the user)
+    if current_user.is_anonymous:
+        cookie = request.cookies.get('session')
+        response.student_id = cookie
+
+    # Delete answer if user unclicks the button they selected.    
+    if current_answer.clicked:
+        db.session.add(response)
+    else:
+        response = Response.query.filter_by(value =response.value , question_num =response.question_num).first()
+        db.session.delete(response)
+
     #update database
     db.session.commit()
  
     return "nice!"
+
+

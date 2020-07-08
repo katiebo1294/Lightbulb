@@ -41,14 +41,16 @@
                             <div class="answerChoice">
                                 <div class="btn-group-toggle" data-toggle="buttons"> 
                                     {% if answer.clicked %}
-                                    <label class="btn btn-secondary button-choices clicked" id = "question-{{answer.index+1}}" onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}', answer_id = {{ answer.id}})" >
-                                        <input class="response" name="studentResponse" type="checkbox" 
+                                    <label class="btn btn-secondary button-choices clicked" id = "question-{{answer.index+1}}" 
+                                    onclick= "setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value = '{{"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[answer.index]}}')">                                        
+                                        <input class="response" name="studentResponse" type="checkbox"
                                                value='{{ answer.content }}'>{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0]
                                         }}
                                     </label>
 
                                     {% else %}
-                                    <label class="btn btn-secondary button-choices" id = "question-{{answer.index+1}}" onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}', answer_id = {{ answer.id}})" >
+                                <label class="btn btn-secondary button-choices" id = "question-{{answer.index+1}}" 
+                                onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value = '{{"ABCDEFGHIJKLMNOPQRSTUVWXYZ"[answer.index]}}')">
                                         <input class="response" name="studentResponse" type="checkbox" 
                                                value='{{ answer.content }}'>{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0]
                                         }}
