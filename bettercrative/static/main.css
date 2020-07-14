@@ -1098,6 +1098,7 @@ span.Taking-a-Quiz{
 
 button.btn.Taking-a-Quiz-Submit{
   font-size:1.5vw;
+  margin-bottom: 1em;
 }
 
 button.btn.Taking-a-Quiz-Submit:hover{
