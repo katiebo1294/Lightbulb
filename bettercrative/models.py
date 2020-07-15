@@ -206,17 +206,7 @@ class Answer(db.Model):
     def __repr__(self):
         return f"Answer('content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}', clicked: {self.clicked}')"
     
-    # class Student(db.Model):
-    """ Represents a student user.
 
-        ...
-        Attributes
-        ----------
-        id: int
-            the student's ID in the database.
-        responses: list(Response)
-            a list of responses the student has made to quiz questions (see Response below).
-    """
 
 
 #    id = db.Column(db.Integer, primary_key=True)
@@ -240,7 +230,7 @@ class Response(db.Model):
             whether or not the answer is correct. Can be true or false.
         """
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    student_id = db.Column(db.Text, nullable = True)
+    student_id = db.Column(db.ForeignKey('student.id'))
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     value = db.Column(db.Text, nullable=False)
@@ -249,3 +239,18 @@ class Response(db.Model):
 
     def __repr__(self):
         return f"Response('{self.classroom_host_id}', '{self.quiz_reference}', '{self.question_num}', '{self.value}', '{self.correct}')"
+    
+class Student(db.Model):
+    """ Represents a student user.
+
+        ...
+        Attributes
+        ----------
+        id: int
+            the student's ID in the database.
+        responses: list(Response)
+            a list of responses the student has made to quiz questions (see Response below).
+    """
+
+    id = db.Column(db.Text, primary_key = True)
+    responses = db.relationship('Response', backref = 'owner', cascade = 'delete, all')
