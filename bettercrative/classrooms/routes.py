@@ -6,7 +6,7 @@ from sqlalchemy import exists, and_
 
 from bettercrative import db
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
-from bettercrative.models import Classroom, Quiz, Response, Question, assoc, Answer
+from bettercrative.models import Classroom, Quiz, Response, Question, assoc, Answer, Student
 
 classrooms = Blueprint('classrooms', __name__)
 
@@ -33,6 +33,11 @@ def enter_classroom():
     if form.validate_on_submit():
         classroom = Classroom.query.filter_by(name=form.room_id.data).first()
         if classroom and classroom.active_quiz:
+            # cookies
+            if current_user.is_anonymous:
+                cookie = request.cookies.get('session')
+                db.session.add(Student(id = cookie))
+                db.session.commit()
             return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id))
         else:
             flash(u'A classroom does not exist with that name. Please try again.', 'danger')
@@ -200,10 +205,7 @@ def take_quiz(classroom_id):
         else:
             response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, value=studentResponse, question_num=page, correct=result)
             db.session.add(response)
-    # cookies
-    if current_user.is_anonymous:
-        cookie = request.cookies.get('session')
-        response.student_id = cookie
+    
       
     
     db.session.commit()
@@ -234,14 +236,24 @@ def view_results(classroom_id):
         sum_right += 1
         print(z)
 
-    print(sum_right)
-
+    
+    
     responses = Response.query.filter_by(classroom_host_id=classroom_id).all()
+    
     classroom = Classroom.query.filter_by(id=classroom_id).first()
     quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
+    students = {response.student_id: responses for response in responses}
+
+    
+    print("-------------------------------------------------------------------")
+    print("DEBUGGING LINE HERE")
+    print("-------------------------------------------------------------------")
+    print(quiz.questions)
+    print(len(quiz.questions))
+    print(type(quiz.questions))
 
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
-                           wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz)
+                           wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz, students = students)
 
 
 #Answers of each student 
@@ -280,16 +292,14 @@ def received_answer():
     # Creating the response object of the user
     response = Response(
         classroom_host_id = received_classroom_id,
+        student_id = request.cookies.get('session'),
         quiz_reference = received_quiz_id,
         question_num = received_page_num,
         value = received_value,
         correct = dicts[current_answer.content]
     )
     
-    # cookies(session ID of the user)
-    if current_user.is_anonymous:
-        cookie = request.cookies.get('session')
-        response.student_id = cookie
+
 
     # Delete answer if user unclicks the button they selected.    
     if current_answer.clicked:

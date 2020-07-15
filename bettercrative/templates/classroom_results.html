@@ -34,27 +34,42 @@
     <h4>Number of Wrong Answers: {{ sumWrong }}</h4> -->
 
     <!-- Create a basic table template -->
+    
     <div>
-        <h2>Correct Answers</h2>
         <table>
-            <tr>
+            <thead>
                 <th>ID</th>
-                <th>Question Number</th>
-                <th>Student's Answer</th>
-                <th>Correct Answer</th>
-            </tr>
-            {% for response in responses %}
+                {%for question in quiz.questions%}
+                <th>{{ question.index + 1}}</th>
+                {%endfor%}
+
+            </thead>
+            <tbody>
+            {% for student,response in students.items() %}
+                <tr>
+                    <td> Anonymous </td>
+                    {% for student_answer in response %}
+                    <td> {{student_answer.value}}</td>
+                    {%endfor%}                
+                </tr>
+            </tbody>
+
+            
+            {% endfor %}
+
+            <!-- Correct Answers -->
             <tr>
-                <td>{{ response.student_id }} </td>
-                <td>{{ response.question_num }}</td>
-                <td id="student-response-{{ loop.index0 }}">{{ response.value }}</td>
+                <td> Correct Answers </td>
+                {%for response in responses %}
+            
                 <td id="correct-answer-{{ loop.index0 }}">{% for answer in quiz.questions[response.question_num -
                     1].answers if answer.correct %}
                     {{ answer.content }}
                     {% endfor %}
                 </td>
+                {%endfor%}
             </tr>
-            {% endfor %}
+
         </table>
     </div>
 
