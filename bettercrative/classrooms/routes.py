@@ -157,15 +157,9 @@ def remove_quiz(classroom_id, quiz_id):
 
     classroom = Classroom.query.get(classroom_id)
     quiz = Quiz.query.get(quiz_id)
-    print(classroom.added_quizzes)
-    print(quiz.classroom_hosts)
-    print(assoc.c.classroom_id)
     classroom.added_quizzes.remove(quiz)
     db.session.commit()
     flash(u'Quiz Removed!', 'success')
-    print(classroom.added_quizzes)
-    print(quiz.classroom_hosts)
-    print(assoc)
     return redirect(url_for('classrooms.classroom', classroom_id=classroom_id))
 
 

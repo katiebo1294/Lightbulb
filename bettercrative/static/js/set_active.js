@@ -32,20 +32,3 @@ function remove_active(url, classroom_id) {
         }
     });
 }
-
-function remove_quiz(url, quiz_id, classroom_id) {
-    console.log("removing quiz from classroom...");
-    $.ajax({
-        type: "GET",
-        data: {'quiz_id': quiz_id, 'classroom_id': classroom_id},
-        url: url,
-        error: function(response) {
-            alert(response.statusText);
-            console.log(response.statusText);
-        },
-        success: function() {
-            console.log("success");
-            refresh("#body");
-        }
-    });
-}
