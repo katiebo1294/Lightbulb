@@ -74,7 +74,7 @@ def account():
 
 
 # TODO move to classroom/routes.py
-@users.route("/account/delete_classroom/<int:quiz_id>", methods=['GET', 'POST'])
+@users.route("/account/delete_quiz/<int:quiz_id>", methods=['GET', 'POST'])
 def delete_quiz(quiz_id):
     """ Delete the specified quiz owned by the current user. 
     
@@ -89,7 +89,7 @@ def delete_quiz(quiz_id):
 
 
 # TODO move to quiz/routes.py
-@users.route("/account/delete_quiz/<int:classroom_id>", methods=['GET', 'POST'])
+@users.route("/account/delete_classroom/<int:classroom_id>", methods=['GET', 'POST'])
 def delete_classroom(classroom_id):
     """ Delete the specified classroom owned by the current user. 
     

@@ -103,16 +103,20 @@
                                    onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
                                     Set Active
                                 </a>
+                                <a class="btn btn-lg remove-quiz"
+                                   href="{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}">
+                                    Remove Quiz
+                                </a>
                                 {% else %}
                                 <a class="btn btn-lg remove-active"
                                    onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-                                    Remove Active
+                                    Unset as Active Quiz
                                 </a>
                                 {% endif %}
-                                <a class="btn btn-lg edit-quiz set-active"
+                                <a class="btn btn-lg edit-quiz"
                                 href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
                                  Edit Quiz
-                             </a>
+                                </a>
                             </li>
                             {%endfor%}
                         </div>

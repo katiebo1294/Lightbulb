@@ -76,6 +76,7 @@ def add_quiz(classroom_id):
     # putting all quizzes of that user in the list
     quiz_list = [(quiz.id, quiz.name) for quiz in quizzes]
     quiz_list.append(default_choice)
+    list.reverse(quiz_list)
     form.quiz.choices = quiz_list
 
     # Handle POST request
@@ -137,6 +138,30 @@ def remove_active():
     db.session.commit()
 
     return "set Empty", 200
+
+
+@classrooms.route("/classroom/remove_quiz/<int:classroom_id>/<int:quiz_id>", methods=['GET', 'POST'])
+@login_required
+def remove_quiz(classroom_id, quiz_id):
+    """ Removes the given quiz from the given classroom.
+
+        Parameters:
+                classroom_id (int): the ID of the classroom to remove the quiz from
+                quiz_id (int): the ID of the quiz to be removed
+    """
+
+    classroom = Classroom.query.get(classroom_id)
+    quiz = Quiz.query.get(quiz_id)
+    print(classroom.added_quizzes)
+    print(quiz.classroom_hosts)
+    print(assoc.c.classroom_id)
+    classroom.added_quizzes.remove(quiz)
+    db.session.commit()
+    flash(u'Quiz Removed!', 'success')
+    print(classroom.added_quizzes)
+    print(quiz.classroom_hosts)
+    print(assoc)
+    return redirect(url_for('classrooms.classroom', classroom_id=classroom_id))
 
 
 @classrooms.route("/classroom/<int:classroom_id>/take", methods=['GET', 'POST'])
