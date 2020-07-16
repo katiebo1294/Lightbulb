@@ -94,31 +94,33 @@
                                    href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
 
                             </div>
+                            <ul style="list-style-type: none; margin: 0; padding: 0;">
                             {% for quiz in classroom.added_quizzes %}
                             <!-- JavaScript option to set the current quiz in the list to active -->
-                            <li {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>
-                                {{ quiz.name }}
+                            <li>
+                                <span {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>{{ quiz.name }}</span>
                                 {% if quiz.id != classroom.active_quiz %}
-                                <a class="btn btn-lg set-active"
+                                <a class="btn btn-lg quiz-options"
                                    onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
                                     Set Active
                                 </a>
-                                <a class="btn btn-lg remove-quiz"
+                                <a class="btn btn-lg quiz-options"
                                    href="{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}">
                                     Remove Quiz
                                 </a>
                                 {% else %}
-                                <a class="btn btn-lg remove-active"
+                                <a class="btn btn-lg quiz-options"
                                    onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-                                    Unset as Active Quiz
+                                    Unset Active
                                 </a>
                                 {% endif %}
-                                <a class="btn btn-lg edit-quiz"
+                                <a class="btn btn-lg quiz-options"
                                 href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
                                  Edit Quiz
                                 </a>
                             </li>
                             {%endfor%}
+                            </ul>
                         </div>
 
                     </div>

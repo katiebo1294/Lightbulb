@@ -1068,14 +1068,20 @@ div.answerBox{
 }
 .btn.btn-lg.set-active{
   font-size:1vw;
-
 }
-.btn.btn-lg.set-active:hover{
+.btn.btn-lg.remove-active{
+  font-size:1vw;
+}
+
+.quiz-options{
+  font-size:1vw;
+}
+
+.quiz-options:hover{
   font-size:1.5vw;
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
-
 
 a.Add-A-Quiz{
   float:right;
