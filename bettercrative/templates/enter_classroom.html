@@ -2,31 +2,31 @@
 {% block content %}
 <div class="form-container">
     <div class="content-section">
-    <form method="POST" action="">
-        {{ form.hidden_tag() }} <!--adds ctrf form-->
+        <form action="" method="POST">
+            {{ form.hidden_tag() }} <!--adds ctrf form-->
 
-        <fieldset class="form-group">
-            <div class="form-group">
-                <legend class="border-bottom mb-4">Enter Classroom</legend>
-                <!-- student can input the name of an active classroom to sign in and take the active quiz -->
-                {{ form.room_id.label(class="form-control-label") }}
-                <!-- classroom id -->
-                {% if form.room_id.errors %}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    <legend class="border-bottom mb-4">Enter Classroom</legend>
+                    <!-- student can input the name of an active classroom to sign in and take the active quiz -->
+                    {{ form.room_id.label(class="form-control-label") }}
+                    <!-- classroom id -->
+                    {% if form.room_id.errors %}
                     {{ form.room_id(class="form-control form-control-lg is-invalid") }}
                     <div class="invalid-feedback">
                         {% for errors in form.room_id.errors %}
-                            <span>{{ error }}</span>
+                        <span>{{ error }}</span>
                         {% endfor %}
                     </div>
-                {% else %}
+                    {% else %}
                     {{ form.room_id(class="form-control form-control-lg") }}
-                {% endif %}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-lg btn-outline-info btn-lg") }}
             </div>
-        </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-lg btn-outline-info btn-lg") }}
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 {% endblock  %}

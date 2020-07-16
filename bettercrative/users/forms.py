@@ -1,8 +1,9 @@
+from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, ValidationError
-from flask_login import current_user
+
 from bettercrative.models import User
 
 

@@ -38,39 +38,61 @@ function removeForm() {
 
 
 function addQuestion(url, q_id) {
+    
     $.ajax({
         type: "GET",
         data: {'quiz_id': q_id},
         url: url,
-        error: function(statusText) {
-            alert(statusText);
-            console.log(statusText);
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
         },
         success: function() {
             refresh("#body");
         }
     });
 }
-function addAnswer() {
-
+function addAnswer(url, q_id) {
+    $.ajax({
+        type: "GET",
+        data: {'question_id': q_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
 }
 function removeQuestion(url, q_id) {
     $.ajax({
         type: "GET",
         data: {'question_id': q_id},
         url: url,
-        error: function(statusText) {
-            alert(statusText);
-            console.log(statusText);
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
         },
         success: function() {
             refresh("#body");
-            //$("#question-" + q_id).hide();
         }
     });
 }
-function removeAnswer() {
-
+function removeAnswer(url, a_id) {
+     $.ajax({
+        type: "GET",
+        data: {'answer_id': a_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
 }
 //add a subform
 function addForm() {
@@ -117,6 +139,31 @@ function addForm() {
     $newForm.find('.remove').click(removeForm);
 }
 
+function addQuestionContent(q_id){
+    
+    document.getElementById("question-form-" + q_id).style.display = "block";
+};
+
+function addAnswerContent(q_id, a_id){
+    document.getElementById("answer-form-" + q_id + "-" + a_id).style.display = "block";
+};
+
+function shiftQuestion(url, q_id, direction) {
+    
+    $.ajax({
+        type: "GET",
+        data: {'question_id': q_id,
+                'direction': direction},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
+};
 
 $(document).ready(function() {
     // $('#add').click(addForm);
@@ -128,4 +175,75 @@ function refresh(section)
     console.log("Beggining Refresh")
     $(section).load(section);
     console.log("Refreshed");
+};
+
+function showEditQuestionContainer(index) {
+    
+    document.getElementById("question-content-display-" + index).style.display = "none";
+    document.getElementById("question-content-edit-form-" + index).style.display = "block";
+};
+
+function resetEditQuestionContainer(index) {
+    refresh("#body");
+};
+
+function showEditAnswerContainer(index) {
+    console.log("id being edited is " + index);
+    document.getElementById("answer-content-display-" + index).style.display = "none";
+    document.getElementById("answer-content-edit-form-" + index).style.display = "block";
+};
+
+function resetEditAnswerContainer(index) {
+    refresh("#body");
+};
+
+function setQType(url,question_id, qtype) {
+    $.ajax({
+        type: "GET",
+        data: {'question_id': question_id,
+                'qtype': qtype},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
+};
+
+function changeActiveQuestion(url,question_id,quiz_id) {
+    event.preventDefault();
+    $.ajax({
+        type: "GET",
+        data: {'question_id': question_id,
+                'quiz_id': quiz_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
+};
+
+function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
+    event.preventDefault();
+    
+    $.ajax({
+        type: "GET",
+        data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
+        'page_num': page_num, 'quiz_id':quiz_id, 'value':value},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#body");
+        }
+    });
 }

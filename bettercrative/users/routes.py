@@ -1,5 +1,6 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
+
 from bettercrative import db, bcrypt
 from bettercrative.models import User, Quiz, Classroom
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
@@ -71,8 +72,9 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
+
 # TODO move to classroom/routes.py
-@users.route("/account/delete_classroom/<int:quiz_id>", methods = ['GET', 'POST'])
+@users.route("/account/delete_quiz/<int:quiz_id>", methods=['GET', 'POST'])
 def delete_quiz(quiz_id):
     """ Delete the specified quiz owned by the current user. 
     
@@ -85,8 +87,9 @@ def delete_quiz(quiz_id):
     flash(u'Quiz Removed', 'success')
     return redirect(url_for('users.account'))
 
+
 # TODO move to quiz/routes.py
-@users.route("/account/delete_quiz/<int:classroom_id>", methods=['GET', 'POST'])
+@users.route("/account/delete_classroom/<int:classroom_id>", methods=['GET', 'POST'])
 def delete_classroom(classroom_id):
     """ Delete the specified classroom owned by the current user. 
     

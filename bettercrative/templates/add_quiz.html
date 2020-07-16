@@ -1,28 +1,33 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="form-container">
+<div class="form-container" style="margin-top: 5%;">
     <div class="content-section">
         <form action="" method="POST">
             {{ form.hidden_tag() }} <!--adds ctrf form-->
+
             <fieldset class="form-group">
                 <div class="form-group">
-                    <legend class="border-bottom mb-4">Add a Quiz to "{{ classroom.name }}"</legend>
-                    <!-- displays a dropdown menu that displays all the user's quizzes and an option to create a new one -->
-                    {{ form.quiz.label }}
-                    {{ form.quiz }}
+                    {{ form.quiz.label }} -> {{ form.quiz }}
+
+
                 </div>
+
+                <div class="form-group">
+                    {% if quiz_list | length == 1%}
+                    {{ form.submit(class="btn btn-lg btn-outline-info" ,value = "Create Quiz") }}
+                    {% else %}
+                    {{ form.submit(class="btn btn-lg btn-outline-info") }}
+                    {% endif %}
+                </div>
+
             </fieldset>
-            <div class="form-group">
-                {{ form.submit(class="btn btn-lg btn-outline-info") }}
-            </div>
         </form>
+        <button onclick="goBack()">Cancel</button>
         {% if form.errors %}
-            {{ form.errors }}
+        {{ form.errors }}
         {% endif %}
 
-        {% if data is defined %}
-            <p>Received data: {{ data }}</p>
-        {% endif %}
+
     </div>
 </div>
-{% endblock  %}
+{% endblock %}

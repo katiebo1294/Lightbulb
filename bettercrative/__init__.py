@@ -1,15 +1,12 @@
-import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
+from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_bootstrap import Bootstrap
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 
 from bettercrative.config import Config
-
-
 # Application factory
 # Blueprint registration
 from bettercrative.errors.routes import not_found
@@ -29,8 +26,8 @@ def create_app(config_class=Config):
 
     migrate.init_app(app, db)
 
-  #  app.config.from_object(os.environ['APP_SETTINGS'])
-   # app.config['SQALCHEMY_TRACK_MODIFICATIONS'] = False
+    #  app.config.from_object(os.environ['APP_SETTINGS'])
+    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     from bettercrative.users.routes import users
     from bettercrative.classrooms.routes import classrooms

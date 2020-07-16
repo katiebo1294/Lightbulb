@@ -1,17 +1,19 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FieldList, FormField, SelectField, Form, BooleanField, IntegerField
+from wtforms import StringField, SubmitField, SelectField, BooleanField
 from wtforms.validators import InputRequired
 
-# Each answer has some content and whether or not it is correct
-class AnswerForm(Form):
+
+class AnswerForm(FlaskForm):
     content = StringField('Answer', validators=[InputRequired('Please fill out this field.')])
     correct = BooleanField('Correct?')
+    submit = SubmitField('Save')
 
-# Currently, a quiz has one question with a list of answers attached to it
+
+class QuestionForm(FlaskForm):
+    content = StringField('Question', validators=[InputRequired('Please fill out this field.')])
+    submit = SubmitField('Save')
+
+
 class QuizForm(FlaskForm):
-    name = StringField('Title', validators=[InputRequired('Please fill out this field.')])
-    question_content = StringField('Question', validators=[InputRequired('Please fill out this field.')])
-    question_answers = FieldList(FormField(AnswerForm), min_entries=4)
+    name = StringField('Name', validators=[InputRequired('Please fill out this field.')])
     submit = SubmitField('Create Quiz')
-
-# TODO change these forms when we rearrange the database

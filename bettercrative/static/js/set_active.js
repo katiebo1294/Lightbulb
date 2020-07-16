@@ -5,10 +5,9 @@ function set_active(url, quiz_id, classroom_id) {
         type: "GET",
         data: {'quiz_id': quiz_id, 'classroom_id' : classroom_id},
         url: url,
-        error: function(statusText) {
-            console.log(fail);
-            alert(statusText);
-            console.log(statusText);
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
         },
         success: function() {
             console.log("success");
@@ -23,10 +22,9 @@ function remove_active(url, classroom_id) {
         type: "GET",
         data: {'classroom_id' : classroom_id},
         url: url,
-        error: function(statusText) {
-            console.log(fail);
-            alert(statusText);
-            console.log(statusText);
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
         },
         success: function() {
             console.log("success");

@@ -1,6 +1,6 @@
 import pytest
 from flask import g, session
-from bettercrative import db
+
 
 def test_register(client, app):
     assert client.get('/register').status_code == 200
@@ -16,9 +16,9 @@ def test_register(client, app):
 
 
 @pytest.mark.parametrize(('username', 'password', 'message'), (
-    ('', '', b'Username is required.'),
-    ('a@c.com', '', b'Password is required.'),
-    ('cat@cat.com', 'test', b'registered'),
+        ('', '', b'Username is required.'),
+        ('a@c.com', '', b'Password is required.'),
+        ('cat@cat.com', 'test', b'registered'),
 ))
 def test_register_validate_input(client, username, password, message):
     response = client.post(
@@ -41,12 +41,13 @@ def test_login(client, auth):
 
 
 @pytest.mark.parametrize(('username', 'password', 'message'), (
-    ('a@c.com', '123', b'Incorrect username'),
-    ('cat@cat.com', '123', b'Incorrect password'),
+        ('a@c.com', '123', b'Incorrect username'),
+        ('cat@cat.com', '123', b'Incorrect password'),
 ))
 def test_login_validate_input(auth, username, password, message):
     response = auth.login(username, password)
     assert message in response.data
+
 
 def test_logout(client, auth):
     auth.login()

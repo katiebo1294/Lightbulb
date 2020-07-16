@@ -1,50 +1,55 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class = "wrapper">
-<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-<div class="col classroomcolumn">
-    <nav class="navbar">
-        <div class="titlebar">
-            Classroom Listing
-        </div>
-        <!-- option to create a new classroom -->
-        <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}" style = "font-size:1.2vw;">
-            Create Classroom
-        </a>
+<div class="wrapper">
+    <!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
+    <div class="col classroomcolumn">
+        <nav class="navbar">
+            <div class="titlebar">
+                Classroom Listing
+            </div>
+            <!-- option to create a new classroom -->
+            <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}" style="font-size:1.2vw;">
+                Create Classroom
+            </a>
 
-        {% for classroom in current_user.classrooms %}
+            {% for classroom in current_user.classrooms %}
             <div class="row classroom_element">
                 <!-- dropdown for a classroom's added quizzes and which one if any is active -->
                 <div class="dropdown show">
-                    <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle" data-toggle="dropdown" id="dropdownMenuLink" role="button">
+                    <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle"
+                       data-toggle="dropdown" id="dropdownMenuLink" role="button">
                         Name: {{ classroom.name }}
                     </a>
                     <div class="dropdown-menu">
                         {% for quiz in classroom.added_quizzes %}
-                            {% if classroom.active_quiz %}
-                                <button class="dropdown-item active">
-                                        *ACTIVE* Quiz: {{ quiz.name }}
-                                </button>
+                        {% if classroom.active_quiz %}
+                        <button class="dropdown-item active">
+                            *ACTIVE* Quiz: {{ quiz.name }}
+                        </button>
 
-                            {% else %}
+                        {% else %}
                         <!-- links to JavaScript file to set the active quiz -->
-                                <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="set_active('{{ url_for('classrooms.set_active', quiz_id=quiz.id)}}', quiz_id = '{{quiz.id}}', classroom_id = '{{classroom.id}}')" method="POST">
-                                        Quiz: {{ quiz.name }}
-                                </button>
-                            {% endif %}
+                        <button class="dropdown-item btn btn-lg ActiveQuizName"
+                                method="POST"
+                                onclick="set_active('{{ url_for('classrooms.set_active', quiz_id=quiz.id)}}', quiz_id = '{{quiz.id}}', classroom_id = '{{classroom.id}}')">
+                            Quiz: {{ quiz.name }}
+                        </button>
+                        {% endif %}
                         {% endfor %}
 
-                        
+
                         {% if not classroom.active_quiz %}
-                            <button class="dropdown-item btn btn-lg active">
-                                None
-                            </button>
+                        <button class="dropdown-item btn btn-lg active">
+                            None
+                        </button>
                         {% else %}
                         <!-- deactivate active quiz, set to None -->
-                            <button class="dropdown-item btn btn-lg ActiveQuizName" onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id = '{{classroom.id}}')" method="POST">
-                                None
-                            </button>
+                        <button class="dropdown-item btn btn-lg ActiveQuizName"
+                                method="POST"
+                                onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id = '{{classroom.id}}')">
+                            None
+                        </button>
                         {% endif %}
                     </div>
                 </div>
@@ -53,62 +58,60 @@
                 <!-- can enter a class to view details, or delete it -->
                 <div class="edit_class">
                     <a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
-                        Enter 
+                        Enter
                     </a>
                 </div>
                 <div class="delete_class">
-                    <a href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}" class="btn-lg">
-                        Delete 
+                    <a class="btn-lg" href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}">
+                        Delete
                     </a>
                 </div>
             </div>
-        {% endfor %}
-    </nav>
-</div>
+            {% endfor %}
+        </nav>
+    </div>
 
 
-<!-- displays the user's quizzes -->
-<div class="col quizcolumn">
-    <nav class="navbar">
-        <div class="titlebar">
-            Quiz Listing
-        </div>
-        <!-- option to create a new quiz -->
-        <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}" style = "font-size:1.2vw;">
-            Create Quiz
-        </a>
-        {% for quiz in current_user.quizzes %}
+    <!-- displays the user's quizzes -->
+    <div class="col quizcolumn">
+        <nav class="navbar">
+            <div class="titlebar">
+                Quiz Listing
+            </div>
+            <!-- option to create a new quiz -->
+            <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}" style="font-size:1.2vw;">
+                Create Quiz
+            </a>
+            {% for quiz in current_user.quizzes %}
             <div class="row classroom_element">
-                <div class="dropdown show quizColumn" >
-                    <a  class="navbar-brand"
+                <div class="dropdown show quizColumn">
+                    <a class="navbar-brand"
                     >
                         Name: {{ quiz.name }}
                     </a>
                     <div class="dropdown-menu">
-                        
 
-                        
+
                     </div>
                 </div>
                 <!-- user can enter a quiz to view details, or delete it -->
                 <div class="edit_class">
-                    <a href = "{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}" class = "btn-lg">
-                        Enter 
+                    <a class="btn-lg" href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+                        Enter
                     </a>
                 </div>
                 <div class="delete_class">
-                    <a class= "btn-lg" href = " {{url_for('users.delete_quiz', quiz_id=quiz.id) }}">
-                        Delete 
+                    <a class="btn-lg" href=" {{url_for('users.delete_quiz', quiz_id=quiz.id) }}">
+                        Delete
                     </a>
                 </div>
             </div>
-        {% endfor %}
-    </nav>
-</div>
+            {% endfor %}
+        </nav>
+    </div>
 
 
+    <!-- Local Javascript -->
+    <script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 
-<!-- Local Javascript -->
-<script src="{{ url_for('static', filename='js/set_active.js') }}" ></script>
-
-{% endblock %}
+    {% endblock %}

@@ -618,9 +618,9 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 
 .form-container {
     position: relative;
-    width: 30%;
     margin: auto;
-    margin-top: 105px;
+    margin-top: 1%;
+    margin-bottom: 1%;
     background-color:rgba(50,50,50,.35);
     padding: 1%;
     border-radius:15px;
@@ -877,8 +877,19 @@ button.Show-Student-Response.btn:hover{
   }
 }
 
+/* footer */
+.page-footer{
+  background-color:#D4D4D4;
+  font-size:1vw;
+}
 
+.footer-element{
+  margin-top:0;
+}
 
+.footer-cont{
+
+}
 
 /* Quiz Section (quiz.html)*/
 #editing-container{
@@ -950,7 +961,7 @@ div.QuizSaveExitBtn.btn:hover{
 
 
 div#quiz-title{
-  margin-top: 1em;
+  margin: 1em 0em;
   width: 100%;
   font-size: 2vw;
 }
@@ -969,6 +980,10 @@ div#question p{
   font-size: 80%;
 }
 
+.activeQuestion{
+  background-color:#A2A2A2;
+}
+
 div.multiple-choice{
   padding: 1em;
   position: relative;
@@ -977,7 +992,6 @@ div.multiple-choice{
   border-top: 3px solid rgb(250, 146, 61);
   padding-right: 4.6em;
   min-height:15em;
-  height: 50vw;
 }
 
 div.question-number::before{
@@ -993,13 +1007,13 @@ div.question-number{
   margin-bottom:3%;
 }
 
-a#Quiz-Edit{
+a#Question-Edit, a#Answer-Edit{
   float:right;
   text-decoration: none;
   color:black;
 }
 
-a#Quiz-Edit:hover{
+a#Question-Edit:hover, a#Answer-Edit:hover{
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
@@ -1044,7 +1058,7 @@ div.answerBox{
   float: left;
   margin-left: 1%;
   border: 1px solid rgb(30,155,95);
-  padding: .53em 0;
+  padding-top: 0.75vw;
   font-size: 2.28vw;
 }
 
@@ -1084,7 +1098,9 @@ span.Taking-a-Quiz{
 
 button.btn.Taking-a-Quiz-Submit{
   font-size:1.5vw;
+  margin-bottom: 1em;
 }
+
 button.btn.Taking-a-Quiz-Submit:hover{
   color: rgb(213, 219, 216);
   font-size:1.7vw;
@@ -1103,6 +1119,132 @@ div.options{
   border:none;
 }
 
-label.btn.btn-secondary.active.button-choices{
+label.btn.btn-secondary.active.button-choices {
   font-size:3.38vw;
 }
+
+label.btn.btn-secondary.button-choices.clicked {
+  background-color: rgb(51, 122, 183);
+}
+
+
+/* Horizontal scroll menu for Questions */
+div.scrollmenu {
+  /* background-color: #333;  */
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+
+ /* Modified version of code from this site: https://css-tricks.com/draggable-elements-push-others-way/ */
+
+.all-items {
+  background: #E3E7ED;
+  counter-reset: items;
+  position: absolute;
+  overflow: auto;
+}
+
+.slide {
+  position: relative;
+  user-select: none;
+  z-index: 5;
+  &:before {
+    position: absolute;
+    bottom: 0;
+    right: 100%;
+    counter-increment: slides;
+    content: counter(slides);
+    padding-right: 0.35rem;
+    color: #999;
+    line-height: normal;
+    font-size: 1rem;
+  }
+}
+
+.ui-sortable-helper {
+  transition: none !important;
+  animation: pulse 0.4s alternate infinite;
+}
+
+.sortable-placeholder {
+  height: 60px;
+  width: 5px;
+  border-left: 2px solid #4999DA; 
+  margin: 0 0 0.75rem 0;
+  position: relative;
+  z-index: 6;
+}
+
+@keyframes pulse {
+  100% { transform: scale(1.1); } 
+}
+
+.cloned-slides {
+  .slide {
+    position: absolute;
+    z-index: 1;
+    &:before {
+      content: attr(data-pos);
+    }
+  }
+}
+
+.question-type-container {
+    display: grid;
+    margin: 20px auto;
+    width: 400px;
+    height: 400px;
+    grid-template-columns: 200px 200px;
+    grid-row: auto auto;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+}
+
+.question-type-choice-box {
+    padding: 20px;
+    border-radius: 10px;
+    border: solid black;
+    color: black;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.question-type-choice-box:hover {
+    border: solid white;
+    color: white;
+}
+
+.answer-delete-button, .answer-edit-button {
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.answer-content {
+    margin-left: 10px;
+}
+
+.question-edit-header {
+    margin-bottom: 5px;
+    font-size: 2vw;
+}
+
+/* For displaying the quiz results */
+table, th, td {
+    border: 1px solid black;
+}
+

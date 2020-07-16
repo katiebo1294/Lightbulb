@@ -38,6 +38,7 @@ packaging==20.1
 Pillow==7.0.0
 pluggy==0.13.1
 postgres==3.0.0
+psycopg2==2.8.5
 psycopg2-binary==2.8.4
 psycopg2-pool==1.1
 py==1.8.1
