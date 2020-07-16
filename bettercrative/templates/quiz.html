@@ -40,6 +40,7 @@
             font-family: "Source Code Pro";
             font-size: 1.2vw;
         }
+
 </style>
 
 <div id="quiz-content-container">
@@ -107,7 +108,7 @@
 
         <div id="questions">
             {% for question in quiz.questions %}
-            <span id="question-{{ loop.index }}" {% if quiz.active != question.id %} style="display: none;" {% endif %}>
+            <span id="question-{{ loop.index }}" {% if quiz.active !=question.id %} style="display: none;" {% endif %}>
                     {% if question.category %}
                     <div id="question">
                         <div class="multiple-choice">
@@ -117,9 +118,11 @@
                                     <!-- set form -->
                                     <span id="question-content-display-{{ loop.index }}">
                                         <label>{{ question.name }}) {{ question.content }}</label>
-                                        <span class="btn btn-sm btn-outline-info" style="color: white;" onclick="showEditQuestionContainer(index={{loop.index}})">Edit</span>
+                                        <span class="btn btn-sm btn-outline-info" style="color: white;"
+                                              onclick="showEditQuestionContainer(index={{loop.index}})">Edit</span>
                                     </span>
-                                    <form style="display: none;" id="question-content-edit-form-{{ loop.index }}" action="{{ url_for('quizzes.add_question_content', question_id=question.id) }}"
+                                    <form style="display: none;" id="question-content-edit-form-{{ loop.index }}"
+                                          action="{{ url_for('quizzes.add_question_content', question_id=question.id) }}"
                                           method="POST">
                                           {{ qform.hidden_tag() }}
                                         <fieldset class="form-group">
@@ -127,7 +130,8 @@
                                             <span>
                                             {{ qform.submit(class="btn btn-lg btn-outline-info") }}
                                         </span>
-                                            <span class="btn btn-outline-info" style="color: white;" onclick="resetEditQuestionContainer(index={{loop.index}})">Cancel</span>
+                                            <span class="btn btn-outline-info" style="color: white;"
+                                                  onclick="resetEditQuestionContainer(index={{loop.index}})">Cancel</span>
                                         </fieldset>
 
                                     </form>
@@ -156,17 +160,20 @@
                                     <span class="btn btn-secondary active button-choices">{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}</span>
                                     <div class="answerBox">
                                         <span class="content-section">
-                                            <button class="btn btn-sm btn-outline-danger answer-delete-button" onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
+                                            <button class="btn btn-sm btn-outline-danger answer-delete-button"
+                                                    onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
                                             <i class="fa fa-times fa-lg"></i>
                                         </button>
                                             <span id="answer-content-display-{{ answer.id }}">
                                                 <label class="answer-content">{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
-                                                <span class="btn btn-sm btn-outline-info answer-edit-button" style="color: white;" onclick="showEditAnswerContainer(index={{answer.id}})">Edit</span>
+                                                <span class="btn btn-sm btn-outline-info answer-edit-button"
+                                                      style="color: white;"
+                                                      onclick="showEditAnswerContainer(index={{answer.id}})">Edit</span>
                                             </span>
-                                            <form style="display: none;" id="answer-content-edit-form-{{ answer.id }}" action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
-                                                  method="POST">
+                                            <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}" id="answer-content-edit-form-{{ answer.id }}"
+                                                  method="POST"
+                                                  style="display: none;">
                                                 {{ aform.hidden_tag() }}
-
                                                 <fieldset class="form-group">
                                                     <span class="form-group">
                                                         {{ aform.content.label }} -> {{ aform.content(value=answer.content) }}
@@ -175,7 +182,8 @@
                                                     <span>
                                                         {{ qform.submit(class="btn btn-lg btn-outline-info") }}
                                                     </span>
-                                                    <span class="btn btn-outline-info" style="color: white;" onclick="resetEditAnswerContainer(index={{loop.index}})">
+                                                    <span class="btn btn-outline-info" style="color: white;"
+                                                          onclick="resetEditAnswerContainer(index={{loop.index}})">
                                                         Cancel
                                                     </span>
                                                 </fieldset>
@@ -192,7 +200,7 @@
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </span>
-                        {% elif question.category == 'True/False' %}
+                        {% elif question.category == 'True-False' %}
                             <!-- Put true/false answer format here -->
                         {% elif question.category == 'Short Answer' %}
                             <!-- Put short answer format here -->
@@ -204,10 +212,14 @@
                 {% else %}
                 <!-- four buttons to choose question type -->
                 <div class="question-type-container">
-                    <button class="question-type-choice-box btn-primary" onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Multiple Choice')">Multiple Choice</button>
-                    <button class="question-type-choice-box btn-danger" onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='True-False')">True or False</button>
-                    <button class="question-type-choice-box btn-warning" onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Short Answer')">Short Answer</button>
-                    <button class="question-type-choice-box btn-secondary" onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='IDE')">Coding</button>
+                    <button class="question-type-choice-box btn-primary"
+                            onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Multiple Choice')">Multiple Choice</button>
+                    <button class="question-type-choice-box btn-danger"
+                            onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='True-False')">True or False</button>
+                    <button class="question-type-choice-box btn-warning"
+                            onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Short Answer')">Short Answer</button>
+                    <button class="question-type-choice-box btn-secondary"
+                            onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='IDE')">Coding</button>
                 </div>
                 {% endif %}
                 </span>
@@ -215,8 +227,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 {% endblock %}

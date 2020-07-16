@@ -137,14 +137,16 @@ class Quiz(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, unique=True, nullable=False)
+    name = db.Column(db.String, nullable=False)
     date_created = db.Column(db.Date, nullable=False, default=datetime.today())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', back_populates='added_quizzes', cascade='none')
+    classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', back_populates='added_quizzes',
+                                      cascade='none')
     questions = db.relationship('Question', backref='quiz', order_by="Question.index",
                                 collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
     active = db.Column(db.Integer, unique=False, nullable=True)
+
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
@@ -175,7 +177,7 @@ class Question(db.Model):
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
     index = db.Column(db.Integer)
     answers = db.relationship('Answer', backref='question', collection_class=ordering_list('index'),
-                              cascade="all, delete, delete-orphan", order_by ="Answer.index")
+                              cascade="all, delete, delete-orphan", order_by="Answer.index")
 
     def __repr__(self):
         return f"Question('{self.name}', '{self.content}', '{self.category}', '{self.quiz_id}', '{self.index}')"
@@ -201,16 +203,14 @@ class Answer(db.Model):
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     index = db.Column(db.Integer, autoincrement=True)
-    clicked = db.Column(db.Boolean, nullable = False, default=False)
+    clicked = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         return f"Answer('content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}', clicked: {self.clicked}')"
-    
 
 
-
-#    id = db.Column(db.Integer, primary_key=True)
-#   responses = db.relationship('Response', backref='student', lazy=True, collection_class=list, cascade="all, delete, delete-orphan")
+# id = db.Column(db.Integer, primary_key=True) responses = db.relationship('Response', backref='student', lazy=True,
+# collection_class=list, cascade="all, delete, delete-orphan")
 # TODO roster? maybe in classroom/user models too
 
 
@@ -230,16 +230,17 @@ class Response(db.Model):
             whether or not the answer is correct. Can be true or false.
         """
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    student_id = db.Column(db.ForeignKey('student.id', ondelete= 'CASCADE'))
+    student_id = db.Column(db.ForeignKey('student.id', ondelete='CASCADE'))
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
-    quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id', ondelete = 'CASCADE'), nullable=False)
+    quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id', ondelete='CASCADE'), nullable=False)
     value = db.Column(db.Text, nullable=False)
     question_num = db.Column(db.Integer, nullable=False)
     correct = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
         return f"Response('{self.classroom_host_id}', '{self.quiz_reference}', '{self.question_num}', '{self.value}', '{self.correct}')"
-    
+
+
 class Student(db.Model):
     """ Represents a student user.
 
@@ -252,5 +253,5 @@ class Student(db.Model):
             a list of responses the student has made to quiz questions (see Response below).
     """
 
-    id = db.Column(db.Text, primary_key = True)
-    responses = db.relationship('Response', backref = 'owner', cascade = 'delete, all')
+    id = db.Column(db.Text, primary_key=True)
+    responses = db.relationship('Response', backref='owner', cascade='delete, all')

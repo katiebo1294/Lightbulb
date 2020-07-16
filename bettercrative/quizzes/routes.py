@@ -5,16 +5,18 @@ from flask import (render_template, url_for, flash,
 from flask_login import current_user, login_required
 
 from bettercrative import db
-from bettercrative.classrooms.routes import classroom
-from bettercrative.models import Quiz, Question, Answer
+from bettercrative.models import Quiz, Question, Answer, Classroom
 from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm
 
 quizzes = Blueprint('quizzes', __name__)
 
 
-@quizzes.route("/quiz/new", methods=['GET', 'POST'])
+@quizzes.route("/quiz/new/", defaults={'classroom_id': None}, methods=['GET', 'POST'])
+@quizzes.route("/quiz/new/<int:classroom_id>", methods=['GET', 'POST'])
 @login_required
-def new_quiz(classroom_id=None):
+def new_quiz(classroom_id):
+    print("top: ")
+    print(classroom_id)
     """ Create a new quiz.
 
         Optional parameters:
@@ -31,8 +33,14 @@ def new_quiz(classroom_id=None):
 
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
+        print("right here: ")
+        print(classroom_id)
         if classroom_id:
+            classroom = Classroom.query.get(classroom_id)
             classroom.added_quizzes.append(quiz)
+            db.session.commit()
+            flash(u'Quiz added to \"' + classroom.name + '\"!', 'success')
+            print("added quiz to classroom")
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 

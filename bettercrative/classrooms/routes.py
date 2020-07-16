@@ -89,7 +89,7 @@ def add_quiz(classroom_id):
         # get chosen quiz's ID from the form, grab that quiz and attach it to the current classroom
         quiz_id = form.quiz.data
         if quiz_id == 0:
-            return redirect(url_for('quizzes.new_quiz'))
+            return redirect(url_for('quizzes.new_quiz', classroom_id=classroom_id))
         else:
             quiz = Quiz.query.filter_by(id=quiz_id).first()
             classroom.added_quizzes.append(quiz)
