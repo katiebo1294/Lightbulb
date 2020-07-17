@@ -247,3 +247,37 @@ function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
         }
     });
 }
+
+function showTrueFalse(choice){
+    
+    var button = document.getElementById(choice+'-btn');
+    button.classList.add('active');
+    console.log(button);
+
+    if(choice == 'true'){
+        button = document.getElementById('false-btn');
+        button.classList.remove('active');
+    }
+    else{
+        button = document.getElementById('true-btn');
+        button.classList.remove('active');
+    }
+    document.getElementById("check_button").style.display = "block";
+    
+}
+
+function setTrueFalse(choice){
+    var t = document.getElementById('true-btn');
+    var f = document.getElementById('false-btn');
+
+    console.log(t);
+    console.log(f);
+
+    if (t.classList[t.classList.length -1] === 'active'){
+        setAnswer();
+    }
+    else{
+        setAnswer();
+    }
+
+}

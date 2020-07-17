@@ -984,7 +984,7 @@ div#question p{
   background-color:#A2A2A2;
 }
 
-div.multiple-choice{
+div.question-container{
   padding: 1em;
   position: relative;
   

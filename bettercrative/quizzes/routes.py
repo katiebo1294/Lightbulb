@@ -276,11 +276,21 @@ def set_question_type():
     qtype = request.args.get('qtype', None)
     print(question_id)
     current_question = Question.query.filter_by(id=question_id).first()
+    current_question.category = qtype
     print(current_question)
     quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
     print(quiz)
-
-    current_question.category = qtype
+    if(current_question.category == 'Multiple Choice'):
+        default_answers = [ Answer(question_id= question_id, index = i) for i in range(4)]
+        for answer in default_answers:
+            db.session.add(answer)
+    elif(current_question.category == 'True-False'):
+        true = Answer(question_id = question_id, content = 'True',index = 0)
+        false = Answer(question_id = question_id, content = 'False', index = 1 )
+        db.session.add(true)
+        db.session.add(false)
+    
+    
     db.session.commit()
     return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
 
