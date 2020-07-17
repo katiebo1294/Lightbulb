@@ -1,5 +1,3 @@
-from datetime import date
-
 from flask import (render_template, url_for, flash,
                    redirect, request, Blueprint)
 from flask_login import current_user, login_required
@@ -53,10 +51,25 @@ def quiz(quiz_id):
         Parameters: 
                 quiz_id (int): The ID of the quiz to display.
     """
+    qzform = QuizForm()
     qform = QuestionForm()
     aform = AnswerForm()
     quiz = Quiz.query.get_or_404(quiz_id)
-    return render_template('quiz.html', title=quiz.name, quiz=quiz, qform=qform, aform=aform)
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, qform=qform, aform=aform)
+
+
+@quizzes.route("/quiz/edit-name/<int:quiz_id>", methods=['GET', 'POST'])
+@login_required
+def edit_quiz_name(quiz_id):
+    quiz = Quiz.query.get_or_404(quiz_id)
+    qzform = QuizForm()
+    qform = QuestionForm()
+    aform = AnswerForm()
+    if qzform.validate_on_submit():
+        quiz.name = qzform.name.data
+        db.session.commit()
+        return redirect(url_for('quizzes.quiz', quiz_id=quiz_id))
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, qform=qform, aform=aform)
 
 
 @quizzes.route("/quiz/add")
@@ -68,11 +81,10 @@ def add_question():
                 quiz_id (int): The ID of the quiz to add the question to.
     """
 
-    #Get the id from the GET request
+    # Get the id from the GET request
     print("adding Question")
     quiz_id = request.args.get('quiz_id', None)
 
-    
     if quiz_id is None:
         return "No quiz id!", 400
 
@@ -81,15 +93,14 @@ def add_question():
         return "Quiz not found!", 404
 
     question = Question(quiz_id=quiz_id)
-    
+
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
-    
 
-    question.name = "Question " 
+    question.name = "Question "
     if question.name is None:
         return "Question name creation fail, something went wrong with counting the quiz questions!", 500
-    
+
     db.session.add(question)
 
     quiz.questions.append(question)
@@ -98,7 +109,7 @@ def add_question():
 
     db.session.commit()
 
-    quiz.active = question.id;
+    quiz.active = question.id
 
     question.name += str(question.index + 1)
 
@@ -167,24 +178,22 @@ def remove_question():
     if quiz is not None:
         quiz.questions.remove(question)
 
-    #setting active question
+    # setting active question
     current_active_question = quiz.active
-    if(current_active_question == question.id):
+    if (current_active_question == question.id):
         current_active_question = quiz.questions[-1].id
-    
 
     print(f'removed')
     db.session.flush()
 
     db.session.delete(question)
 
-    
     print(f'deleted')
 
     db.session.commit()
-    
+
     quiz.active = current_active_question
-    
+
     db.session.flush()
     db.session.commit()
     return "lit", 200
@@ -280,17 +289,16 @@ def set_question_type():
     print(current_question)
     quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
     print(quiz)
-    if(current_question.category == 'Multiple Choice'):
-        default_answers = [ Answer(question_id= question_id, index = i) for i in range(4)]
+    if current_question.category == 'Multiple Choice':
+        default_answers = [Answer(question_id=question_id, index=i) for i in range(4)]
         for answer in default_answers:
             db.session.add(answer)
-    elif(current_question.category == 'True-False'):
-        true = Answer(question_id = question_id, content = 'True',index = 0)
-        false = Answer(question_id = question_id, content = 'False', index = 1 )
+    elif current_question.category == 'True-False':
+        true = Answer(question_id=question_id, content='True', index=0)
+        false = Answer(question_id=question_id, content='False', index=1)
         db.session.add(true)
         db.session.add(false)
-    
-    
+
     db.session.commit()
     return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
 
@@ -308,6 +316,7 @@ def add_question_content(question_id):
     print(current_question)
     current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
 
+    qzform = QuizForm()
     qform = QuestionForm()
     aform = AnswerForm()
 
@@ -320,7 +329,7 @@ def add_question_content(question_id):
         return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
     # handle GET Request
     print('rendering template')
-    return render_template('quiz.html', title='question', quiz=current_quiz, qform=qform, aform=aform)
+    return render_template('quiz.html', title='question', quiz=current_quiz, qzform=qzform, qform=qform, aform=aform)
 
 
 @quizzes.route("/quiz/answer/<int:answer_id>/add_content", methods=['GET', 'POST'])
@@ -332,12 +341,13 @@ def add_answer_content(answer_id):
     """
 
     # Find the current answer and then update it's value by showing the form
-    
+
     current_answer = Answer.query.filter_by(id=answer_id).first()
     print(current_answer)
     current_question = Question.query.filter_by(id=current_answer.question_id).first()
     current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
 
+    qzform = QuizForm()
     qform = QuestionForm()
     aform = AnswerForm()
 
@@ -351,7 +361,7 @@ def add_answer_content(answer_id):
         return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
     # handle GET Request
     print('rendering template')
-    return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform)
+    return render_template('quiz.html', title='answer', quiz=current_quiz, qzform=qzform, qform=qform, aform=aform)
 
 
 @quizzes.route("/quiz/changeActiveQuestion")
@@ -364,7 +374,7 @@ def changeActiveQuestion():
     """
     question_id = request.args.get('question_id', None)
     quiz_id = request.args.get('quiz_id', None)
-    
+
     question = Question.query.filter_by(id=question_id).first()
     if question is None:
         return "oops fuk", 500
@@ -378,13 +388,15 @@ def changeActiveQuestion():
     db.session.commit()
     return "lit", 200
 
+
 """
 -------------------------------------------------------------------
 DEBUGGING FUNCTIONS SECTION [REMOVE LATER]
 -------------------------------------------------------------------
 """
 
-def printQuestion(question : Question) -> None:
+
+def printQuestion(question: Question) -> None:
     print(f'question id: {question.id} | question name: {question.name} | \
         question content: {question.content} | question category: {question.category} \
             | quiz_id(FOREIGN KEY): {question.quiz_id} | \

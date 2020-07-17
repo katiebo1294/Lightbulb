@@ -183,7 +183,12 @@ function showEditQuestionContainer(index) {
     document.getElementById("question-content-edit-form-" + index).style.display = "block";
 };
 
-function resetEditQuestionContainer(index) {
+function showEditQuizNameContainer() {
+    document.getElementById("quizname").style.display = "none";
+    document.getElementById("quiz-name-edit-form").style.display = "block";
+}
+
+function resetEditContainer(index) {
     refresh("#body");
 };
 
@@ -191,10 +196,6 @@ function showEditAnswerContainer(index) {
     console.log("id being edited is " + index);
     document.getElementById("answer-content-display-" + index).style.display = "none";
     document.getElementById("answer-content-edit-form-" + index).style.display = "block";
-};
-
-function resetEditAnswerContainer(index) {
-    refresh("#body");
 };
 
 function setQType(url,question_id, qtype) {
