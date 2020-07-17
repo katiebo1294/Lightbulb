@@ -537,7 +537,6 @@ a#Cancel-Button:hover{
 input#submit.btn.btn-lg.btn-outline-info{
   font-size:1.8vw;
   font-family: "Source Code Pro";
-  color: white;
 }
 
 /* form boxes end*/
@@ -1059,6 +1058,8 @@ div.answerBox{
   margin-left: 1%;
   border: 1px solid rgb(30,155,95);
   padding-top: 0.75vw;
+  padding-bottom: 0.75vw;
+  padding-right: 1vw;
   font-size: 2.28vw;
 }
 
@@ -1236,12 +1237,12 @@ div.scrollmenu a:hover {
 
 .answer-delete-button, .answer-edit-button {
     float: right;
-    margin-right: 10px;
-    margin-bottom: 5px;
+    margin-right: 0.5vw;
 }
 
 .answer-content {
     margin-left: 10px;
+    margin-bottom: 0;
 }
 
 .question-edit-header {

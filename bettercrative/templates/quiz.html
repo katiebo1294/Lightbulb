@@ -69,8 +69,8 @@
             <span id="quizname">
                 {{quiz.name}}
                 <span class="btn btn-sm btn-outline-info"
-                      style="color: white; float: right; margin-top: .5vw; margin-right: .25vw;"
-                      onclick="showEditQuizNameContainer()">Edit</span>
+                      style=" float: right; margin-top: .5vw; margin-right: .25vw;"
+                      onclick="showEditQuizNameContainer()"><i class="fas fa-pencil-alt"></i></span>
             </span>
             <form style="display: none;" id="quiz-name-edit-form"
                       action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}"
@@ -79,9 +79,9 @@
                     <fieldset class="form-group">
                         <label>{{ qzform.name(value=quiz.name) }}</label>
                         <span>
-                    {{ qzform.submit(class="btn btn-lg btn-outline-info") }}
+                    {{ qzform.submit(class="btn btn-lg btn-outline-info", value="Save") }}
                 </span>
-                        <span class="btn btn-outline-info" style="color: white;"
+                        <span class="btn btn-outline-info"
                               onclick="resetEditContainer(index=1)">Cancel</span>
                     </fieldset>
 
@@ -167,9 +167,8 @@
                                             <span id="answer-content-display-{{ answer.id }}">
                                                 <label class="answer-content">{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
                                                 <span class="btn btn-sm btn-outline-info answer-edit-button"
-                                                      style="color: white;"
                                                       onclick="showEditAnswerContainer(index={{answer.id}})">
-                                                    Edit
+                                                    <i class="fas fa-pencil-alt"></i>
                                                 </span>
                                             </span>
                                             <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
@@ -185,7 +184,7 @@
                                                     <span>
                                                         {{ qform.submit(class="btn btn-lg btn-outline-info") }}
                                                     </span>
-                                                    <span class="btn btn-outline-info" style="color: white;"
+                                                    <span class="btn btn-outline-info"
                                                           onclick="resetEditAnswerContainer(index={{loop.index}})">
                                                         Cancel
                                                     </span>

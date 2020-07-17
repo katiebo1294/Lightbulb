@@ -4,8 +4,8 @@
         <!-- set form -->
         <span id="question-content-display-{{ loop.index }}">
             <label>{{ question.name }}) {{ question.content }}</label>
-            <span class="btn btn-sm btn-outline-info" style="color: white;"
-                onclick="showEditQuestionContainer(index={{loop.index}})">Edit</span>
+            <span class="btn btn-sm btn-outline-info"
+                onclick="showEditQuestionContainer(index={{loop.index}})"><i class="fas fa-pencil-alt"></i></span>
         </span>
         <form style="display: none;" id="question-content-edit-form-{{ loop.index }}"
             action="{{ url_for('quizzes.add_question_content', question_id=question.id) }}"
@@ -15,9 +15,9 @@
                 <label>{{ question.name }})
                     {{ qform.content(value=question.content) }}</label>
                 <span>
-                    {{ qform.submit(class="btn btn-lg btn-outline-info") }}
+                    {{ qform.submit(class="btn btn-outline-info") }}
                 </span>
-                <span class="btn btn-outline-info" style="color: white;"
+                <span class="btn btn-outline-info"
                     onclick="resetEditContainer(index={{loop.index}})">Cancel</span>
             </fieldset>
 
