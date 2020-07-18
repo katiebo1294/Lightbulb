@@ -12,6 +12,21 @@ from bettercrative.config import Config
 from bettercrative.errors.routes import not_found
 
 
+def get_alphabet_index(index):
+    alpha = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    s = ""
+    quotient = index
+    while quotient > 26:
+        remainder = int(quotient % 26)
+        # Takes care of edge case when rightmost letter is Z
+        if remainder == 0:
+            quotient -= 26
+        s += alpha[remainder - 1]
+        quotient = int(quotient / 26)
+    s += alpha[quotient - 1]
+    return s[::-1]
+
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     Bootstrap(app)
@@ -39,6 +54,8 @@ def create_app(config_class=Config):
     app.register_blueprint(errors)
 
     app.register_error_handler(404, not_found)
+
+    app.jinja_env.globals.update(get_alphabet_index=get_alphabet_index)
 
     return app
 

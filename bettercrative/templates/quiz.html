@@ -157,7 +157,7 @@
                                 {% set outer_loop = loop %}
                                 {% for answer in question.answers %}
                                 <div class="answerChoice">
-                                    <span class="btn btn-secondary active button-choices">{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0] }}</span>
+                                    <span class="btn btn-secondary active button-choices">{{ get_alphabet_index(loop.index) }}</span>
                                     <div class="answerBox">
                                         <span class="content-section">
                                             <button class="btn btn-sm btn-outline-danger answer-delete-button"
