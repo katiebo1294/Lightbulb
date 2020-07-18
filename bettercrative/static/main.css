@@ -23,6 +23,7 @@ footer {
 .wrapper{
   margin-top:5vw;
   width:100%;
+  overflow: auto;
 }
 
 section {
