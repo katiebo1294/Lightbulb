@@ -471,6 +471,7 @@ body:after{
   width: 100%;
   padding-top: 3%;
   padding-bottom: 10%;
+  min-height: 30vw;
   /* background-color: blue; */
 }
 .col-md-6 img{

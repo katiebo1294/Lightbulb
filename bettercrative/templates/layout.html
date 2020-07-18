@@ -233,6 +233,12 @@
 <script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
 <script src="{{ url_for('static', filename='js/horizontalScroll.js') }}"></script>
+<script type="text/javascript" src="js/bootstrap/bootstrap-dropdown.js"></script>
+<script>
+     $(document).ready(function(){
+        $('.dropdown-toggle').dropdown()
+    });
+</script>
 
 <script>
         $(window).scroll(function () {
