@@ -667,10 +667,6 @@ div.col.quizcolumn {
   position: relative;
 }
 
-div.col.quizcolumn div.delete_class{
-  margin-left: 10vw;
-}
-
 nav.navbar{
   width: 42vw;
 }
@@ -693,16 +689,6 @@ div.row.classroom_element{
   margin-left:2%;
 }
 
-
-
-div.dropdown a{
-  color: white;
-  text-decoration: none;
-}
-
-div.dropdown.show a{
-  color: white;
-}
 div.dropdown.show a.dropdown-item{
   color: black;
   background-color:white;
@@ -711,8 +697,9 @@ div.dropdown.show a:hover{
   color: #00E676;
 }
 
-.edit_class a{
-  color: white;
+.edit_class a, .edit_quiz a{
+  color: darkgreen !important;
+  font-weight: bolder;
   text-decoration: none;
   position:relative;
 }
@@ -720,8 +707,9 @@ div.dropdown.show a:hover{
   color: #00E676;
 }
 
-.delete_class a{
-  color: white;
+.delete_class a, .delete_quiz a{
+  color: darkred !important;
+  font-weight: bolder;
   text-decoration: none;
   position:relative;
 }
@@ -733,13 +721,11 @@ div.dropdown.show a:hover{
 
 
 .enter_quiz{
-  margin-left:5vw;
   position:relative;
 }
 .delete_quiz{
   position:relative;
   margin-top:.1vw;
-  margin-left: 4vw;
 }
 div.enter_quiz a{
   font-size:1.2vw;
@@ -776,48 +762,35 @@ div.delete_quiz a:hover{
 }
 
 
-div.col.classroomcolumn a{
+.classroomcolumn a{
   text-decoration: none;
   font-family: 'Source Code Pro';
   color: black;
   font-size:1.2vw;
 }
-div.col.quizcolumn a{
+.quizcolumn a{
   text-decoration: none;
   font-family: 'Source Code Pro';
   color: black;
   font-size:1.2vw;
 }
 
-div.col.quizcolumn div.edit_class a:hover{
+.quizcolumn div.edit_class a:hover{
   color: black;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
-div.col.quizcolumn div.delete_class a:hover{
+.quizcolumn div.delete_class a:hover{
   color: rgb(237, 74, 74);
   box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
 }
-div.col.classroomcolumn div.edit_class a:hover{
+.classroomcolumn div.edit_class a:hover{
   color: black;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
-div.col.classroomcolumn div.delete_class a:hover{
+.classroomcolumn div.delete_class a:hover{
   color: rgb(237, 74, 74);
   box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
-}
-
-
-
-
-div.edit_class{
-
-margin-left:5vw;
-
-}
-
-div.delete_class {
-  margin-left:5vw;
 }
 
 a.btn-large.sideClick{

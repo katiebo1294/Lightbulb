@@ -16,7 +16,7 @@
             {% for classroom in current_user.classrooms %}
             <div class="row classroom_element">
                 <!-- dropdown for a classroom's added quizzes and which one if any is active -->
-                <div class="dropdown show">
+                <div class="dropdown show room-name">
                     <a aria-expanded="false" aria-haspopup="true" class="navbar-brand dropdown-toggle"
                        data-toggle="dropdown" id="dropdownMenuLink" role="button">
                         Name: {{ classroom.name }}
@@ -84,7 +84,7 @@
             </a>
             {% for quiz in current_user.quizzes %}
             <div class="row classroom_element">
-                <div class="dropdown show quizColumn">
+                <div class="show quizColumn">
                     <a class="navbar-brand"
                     >
                         Name: {{ quiz.name }}
