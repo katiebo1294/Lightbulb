@@ -14,14 +14,20 @@
     <title>Bettercrative</title>
     {% endif %}
 
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Popper -->
+    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
     <!-- Bootstrap core CSS -->
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
     <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-    <!-- Jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
     <!-- Custom fonts for this template -->
     <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet"
@@ -34,9 +40,6 @@
     <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
 
 
-    <!-- Popper -->
-    <script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 
 </head>
 
@@ -233,12 +236,7 @@
 <script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
 <script src="{{ url_for('static', filename='js/horizontalScroll.js') }}"></script>
-<script type="text/javascript" src="js/bootstrap/bootstrap-dropdown.js"></script>
-<script>
-     $(document).ready(function(){
-        $('.dropdown-toggle').dropdown()
-    });
-</script>
+
 
 <script>
         $(window).scroll(function () {

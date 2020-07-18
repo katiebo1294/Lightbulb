@@ -13,10 +13,6 @@ body{
   max-width: 100%;
 }
 
-footer {
-  position: relative;
-}
-
 *{
   box-sizing: border-box;
 }
@@ -471,7 +467,7 @@ body:after{
   width: 100%;
   padding-top: 3%;
   padding-bottom: 10%;
-  min-height: 30vw;
+  min-height: 50vw;
   /* background-color: blue; */
 }
 .col-md-6 img{
@@ -861,6 +857,11 @@ button.Show-Student-Response.btn:hover{
 }
 
 /* footer */
+footer {
+  width: 100%;
+  bottom: 0;
+}
+
 .page-footer{
   background-color:#D4D4D4;
   font-size:1vw;
