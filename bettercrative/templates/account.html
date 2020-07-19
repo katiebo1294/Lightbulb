@@ -40,12 +40,12 @@
                 <!-- can enter a class to view details, or delete it -->
                 <div class="edit_class">
                     <a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
-                        Enter
+                        <i class="fas fa-pencil-alt"></i>
                     </a>
                 </div>
                 <div class="delete_class">
                     <a class="btn-lg" href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}">
-                        Delete
+                        <i class="fa fa-trash" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
@@ -77,12 +77,12 @@
                 <!-- user can enter a quiz to view details, or delete it -->
                 <div class="edit_class">
                     <a class="btn-lg" href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-                        Enter
+                        <i class="fas fa-pencil-alt"></i>
                     </a>
                 </div>
                 <div class="delete_class">
                     <a class="btn-lg" href=" {{url_for('users.delete_quiz', quiz_id=quiz.id) }}">
-                        Delete
+                        <i class="fa fa-trash" aria-hidden="true"></i>
                     </a>
                 </div>
             </div>
