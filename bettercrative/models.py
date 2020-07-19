@@ -206,7 +206,7 @@ class Answer(db.Model):
     clicked = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
-        return f"Answer('content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}', clicked: {self.clicked}')"
+        return f"Answer('id:{self.id}' ,'content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}', clicked: {self.clicked}')"
 
 
 # id = db.Column(db.Integer, primary_key=True) responses = db.relationship('Response', backref='student', lazy=True,

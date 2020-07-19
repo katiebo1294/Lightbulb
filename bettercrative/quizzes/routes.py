@@ -361,7 +361,11 @@ def add_answer_content(answer_id):
         return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
     # handle GET Request
     print('rendering template')
+<<<<<<< Updated upstream
     return render_template('quiz.html', title='answer', quiz=current_quiz, qzform=qzform, qform=qform, aform=aform)
+=======
+    return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform, answer = current_answer)
+>>>>>>> Stashed changes
 
 
 @quizzes.route("/quiz/changeActiveQuestion")

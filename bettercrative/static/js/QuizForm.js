@@ -249,21 +249,26 @@ function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
     });
 }
 
-function showTrueFalse(choice){
-    
-    var button = document.getElementById(choice+'-btn');
-    button.classList.add('active');
+function showTrueFalse(answer_id,choice,answers){
+    console.log(answer_id);
+    var button = document.getElementById(answer_id+'-btn');
     console.log(button);
-
+    button.classList.add('active');
+    console.log(choice);
+    console.log(button);
+    
+    
     if(choice == 'true'){
-        button = document.getElementById('false-btn');
+        button = document.getElementById(answer_id+'-btn');
         button.classList.remove('active');
     }
     else{
-        button = document.getElementById('true-btn');
+        button = document.getElementById(answer_id+'-btn');
         button.classList.remove('active');
     }
+    
     document.getElementById("check_button").style.display = "block";
+    event.preventDefault();
     
 }
 
@@ -281,4 +286,21 @@ function setTrueFalse(choice){
         setAnswer();
     }
 
+}
+function checked(answer_id){
+    //Get the button and the checkbox
+    var button = document.getElementById(answer_id+'-correct');
+    var checkbox = document.getElementById(answer_id + '-checkbox');
+    
+
+    //Checking rules for checkbox
+    var contains = button.classList.length
+    if(button.classList.item(contains-1) === 'active'){
+        button.classList.remove('active');
+        checkbox.checked = false;
+    }
+    else{
+        checkbox.checked = true;
+        button.classList.add('active');
+    }
 }
