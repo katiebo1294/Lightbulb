@@ -16,6 +16,17 @@ body{
 *{
   box-sizing: border-box;
 }
+
+.alert {
+  margin-top: 5%;
+  padding: 12px;
+  border-radius: 3px;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  border-width: 2px;
+  border-style: solid;
+  }
+
 .wrapper{
   margin-top:5vw;
   width:100%;
@@ -673,7 +684,6 @@ div.row.quiz_element{
 }
 div.row.classroom_element{
   font-family: 'Source Code Pro';
-  display:inline-flex;
 }
 
 .quiz_element{

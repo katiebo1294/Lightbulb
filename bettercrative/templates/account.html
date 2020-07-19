@@ -13,7 +13,7 @@
                 Create Classroom
             </a>
 
-            {% for classroom in current_user.classrooms %}
+            {% for classroom in current_user.classrooms|sort(attribute="date_created") %}
             <div class="row classroom_element">
                 <!-- dropdown for a classroom's added quizzes and which one if any is active -->
                 <div class="dropdown show room-name">
@@ -24,30 +24,33 @@
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         {% for quiz in classroom.added_quizzes %}
                         {% if classroom.active_quiz == quiz.id %}
-                        <a class="dropdown-item" href="#" onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }})">
+                        <a class="dropdown-item" href="#"
+                           onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
                             *ACTIVE* Quiz: {{ quiz.name }}
                         </a>
                         {% else %}
-                        <a class="dropdown-item" href="#" onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }})">
+                        <a class="dropdown-item" href="#"
+                           onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
                             Quiz: {{ quiz.name }}
                         </a>
                         {% endif %}
                         {% endfor %}
                     </div>
                 </div>
+                <!-- can enter a class to view details, or delete it -->
+                <div class="edit_class">
+                    <a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
+                        Enter
+                    </a>
+                </div>
+                <div class="delete_class">
+                    <a class="btn-lg" href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}">
+                        Delete
+                    </a>
+                </div>
             </div>
 
-            <!-- can enter a class to view details, or delete it -->
-            <div class="edit_class">
-                <a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
-                    Enter
-                </a>
-            </div>
-            <div class="delete_class">
-                <a class="btn-lg" href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}">
-                    Delete
-                </a>
-            </div>
+
             {% endfor %}
         </nav>
     </div>
