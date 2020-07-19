@@ -230,18 +230,15 @@
                             <!-- FORM -->
                             
                             {%if answer.content == "True"%}
-                            <span class="btn btn-lg btn-outline-success" id='true-btn' onclick='showTrueFalse("true")'>True</span>
+                            <span class = "btn btn-lg btn-outline-success" id = '{{answer.id}}-btn' onclick = 'showTrueFalse("{{answer.id}}",choice="true", "{{question.answers}}")' >True</span>
                             {%else%}
-                            <span class="btn btn-lg btn-outline-danger" id='false-btn' onclick='showTrueFalse("false")'>False</span>
+                        <span class = "btn btn-lg btn-outline-danger" id = '{{answer.id}}-btn' onclick = 'showTrueFalse("{{answer.id}}",choice="false", "{{question.answers}}")' >False</span>
                             
                             {%endif%}
                             
                             {%endfor%}
-                            <span class='btn btn-lg btn-outline-primary' id="check_button" onclick='setTrueFalse(this)'
-                                  style='display:none;'>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="currentColor"><path fill-rule="nonzero"
-                                                           d="M18.293 6.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-5.5-5.5a1 1 0 011.32-1.497l.094.083L9 15.585l9.293-9.292z"></path></svg>
+                            <span class='btn btn-lg btn-outline-primary' id = "check_button" onclick='setTrueFalse(this)' style='display:none;'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="nonzero" d="M18.293 6.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-5.5-5.5a1 1 0 011.32-1.497l.094.083L9 15.585l9.293-9.292z"></path></svg>
                             </span>
                         </span>
 

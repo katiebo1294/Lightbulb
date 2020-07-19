@@ -3,6 +3,7 @@ from wtforms import StringField, SubmitField, SelectField, BooleanField
 from wtforms.validators import InputRequired
 
 
+
 class AnswerForm(FlaskForm):
     content = StringField('Answer', validators=[InputRequired('Please fill out this field.')])
     correct = BooleanField('Correct')
