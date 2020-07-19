@@ -17,3 +17,7 @@ class QuestionForm(FlaskForm):
 class QuizForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired('Please fill out this field.')])
     submit = SubmitField('Create Quiz')
+
+class QuestionFormOverall(FlaskForm):
+    answer_form = wtforms.FormField(AnswerForm)
+    question_form = wtforms.FormField(QuestionForm)

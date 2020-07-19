@@ -155,50 +155,53 @@
                             <span class="reset"> </span>
                             <span class="answerContainer reset">
                                 {% set outer_loop = loop %}
-                                {% for answer in question.answers %}
-                                <div class="answerChoice">
-                                    <span class="btn btn-secondary active button-choices">{{ get_alphabet_index(loop.index) }}</span>
-                                    <div class="answerBox">
-                                        <span class="content-section">
-                                            <button class="btn btn-sm btn-outline-danger answer-delete-button"
-                                                    onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
-                                            <i class="fa fa-times fa-lg"></i>
-                                        </button>
-                                            <span id="answer-content-display-{{ answer.id }}">
-                                                <label class="answer-content">{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
-                                                <span class="btn btn-sm btn-outline-info answer-edit-button"
-                                                      onclick="showEditAnswerContainer(index={{answer.id}})">
-                                                    <i class="fas fa-pencil-alt"></i>
+                                <!-- This area is for the set answers -->
+                                <span id="displayAnswer-{{ question.id }}">
+                                    {% for answer in question.answers %}
+                                    <div class="answerChoice">
+                                        <span class="btn btn-secondary active button-choices">{{ get_alphabet_index(loop.index) }}</span>
+                                        <div class="answerBox">
+                                            <span class="content-section">
+                                                <button class="btn btn-sm btn-outline-danger answer-delete-button"
+                                                        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
+                                                    <i class="fa fa-times fa-lg"></i>
+                                                </button>
+                                                <span id="answer-content-display-{{ answer.id }}">
+                                                    <label class="answer-content">{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
                                                 </span>
                                             </span>
-                                            <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
-                                                  id="answer-content-edit-form-{{ answer.id }}"
-                                                  method="POST"
-                                                  style="display: none;">
-                                                {{ aform.hidden_tag() }}
-                                                <fieldset class="form-group">
-                                                    <span class="form-group">
-                                                        {{ aform.content.label }} {{ aform.content(value=answer.content) }}
-                                                        <button type="button" class="btn btn-default btn-sm" style="margin-left: 5%;">
-                                                            {{ aform.correct.label }} {{ aform.correct(checked=answer.correct) }}
-                                                        </button>
-                                                    </span>
-                                                    <span>
-                                                        {{ qform.submit(class="btn btn-lg btn-outline-info") }}
-                                                    </span>
-                                                    <span class="btn btn-outline-info"
-                                                          onclick="resetEditAnswerContainer(index={{loop.index}})">
-                                                        Cancel
-                                                    </span>
-                                                </fieldset>
-                                            </form>
-                                            {% if aform.errors %}
-                                                {{ aform.errors }}
-                                            {% endif %}
-                                        </span>
+                                        </div>
                                     </div>
-                                </div>
-                                {% endfor %}
+                                    {% endfor %}
+                                </span>
+                                <!-- this area is for the edit answers -->
+                                <span id="displayAnswerEdit-{{ question.id }}" style="display: none;">
+                                    {% for answer in question.answers %}
+                                        <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
+                                        id="answer-content-edit-form-{{ answer.id }}"
+                                        method="POST">
+                                        {{ aform.hidden_tag() }}
+                                            <fieldset class="form-group">
+                                                <span class="form-group">
+                                                    {{ aform.content.label }} {{ aform.content(value=answer.content) }}
+                                                    <button type="button" class="btn btn-default btn-sm" style="margin-left: 5%;">
+                                                        {{ aform.correct.label }} {{ aform.correct(checked=answer.correct) }}
+                                                    </button>
+                                                </span>
+                                                <span>
+                                                    {{ qform.submit(class="btn btn-lg btn-outline-info") }}
+                                                </span>
+                                                <span class="btn btn-outline-info"
+                                                    onclick="resetEditAnswerContainer(index={{loop.index}})">
+                                                    Cancel
+                                                </span>
+                                            </fieldset>
+                                        </form>
+                                        {% if aform.errors %}
+                                            {{ aform.errors }}
+                                        {% endif %}
+                                    {% endfor %}
+                                    </span>
                                 <button class="btn btn-outline-success"
                                         onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }})">
                                     <i class="fa fa-plus"></i>
