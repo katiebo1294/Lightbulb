@@ -182,11 +182,15 @@
                                         method="POST">
                                         {{ aform.hidden_tag() }}
                                             <fieldset class="form-group">
-                                                <span class="form-group">
+                                                <span class="form-group correctness-container">
                                                     {{ aform.content.label }} {{ aform.content(value=answer.content) }}
-                                                    <button type="button" class="btn btn-default btn-sm" style="margin-left: 5%;">
-                                                        {{ aform.correct.label }} {{ aform.correct(checked=answer.correct) }}
-                                                    </button>
+                                                    {{ aform.correct.label }}
+                                                    {% if answer.correct %}
+                                                        <i class="fas fa-check-circle"></i>
+                                                    {% else %}
+                                                        <i class="far fa-check-circle"></i>
+                                                    {% endif %}
+                                                    {{ aform.correct(checked=answer.correct, class_="actual-checkbox") }}
                                                 </span>
                                                 <span>
                                                     {{ qform.submit(class="btn btn-lg btn-outline-info") }}
@@ -288,5 +292,12 @@
     </div>
 </div>
 
-
+<script>
+    $('.correctness-container').click(function() {
+        $(this).find('i').toggleClass('far fa-check-circle fas fa-check-circle');
+        var checkbox = $(this).find('#correct');
+        console.log(checkbox);
+        checkbox.prop('checked', !checkbox.prop('checked'));
+    });
+</script>
 {% endblock %}

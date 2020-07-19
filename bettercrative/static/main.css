@@ -917,7 +917,22 @@ div.editSign{
   font-size:2.2vw;
 }
 
+/* The actual WTForms checkbox, which we want to hide */
+.actual-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
 
+.fa-check-circle {
+  color: green;
+}
+
+.fa-check-circle:hover {
+  cursor: pointer;
+}
 
 div.SaveExitBtn.btn{
   float:right;
