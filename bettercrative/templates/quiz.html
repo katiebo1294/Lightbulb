@@ -178,8 +178,10 @@
                                                 {{ aform.hidden_tag() }}
                                                 <fieldset class="form-group">
                                                     <span class="form-group">
-                                                        {{ aform.content.label }} -> {{ aform.content(value=answer.content) }}
-                                                        {{ aform.correct.label }} -> {{ aform.correct(checked=answer.correct) }}
+                                                        {{ aform.content.label }} {{ aform.content(value=answer.content) }}
+                                                        <button type="button" class="btn btn-default btn-sm" style="margin-left: 5%;">
+                                                            {{ aform.correct.label }} {{ aform.correct(checked=answer.correct) }}
+                                                        </button>
                                                     </span>
                                                     <span>
                                                         {{ qform.submit(class="btn btn-lg btn-outline-info") }}
