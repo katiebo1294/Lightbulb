@@ -32,7 +32,7 @@
 			<!--Need to rework so that 1 is = to <int: id> I got error before-->
 			{% for question in questions.items %}
 			<form action="" method="POST">
-                <span class="btn" style="font-size:2.7vw; margin-top:3vw;">
+                <span id="question-title" class="btn" style="font-size:2.7vw; margin-top:3vw;">
                     {{ question.content }}</span>
 				<div class="options">
 					<!-- Answer Section -->
@@ -46,16 +46,14 @@
 									       id="question-{{answer.index+1}}"
 									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value = {{ get_alphabet_index(answer.index) }})">
 										<input class="response" name="studentResponse" type="checkbox"
-										       value="{{ answer.content }}">{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0]
-										}}
+										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
 									</label>
 
 									{% else %}
 									<label class="btn btn-secondary button-choices" id="question-{{answer.index+1}}"
 									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value = {{ get_alphabet_index(answer.index) }})">
 										<input class="response" name="studentResponse" type="checkbox"
-										       value="{{ answer.content }}">{{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[loop.index0]
-										}}
+										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
 									</label>
 									{%endif%}
 								</div>
@@ -79,10 +77,10 @@
 			{% for page_num in questions.iter_pages() %}
 			{% if page_num %}
 			{% if questions.page == page_num %} <!-- current page -->
-			<a class="btn btn-info mb-4"
+			<a class="btn btn-info mb-4 pagination-buttons"
 			   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num) }}">{{ page_num }}</a>
 			{% else %}
-			<a class="btn btn-outline-info mb-4"
+			<a class="btn btn-outline-info mb-4 pagination-buttons"
 			   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num) }}">{{ page_num }}</a>
 			{% endif %}
 			{% endif %}
@@ -90,6 +88,7 @@
 			<!-- prevent things from floating after this section -->
 			<div style=" clear: both;"></div>
 		</div>
+		<button class="btn btn-lg btn-primary quiz-back-btn"><a href="{% if current_user.is_authenticated %}{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}{% else %}{{ url_for('main.home') }}{% endif %}"><i class="fas fa-angle-double-left"></i> Go Back</a></button>
 	</div>
 	<div class="reset">
 	</div>

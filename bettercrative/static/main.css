@@ -814,6 +814,16 @@ a.btn-large.sideClick{
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
+#question-title {
+  background: grey;
+  border: solid dimgrey;
+  font-weight: bold;
+  color: ghostwhite;
+}
+
+.button-choices {
+  font-weight: bold;
+}
 
 a.Take-Active-Quiz.btn{
   float:right;
@@ -1066,13 +1076,40 @@ div.answerBox{
   width: 85%;
   float: left;
   margin-left: 1%;
-  border: 1px solid rgb(30,155,95);
   padding-top: 0.75vw;
   padding-bottom: 0.75vw;
   padding-right: 1vw;
+  padding-left: 0.5vw;
   font-size: 2.28vw;
+  font-weight: bold;
+  background: darkseagreen;
+  border: solid forestgreen;
+  border-radius: .25rem;
 }
 
+.pagination-buttons {
+  font-weight: bolder;
+  background-color: white;
+}
+
+.pagination-buttons.btn-info {
+  color: black;
+}
+
+.quiz-back-btn {
+  font-size: 3vw;
+  font-weight: bolder;
+  padding-bottom: 0.5rem;
+}
+
+.quiz-back-btn a {
+  color: white;
+}
+
+.quiz-back-btn a:hover {
+  text-decoration: none;
+  color: white;
+}
 
 .btn {
   border: 2px solid black;
