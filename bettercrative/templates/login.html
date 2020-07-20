@@ -6,8 +6,8 @@
             {{ form.hidden_tag() }} <!--adds ctrf form-->
             <fieldset class="form-group">
                 <!-- Email Form -->
+                <legend class="border-bottom mb-4">Log In</legend>
                 <div class="form-group">
-                    <legend class="border-bottom mb-4">Log In</legend>
                     {{ form.email.label(class="form=control-label") }}
 
                     {% if form.email.errors %}

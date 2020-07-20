@@ -632,11 +632,12 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 .form-container {
     position: relative;
     margin: auto;
-    margin-top: 1%;
+    margin-top: 5%;
     margin-bottom: 1%;
     background-color:rgba(50,50,50,.35);
     padding: 1%;
     border-radius:15px;
+    width: 50%;
 }
 
 
