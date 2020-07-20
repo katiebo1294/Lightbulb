@@ -1,10 +1,11 @@
 from flask import (render_template, url_for, flash,
                    redirect, request, Blueprint)
 from flask_login import current_user, login_required
+from wtforms import FormField, FieldList
 
 from bettercrative import db
 from bettercrative.models import Quiz, Question, Answer, Classroom
-from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm
+from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm, QuestionFormOverall
 
 quizzes = Blueprint('quizzes', __name__)
 
@@ -52,10 +53,15 @@ def quiz(quiz_id):
                 quiz_id (int): The ID of the quiz to display.
     """
     qzform = QuizForm()
-    qform = QuestionForm()
-    aform = AnswerForm()
+
+    class LocalForm(QuestionFormOverall):
+        pass
+
     quiz = Quiz.query.get_or_404(quiz_id)
-    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, qform=qform, aform=aform)
+    LocalForm.answer_form = FieldList(FormField(AnswerForm), min_entries=len(quiz.questions[0].answers))
+    form = LocalForm()
+
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form)
 
 
 @quizzes.route("/quiz/edit-name/<int:quiz_id>", methods=['GET', 'POST'])
@@ -63,13 +69,18 @@ def quiz(quiz_id):
 def edit_quiz_name(quiz_id):
     quiz = Quiz.query.get_or_404(quiz_id)
     qzform = QuizForm()
-    qform = QuestionForm()
-    aform = AnswerForm()
+
+    class LocalForm(QuestionFormOverall):
+        pass
+
+    LocalForm.answer_form = FieldList(FormField(AnswerForm), min_entries=len(quiz.questions[0].answers))
+    form = LocalForm()
+
     if qzform.validate_on_submit():
         quiz.name = qzform.name.data
         db.session.commit()
         return redirect(url_for('quizzes.quiz', quiz_id=quiz_id))
-    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, qform=qform, aform=aform)
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form)
 
 
 @quizzes.route("/quiz/add")
@@ -180,7 +191,7 @@ def remove_question():
 
     # setting active question
     current_active_question = quiz.active
-    if (current_active_question == question.id):
+    if current_active_question == question.id:
         current_active_question = quiz.questions[-1].id
 
     print(f'removed')
@@ -301,6 +312,34 @@ def set_question_type():
 
     db.session.commit()
     return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
+
+
+@quizzes.route("/quiz/question/<int:question_id>/edit", methods=['GET', 'POST'])
+@login_required
+def edit_question(question_id):
+    question = Question.query.get_or_404(question_id)
+    quiz = question.quiz
+
+    class LocalForm(QuestionFormOverall):
+        pass
+
+    LocalForm.answer_form = FieldList(FormField(AnswerForm), min_entries=len(question.answers))
+    form = LocalForm()
+    qzform = QuizForm()
+
+    if form.validate_on_submit():
+        question.content = form.question_form.content.data
+        print("question content:", form.question_form.content.data)
+        for i, aform in enumerate(form.answer_form):
+            question.answers[i].content = aform.content.data
+            print("answer", i, "content:", aform.content.data)
+            question.answers[i].correct = aform.correct.data
+            print("answer", i, "correctness:", aform.correct.data)
+
+        db.session.commit()
+        flash(u'Successfully updated question!', 'success')
+        return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
+    return render_template('quiz.html', quiz=quiz, form=form, qzform=qzform)
 
 
 @quizzes.route("/quiz/question/<int:question_id>/add_content", methods=['GET', 'POST'])

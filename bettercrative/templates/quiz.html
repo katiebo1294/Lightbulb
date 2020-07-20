@@ -45,6 +45,7 @@
     
 
 
+
 </style>
 
 <div id="quiz-content-container">
@@ -73,22 +74,22 @@
                       onclick="showEditQuizNameContainer()"><i class="fas fa-pencil-alt"></i></span>
             </span>
             <form style="display: none;" id="quiz-name-edit-form"
-                      action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}"
-                      method="POST">
-                    {{ qzform.hidden_tag() }}
-                    <fieldset class="form-group">
-                        <label>{{ qzform.name(value=quiz.name) }}</label>
-                        <span>
+                  action=""
+                  method="POST">
+                {{ qzform.hidden_tag() }}
+                <fieldset class="form-group">
+                    <label>{{ qzform.name(value=quiz.name) }}</label>
+                    <span>
                     {{ qzform.submit(class="btn btn-lg btn-outline-info", value="Save") }}
                 </span>
-                        <span class="btn btn-outline-info"
-                              onclick="resetEditContainer(index=1)">Cancel</span>
-                    </fieldset>
+                    <span class="btn btn-outline-info"
+                          onclick="resetEditContainer(index=1)">Cancel</span>
+                </fieldset>
 
-                </form>
-                {% if qform.errors %}
-                {{ qform.errors }}
-                {%endif%}
+            </form>
+            {% if qzform.errors %}
+            {{ qzform.errors }}
+            {%endif%}
         </div>
 
         <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
@@ -131,7 +132,7 @@
 
         <div id="questions">
             {% for question in quiz.questions %}
-            <span id="question-{{ loop.index }}" {% if quiz.active !=question.id %} style="display: none;" {% endif %}>
+            <div id="question-{{ loop.index }}" {% if quiz.active !=question.id %} style="display: none;" {% endif %}>
                 {% if question.category %}
 
                 {{question.category}}
@@ -141,8 +142,49 @@
                         {% if question.category == 'Multiple Choice' %}
                         <div class='multiple-choice'>
                             <!-- contents of multiple choice box -->
-                            {%include 'question_header.html'%}
-                            
+                        <div class="question-edit-header">
+                            <div class="question-number">
+                                <!-- set form -->
+                                <span id="question-content-display-{{ question.id }}">
+                                    <label>{{ question.name }}) {{ question.content }}</label>
+                                    <span class="btn btn-sm btn-outline-info"
+                                          onclick="showEditQuestionContainer(index={{question.id}})"><i class="fas fa-pencil-alt"></i></span>
+                                </span>
+                                <form style="display: none;" id="question-content-edit-form-{{ question.id }}"
+                                      action="{{ url_for('quizzes.edit_question', question_id=question.id) }}"
+                                      method="POST">
+                                    {{ form.hidden_tag() }}
+                                    {{ form.question_form.hidden_tag() }}
+                                    <fieldset class="form-group">
+                                        <label>{{ question.name }})
+                                            {{ form.question_form.content(value=question.content) }}</label>
+                                        <span>
+                                            {{ form.submit(class="btn btn-sm btn-outline-info") }}
+                                        </span>
+                                        <span class="btn btn-sm btn-outline-info"
+                                              onclick="resetEditContainer(index={{loop.index}})">Cancel</span>
+                                        <div id="displayAnswerEdit-{{ question.id }}" class="form-group">
+                                        {% for aform in form.answer_form %}
+                                            {{ aform.hidden_tag() }}
+                                            {% set answer = question.answers[ loop.index0 ] %}
+                                                <div class="correctness-container">
+                                                    {{ aform.content(value=answer.content) }}
+                                                    {% if answer.correct %}
+                                                        <i class="fas fa-check-circle"></i>
+                                                    {% else %}
+                                                        <i class="far fa-check-circle"></i>
+                                                    {% endif %}
+                                                    {{ aform.correct(checked=answer.correct, class_="actual-checkbox") }}
+                                                </div>
+                                        {% endfor %}
+                                        </div>
+                                    </fieldset>
+                                </form>
+                                {% if form.errors %}
+                                {{ form.errors }}
+                                {% endif %}
+                            </div>
+                        </div>
                             <div class="answerchoices">
                                 <span class="menu">
                                     
@@ -153,10 +195,10 @@
                                 </span>
                             </div>
                             <span class="reset"> </span>
-                            <span class="answerContainer reset">
+                            <div class="answerContainer reset">
                                 {% set outer_loop = loop %}
                                 <!-- This area is for the set answers -->
-                                <span id="displayAnswer-{{ question.id }}">
+                                <div id="displayAnswer-{{ question.id }}">
                                     {% for answer in question.answers %}
                                     <div class="answerChoice">
                                         <span class="btn btn-secondary active button-choices">{{ get_alphabet_index(loop.index) }}</span>
@@ -173,50 +215,18 @@
                                         </div>
                                     </div>
                                     {% endfor %}
-                                </span>
-                                <!-- this area is for the edit answers -->
-                                <span id="displayAnswerEdit-{{ question.id }}" style="display: none;">
-                                    {% for answer in question.answers %}
-                                        <form action="{{ url_for('quizzes.add_answer_content', answer_id=answer.id) }}"
-                                        id="answer-content-edit-form-{{ answer.id }}"
-                                        method="POST">
-                                        {{ aform.hidden_tag() }}
-                                            <fieldset class="form-group">
-                                                <span class="form-group correctness-container">
-                                                    {{ aform.content.label }} {{ aform.content(value=answer.content) }}
-                                                    {{ aform.correct.label }}
-                                                    {% if answer.correct %}
-                                                        <i class="fas fa-check-circle"></i>
-                                                    {% else %}
-                                                        <i class="far fa-check-circle"></i>
-                                                    {% endif %}
-                                                    {{ aform.correct(checked=answer.correct, class_="actual-checkbox") }}
-                                                </span>
-                                                <span>
-                                                    {{ qform.submit(class="btn btn-lg btn-outline-info") }}
-                                                </span>
-                                                <span class="btn btn-outline-info"
-                                                    onclick="resetEditAnswerContainer(index={{loop.index}})">
-                                                    Cancel
-                                                </span>
-                                            </fieldset>
-                                        </form>
-                                        {% if aform.errors %}
-                                            {{ aform.errors }}
-                                        {% endif %}
-                                    {% endfor %}
-                                    </span>
+                                </div>
                                 <button class="btn btn-outline-success"
                                         onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }})">
                                     <i class="fa fa-plus"></i>
                                 </button>
-                            </span>
+                            </div>
                         </div>
 
                         <!-- True/False -->
                         {% elif question.category == 'True-False' %}
                         <div class='true-false'>
-                            {%include 'question_header.html'%}
+
                             <div class="answerchoices">
                                 <span class="menu">
                                     
@@ -234,15 +244,20 @@
                             <!-- FORM -->
                             
                             {%if answer.content == "True"%}
-                            <span class = "btn btn-lg btn-outline-success" id = '{{answer.id}}-btn' onclick = 'showTrueFalse("{{answer.id}}",choice="true", "{{question.answers}}")' >True</span>
+                            <span class="btn btn-lg btn-outline-success" id='{{answer.id}}-btn'
+                                  onclick='showTrueFalse("{{answer.id}}",choice="true", "{{question.answers}}")'>True</span>
                             {%else%}
-                        <span class = "btn btn-lg btn-outline-danger" id = '{{answer.id}}-btn' onclick = 'showTrueFalse("{{answer.id}}",choice="false", "{{question.answers}}")' >False</span>
+                        <span class="btn btn-lg btn-outline-danger" id='{{answer.id}}-btn'
+                              onclick='showTrueFalse("{{answer.id}}",choice="false", "{{question.answers}}")'>False</span>
                             
                             {%endif%}
                             
                             {%endfor%}
-                            <span class='btn btn-lg btn-outline-primary' id = "check_button" onclick='setTrueFalse(this)' style='display:none;'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="nonzero" d="M18.293 6.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-5.5-5.5a1 1 0 011.32-1.497l.094.083L9 15.585l9.293-9.292z"></path></svg>
+                            <span class='btn btn-lg btn-outline-primary' id="check_button" onclick='setTrueFalse(this)'
+                                  style='display:none;'>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                     fill="currentColor"><path fill-rule="nonzero"
+                                                               d="M18.293 6.293a1 1 0 011.497 1.32l-.083.094-10 10a1 1 0 01-1.32.083l-.094-.083-5.5-5.5a1 1 0 011.32-1.497l.094.083L9 15.585l9.293-9.292z"></path></svg>
                             </span>
                         </span>
 
@@ -250,18 +265,16 @@
                         <!-- Short Answer -->
                         {% elif question.category == 'Short Answer'%}
                         <div class='short-answer'>
-                            {%include 'question_header.html'%}
                         </div>
 
                         <!-- IDE -->
                         {%else%}
                         <div class='IDE'>
-                            {%include 'question_header.html'%}
                         </div>
                         {%endif%}
                     </div>
                 </div>
-            </span>
+            </div>
             {% else %}
             <!-- four buttons to choose question type -->
             <div class="question-type-container">
@@ -299,5 +312,6 @@
         console.log(checkbox);
         checkbox.prop('checked', !checkbox.prop('checked'));
     });
+
 </script>
 {% endblock %}

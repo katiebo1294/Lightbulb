@@ -1,8 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, BooleanField
-import wtforms
+from wtforms import StringField, SubmitField, BooleanField, FormField, FieldList
 from wtforms.validators import InputRequired
-
 
 
 class AnswerForm(FlaskForm):
@@ -20,6 +18,8 @@ class QuizForm(FlaskForm):
     name = StringField('Name', validators=[InputRequired('Please fill out this field.')])
     submit = SubmitField('Create Quiz')
 
+
 class QuestionFormOverall(FlaskForm):
-    answer_form = wtforms.FormField(AnswerForm)
-    question_form = wtforms.FormField(QuestionForm)
+    answer_form = FieldList(FormField(AnswerForm))
+    question_form = FormField(QuestionForm)
+    submit = SubmitField('Save Changes')
