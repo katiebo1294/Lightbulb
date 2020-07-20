@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from bettercrative.config import Config
 # Application factory
 # Blueprint registration
-from bettercrative.errors.routes import not_found
+from bettercrative.errors.routes import bad_request, unauthorized, forbidden,  not_found
 
 
 def get_alphabet_index(index):
@@ -53,6 +53,9 @@ def create_app(config_class=Config):
     app.register_blueprint(quizzes)
     app.register_blueprint(errors)
 
+    app.register_error_handler(400, bad_request)
+    app.register_error_handler(401, unauthorized)
+    app.register_error_handler(403, forbidden)
     app.register_error_handler(404, not_found)
 
     app.jinja_env.globals.update(get_alphabet_index=get_alphabet_index)
