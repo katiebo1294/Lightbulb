@@ -329,12 +329,9 @@ def edit_question(question_id):
 
     if form.validate_on_submit():
         question.content = form.question_form.content.data
-        print("question content:", form.question_form.content.data)
         for i, aform in enumerate(form.answer_form):
             question.answers[i].content = aform.content.data
-            print("answer", i, "content:", aform.content.data)
             question.answers[i].correct = aform.correct.data
-            print("answer", i, "correctness:", aform.correct.data)
 
         db.session.commit()
         flash(u'Successfully updated question!', 'success')

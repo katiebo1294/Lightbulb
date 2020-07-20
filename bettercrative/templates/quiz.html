@@ -70,7 +70,7 @@
             <span id="quizname">
                 {{quiz.name}}
                 <span class="btn btn-sm btn-outline-info"
-                      style=" float: right; margin-top: .5vw; margin-right: .25vw;"
+                      style=" margin-top: .5vw; margin-left: .25vw;"
                       onclick="showEditQuizNameContainer()"><i class="fas fa-pencil-alt"></i></span>
             </span>
             <form style="display: none;" id="quiz-name-edit-form"
@@ -170,11 +170,12 @@
                                                 <div class="correctness-container">
                                                     {{ aform.content(value=answer.content) }}
                                                     {% if answer.correct %}
-                                                        <i class="fas fa-check-circle"></i>
+                                                        <i id="answer_form-{{ loop.index0 }}-checkbox" class="fas fa-check-circle"></i>
+                                                        {{ aform.correct(checked=True, value='y', class_="actual-checkbox") }}
                                                     {% else %}
-                                                        <i class="far fa-check-circle"></i>
+                                                        <i id="answer_form-{{ loop.index0 }}-checkbox" class="far fa-check-circle"></i>
+                                                        {{ aform.correct(checked=False, value='n', class_="actual-checkbox") }}
                                                     {% endif %}
-                                                    {{ aform.correct(checked=answer.correct, class_="actual-checkbox") }}
                                                 </div>
                                         {% endfor %}
                                         </div>
@@ -237,19 +238,19 @@
                                 </span>
                             </div>
                         </div>
-                        <span class="reset"> </span>
+                        <span class="reset"></span>
                         <span class="answerContainer reset">
                             {% for answer in question.answers %}
                             <!-- hover on the selected then submit button on save  -->
                             <!-- FORM -->
-                            
+
                             {%if answer.content == "True"%}
                             <span class="btn btn-lg btn-outline-success" id='{{answer.id}}-btn'
                                   onclick='showTrueFalse("{{answer.id}}",choice="true", "{{question.answers}}")'>True</span>
                             {%else%}
                         <span class="btn btn-lg btn-outline-danger" id='{{answer.id}}-btn'
                               onclick='showTrueFalse("{{answer.id}}",choice="false", "{{question.answers}}")'>False</span>
-                            
+
                             {%endif%}
                             
                             {%endfor%}
@@ -268,7 +269,7 @@
                         </div>
 
                         <!-- IDE -->
-                        {%else%}
+                        {% else %}
                         <div class='IDE'>
                         </div>
                         {%endif%}
@@ -299,19 +300,10 @@
                 </button>
             </div>
             {% endif %}
-
             {% endfor %}
         </div>
     </div>
 </div>
-
-<script>
-    $('.correctness-container').click(function() {
-        $(this).find('i').toggleClass('far fa-check-circle fas fa-check-circle');
-        var checkbox = $(this).find('#correct');
-        console.log(checkbox);
-        checkbox.prop('checked', !checkbox.prop('checked'));
-    });
-
-</script>
+<script src="js/horizontalscroll.js"></script>
 {% endblock %}
+

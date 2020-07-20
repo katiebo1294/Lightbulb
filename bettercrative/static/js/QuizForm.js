@@ -259,8 +259,8 @@ function showTrueFalse(answer_id,choice,answers){
     button.classList.add('active');
     console.log(choice);
     console.log(button);
-    
-    
+
+
     if(choice == 'true'){
         button = document.getElementById(answer_id+'-btn');
         button.classList.remove('active');
@@ -307,3 +307,20 @@ function checked(answer_id){
         button.classList.add('active');
     }
 }
+
+$('.correctness-container').click(function() {
+        var icon = $(this).find('i');
+        var id = icon.attr('id');
+        id = id.slice(0, id.length - 8);
+        console.log(id);
+        icon.toggleClass('far fa-check-circle fas fa-check-circle');
+        var checkbox = $(this).find('#' + id + "correct");
+        console.log(checkbox);
+        if(checkbox.prop('checked')) {
+            console.log('was checked');
+            checkbox.prop('checked', false);
+        } else {
+            console.log('was not checked');
+            checkbox.prop('checked', true);
+        }
+    });
