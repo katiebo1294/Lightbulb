@@ -27,6 +27,10 @@ def get_alphabet_index(index):
     return s[::-1]
 
 
+def append_form(form):
+    form.answer_form.append_entry()
+
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     Bootstrap(app)
@@ -59,6 +63,7 @@ def create_app(config_class=Config):
     app.register_error_handler(404, not_found)
 
     app.jinja_env.globals.update(get_alphabet_index=get_alphabet_index)
+    app.jinja_env.globals.update(append_form=append_form)
 
     return app
 

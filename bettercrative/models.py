@@ -202,7 +202,7 @@ class Answer(db.Model):
     content = db.Column(db.Text, nullable=True)
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
-    index = db.Column(db.Integer, autoincrement=True)
+    index = db.Column(db.Integer)
     clicked = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):

@@ -217,7 +217,7 @@ function setQType(url,question_id, qtype) {
     });
 };
 
-function changeActiveQuestion(url,question_id,quiz_id) {
+function change_active_question(url,question_id,quiz_id) {
     event.preventDefault();
     $.ajax({
         type: "GET",

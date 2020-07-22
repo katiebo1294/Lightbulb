@@ -41,11 +41,6 @@
     .affix .navTrigger p {
         color: black;
     }
-
-    
-
-
-
 </style>
 
 <div id="quiz-content-container">
@@ -97,7 +92,7 @@
             {% for question in quiz.questions %}
             <a class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
                id="qbtn-{{ loop.index }}"
-               onclick="changeActiveQuestion('{{ url_for('quizzes.changeActiveQuestion') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }})">
+               onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }})">
                 {% if not loop.first %}
                 <button class="btn btn-outline-info shift-Button"
                         onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
@@ -135,7 +130,7 @@
             <div id="question-{{ loop.index }}" {% if quiz.active !=question.id %} style="display: none;" {% endif %}>
                 {% if question.category %}
 
-                {{question.category}}
+                {{ question.category }}
                 <div id="question">
                     <div class='question-container'>
                         <!-- Multiple Choice -->
@@ -164,10 +159,11 @@
                                         <span class="btn btn-sm btn-outline-info"
                                               onclick="resetEditContainer(index={{loop.index}})">Cancel</span>
                                         <div id="displayAnswerEdit-{{ question.id }}" class="form-group">
-                                        {% for aform in form.answer_form %}
+                                        {% for answer in question.answers %}
+                                            {{ append_form(form) }}
+                                            {% set aform = form.answer_form[ loop.index0 ] %}
                                             {{ aform.hidden_tag() }}
-                                            {% set answer = question.answers[ loop.index0 ] %}
-                                                <div class="correctness-container">
+                                            <div class="correctness-container">
                                                     {{ aform.content(value=answer.content) }}
                                                     {% if answer.correct %}
                                                         <i id="answer_form-{{ loop.index0 }}-checkbox" class="fas fa-check-circle"></i>
@@ -304,6 +300,6 @@
         </div>
     </div>
 </div>
-<script src="js/horizontalscroll.js"></script>
+<script src="{{ url_for('static', filename='js/horizontalscroll.js') }}"></script>
 {% endblock %}
 

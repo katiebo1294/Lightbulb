@@ -14,8 +14,6 @@ quizzes = Blueprint('quizzes', __name__)
 @quizzes.route("/quiz/new/<int:classroom_id>", methods=['GET', 'POST'])
 @login_required
 def new_quiz(classroom_id):
-    print("top: ")
-    print(classroom_id)
     """ Create a new quiz.
 
         Optional parameters:
@@ -28,18 +26,18 @@ def new_quiz(classroom_id):
             name=form.name.data,
             owner=current_user
         )
+        first_question = Question(quiz_id=quiz.id)
+        db.session.add(first_question)
+        quiz.questions.append(first_question)
         db.session.add(quiz)
 
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
-        print("right here: ")
-        print(classroom_id)
         if classroom_id:
             classroom = Classroom.query.get(classroom_id)
             classroom.added_quizzes.append(quiz)
             db.session.commit()
             flash(u'Quiz added to \"' + classroom.name + '\"!', 'success')
-            print("added quiz to classroom")
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
@@ -53,14 +51,9 @@ def quiz(quiz_id):
                 quiz_id (int): The ID of the quiz to display.
     """
     qzform = QuizForm()
-
-    class LocalForm(QuestionFormOverall):
-        pass
+    form = QuestionFormOverall()
 
     quiz = Quiz.query.get_or_404(quiz_id)
-    LocalForm.answer_form = FieldList(FormField(AnswerForm), min_entries=len(quiz.questions[0].answers))
-    form = LocalForm()
-
     return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form)
 
 
@@ -68,13 +61,9 @@ def quiz(quiz_id):
 @login_required
 def edit_quiz_name(quiz_id):
     quiz = Quiz.query.get_or_404(quiz_id)
+
     qzform = QuizForm()
-
-    class LocalForm(QuestionFormOverall):
-        pass
-
-    LocalForm.answer_form = FieldList(FormField(AnswerForm), min_entries=len(quiz.questions[0].answers))
-    form = LocalForm()
+    form = QuestionFormOverall()
 
     if qzform.validate_on_submit():
         quiz.name = qzform.name.data
@@ -160,7 +149,7 @@ def add_answer():
 
     db.session.commit()
     print("success")
-    return "addedAnswer - Success", 200
+    return redirect(url_for('quizzes.quiz', quiz_id=question.quiz_id))
 
 
 @quizzes.route("/quiz/remove")
@@ -232,13 +221,9 @@ def remove_answer():
     if question is None:
         return "oops fuk", 500
 
-    if question is not None:
-        question.answers.remove(answer)
-
+    question.answers.remove(answer)
     print(f'removed')
     db.session.flush()
-
-    db.session.delete(answer)
 
     print(f'deleted')
 
@@ -301,10 +286,9 @@ def set_question_type():
     quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
     print(quiz)
     if current_question.category == 'Multiple Choice':
-        default_answers = [Answer(question_id=question_id, index=i) for i in range(4)]
-        for answer in default_answers:
-            db.session.add(answer)
-    elif current_question.category == 'True-False':
+        for i in range(4):
+            current_question.answers.append(Answer())
+    if current_question.category == 'True-False':
         true = Answer(question_id=question_id, content='True', index=0)
         false = Answer(question_id=question_id, content='False', index=1)
         db.session.add(true)
@@ -320,11 +304,7 @@ def edit_question(question_id):
     question = Question.query.get_or_404(question_id)
     quiz = question.quiz
 
-    class LocalForm(QuestionFormOverall):
-        pass
-
-    LocalForm.answer_form = FieldList(FormField(AnswerForm), min_entries=len(question.answers))
-    form = LocalForm()
+    form = QuestionFormOverall()
     qzform = QuizForm()
 
     if form.validate_on_submit():
@@ -383,7 +363,6 @@ def add_answer_content(answer_id):
     current_question = Question.query.filter_by(id=current_answer.question_id).first()
     current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
 
-    qzform = QuizForm()
     qform = QuestionForm()
     aform = AnswerForm()
 
@@ -400,9 +379,9 @@ def add_answer_content(answer_id):
     return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform, answer = current_answer)
 
 
-@quizzes.route("/quiz/changeActiveQuestion")
+@quizzes.route("/quiz/change_active_question")
 @login_required
-def changeActiveQuestion():
+def change_active_question():
     """ Sets the active question of a provided quiz to the provided question
         Parameters:
             question_id (int): the ID of the question
