@@ -78,7 +78,7 @@
                     {{ qzform.submit(class="btn btn-lg btn-outline-info", value="Save") }}
                 </span>
                     <span class="btn btn-outline-info"
-                          onclick="resetEditContainer(index=1)">Cancel</span>
+                          onclick="refresh('#body')">Cancel</span>
                 </fieldset>
 
             </form>
@@ -157,7 +157,7 @@
                                             {{ form.submit(class="btn btn-sm btn-outline-info") }}
                                         </span>
                                         <span class="btn btn-sm btn-outline-info"
-                                              onclick="resetEditContainer(index={{loop.index}})">Cancel</span>
+                                              onclick="refresh('#body')">Cancel</span>
                                         <div id="displayAnswerEdit-{{ question.id }}" class="form-group">
                                         {% for answer in question.answers %}
                                             {{ append_form(form) }}

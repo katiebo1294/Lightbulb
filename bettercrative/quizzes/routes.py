@@ -29,6 +29,7 @@ def new_quiz(classroom_id):
         first_question = Question(quiz_id=quiz.id, name="Question 1")
         db.session.add(first_question)
         quiz.questions.append(first_question)
+        quiz.active = first_question.id
         db.session.add(quiz)
 
         db.session.commit()
@@ -37,7 +38,7 @@ def new_quiz(classroom_id):
             classroom = Classroom.query.get(classroom_id)
             classroom.added_quizzes.append(quiz)
             db.session.commit()
-            flash(u'Quiz added to \"' + classroom.name + '\"!', 'success')
+            flash(u'Quiz \"' + quiz.name + '\" added to \"' + classroom.name + '\"!', 'success')
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('create_quiz.html', title='New Quiz', form=form)
 
@@ -317,66 +318,6 @@ def edit_question(question_id):
         flash(u'Successfully updated question!', 'success')
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
     return render_template('quiz.html', quiz=quiz, form=form, qzform=qzform)
-
-
-@quizzes.route("/quiz/question/<int:question_id>/add_content", methods=['GET', 'POST'])
-@login_required
-def add_question_content(question_id):
-    """ Adds question content within the question in the quiz.
-        Paramters:
-            question_id (int): the ID of the question for content to be added.
-    """
-
-    # Find the current question and then update it's value by showing the form
-    current_question = Question.query.filter_by(id=question_id).first()
-    print(current_question)
-    current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
-
-    qzform = QuizForm()
-    qform = QuestionForm()
-    aform = AnswerForm()
-
-    # handle POST request
-    if qform.validate_on_submit():
-        flash(f'IT VALIDATED')
-        current_question.content = qform.content.data
-        print(current_quiz)
-        db.session.commit()
-        return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
-    # handle GET Request
-    print('rendering template')
-    return render_template('quiz.html', title='question', quiz=current_quiz, qzform=qzform, qform=qform, aform=aform)
-
-
-@quizzes.route("/quiz/answer/<int:answer_id>/add_content", methods=['GET', 'POST'])
-@login_required
-def add_answer_content(answer_id):
-    """ Adds answer content within the answer in the question.
-        Paramters:
-            answer_id (int): the ID of the answer for content to be added.
-    """
-
-    # Find the current answer and then update it's value by showing the form
-
-    current_answer = Answer.query.filter_by(id=answer_id).first()
-    print(current_answer)
-    current_question = Question.query.filter_by(id=current_answer.question_id).first()
-    current_quiz = Quiz.query.filter_by(id=current_question.quiz_id).first()
-
-    qform = QuestionForm()
-    aform = AnswerForm()
-
-    # handle POST request
-    if aform.validate_on_submit():
-        flash(f'IT VALIDATED')
-        current_answer.content = aform.content.data
-        current_answer.correct = aform.correct.data
-        print(current_question)
-        db.session.commit()
-        return redirect(url_for('quizzes.quiz', quiz_id=current_quiz.id))
-    # handle GET Request
-    print('rendering template')
-    return render_template('quiz.html', title='answer', quiz=current_quiz, qform=qform, aform=aform, answer = current_answer)
 
 
 @quizzes.route("/quiz/change_active_question")
