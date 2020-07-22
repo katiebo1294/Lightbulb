@@ -39,7 +39,6 @@
 </head>
 
 <body id="body">
-<div class="transparent-background">
     <!--NavBar-->
     <header>
         <nav class="nav">
@@ -68,12 +67,8 @@
 
                 <!-- Collapse for mobile-->
                 <span class=navTrigger>
-                        <i>
-                            <p>B</p>
-                        </i>
-                        <i>
-                            <p>C</p>
-                        </i>
+                        <i>B</i>
+                        <i>C</i>
                         <i> </i>
                     </span>
 
@@ -84,23 +79,22 @@
     <!--End Of NavBar-->
 
     <!-- Home section -->
-    <section class="home-section">
+    <div class="home-section">
         <!-- Message flashing -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="alert alert-{{ category }}" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-        {% endif %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
         <!-- Page content -->
         {% block content %}
         {% endblock %}
-    </section>
+    </div>
     <!-- End of Home Section -->
-</div>
 
 <!-- from https://mdbootstrap.com/docs/jquery/navigation/footer/ -->
 <!-- Footer -->

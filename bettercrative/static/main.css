@@ -235,7 +235,7 @@ body:after{
   width: 100%;
   height: 4px;
 }
-.navTrigger p{
+.navTrigger i{
   font-size: 60%;
   color: black;
 }
@@ -243,7 +243,7 @@ body:after{
     background-color: white;
   }
 
-.affix .navTrigger p {
+.affix .navTrigger i {
   color: white;
   font-size: 40%;
 }
