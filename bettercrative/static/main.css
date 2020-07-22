@@ -653,23 +653,27 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 
 .classroomcolumn {
   background-color:#8793c7;
-  height:52%;
+  border: .1em solid #747da8;
+  border-radius: .5em;
+  height: 52%;
   width:43%;
   float:left;
   margin-left:5vw;
   margin-top: 4vw;
-  height:30vw;
+  min-height:30vw;
   
 }
 
 div.col.quizcolumn {
   background-color:#8cb4d2;
-  height:52%;
+  border: .1em solid #7a9cb6;
+  border-radius: .5em;
+  height: 52%;
   width:43%;
   float:left;
   margin-left:5vw;
   margin-top: 4vw;
-  height:30vw;
+  min-height:30vw;
 }
 
 #quiz-content-container {
@@ -679,22 +683,13 @@ div.col.quizcolumn {
 nav.navbar{
   width: 42vw;
 }
-div.row.quiz_element{
+li.row.quiz_element{
   font-family: 'Source Code Pro';
   font-size:1.2vw;
 }
-div.row.classroom_element{
+
+li.row.classroom_element{
   font-family: 'Source Code Pro';
-}
-
-.quiz_element{
-  margin-top: 2%;
-  margin-left: 2%;
-}
-
-.classroom_element {
-  margin-top:2%;
-  margin-left:2%;
 }
 
 div.dropdown.show a.dropdown-item{
@@ -709,32 +704,38 @@ div.dropdown.show a:hover{
   color: darkgreen !important;
   font-weight: bolder;
   text-decoration: none;
-  position:relative;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
 }
-.edit_class a:hover{
+
+.account-page-icons{
+  padding: 0.4em;
+}
+
+.account-page-icons.fa-trash:hover{
+  color: rgb(248, 133, 133);
+  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
+}
+
+.account-page-icons.fa-pencil-alt:hover{
   color: #00E676;
+  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
 .delete_class a, .delete_quiz a{
   color: darkred !important;
   font-weight: bolder;
   text-decoration: none;
-  position:relative;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
 }
 
-.delete_class a:hover{
-  color: #00E676;
-}
-
-
-
-.enter_quiz{
-  position:relative;
-}
 .delete_quiz{
-  position:relative;
   margin-top:.1vw;
 }
+
 div.enter_quiz a{
   font-size:1.2vw;
   color: white;
@@ -752,14 +753,9 @@ div.delete_quiz a{
   text-decoration:none;
 }
 
-div.delete_quiz a:hover{
-  color: #00E676;
-}
-
 .titlebar {
-  border-style: solid;
-  border-width:1px;
-  border-color:black;
+  border: 1px solid black;
+  border-radius: 0.1em;
   background-color:grey;
   padding:5px;
   font-family: "Source Code Pro";
@@ -767,52 +763,56 @@ div.delete_quiz a:hover{
   color:white;
   text-align:center;
   max-width: 100%;
+  cursor: default;
 }
 
+.classroomcolumn, .quizcolumn {
+  padding: 1vw;
+}
 
-.classroomcolumn a{
+/* table itself */
+.account-tables {
+  width: 100%;
+  table-layout: fixed;
+  padding: 1em;
+  border: none;
+  border-collapse: separate;
+}
+
+/* individual table elements */
+.account-tables * td {
+  width: 33%;
+  border: none;
+}
+
+.quiz_element:hover{
+  background-color: #7a9cb6;
+}
+
+.classroom_element:hover{
+  background-color: #747da8;
+}
+
+.quizcolumn, .quizcolumn a, .classroomcolumn a {
   text-decoration: none;
   font-family: 'Source Code Pro';
   color: black;
   font-size:1.2vw;
 }
-.quizcolumn a{
-  text-decoration: none;
-  font-family: 'Source Code Pro';
-  color: black;
-  font-size:1.2vw;
-}
 
-.quizcolumn div.edit_class a:hover{
-  color: black;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-.quizcolumn div.delete_class a:hover{
-  color: rgb(237, 74, 74);
-  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
-}
-.classroomcolumn div.edit_class a:hover{
-  color: black;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-.classroomcolumn div.delete_class a:hover{
-  color: rgb(237, 74, 74);
-  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
+.sideClick {
+  margin-right: 2em;
+  float: right;
 }
 
 a.btn-large.sideClick{
-  font-size:1.5vw;
+  font-size:1.2vw;
 }
 
-.navbar a.btn-large.sideClick:hover{
+a.btn-large.sideClick:hover{
   color: black;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-  
-}
-.navbar a.btn-large.sideClick:hover{
-  color: black;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+  border-radius: .3em;
 }
 
 #question-title {
@@ -861,19 +861,12 @@ button.Show-Student-Response.btn:hover{
 @media screen and (max-width:710px){
   div.row.classroom_element{
     font-family: 'Source Code Pro';
-    display:inline-flex;
   }
   div.delete_class{
     margin-left:0px;
   }
   div.edit_class{
     margin-left:0px;
-  }
-}
-
-@media screen and (max-width: 934px){
-  div.col.quizcolumn div.delete_class{
-    margin-left: 5vw;
   }
 }
 

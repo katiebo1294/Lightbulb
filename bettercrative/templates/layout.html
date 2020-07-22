@@ -47,10 +47,10 @@
                     <a href="{{ url_for('main.home') }}">Bettercrative</a>
                 </div>
 
-
                 <div class="listofcontents" id="navlistcontents">
                     <ul class="navlinks">
                         <li><a href="{{ url_for('main.home') }}"> Home </a></li>
+
                         {% if current_user.is_authenticated %}
                         <li><a href="{{ url_for('main.about') }}"> About </a></li>
                         <li><a href="{{ url_for('users.account') }}"> Account </a></li>
@@ -59,9 +59,7 @@
 
                         <li><a href="{{ url_for('users.register') }}"> Register </a></li>
                         <li><a href="{{ url_for('main.about') }}"> About </a></li>
-
                         {% endif %}
-
                     </ul>
                 </div>
 
@@ -71,9 +69,7 @@
                         <i>C</i>
                         <i> </i>
                     </span>
-
             </div> <!-- container close tag-->
-
         </nav>
     </header>
     <!--End Of NavBar-->

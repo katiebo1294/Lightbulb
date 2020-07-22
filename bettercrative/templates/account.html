@@ -1,27 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="wrapper">
-    <!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-    <div class="col classroomcolumn">
-        <nav class="navbar">
-            <div class="titlebar">
+<div class="wrapper" xmlns="http://www.w3.org/1999/html">
+	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
+	<div class="col classroomcolumn">
+            <span class="titlebar">
                 Classroom Listing
-            </div>
-            <!-- option to create a new classroom -->
-            <a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}" style="font-size:1.2vw;">
-                Create Classroom
-            </a>
-
-            {% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-            <div class="row classroom_element">
-                <!-- dropdown for a classroom's added quizzes and which one if any is active -->
-                <div class="dropdown show room-name">
-                    <button class="btn btn-outline dropdown-toggle" type="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Name: {{ classroom.name }}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            </span>
+		<!-- option to create a new classroom -->
+		<a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}">
+			Create Classroom
+		</a>
+		<table class="account-tables">
+			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
+			<tr class="row classroom_element">
+				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
+				<td class="dropdown show room-name">
+					<button class="btn btn-outline dropdown-toggle" type="button" id="dropdownMenuLink"
+					        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Name: {{ classroom.name }}
+					</button>
+					<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         {% for quiz in classroom.added_quizzes %}
                         {% if classroom.active_quiz == quiz.id %}
                         <a class="dropdown-item" href="#"
@@ -35,59 +34,54 @@
                         </a>
                         {% endif %}
                         {% endfor %}
-                    </div>
-                </div>
-                <!-- can enter a class to view details, or delete it -->
-                <div class="edit_class">
-                    <a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
-                </div>
-                <div class="delete_class">
-                    <a class="btn-lg" href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
+                    </span>
+				</td>
+
+				<!-- can enter a class to view details, or delete it -->
+				<td class="edit_class">
+					<a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
+						<i class="account-page-icons fas fa-pencil-alt"></i>
+					</a>
+				</td>
+				<td class="delete_class">
+					<a class="btn-lg" href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}">
+						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+					</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
 
 
-            {% endfor %}
-        </nav>
-    </div>
-
-
-    <!-- displays the user's quizzes -->
-    <div class="col quizcolumn">
-        <nav class="navbar">
-            <div class="titlebar">
+	<!-- displays the user's quizzes -->
+	<div class="col quizcolumn">
+            <span class="titlebar">
                 Quiz Listing
-            </div>
-            <!-- option to create a new quiz -->
-            <a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}" style="font-size:1.2vw;">
-                Create Quiz
-            </a>
-            {% for quiz in current_user.quizzes %}
-            <div class="row classroom_element">
-                <div class="show quizColumn">
-                    <a class="navbar-brand">
-                        Name: {{ quiz.name }}
-                    </a>
-                </div>
-                <!-- user can enter a quiz to view details, or delete it -->
-                <div class="edit_class">
-                    <a class="btn-lg" href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-                        <i class="fas fa-pencil-alt"></i>
-                    </a>
-                </div>
-                <div class="delete_class">
-                    <a class="btn-lg" href=" {{url_for('users.delete_quiz', quiz_id=quiz.id) }}">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </nav>
-    </div>
+            </span>
+		<!-- option to create a new quiz -->
+		<a class="btn-large sideClick" href="{{ url_for('quizzes.new_quiz') }}">
+			Create Quiz
+		</a>
+		<table class="account-tables">
+			{% for quiz in current_user.quizzes %}
+			<tr class="row quiz_element">
+				<td class="show quizColumn">Name: {{ quiz.name }}</td>
+				<!-- user can enter a quiz to view details, or delete it -->
+				<td class="edit_quiz">
+					<a class="btn-lg" href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+						<i class="account-page-icons fas fa-pencil-alt"></i>
+					</a>
+				</td>
+				<td class="delete_quiz">
+					<a class="btn-lg" href=" {{url_for('users.delete_quiz', quiz_id=quiz.id) }}">
+						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+					</a>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
 </div>
 
 {% endblock %}

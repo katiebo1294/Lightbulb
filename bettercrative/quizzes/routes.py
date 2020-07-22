@@ -29,8 +29,8 @@ def new_quiz(classroom_id):
         first_question = Question(quiz_id=quiz.id, name="Question 1")
         db.session.add(first_question)
         quiz.questions.append(first_question)
-        quiz.active = first_question.id
         db.session.add(quiz)
+        quiz.active = first_question.id
 
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
