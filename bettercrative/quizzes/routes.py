@@ -26,7 +26,7 @@ def new_quiz(classroom_id):
             name=form.name.data,
             owner=current_user
         )
-        first_question = Question(quiz_id=quiz.id)
+        first_question = Question(quiz_id=quiz.id, name="Question 1")
         db.session.add(first_question)
         quiz.questions.append(first_question)
         db.session.add(quiz)

@@ -1,11 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<script crossorigin="anonymous"
-        integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
-        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-
-
 <h1>Results of quiz </h1>
 
 <form action="/classroom/{{classroomid}}/results" method="GET POST">
@@ -110,5 +105,8 @@
 
 </script>
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
+<script crossorigin="anonymous"
+        integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
 {% endblock  %}

@@ -27,8 +27,6 @@
     <script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-
-
     <!-- Custom fonts for this template -->
     <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet"
           type="text/css">
@@ -38,9 +36,6 @@
 
     <!-- CSS -->
     <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
-
-
-
 </head>
 
 <body id="body">
@@ -230,60 +225,8 @@
 
 <!-- Global Javascript -->
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 <script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 <script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
-
-
-<script>
-        $(window).scroll(function () {
-            if ($(document).scrollTop() > 30) {
-                $('.nav').addClass('affix');
-            } else {
-                $('.nav').removeClass('affix');
-            }
-        });
-
-
-</script>
-<script>
-        $('.navTrigger').click(function () {
-            $(this).toggleClass('active');
-            console.log("Clicked hamburger");
-            $("#navlistcontents").toggleClass("show_list");
-            $("#navlistcontents").fadeIn();
-
-        });
-
-
-</script>
-
-<script>
-        function dropDown() {
-            var x = document.getElementById("navlistofcontents");
-            if (x.className === "listofcontents") {
-                x.className += " responsive ";
-            }
-            else {
-                x.className = "listofcontents";
-            }
-        }
-
-
-</script>
-<script>
-    function goBack() {
-        window.history.back();
-        console.log("Going back to previous page");
-    }
-</script>
-<script>
-    window.setTimeout(function () {
-    $(".alert").fadeTo(300, 0).slideUp(300, function () {
-        $(this).remove();
-    });
-}, 1500);
-</script>
 </body>
 
 </html>
