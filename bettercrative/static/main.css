@@ -5,9 +5,9 @@
 body{
   
   background-attachment: fixed;
+  background-image: url('images/laptopmono.jpg');
   font-family: 'Open Sans Condensed';
   font-size: 180%;
-  background-image: url("images/laptopmono.jpg");
 }
 .img{
   max-width: 100%;
@@ -793,11 +793,24 @@ div.delete_quiz a{
   background-color: #747da8;
 }
 
+.classroom-table-rows:hover{
+  background-color: rgb(177 225 208);
+  border: 2px solid rgb(177 225 208);
+}
+
 .quizcolumn, .quizcolumn a, .classroomcolumn a {
   text-decoration: none;
   font-family: 'Source Code Pro';
   color: black;
   font-size:1.2vw;
+}
+
+#placeholder {
+  visibility: hidden;
+}
+
+.table-quiztitle {
+  valign: middle;
 }
 
 .sideClick {
@@ -973,16 +986,11 @@ div.QuizSaveExitBtn.btn:hover{
 }
 
 
-div#quiz-title{
+div#quiz-title, div#classroom-title{
   margin: 1em 0em;
   width: 100%;
   font-size: 2vw;
-}
-div#quizname{
-  border-width:1px;
-  border-style: solid;
-  border-color: black;
-
+  border: 1px solid black;
 }
 
 div #question{
@@ -1115,11 +1123,11 @@ div.answerBox{
   font-size:1vw;
 }
 
-.quiz-options{
+.quiz-options {
   font-size:1vw;
 }
 
-.quiz-options:hover{
+.quiz-options:hover {
   font-size:1.5vw;
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;

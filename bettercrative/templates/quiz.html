@@ -55,7 +55,6 @@
 
             <div class="headerSection">
 
-                <div class="editSign">Quiz</div>
                 <div class="QuizSaveExitBtn btn"><a href="{{ url_for('users.account')}}">Save and Exit</a></div>
             </div>
         </div>
@@ -63,17 +62,16 @@
         <!-- Quiz Title -->
         <div id="quiz-title">
             <span id="quizname">
-                {{quiz.name}}
+                Quiz "{{quiz.name}}"
                 <span class="btn btn-sm btn-outline-info"
                       style=" margin-top: .5vw; margin-left: .25vw;"
                       onclick="showEditQuizNameContainer()"><i class="fas fa-pencil-alt"></i></span>
             </span>
             <form style="display: none;" id="quiz-name-edit-form"
-                  action=""
-                  method="POST">
+                  action="">
                 {{ qzform.hidden_tag() }}
                 <fieldset class="form-group">
-                    <label>{{ qzform.name(value=quiz.name) }}</label>
+                    <label>Quiz "{{ qzform.name(value=quiz.name) }}"</label>
                     <span>
                     {{ qzform.submit(class="btn btn-lg btn-outline-info", value="Save") }}
                 </span>

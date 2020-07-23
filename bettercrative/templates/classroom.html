@@ -1,16 +1,12 @@
 {% extends "layout.html" %}
-{% block content %}
 
+{% block content %}
 <style>
     body{
         background-image: none;
     }
     section.nav-section {
         background-color: rgb(188, 252, 231)
-    }
-
-    .transparent-background {
-        background-image: none;
     }
 
     .affix {
@@ -40,129 +36,116 @@
         color: black;
     }
 
+
+
 </style>
 
 <div id="quiz-content-container">
 
-    <!-- Quiz Edit Container for users -->
-    <div id="editing-container">
-        <!--  want to change this later to classroom name  -->
+	<!-- Quiz Edit Container for users -->
+	<div id="editing-container">
+		<!--  want to change this later to classroom name  -->
 
-        <div id="quizTitle"></div>
+		<div id="quizTitle"></div>
 
-        {% if current_user.is_authenticated %}
+		{% if current_user.is_authenticated %}
 
-        <div id="edit-section">
+		<div id="edit-section">
+			<div class="headerSection">
+				<div class="SaveExitBtn btn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
+			</div>
+		</div>
 
+		{% endif %}
 
-            <div class="headerSection">
+		<!-- Classroom Title -->
+		<div id="classroom-title">
+            <span id="classroomname">
+                Classroom "{{ classroom.name }}"
+            </span>
+		</div>
 
-                <div class="editSign">Classroom</div>
-                <div class="SaveExitBtn btn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
-            </div>
-        </div>
-
-        {% endif %}
-
-        <!-- Classroom Title -->
-        <div id="quiz-title">
-            <div id="quizname">
-                {{classroom.name}}
-
-            </div>
-        </div>
-
-        <!-- prevent things from floating after this section -->
-        <div style=" clear: both;"></div>
-        <!-- prevent things from floating after this section -->
+		<!-- prevent things from floating after this section -->
+		<div style=" clear: both;"></div>
+		<!-- prevent things from floating after this section -->
 
 
-        <div id="question">
+		<div id="question">
 
-            <div class="question-container">
+			<div class="question-container">
 
-                <!-- contents of multiple choice box -->
-                <div class="question-edit-header">
-                    <div class="question-number">
-                        <div class="quizlist">
-                            <div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
-                                <span class="Active-Rooms">Added Quizzes</span>
-                                <a class="btn Add-A-Quiz"
-                                   href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
+				<!-- contents of multiple choice box -->
+				<div class="question-edit-header">
+					<div class="question-number">
+						<div class="quizlist">
+							<div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
+								<span class="Active-Rooms">Added Quizzes</span>
+								<a class="btn Add-A-Quiz"
+								   href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
 
-                            </div>
-                            <ul style="list-style-type: none; margin: 0; padding: 0;">
-                            {% for quiz in classroom.added_quizzes %}
-                            <!-- JavaScript option to set the current quiz in the list to active -->
-                            <li>
-                                <span {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>{{ quiz.name }}</span>
-                                {% if quiz.id != classroom.active_quiz %}
-                                <a class="btn btn-lg quiz-options"
-                                   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-                                    Set Active
-                                </a>
-                                <a class="btn btn-lg quiz-options"
-                                   href="{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}">
-                                    Remove Quiz
-                                </a>
-                                {% else %}
-                                <a class="btn btn-lg quiz-options"
-                                   onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-                                    Unset Active
-                                </a>
-                                {% endif %}
-                                <a class="btn btn-lg quiz-options"
-                                href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-                                 Edit Quiz
-                                </a>
-                            </li>
-                            {%endfor%}
-                            </ul>
-                        </div>
+							</div>
+							<table class="account-tables">
+							{% for quiz in classroom.added_quizzes %}
+							<!-- JavaScript option to set the current quiz in the list to active -->
+							<tr class="classroom-table-rows">
+								<td {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>{{
+									quiz.name }}
+								</td>
+								<td>
+									<a class="btn btn-lg quiz-options"
+									        href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+										Edit Quiz
+									</a>
+								</td>
+								{% if quiz.id != classroom.active_quiz %}
+								<td>
+									<a class="btn btn-lg quiz-options"
+									        onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+										Set Active
+									</a>
+								</td><td>
+									<a class="btn btn-lg quiz-options"
+									        href="{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}">
+										Remove Quiz
+									</a>
+								</td>
+								{% else %}
+								<td>
+									<a class="btn btn-lg quiz-options"
+									        onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+										Unset Active
+									</a>
+								</td>
+								<td>
+									<a id="placeholder" class="btn btn-lg">
+										Placeholder
+									</a>
+								</td>
+								{% endif %}
+							</tr>
+							{%endfor%}
+							</table>
+						</div>
+					</div>
 
-                    </div>
+				</div>
+				{% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
+				{% if classroom.active_quiz %}
+				<div>
+					<a class="Take-Active-Quiz btn "
+					   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
+				</div>
+				{% endif %}
 
-                </div>
-                {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
-                {% if classroom.active_quiz %}
-                <div>
-                    <a class="Take-Active-Quiz btn "
-                       href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
-                </div>
-                {% endif %}
-
-                <!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
-                <div>
-                    <a class="View-Results btn"
-                       href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
-                </div>
-                {% endif %}
-
-                <div class="answerchoices">
-                    <div class="menu">
-                        <div class="answerchoices-header">
-
-                        </div>
-                        <!-- prevent things from floatt ing after this section -->
-                        <div style=" clear: both;"></div>
-                        <!-- prevent things from floating after this section -->
-
-                    </div>
-                </div>
-
-                <!-- <div style="height:40vh; width:40vw;">
-                   Temporary area to display charts of student data 
-                    <canvas id="basicChart"></canvas>
-                    <button class="Show-Student-Response btn" onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
-                        Show student response {{ sumRight }}
-                    </button>
-                </div> -->
-            </div>
-        </div>
-    </div>
+				<!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
+				<!--TODO make this invisible if there aren't any responses yet -->
+				<div>
+					<a class="View-Results btn"
+					   href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
 </div>
-
-<script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
-
-
 {% endblock %}

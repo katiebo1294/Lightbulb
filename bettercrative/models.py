@@ -138,7 +138,7 @@ class Quiz(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    date_created = db.Column(db.Date, nullable=False, default=datetime.today())
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', back_populates='added_quizzes',
                                       cascade='none')

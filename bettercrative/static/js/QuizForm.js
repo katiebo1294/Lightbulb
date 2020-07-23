@@ -102,7 +102,7 @@ function showEditQuestionContainer(index) {
 
 function showEditQuizNameContainer() {
     document.getElementById("quizname").style.display = "none";
-    document.getElementById("quiz-name-edit-form").style.display = "block";
+    document.getElementById("quiz-name-edit-form").style.display = "inline-block";
 }
 
 function setQType(url,question_id, qtype) {
