@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="wrapper" xmlns="http://www.w3.org/1999/html">
+<div class="wrapper">
 	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
 	<div class="col classroomcolumn">
             <span class="titlebar">
@@ -64,7 +64,7 @@
 			Create Quiz
 		</a>
 		<table class="account-tables">
-			{% for quiz in current_user.quizzes %}
+			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
 			<tr class="row quiz_element">
 				<td class="show quizColumn table-quiztitle">Name: {{ quiz.name }}</td>
 				<!-- user can enter a quiz to view details, or delete it -->

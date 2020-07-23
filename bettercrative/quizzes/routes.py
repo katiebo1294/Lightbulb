@@ -30,10 +30,11 @@ def new_quiz(classroom_id):
         db.session.add(first_question)
         quiz.questions.append(first_question)
         db.session.add(quiz)
-        quiz.active = first_question.id
 
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
+        quiz.active = first_question.id
+        print(quiz.active)
         if classroom_id:
             classroom = Classroom.query.get(classroom_id)
             classroom.added_quizzes.append(quiz)

@@ -2,28 +2,31 @@
 {% block content %}
 <div class="form-container">
     <div class="content-section">
-        <!-- debugging check -->
-        {% if form.errors %}
-        {{form.errors}}
-        {%endif%}
         <form action="" method="POST">
             {{ form.hidden_tag() }} <!--adds csrf form-->
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Create Quiz</legend>
+                <legend class="border-bottom mb-4" id="Create-Button">Create Quiz</legend>
                 <div class="form-group">
                     <!-- quiz title -->
-                    {{ form.name.label }}
-                    {{ form.name }}
+                    {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+	                    {% for error in form.name.errors %}
+	                    <span>{{ error }}</span>
+	                    {% endfor %}
+                    </div>
+					{% else %}
+						{{ form.name(class="form-control form-control-lg") }}
+					{% endif %}
                 </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-lg btn-outline-info") }}
             </div>
         </form>
-        <a href="{{ url_for('users.account') }}" id="Cancel-Button">
+        <a href="{{ url_for('users.account') }}" class="btn btn-outline-secondary">
             Cancel
         </a>
     </div>
 </div>
-
 {% endblock  %}

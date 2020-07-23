@@ -10,10 +10,6 @@
         background-color: rgb(188, 252, 231)
     }
 
-    .transparent-background {
-        background-image: none;
-    }
-
     .affix {
         padding: 0;
         font-size: 80%;
@@ -44,45 +40,37 @@
 </style>
 
 <div id="quiz-content-container">
-
     <!-- Quiz Edit Container for users -->
     <div id="editing-container">
         <!--  want to change this later to classroom name  -->
-
-        <div id="quizTitle"></div>
-
-        <div id="edit-section">
-
             <div class="headerSection">
-
-                <div class="QuizSaveExitBtn btn"><a href="{{ url_for('users.account')}}">Save and Exit</a></div>
+                <div class="QuizSaveExitBtn btn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
             </div>
-        </div>
 
         <!-- Quiz Title -->
         <div id="quiz-title">
             <span id="quizname">
                 Quiz "{{quiz.name}}"
-                <span class="btn btn-sm btn-outline-info"
-                      style=" margin-top: .5vw; margin-left: .25vw;"
+                <span class="btn btn-outline-info"
+                      style="margin: .25vw;"
                       onclick="showEditQuizNameContainer()"><i class="fas fa-pencil-alt"></i></span>
             </span>
+	        <!-- Quiz name edit form -->
             <form style="display: none;" id="quiz-name-edit-form"
                   action="">
                 {{ qzform.hidden_tag() }}
                 <fieldset class="form-group">
                     <label>Quiz "{{ qzform.name(value=quiz.name) }}"</label>
                     <span>
-                    {{ qzform.submit(class="btn btn-lg btn-outline-info", value="Save") }}
+                    {{ qzform.submit(class="btn btn-outline-info", value="Save") }}
                 </span>
-                    <span class="btn btn-outline-info"
+                    <span style="margin-right: .5vw;" class="btn btn-outline-secondary"
                           onclick="refresh('#body')">Cancel</span>
                 </fieldset>
-
             </form>
             {% if qzform.errors %}
             {{ qzform.errors }}
-            {%endif%}
+            {% endif %}
         </div>
 
         <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
@@ -109,14 +97,12 @@
                 </button>
                 {% endif %}
             </a>
-
             {% endfor %}
 
             <button class="btn btn-outline-success .item .slide"
                     onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
                 <i class="fa fa-plus"></i>
             </button>
-
         </div>
 
         <!-- prevent things from floating after this section -->
@@ -125,9 +111,8 @@
 
         <div id="questions">
             {% for question in quiz.questions %}
-            <div id="question-{{ loop.index }}" {% if quiz.active !=question.id %} style="display: none;" {% endif %}>
+            <div id="question-{{ loop.index }}" {% if quiz.active != question.id %} style="display: none;" {% endif %}>
                 {% if question.category %}
-
                 {{ question.category }}
                 <div id="question">
                     <div class='question-container'>

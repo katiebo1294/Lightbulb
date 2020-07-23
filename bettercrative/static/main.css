@@ -13,22 +13,28 @@ body{
   max-width: 100%;
 }
 
+.btn-outline-secondary, .btn-outline-info {
+  font-weight: bold;
+}
+
 *{
   box-sizing: border-box;
 }
 
 .alert {
-  margin-top: 5%;
+  margin: 5% 10% 0% 10%;
   padding: 12px;
   border-radius: 3px;
   font-size: 1.2rem;
-  margin-bottom: 16px;
   border-width: 2px;
   border-style: solid;
+  position: absolute;
+  width: 80%;
+  display: inline-block;
   }
 
 .wrapper{
-  margin-top:5vw;
+  margin: 5vw auto;
   width:100%;
   overflow: auto;
 }
@@ -467,11 +473,7 @@ body:after{
   width: 100%;
   height:100px;
 }
-/* transparent-background */
-.transparent-background{
-  background-image: url("images/laptopmono.jpg");
-}
-/* end transparent-background */
+
 /* About-Section */
 
 .home-section{
@@ -487,11 +489,6 @@ body:after{
   box-shadow:  black 5px 5px 45px;
   max-width: 80%;
 }
-
-
-
-
-
 
 /* end about-section */
 
@@ -509,8 +506,6 @@ body:after{
 .login-section-container p{
   text-align: center;
   font-family: 'Amatic SC', cursive;
-  
-
 }
 
 /* end login-section */
@@ -551,6 +546,7 @@ a#Cancel-Button:hover{
 input#submit.btn.btn-lg.btn-outline-info{
   font-size:1.8vw;
   font-family: "Source Code Pro";
+  font-weight: bold;
 }
 
 /* form boxes end*/
@@ -632,7 +628,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 .form-container {
     position: relative;
     margin: auto;
-    margin-top: 5%;
+    margin-top: 6%;
     margin-bottom: 1%;
     background-color:rgba(50,50,50,.35);
     padding: 1%;
@@ -860,6 +856,21 @@ a.View-Results.btn:hover{
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
+#classroom-results {
+  margin: auto;
+  margin-top: 2%;
+}
+
+.student-answer {
+  color: white;
+  text-align: center;
+}
+
+#results-title {
+  margin: auto;
+  text-align: center;
+  margin-top: 15%;
+}
 
 button.Show-Student-Response.btn{
   font-size:1.2vw;
@@ -988,17 +999,9 @@ div.QuizSaveExitBtn.btn:hover{
 
 div#quiz-title, div#classroom-title{
   margin: 1em 0em;
-  width: 100%;
+  display: inline-block;
   font-size: 2vw;
   border: 1px solid black;
-}
-
-div #question{
-  margin-top:3%;
-  font-size: 2vw;
-}
-div#question p{
-  font-size: 80%;
 }
 
 .activeQuestion{
@@ -1013,6 +1016,9 @@ div.question-container{
   border-top: 3px solid rgb(250, 146, 61);
   padding-right: 4.6em;
   min-height:15em;
+
+  margin-top: 3%;
+  font-size: 2vw;
 }
 
 div.question-number::before{

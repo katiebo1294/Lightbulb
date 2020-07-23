@@ -5,6 +5,7 @@
     body{
         background-image: none;
     }
+
     section.nav-section {
         background-color: rgb(188, 252, 231)
     }
@@ -52,7 +53,7 @@
 
 		<div id="edit-section">
 			<div class="headerSection">
-				<div class="SaveExitBtn btn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
+				<div class="SaveExitBtn btn"><a onclick="goBack();">Save and Exit</a></div>
 			</div>
 		</div>
 
@@ -85,11 +86,11 @@
 
 							</div>
 							<table class="account-tables">
-							{% for quiz in classroom.added_quizzes %}
+							{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
 							<!-- JavaScript option to set the current quiz in the list to active -->
 							<tr class="classroom-table-rows">
-								<td {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>{{
-									quiz.name }}
+								<td {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>
+									{{ quiz.name }}
 								</td>
 								<td>
 									<a class="btn btn-lg quiz-options"

@@ -145,7 +145,7 @@ class Quiz(db.Model):
     questions = db.relationship('Question', backref='quiz', order_by="Question.index",
                                 collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
-    active = db.Column(db.Integer, unique=False, nullable=True)
+    active = db.Column(db.Integer, unique=False, nullable=True, default=None)
 
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"

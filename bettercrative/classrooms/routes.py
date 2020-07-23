@@ -175,8 +175,7 @@ def take_quiz(classroom_id):
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
-    
-    
+
     # dictionary of true and false for each input
     dicts = {}
     
@@ -187,9 +186,8 @@ def take_quiz(classroom_id):
 
     # gets a list of what the student responded with
     answered = request.form.getlist('studentResponse')
-    response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id,question_num = page)
+    response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, question_num=page)
 
-    
     for studentResponse in answered:
         result = dicts[studentResponse]
         response = Response.query.filter_by(classroom_host_id=classroom.id, quiz_reference=quiz.id, question_num=page).first()
@@ -229,8 +227,6 @@ def view_results(classroom_id):
     for z in correct_responses:
         sum_right += 1
         print(z)
-
-    
     
     responses = Response.query.filter_by(classroom_host_id=classroom_id).all()
     
@@ -238,7 +234,6 @@ def view_results(classroom_id):
     quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
     students = {response.student_id: responses for response in responses}
 
-    
     print("-------------------------------------------------------------------")
     print("DEBUGGING LINE HERE")
     print("-------------------------------------------------------------------")
@@ -247,7 +242,7 @@ def view_results(classroom_id):
     print(type(quiz.questions))
 
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
-                           wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz, students = students)
+                           wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz, students=students)
 
 
 #Answers of each student 

@@ -1,109 +1,83 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h1>Results of quiz </h1>
 
-<form action="/classroom/{{classroomid}}/results" method="GET POST">
+<!--This is mostly like this so its easier for the frontend team to use these values and
+use chart.js to make it look pretty -->
+
+<!--The backend queries for all right answers and wrong answer
+It returns I think a list of them that are variables rightAnswers and wrongAnswers-->
+
+<!-- this is the original setup, changing from response oriented to student oriented -->
+<!-- <h3> Correct: </h3>
+{% for response in rightAnswers %}
+<h4> {{ response }} </h4>
+{% endfor %}
+<br> </br>
+<h3> Wrong: </h3>
+{% for response in wrongAnswers %}
+<h4> {{ response }} </h4>
+
+{% endfor %}
+<br></br>
+<h4>Number of Correct Answers: {{ sumRight }}</h4>
+<h2></h2>
+<h4>Number of Wrong Answers: {{ sumWrong }}</h4> -->
+
+<!-- Create a basic table template -->
+
+<div class="container" style="margin:auto;">
+	<h1 id="results-title">Quiz Results</h1>
+	<table id="classroom-results">
+		<tr>
+			<th>Name</th>
+			{% for question in quiz.questions %}
+			<th>{{ question.index + 1 }}</th>
+			{% endfor %}
+		</tr>
+
+		{% for student,response in students.items() %}
+		<tr>
+			<td> Anonymous</td>
+			{% for student_answer in response %}
+			<td style="background-color: {% if student_answer.correct %}green{% else %}red{% endif %};" class="student-answer">{{ student_answer.value }}</td>
+			{% endfor %}
+		</tr>
 
 
-    <!--This is mostly like this so its easier for the frontend team to use these values and
-    use chart.js to make it look pretty -->
+		{% endfor %}
 
-    <!--The backend queries for all right answers and wrong answer
-    It returns I think a list of them that are variables rightAnswers and wrongAnswers-->
+		<!-- Correct Answers -->
+		<tr>
+			<td> Correct Answers</td>
+			{%for response in responses %}
 
-    <!-- this is the original setup, changing from response oriented to student oriented -->
-    <!-- <h3> Correct: </h3>
-    {% for response in rightAnswers %}
-    <h4> {{ response }} </h4>
-    {% endfor %}
-    <br> </br>
-    <h3> Wrong: </h3>
-    {% for response in wrongAnswers %}
-    <h4> {{ response }} </h4>
+			<td id="correct-answer-{{ loop.index0 }}">{% for answer in quiz.questions[response.question_num -
+				1].answers if answer.correct %}
+				{{ answer.content }}{% if not loop.last %}, {% endif %}
+				{% endfor %}
+			</td>
+			{%endfor%}
+		</tr>
 
-    {% endfor %}
-    <br></br>
-    <h4>Number of Correct Answers: {{ sumRight }}</h4>
-    <h2></h2>
-    <h4>Number of Wrong Answers: {{ sumWrong }}</h4> -->
+	</table>
+</div>
 
-    <!-- Create a basic table template -->
-    
-    <div>
-        <table>
-            <thead>
-                <th>ID</th>
-                {%for question in quiz.questions%}
-                <th>{{ question.index + 1}}</th>
-                {%endfor%}
+<button class="btn btn-lg btn-primary quiz-back-btn"><a onclick="goBack();">
+	<i class="fas fa-angle-double-left"></i> Go Back</a></button>
 
-            </thead>
-            <tbody>
-            {% for student,response in students.items() %}
-                <tr>
-                    <td> Anonymous </td>
-                    {% for student_answer in response %}
-                    <td> {{student_answer.value}}</td>
-                    {%endfor%}                
-                </tr>
-            </tbody>
-
-            
-            {% endfor %}
-
-            <!-- Correct Answers -->
-            <tr>
-                <td> Correct Answers </td>
-                {%for response in responses %}
-            
-                <td id="correct-answer-{{ loop.index0 }}">{% for answer in quiz.questions[response.question_num -
-                    1].answers if answer.correct %}
-                    {{ answer.content }}
-                    {% endfor %}
-                </td>
-                {%endfor%}
-            </tr>
-
-        </table>
-    </div>
-
-    <!--Right now redirects to classroom and kinda funky, change as you please-->
-    <input formaction="/classroom/{{classroomid}}" type="submit" value="Go back">
-</form>
 <!-- Chart.js area -->
 
 
 <div style="height:40vh; width:40vw;">
-    <!-- Temporary area to display charts of student data -->
-    <canvas id="basicChart"></canvas>
-    <button class="Show-Student-Response btn"
-            onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
-        Show student response {{ sumRight }}
-    </button>
+	<!-- Temporary area to display charts of student data -->
+	<canvas id="basicChart"></canvas>
+	<button class="Show-Student-Response btn"
+	        onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
+		Show student response {{ sumRight }}
+	</button>
 </div>
 
-<!-- To color the student's results based on if they got it right or wrong -- idk how to stick it in a function and still have it work so that's why it's not in a .js file.... feel free to move it, frontend gods -->
-<script type="text/javascript">
-    var index;
-    var response;
-    var key;
-    var rows = document.getElementsByTagName("tr");
-    for(index = 0; index < rows.length-1; index++) {
-    console.log("student-response-" + index);
-        response = document.getElementById("student-response-" + index);
-        console.log(response.textContent.trim());
-        key = document.getElementById("correct-answer-" + index);
-        console.log(key.textContent.trim());
-        if(response.textContent.trim() === key.textContent.trim()) {
-            response.style.color = "green";
-            console.log(index)
-        } else {
-            response.style.color = "red";
-        }
-    }
-
-</script>
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
 <script crossorigin="anonymous"
         integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="

@@ -33,3 +33,4 @@ setTimeout(function () {
         $(this).remove();
     });
 }, 1500);
+
