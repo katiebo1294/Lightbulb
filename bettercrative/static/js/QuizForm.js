@@ -194,6 +194,8 @@ function setTrueFalse(choice){
     }
 
 }
+
+
 function checked(answer_id){
     //Get the button and the checkbox
     var button = document.getElementById(answer_id+'-correct');
@@ -211,6 +213,32 @@ function checked(answer_id){
         button.classList.add('active');
     }
 }
+
+/**
+ * Description:
+    shows the classroom edit form
+ * Param:
+    classroom_id:
+        id of that classroom
+ * Return: 
+    n/a
+ */
+function showEditClassroom(classroom_id){
+    //Getting the classroom we want to edit
+    var classroom = document.getElementById('classroom-' + classroom_id);
+    var form = document.getElementById('classroom-form-'+ classroom_id);
+    classroom.style.display='none';
+    form.style.display = 'block';
+}
+
+function cancelEditClassroom(classroom_id){
+    var classroom = document.getElementById('classroom-' + classroom_id);
+    var form = document.getElementById('classroom-form-'+ classroom_id);
+    classroom.style.display='inline-block';
+    form.style.display = 'none';
+}
+
+
 
 $('.correctness-container').click(function() {
     var icon = $(this).find('i');

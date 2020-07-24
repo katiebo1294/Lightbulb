@@ -997,12 +997,14 @@ div.QuizSaveExitBtn.btn:hover{
 }
 
 
-div#quiz-title, div#classroom-title{
+div#quiz-title, div.classroom-title{
   margin: 1em 0em;
   display: inline-block;
   font-size: 2vw;
   border: 1px solid black;
 }
+
+
 
 .activeQuestion{
   background-color:#A2A2A2;

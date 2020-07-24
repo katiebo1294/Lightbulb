@@ -60,12 +60,24 @@
 		{% endif %}
 
 		<!-- Classroom Title -->
-		<div id="classroom-title">
+		<div class="classroom-title" id='classroom-{{classroom.id}}'>
             <span id="classroomname">
                 Classroom "{{ classroom.name }}"
-            </span>
-		</div>
+			</span>
+			<span class='btn btn-outline-info' style='margin:.25vw' onclick='showEditClassroom({{classroom.id}})'>
+				<i class='fas fa-pencil-alt'></i>
+			</span>
+		</div>										
+		<form class="edit-classroom-title" action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
+			{{form.hidden_tag()}}
+			<div class='edit-classroom-form' id='classroom-form-{{classroom.id}}'style='display:none;'>
+				<!-- <input placeholder="enter new name here" value='{{classroom.name}}' id='classroomname-content-{{classroom.id}}' type='text'>  -->
+				{{form.name(placeholder='Enter new name ' ,id='classroomname-content-'~classroom.id,value=classroom.name)}}
+				{{form.submit(class='btn btn-sm btn-outline-info', type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
+				<span class='btn btn-sm btn-outline-danger' onclick='cancelEditClassroom({{classroom.id}})'> Cancel</span>
 
+			</div>
+		</form>
 		<!-- prevent things from floating after this section -->
 		<div style=" clear: both;"></div>
 		<!-- prevent things from floating after this section -->

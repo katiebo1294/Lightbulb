@@ -54,7 +54,13 @@ def classroom(classroom_id):
     """
     classroom = Classroom.query.get_or_404(classroom_id)
     if current_user.is_authenticated:
-        return render_template('classroom.html', title=classroom.name, classroom=classroom)
+        form = ClassroomForm()
+        if form.validate_on_submit():
+            print('validated');
+            print("-------------------------------------------------------------------")
+            print("DEBUGGING LINE HERE")
+            print("-------------------------------------------------------------------")
+        return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
     else:
         quiz = classroom.active_quiz
         return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz)
@@ -116,7 +122,7 @@ def set_active():
     quiz_id = request.args.get('quiz_id', None)
     classroom_id = request.args.get('classroom_id', None)
     classroom = Classroom.query.get_or_404(classroom_id)
-
+    
     classroom.active_quiz = quiz_id
     db.session.commit()
 
@@ -303,3 +309,15 @@ def received_answer():
     return "nice!"
 
 
+@classrooms.route("/classroom/<int:classroom_id>/edit_classroom_name", methods=['GET','POST'])
+def edit_classroom_name(classroom_id):
+    args = request.args
+    print(args)
+    classroom = Classroom.query.filter_by(id=classroom_id).first()
+    form = ClassroomForm()
+    if form.validate_on_submit:
+        classroom.name = args['name']
+        db.session.commit()
+   
+    
+    return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
