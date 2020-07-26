@@ -923,6 +923,20 @@ footer {
   margin-top:5vw;
 }
 
+.quizTitle {
+  font-size:3vw;
+  width:30vw;
+  text-align:left;
+  border:0.5px solid black;
+  border-radius:25px;
+  transition: color .5s
+              ease-in-out, background-color .5s;
+}
+
+.quizTitle:hover {
+  background-color:#87b8e6;
+}
+
 div.headerSection::before{
   content: "";
   display: table;
@@ -991,17 +1005,14 @@ div.QuizSaveExitBtn.btn a:hover{
   color: rgb(2, 132, 69);
 }
 div.QuizSaveExitBtn.btn:hover{
-  
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-  font-size:1.8vw;
 }
 
 
 div#quiz-title, div.classroom-title{
   margin: 1em 0em;
   display: inline-block;
-  font-size: 2vw;
-  border: 1px solid black;
+  font-size: 3vw;
 }
 
 

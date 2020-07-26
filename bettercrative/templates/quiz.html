@@ -44,28 +44,30 @@
     <div id="editing-container">
         <!--  want to change this later to classroom name  -->
             <div class="headerSection">
-                <div class="QuizSaveExitBtn btn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
+                <div class="btn QuizSaveExitBtn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
             </div>
 
         <!-- Quiz Title -->
         <div id="quiz-title">
-            <span id="quizname">
-                Quiz "{{quiz.name}}"
-                <span class="btn btn-outline-info"
-                      style="margin: .25vw;"
-                      onclick="showEditQuizNameContainer()"><i class="fas fa-pencil-alt"></i></span>
+            <span class="btn quizTitle" id="quizname" onclick="showEditQuizNameContainer()">
+                {{quiz.name}}
+                <span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
+                    <i class="fas fa-pencil-alt"></i>
+                </span>
             </span>
 	        <!-- Quiz name edit form -->
             <form style="display: none;" id="quiz-name-edit-form"
                   action="">
                 {{ qzform.hidden_tag() }}
-                <fieldset class="form-group">
-                    <label>Quiz "{{ qzform.name(value=quiz.name) }}"</label>
+                <fieldset>
+                    <label>{{ qzform.name(value=quiz.name) }}</label>
                     <span>
-                    {{ qzform.submit(class="btn btn-outline-info", value="Save") }}
-                </span>
+                        {{ qzform.submit(class="btn btn-outline-info", value="Save") }}
+                    </span>
                     <span style="margin-right: .5vw;" class="btn btn-outline-secondary"
-                          onclick="refresh('#body')">Cancel</span>
+                          onclick="refresh('#body')">
+                          Cancel
+                    </span>
                 </fieldset>
             </form>
             {% if qzform.errors %}
