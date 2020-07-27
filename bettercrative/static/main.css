@@ -522,7 +522,10 @@ body:after{
 /* form boxes */
 
 input#name{
-  width:28vw;
+  width:30vw;
+  border-radius:25px;
+  border-color:black;
+  padding:.375rem .75rem;
 }
 
 legend.border-bottom.mb-4{
