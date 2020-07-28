@@ -60,12 +60,12 @@
 		{% endif %}
 
 		<!-- Classroom Title -->
-		<div class="classroom-title" id='classroom-{{classroom.id}}'>
+		<div class="btn classroom-title editTitle" id='classroom-{{classroom.id}}' onclick='showEditClassroom({{classroom.id}})'>
             <span id="classroomname">
-                Classroom "{{ classroom.name }}"
+                {{ classroom.name }}
 			</span>
-			<span class='btn btn-outline-info' style='margin:.25vw' onclick='showEditClassroom({{classroom.id}})'>
-				<i class='fas fa-pencil-alt'></i>
+			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
+				<i class="fas fa-pencil-alt"></i>
 			</span>
 		</div>										
 		<form class="edit-classroom-title" action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">

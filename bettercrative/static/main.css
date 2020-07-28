@@ -6,6 +6,7 @@ body{
   
   background-attachment: fixed;
   background-image: url('images/laptopmono.jpg');
+  background-repeat: no-repeat;
   font-family: 'Open Sans Condensed';
   font-size: 180%;
 }
@@ -926,7 +927,7 @@ footer {
   margin-top:5vw;
 }
 
-.quizTitle {
+.editTitle {
   font-size:3vw;
   width:30vw;
   text-align:left;
@@ -936,7 +937,7 @@ footer {
               ease-in-out, background-color .5s;
 }
 
-.quizTitle:hover {
+.editTitle:hover {
   background-color:#87b8e6;
 }
 

@@ -49,7 +49,7 @@
 
         <!-- Quiz Title -->
         <div id="quiz-title">
-            <span class="btn quizTitle" id="quizname" onclick="showEditQuizNameContainer()">
+            <span class="btn editTitle" id="quizname" onclick="showEditQuizNameContainer()">
                 {{quiz.name}}
                 <span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
                     <i class="fas fa-pencil-alt"></i>
@@ -57,18 +57,18 @@
             </span>
 	        <!-- Quiz name edit form -->
             <form style="display: none;" id="quiz-name-edit-form"
-                  action="">
+                  action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
                 {{ qzform.hidden_tag() }}
-                <fieldset>
-                    <span>{{ qzform.name(value=quiz.name) }}</span>
-                    <span>
-                        {{ qzform.submit(class="btn btn-outline-info", value="Save") }}
-                    </span>
-                    <span style="margin-right: .5vw;" class="btn btn-outline-secondary"
-                          onclick="refresh('#body')">
-                          Cancel
-                    </span>
-                </fieldset>
+                {{ qzform.name(value=quiz.name) }}
+                <!-- This area will hold the save and edit stuff, this is what changes when the input is clicked into -->
+                <span>
+
+                </span>
+                {{ qzform.submit(class="btn btn-outline-info", value="Save") }} 
+                <span style="margin-right: .5vw;" class="btn btn-outline-secondary"
+                        onclick="refresh('#body')">
+                        Cancel
+                </span>
             </form>
             {% if qzform.errors %}
             {{ qzform.errors }}

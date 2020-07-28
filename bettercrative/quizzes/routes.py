@@ -64,11 +64,14 @@ def quiz(quiz_id):
 @login_required
 def edit_quiz_name(quiz_id):
     quiz = Quiz.query.get_or_404(quiz_id)
+    
+    print("editing name")
 
     qzform = QuizForm()
     form = QuestionFormOverall()
 
     if qzform.validate_on_submit():
+        print("Validated")
         quiz.name = qzform.name.data
         db.session.commit()
         return redirect(url_for('quizzes.quiz', quiz_id=quiz_id))
