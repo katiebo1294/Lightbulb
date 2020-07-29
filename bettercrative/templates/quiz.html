@@ -55,15 +55,15 @@
                     <i class="fas fa-pencil-alt"></i>
                 </span>
             </span>
-	        <!-- Quiz name edit form -->
+            <!-- Quiz name edit form -->
+            
             <form style="display: none;" id="quiz-name-edit-form"
-                  action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
-                {{ qzform.hidden_tag() }}
+                  action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}"
+                  method="POST">
+                
+                {{qzform.hidden_tag()}}
                 {{ qzform.name(value=quiz.name) }}
                 <!-- This area will hold the save and edit stuff, this is what changes when the input is clicked into -->
-                <span>
-
-                </span>
                 {{ qzform.submit(class="btn btn-outline-info", value="Save") }} 
                 <span style="margin-right: .5vw;" class="btn btn-outline-secondary"
                         onclick="refresh('#body')">
