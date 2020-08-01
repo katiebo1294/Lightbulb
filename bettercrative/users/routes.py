@@ -73,46 +73,6 @@ def account():
                            image_file=image_file, form=form)
 
 
-# TODO move to classroom/routes.py
-@users.route("/account/delete_quiz/<int:quiz_id>", methods=['GET', 'POST'])
-def delete_quiz(quiz_id):
-    """ Delete the specified quiz owned by the current user. 
-    
-        Parameters:
-                quiz_id (int): the ID of the quiz to be deleted.
-    """
-    quiz = Quiz.query.filter_by(id=quiz_id).first()
-    #remove active quiz from classroom if the quiz removed is the active quiz
-    
-    for classroom in quiz.classroom_hosts:
-        if classroom.active_quiz == quiz_id:
-            classroom.active_quiz = None
-            db.session.add(classroom)
-    
-    db.session.delete(quiz)
-
-    
-
-    db.session.commit()
-    flash(u'Quiz Removed', 'success')
-    return redirect(url_for('users.account'))
-
-
-# TODO move to quiz/routes.py
-@users.route("/account/delete_classroom/<int:classroom_id>", methods=['GET', 'POST'])
-def delete_classroom(classroom_id):
-    """ Delete the specified classroom owned by the current user. 
-    
-        Parameters:
-                classroom_id (int): the ID of the classroom to be deleted.
-    """
-    classroom = Classroom.query.filter_by(id=classroom_id).first()
-    db.session.delete(classroom)
-    db.session.commit()
-    flash(u'Classroom Removed!', 'success')
-    return redirect(url_for('users.account'))
-
-
 @users.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
     """ Request a password reset for the current user. """

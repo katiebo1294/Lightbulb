@@ -3,7 +3,7 @@
 {% block content %}
 <div class="wrapper">
 	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-	<div class="col classroomcolumn">
+	<div id="classroomListing" class="col classroomcolumn">
             <span class="titlebar">
                 Classroom Listing
             </span>
@@ -44,9 +44,9 @@
 					</a>
 				</td>
 				<td class="delete_class">
-					<a class="btn-lg" href="{{ url_for('users.delete_classroom', classroom_id=classroom.id) }}">
+					<button type="button" class="btn btn-sm" onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
 						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-					</a>
+					</button>
 				</td>
 			</tr>
 			{% endfor %}
@@ -55,7 +55,7 @@
 
 
 	<!-- displays the user's quizzes -->
-	<div class="col quizcolumn">
+	<div id="quizListing" class="col quizcolumn">
             <span class="titlebar">
                 Quiz Listing
             </span>
@@ -74,14 +74,16 @@
 					</a>
 				</td>
 				<td class="delete_quiz">
-					<a class="btn-lg" href=" {{url_for('users.delete_quiz', quiz_id=quiz.id) }}">
+					<button type="button" class="btn btn-sm" onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
 						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-					</a>
+					</button>
 				</td>
 			</tr>
 			{% endfor %}
 		</table>
 	</div>
 </div>
+
+<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
 
 {% endblock %}

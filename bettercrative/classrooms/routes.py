@@ -326,3 +326,19 @@ def edit_classroom_name(classroom_id):
    
     
     return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
+
+@classrooms.route("/account/delete_classroom")
+@login_required
+def delete_classroom():
+    """ Delete the specified classroom owned by the current user. 
+    
+        Parameters:
+                classroom_id (int): the ID of the classroom to be deleted.
+    """
+    classroom_id = request.args.get('classroom_id', None)
+    classroom = Classroom.query.filter_by(id=classroom_id).first()
+    db.session.delete(classroom)
+    db.session.commit()
+    db.session.flush()
+    flash(u'Classroom Removed!', 'success')
+    return "deleted classroom", 200

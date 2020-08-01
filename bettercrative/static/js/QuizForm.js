@@ -31,7 +31,7 @@ function addAnswer(url, q_id) {
 // remove Question
 function removeQuestionPopup(url, q_id) {
     modal = document.getElementById("modalPopUp");
-    modalText = document.getElementById("modalTextDeleteQuestion")
+    modalText = document.getElementById("modalText")
     modalButton = document.getElementById("modalButton");
     modalText.innerHTML = "Are you sure that you want to delete this question?";
     modalButton.onclick = function() {removeQuestion(url,q_id)};
@@ -319,3 +319,29 @@ $('.correctness-container').click(function() {
     }
 });
 
+
+/*  Removal of a Quiz*/
+function removeQuizPopup(url, q_id) {
+    modal = document.getElementById("modalPopUp");
+    modalText = document.getElementById("modalText")
+    modalButton = document.getElementById("modalButton");
+    modalText.innerHTML = "Are you sure that you want to delete this quiz??";
+    modalButton.onclick = function() {removeQuiz(url,q_id)};
+    modal.style.display = "block";
+}
+
+function removeQuiz(url, q_id) {
+    $.ajax({
+        type: "GET",
+        data: {'quiz_id': q_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            refresh("#quizListing");
+        }
+    });
+    document.getElementById("modalPopUp").style.display = "none";
+}

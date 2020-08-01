@@ -418,6 +418,33 @@ def change_active_question():
     db.session.commit()
     return "lit", 200
 
+@quizzes.route("/account/delete_quiz")
+@login_required
+def delete_quiz():
+    """ Delete the specified quiz owned by the current user. 
+    
+        Parameters:
+                quiz_id (int): the ID of the quiz to be deleted.
+    """
+    quiz_id = request.args.get('quiz_id', None)
+    quiz = Quiz.query.filter_by(id=quiz_id).first()
+    #remove active quiz from classroom if the quiz removed is the active quiz
+    
+    for classroom in quiz.classroom_hosts:
+        if classroom.active_quiz == quiz_id:
+            classroom.active_quiz = None
+            db.session.add(classroom)
+    
+    db.session.delete(quiz)
+
+    
+
+    db.session.commit()
+    db.session.flush()
+    flash(u'Quiz Removed', 'success')
+    return "Quiz removed", 200
+
+
 
 """
 -------------------------------------------------------------------
