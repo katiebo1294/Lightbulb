@@ -11,7 +11,8 @@ function set_active(url, quiz_id, classroom_id) {
         },
         success: function() {
             console.log("success");
-            refresh("#body");
+
+            refresh('#quizzes-'+classroom_id)
         }
     });
 }
@@ -28,7 +29,9 @@ function remove_active(url, classroom_id) {
         },
         success: function() {
             console.log("success");
-            refresh("#body");
+            refresh("#quizzes-"+classroom_id);
+
         }
     });
 }
+

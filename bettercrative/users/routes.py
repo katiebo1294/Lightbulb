@@ -82,7 +82,17 @@ def delete_quiz(quiz_id):
                 quiz_id (int): the ID of the quiz to be deleted.
     """
     quiz = Quiz.query.filter_by(id=quiz_id).first()
+    #remove active quiz from classroom if the quiz removed is the active quiz
+    
+    for classroom in quiz.classroom_hosts:
+        if classroom.active_quiz == quiz_id:
+            classroom.active_quiz = None
+            db.session.add(classroom)
+    
     db.session.delete(quiz)
+
+    
+
     db.session.commit()
     flash(u'Quiz Removed', 'success')
     return redirect(url_for('users.account'))

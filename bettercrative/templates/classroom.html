@@ -90,7 +90,7 @@
 				<!-- contents of multiple choice box -->
 				<div class="question-edit-header">
 					<div class="question-number">
-						<div class="quizlist">
+						<div class="quizlist" id="quizzes-{{classroom.id}}">
 							<div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
 								<span class="Active-Rooms">Added Quizzes</span>
 								<a class="btn Add-A-Quiz"
@@ -112,7 +112,7 @@
 								</td>
 								{% if quiz.id != classroom.active_quiz %}
 								<td>
-									<a class="btn btn-lg quiz-options"
+									<a id='set-active-{{classroom.id}}' class="btn btn-lg quiz-options"
 									        onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
 										Set Active
 									</a>
@@ -124,7 +124,7 @@
 								</td>
 								{% else %}
 								<td>
-									<a class="btn btn-lg quiz-options"
+									<a id='remove-active-{{classroom.id}}' class="btn btn-lg quiz-options"
 									        onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
 										Unset Active
 									</a>

@@ -190,20 +190,14 @@ function showTrueFalse(answer_id){
 }
 
 
-function setTrueFalse(choice){
-    var t = document.getElementById('true-btn');
-    var f = document.getElementById('false-btn');
-
-    console.log(t);
-    console.log(f);
-
-    if (t.classList[t.classList.length -1] === 'active'){
-        setAnswer();
-    }
-    else{
-        setAnswer();
-    }
-
+function  cancelTF(answer_id){
+    event.preventDefault();
+    var form_content = document.getElementById(answer_id+'-TF-form');
+    var question_content = document.getElementById('question-content-display-' + answer_id);
+    var answer_choices = document.getElementById(answer_id + '-answerchoices');
+    answer_choices.classList.replace('noshow', 'show');
+    form_content.classList.replace('show', 'noshow');
+    question_content.classList.replace('noshow', 'show');
 }
 
 /**

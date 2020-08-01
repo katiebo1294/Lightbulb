@@ -55,11 +55,6 @@ def classroom(classroom_id):
     classroom = Classroom.query.get_or_404(classroom_id)
     if current_user.is_authenticated:
         form = ClassroomForm()
-        if form.validate_on_submit():
-            print('validated');
-            print("-------------------------------------------------------------------")
-            print("DEBUGGING LINE HERE")
-            print("-------------------------------------------------------------------")
         return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
     else:
         quiz = classroom.active_quiz
@@ -119,14 +114,19 @@ def set_active():
             quiz_id (int): the ID of the quiz to set active
             classroom_id (int): the ID of the classroom to make it active in
     """
+   
     quiz_id = request.args.get('quiz_id', None)
     classroom_id = request.args.get('classroom_id', None)
     classroom = Classroom.query.get_or_404(classroom_id)
-    
+    print("-------------------------------------------------------------------")
+    print("DEBUGGING LINE HERE")
+    print(classroom)
+    print("-------------------------------------------------------------------")
     classroom.active_quiz = quiz_id
     db.session.commit()
-
-    return render_template('classroom.html', classroom=classroom)
+   
+    form = ClassroomForm()
+    return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
 
 
 @classrooms.route("/classroom/remove_active", methods=['GET', 'POST'])
@@ -176,7 +176,12 @@ def take_quiz(classroom_id):
         Parameters:
                 classroom_id (int): the ID of the classroom the student is signed in to
     """
+    
     classroom = Classroom.query.get_or_404(classroom_id)
+    print("-------------------------------------------------------------------")
+    print("DEBUGGING LINE HERE")
+    print(classroom.active_quiz)
+    print("-------------------------------------------------------------------")
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
