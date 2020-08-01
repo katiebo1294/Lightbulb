@@ -1,6 +1,29 @@
 {% extends "layout.html" %}
 
 {% block content %}
+<div id="modalPopUpForm" class="modalPopUp" style="display:none;">
+	<form action="" method="POST">
+		{{ classForm.hidden_tag() }} <!--adds ctrf form-->
+		<div class="modalContent">
+			<fieldset>
+				<div id="modalTextForm">
+				</div>
+				{% if classForm.name.errors %}
+				{{ classForm.name(class="form-control form-control-lg is-invalid") }}
+				<div class="invalid-feedback">
+					{% for error in classForm.name.errors %}
+					<span>{{ error }}</span>
+					{% endfor %}
+				</div>
+				{% else %}
+					{{ classForm.name(class="form-control form-control-lg") }}
+				{% endif %}
+			</fieldset>
+			{{classForm.submit(class="btn btn-success")}} <!-- confirm button -->
+			<button type="button" class="btn btn-secondary" onclick="document.getElementById('modalPopUp').style.display='none'">Cancel</button>
+		</div>
+	</form>
+</div>
 <div class="wrapper">
 	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
 	<div id="classroomListing" class="col classroomcolumn">
@@ -8,9 +31,9 @@
                 Classroom Listing
             </span>
 		<!-- option to create a new classroom -->
-		<a class="btn-large sideClick" href="{{ url_for('classrooms.new_classroom') }}">
+		<button class="btn-large sideClick" onclick="javascript:createClassroomPopup()">
 			Create Classroom
-		</a>
+		</button>
 		<table class="account-tables">
 			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
 			<tr class="row classroom_element">

@@ -15,14 +15,13 @@ classrooms = Blueprint('classrooms', __name__)
 @login_required
 def new_classroom():
     """ Create a new classroom. """
-    form = ClassroomForm()
-    if form.validate_on_submit():
-        classroom = Classroom(name=form.name.data, owner=current_user)
+    classForm = ClassroomForm()
+    if classForm.validate_on_submit():
+        classroom = Classroom(name=classForm.name.data, owner=current_user)
         db.session.add(classroom)
         db.session.commit()
         flash(u'New classroom \"' + classroom.name + '\" created!', 'success')
         return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
-    return render_template('create_classroom.html', title='New Classroom', form=form)
 
 
 # TODO exception handling for student enter classroom w/o active quiz

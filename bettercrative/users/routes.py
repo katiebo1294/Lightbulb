@@ -5,6 +5,7 @@ from bettercrative import db, bcrypt
 from bettercrative.models import User, Quiz, Classroom
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
+from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
 from bettercrative.users.util import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -56,6 +57,15 @@ def logout():
 def account():
     """ Display the current user's account page. Shows a list of their created classrooms and quizzes. """
     form = UpdateAccountForm()
+    classForm =  ClassroomForm()
+
+    if classForm.validate_on_submit():
+        classroom = Classroom(name=classForm.name.data, owner=current_user)
+        db.session.add(classroom)
+        db.session.commit()
+        flash(u'New classroom \"' + classroom.name + '\" created!', 'success')
+        return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
+
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -70,7 +80,7 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form)
+                           image_file=image_file, form=form, classForm=classForm)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

@@ -23,3 +23,11 @@ function removeClassroom(url, c_id) {
     });
     document.getElementById("modalPopUp").style.display = "none";;
 }
+
+// create Classroom
+function createClassroomPopup() {
+    modal = document.getElementById("modalPopUpForm");
+    modalText = document.getElementById("modalTextForm")
+    modalText.innerHTML = "Create Classroom";
+    modal.style.display = "block";
+}
