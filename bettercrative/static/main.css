@@ -7,6 +7,7 @@ body{
   background-attachment: fixed;
   background-image: url('images/laptopmono.jpg');
   background-repeat: no-repeat;
+  background-size:100vw;
   font-family: 'Open Sans Condensed';
   font-size: 180%;
 }

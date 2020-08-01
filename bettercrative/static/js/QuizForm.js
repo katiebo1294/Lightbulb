@@ -9,7 +9,7 @@ function addQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
 }
@@ -24,7 +24,7 @@ function addAnswer(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
 }
@@ -39,7 +39,7 @@ function removeQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
 }
@@ -54,7 +54,7 @@ function removeAnswer(url, a_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
 }
@@ -80,7 +80,7 @@ function shiftQuestion(url, q_id, direction) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
 };
@@ -88,8 +88,18 @@ function shiftQuestion(url, q_id, direction) {
 function refresh(section)
 {
     console.log("Beginning Refresh")
-    $(section).load(section);
-    console.log("Refreshed");
+    // $(section).load(document.URL + section);
+    $.ajax({
+        type: "GET",
+        url: document.URL,
+        contentType: "text",
+        success: function(data) {
+            var result = $('<div />').append(data).find(section).html();
+            $(section)[0].innerHTML = result;
+            console.log("Refreshed");
+        }
+    })
+    // console.log("Refreshed");
 };
 
 function showEditQuestionContainer(index) {
@@ -117,7 +127,7 @@ function setQType(url,question_id, qtype) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
     
@@ -135,7 +145,7 @@ function change_active_question(url,question_id,quiz_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
 };
@@ -153,7 +163,7 @@ function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#body");
+            refresh("#questionView");
         }
     });
 }
