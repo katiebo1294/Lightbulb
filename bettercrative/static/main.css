@@ -56,6 +56,33 @@ body:after{
   height: 100%;
 }
 
+/* modal pop-ups */
+.modalPopUp {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  padding-top: 10vw;
+  background-color:rgba(50,50,50,.35);
+  float:center;
+}
+
+.modalContent {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  padding:1vw;
+  border-radius:25px;
+}
+
+.modalBtn {
+  width: 40%;
+  float:left;
+}
 
 
 /* start nav*/

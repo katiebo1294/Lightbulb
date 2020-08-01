@@ -28,6 +28,15 @@ function addAnswer(url, q_id) {
         }
     });
 }
+// remove Question
+function removeQuestionPopup(url, q_id) {
+    modal = document.getElementById("modalPopUp");
+    modalText = document.getElementById("modalTextDeleteQuestion")
+    modalButton = document.getElementById("modalButton");
+    modalText.innerHTML = "Are you sure that you want to delete this question?";
+    modalButton.onclick = function() {removeQuestion(url,q_id)};
+    modal.style.display = "block";
+}
 
 function removeQuestion(url, q_id) {
     $.ajax({
@@ -42,6 +51,7 @@ function removeQuestion(url, q_id) {
             refresh("#questionView");
         }
     });
+    document.getElementById("modalPopUp").style.display = "none";;
 }
 
 function removeAnswer(url, a_id) {
