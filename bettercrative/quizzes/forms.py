@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, FormField, FieldList
+from wtforms import StringField, SubmitField, BooleanField, FormField, FieldList, TextAreaField
 from wtforms.validators import InputRequired
 
 
@@ -21,5 +21,10 @@ class QuizForm(FlaskForm):
 
 class QuestionFormOverall(FlaskForm):
     answer_form = FieldList(FormField(AnswerForm))
+    question_form = FormField(QuestionForm)
+    submit = SubmitField('Save Changes')
+
+class QuestionFormOverallSA(FlaskForm):
+    answer_form = TextAreaField(u'short answer here')
     question_form = FormField(QuestionForm)
     submit = SubmitField('Save Changes')

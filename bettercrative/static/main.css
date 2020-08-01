@@ -918,6 +918,12 @@ footer {
 }
 
 /* Quiz Section (quiz.html)*/
+.show{
+  display:block;
+}
+.noshow{
+  display:none;
+}
 #editing-container{
   position: relative;
   width:85%;
@@ -1019,8 +1025,10 @@ div#quiz-title, div.classroom-title{
   font-size: 3vw;
 }
 
-
-
+/*Short answer overrides the height of the input box*/
+.form-height{
+  height:20vh;
+}
 .activeQuestion{
   background-color:#A2A2A2;
 }
@@ -1169,7 +1177,9 @@ a.Add-A-Quiz:hover{
 }
 
 /*Taking a quiz section*/
-
+span.choices.disabled:hover{
+  cursor:default;
+}
 span.Taking-a-Quiz{
   font-size:3vw;
   margin-left:38vw;

@@ -106,6 +106,7 @@ function showEditQuizNameContainer() {
 }
 
 function setQType(url,question_id, qtype) {
+    event.preventDefault();
     $.ajax({
         type: "GET",
         data: {'question_id': question_id,
@@ -119,6 +120,7 @@ function setQType(url,question_id, qtype) {
             refresh("#body");
         }
     });
+    
 };
 
 function change_active_question(url,question_id,quiz_id) {
@@ -156,28 +158,17 @@ function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
     });
 }
 
-function showTrueFalse(answer_id,choice,answers){
-    console.log(answer_id);
-    var button = document.getElementById(answer_id+'-btn');
-    console.log(button);
-    button.classList.add('active');
-    console.log(choice);
-    console.log(button);
-
-
-    if(choice == 'true'){
-        button = document.getElementById(answer_id+'-btn');
-        button.classList.remove('active');
-    }
-    else{
-        button = document.getElementById(answer_id+'-btn');
-        button.classList.remove('active');
-    }
-    
-    document.getElementById("check_button").style.display = "block";
+function showTrueFalse(answer_id){
     event.preventDefault();
+    var form_content = document.getElementById(answer_id+'-TF-form');
+    var question_content = document.getElementById('question-content-display-' + answer_id);
+    var answer_choices = document.getElementById(answer_id + '-answerchoices');
+    answer_choices.classList.replace('show', 'noshow');
+    form_content.classList.replace('noshow', 'show');
+    question_content.classList.replace('show', 'noshow');
     
 }
+
 
 function setTrueFalse(choice){
     var t = document.getElementById('true-btn');
@@ -195,23 +186,72 @@ function setTrueFalse(choice){
 
 }
 
-
-function checked(answer_id){
-    //Get the button and the checkbox
-    var button = document.getElementById(answer_id+'-correct');
-    var checkbox = document.getElementById(answer_id + '-checkbox');
-    
-
-    //Checking rules for checkbox
-    var contains = button.classList.length
-    if(button.classList.item(contains-1) === 'active'){
-        button.classList.remove('active');
-        checkbox.checked = false;
+/**
+ * Description:
+        Handles aligning the checkbox and the buttons for backend procesing
+        Handles the display after form submission
+ * Param:
+        span:
+            either span the given is the true span or the false span tag from the dom
+ * Return: 
+        n/a
+ */
+function checked(span){
+    if(span.title === 'True'){
+        var id = span.id.slice(9);
     }
     else{
-        checkbox.checked = true;
-        button.classList.add('active');
+        var id = span.id.slice(10);
     }
+    
+    var true_checkbox_id = 'answer_form-true-' + id;
+    var false_checkbox_id = 'answer_form-false-' + id;
+    
+    //Display Processing variables
+    var true_display = document.getElementById(id+'-true-display');
+    var false_display = document.getElementById(id+'-false-display');
+    
+    /*Processing the data for the backend section */
+    if(span.title === 'True'){
+        console.log(span.id.slice(0,9) + id);
+        var false_button = document.getElementById('btn-false-' + id);
+        console.log('false button is ' + false_button);
+        if (false_button.classList.contains('active')){
+            false_button.classList.remove('active');
+        }
+        span.classList.add('active');
+
+        var true_checkbox = document.getElementById(true_checkbox_id);
+        true_checkbox.checked = true;
+
+        var false_checkbox = document.getElementById(false_checkbox_id);
+        false_checkbox.checked = false;
+
+
+    }
+    else{
+        
+        var true_button = document.getElementById('btn-true-' + id);
+        if(true_button.classList.contains('active')){
+            true_button.classList.remove('active');
+        }
+        span.classList.add('active');
+        
+        var false_checkbox = document.getElementById(false_checkbox_id);
+        false_checkbox.checked = true;
+
+        var true_checkbox = document.getElementById(true_checkbox_id);
+        true_checkbox.checked = false;
+        
+        
+    
+         
+    }
+
+    
+    
+
+    
 }
 
 /**
@@ -238,7 +278,15 @@ function cancelEditClassroom(classroom_id){
     form.style.display = 'none';
 }
 
-
+function showShortAnswer(question_id){
+    event.preventDefault();
+    var form_content = document.getElementById(question_id+'-short-answer-form');
+    var question_content = document.getElementById('question-content-display-' + question_id);
+    var answer_choices = document.getElementById(question_id + '-answerchoices');
+    answer_choices.classList.replace('show', 'noshow');
+    form_content.classList.replace('noshow', 'show');
+    question_content.classList.replace('show', 'noshow');
+}
 
 $('.correctness-container').click(function() {
     var icon = $(this).find('i');
@@ -256,3 +304,4 @@ $('.correctness-container').click(function() {
         checkbox.prop('checked', true);
     }
 });
+

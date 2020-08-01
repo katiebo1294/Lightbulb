@@ -6,6 +6,7 @@ from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
+
 from bettercrative.config import Config
 # Application factory
 # Blueprint registration
@@ -33,6 +34,7 @@ def append_form(form):
 
 def create_app(config_class=Config):
     app = Flask(__name__)
+    app.jinja_options['extensions'].append('jinja2.ext.loopcontrols')
     Bootstrap(app)
     app.config.from_object(config_class)
     db.app = app
@@ -64,7 +66,7 @@ def create_app(config_class=Config):
 
     app.jinja_env.globals.update(get_alphabet_index=get_alphabet_index)
     app.jinja_env.globals.update(append_form=append_form)
-
+    
     return app
 
 
