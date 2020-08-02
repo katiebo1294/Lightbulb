@@ -106,6 +106,7 @@ function refresh(section)
         success: function(data) {
             var result = $('<div />').append(data).find(section).html();
             $(section)[0].innerHTML = result;
+            MathJax.typeset();
             console.log("Refreshed");
         }
     })

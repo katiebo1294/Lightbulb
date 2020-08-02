@@ -128,9 +128,11 @@
 
 					<!-- can enter a class to view details, or delete it -->
 					<td class="edit_class" style="text-align:center; width:10%; margin-left:1%;">
-						<button type="button" class="btn btn-sm"href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
+						<a href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
+						<button type="button" class="btn btn-sm">
 							<i class="account-page-icons fas fa-pencil-alt"></i>
 						</button>
+						</a>
 					</td>
 					<td class="delete_class" style="text-align:center; width:10%; margin-left:1%;">
 						<button type="button" class="btn btn-sm"  onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
