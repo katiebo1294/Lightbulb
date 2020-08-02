@@ -73,7 +73,7 @@
 			<div class='edit-classroom-form' id='classroom-form-{{classroom.id}}'style='display:none;'>
 				<!-- <input placeholder="enter new name here" value='{{classroom.name}}' id='classroomname-content-{{classroom.id}}' type='text'>  -->
 				{{form.name(placeholder='Enter new name ' ,id='classroomname-content-'~classroom.id,value=classroom.name)}}
-				{{form.submit(class='btn btn-sm btn-outline-info', type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
+				{{form.submitClass(class='btn btn-sm btn-outline-info', type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
 				<span class='btn btn-sm btn-outline-danger' onclick='cancelEditClassroom({{classroom.id}})'> Cancel</span>
 
 			</div>

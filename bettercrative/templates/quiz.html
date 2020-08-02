@@ -64,7 +64,7 @@
                 {{qzform.hidden_tag()}}
                 {{ qzform.name(value=quiz.name) }}
                 <!-- This area will hold the save and edit stuff, this is what changes when the input is clicked into -->
-                {{ qzform.submit(class="btn btn-outline-info", value="Save") }} 
+                {{ qzform.submitQuiz(class="btn btn-outline-info", value="Save") }} 
                 <span style="margin-right: .5vw;" class="btn btn-outline-secondary"
                         onclick="refresh('#quiz-content-container')">
                         Cancel
@@ -140,7 +140,7 @@
                                             <label>{{ question.name }})
                                                 {{ form.question_form.content(value=question.content) }}</label>
                                             <span>
-                                                {{ form.submit(class="btn btn-sm btn-outline-info") }}
+                                                {{ form.submitQuiz(class="btn btn-sm btn-outline-info") }}
                                             </span>
                                             <span class="btn btn-sm btn-outline-info"
                                                 onclick="refresh('#questions')">Cancel</span>
