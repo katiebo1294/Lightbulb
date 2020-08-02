@@ -61,9 +61,9 @@
 			<tr class="row classroom_element">
 				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
 				<td class="dropdown show room-name">
-					<button class="btn btn-outline dropdown-toggle" type="button" id="dropdownMenuLink"
+					<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
 					        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Name: {{ classroom.name }}
+						{{ classroom.name }}
 					</button>
 					<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                         {% for quiz in classroom.added_quizzes %}
@@ -111,7 +111,7 @@
 		<table class="account-tables">
 			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
 			<tr class="row quiz_element">
-				<td class="show quizColumn table-quiztitle">Name: {{ quiz.name }}</td>
+				<td class="show quizColumn table-quiztitle itemName">{{ quiz.name }}</td>
 				<!-- user can enter a quiz to view details, or delete it -->
 				<td class="edit_quiz">
 					<a class="btn-lg" href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">

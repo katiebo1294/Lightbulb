@@ -678,6 +678,18 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 
 /**Account**/
 
+.itemName {
+  width: 100%;                   /* IE6 needs any width */
+  overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
+  -o-text-overflow: ellipsis;    /* Opera < 11*/
+  text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
+}
+
+.itemName:hover {
+  -o-text-overflow: initial;    /* Opera < 11*/
+  text-overflow:    initial;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
+  overflow-x: auto;              /* "overflow" value must be different from  visible"*/ 
+}
 
 .classroomcolumn {
   background-color:#8793c7;
