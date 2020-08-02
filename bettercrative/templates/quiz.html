@@ -112,7 +112,7 @@
             <div style=" clear: both;"></div>
             <!-- prevent things from floating after this section -->
 
-            <div id="questions">
+            <div id="questions" class="">
                 {% for question in quiz.questions %}
                 <div id="question-{{ loop.index }}" {% if quiz.active != question.id %} style="display: none;" {% endif %}>
                     {% if question.category %}
@@ -127,7 +127,9 @@
                                 <div class="question-number">
                                     <!-- set form -->
                                     <span id="question-content-display-{{ question.id }}">
-                                        <label>{{ question.name }}) {{ question.content }}</label>
+                                        <label class="">
+                                            {{ question.name }}) {{ question.content }}
+                                        </label>
                                         <span class="btn btn-outline-info" style="float:right; margin:auto;"
                                             onclick="showEditQuestionContainer(index={{question.id}})"><i class="fas fa-pencil-alt"></i></span>
                                     </span>
