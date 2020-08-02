@@ -713,7 +713,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 div.col.quizcolumn {
   background-color:#8cb4d2;
   border: .1em solid #7a9cb6;
-  border-radius: .5em;
   height: 100%;
   width:75%;
   float:left;
@@ -801,14 +800,13 @@ div.delete_quiz a{
 
 .titlebar {
   border: 1px solid black;
-  border-radius: 0.1em;
   background-color:grey;
-  padding:5px;
+  padding:.75%;
   font-family: "Source Code Pro";
   font-size:2vw;
   color:white;
   text-align:center;
-  max-width: 100%;
+  overflow:auto;
   cursor: default;
 }
 
@@ -859,8 +857,9 @@ div.delete_quiz a{
 }
 
 .sideClick {
-  margin-right: 2em;
   float: right;
+  margin:auto;
+  display:block;
 }
 
 a.btn-large.sideClick{

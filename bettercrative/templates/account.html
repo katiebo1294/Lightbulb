@@ -50,13 +50,17 @@
 	<div class="account_box">
 		<!-- displays the user's quizzes -->
 		<div id="quizListing" class="col quizcolumn">
-				<span class="titlebar">
-					Quiz Listing
-				</span>
-			<!-- option to create a new quiz -->
-			<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
-				Create Quiz
-			</button>
+			<div class="titlebar" style="text-align:left;">
+				<div style="float:left;">
+					Quizzes
+				</div>
+				<!-- option to create a new quiz -->
+				<div class="">
+					<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
+						Create Quiz
+					</button>
+				</div>
+			</div>
 			<table class="account-tables">
 				{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
 				<tr class="row quiz_element">
