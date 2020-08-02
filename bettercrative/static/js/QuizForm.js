@@ -345,3 +345,14 @@ function removeQuiz(url, q_id) {
     });
     document.getElementById("modalPopUp").style.display = "none";
 }
+
+// create Quiz
+function createQuizPopup() {
+    document.getElementById("modalClass").style.display = "none";
+    modal = document.getElementById("modalPopUpForm");
+    modalForm = document.getElementById("modalQuiz");
+    modalText = document.getElementById("modalTextForm")
+    modalText.innerHTML = "Create Quiz";
+    modal.style.display = "block";
+    modalForm.style.display = "block";
+}

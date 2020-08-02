@@ -2,10 +2,11 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 
 from bettercrative import db, bcrypt
-from bettercrative.models import User, Quiz, Classroom
+from bettercrative.models import User, Quiz, Classroom, Question
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
+from bettercrative.quizzes.forms import QuizForm
 from bettercrative.users.util import save_picture, send_reset_email
 
 users = Blueprint('users', __name__)
@@ -58,6 +59,23 @@ def account():
     """ Display the current user's account page. Shows a list of their created classrooms and quizzes. """
     form = UpdateAccountForm()
     classForm =  ClassroomForm()
+    quizForm = QuizForm()
+
+    if quizForm.validate_on_submit():
+        quiz = Quiz(
+            name=quizForm.name.data,
+            owner=current_user
+        )
+        first_question = Question(quiz_id=quiz.id, name="Question 1")
+        db.session.add(first_question)
+        quiz.questions.append(first_question)
+        db.session.add(quiz)
+
+        db.session.commit()
+        flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
+        quiz.active = first_question.id
+        print(quiz.active)
+        return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
 
     if classForm.validate_on_submit():
         classroom = Classroom(name=classForm.name.data, owner=current_user)
@@ -80,7 +98,7 @@ def account():
         form.email.data = current_user.email
     image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form, classForm=classForm)
+                           image_file=image_file, form=form, classForm=classForm, quizForm=quizForm)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

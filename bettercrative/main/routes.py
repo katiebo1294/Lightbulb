@@ -2,10 +2,11 @@ from flask import render_template, Blueprint, make_response, url_for, redirect, 
 from flask_login import current_user
 
 from bettercrative import db, bcrypt
-from bettercrative.models import User, Quiz, Classroom
+from bettercrative.models import User, Quiz, Classroom, Question
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
+from bettercrative.quizzes.forms import QuizForm
 
 main = Blueprint('main', __name__)
 
@@ -17,7 +18,25 @@ def home():
     if current_user.is_authenticated:
         form = UpdateAccountForm()
         classForm =  ClassroomForm()
+        quizForm = QuizForm()
 
+        if quizForm.validate_on_submit():
+            quiz = Quiz(
+                name=quizForm.name.data,
+                owner=current_user
+            )
+            first_question = Question(quiz_id=quiz.id, name="Question 1")
+            db.session.add(first_question)
+            quiz.questions.append(first_question)
+            db.session.add(quiz)
+
+            db.session.commit()
+            flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
+            quiz.active = first_question.id
+            print(quiz.active)
+            return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
+
+        # classroom form
         if classForm.validate_on_submit():
             classroom = Classroom(name=classForm.name.data, owner=current_user)
             db.session.add(classroom)
@@ -25,6 +44,7 @@ def home():
             flash(u'New classroom \"' + classroom.name + '\" created!', 'success')
             return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
 
+        # profile form
         if form.validate_on_submit():
             if form.picture.data:
                 picture_file = save_picture(form.picture.data)
@@ -39,7 +59,7 @@ def home():
             form.email.data = current_user.email
         image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
         return render_template('account.html', title='Account',
-                            image_file=image_file, form=form, classForm=classForm)
+                            image_file=image_file, form=form, classForm=classForm, quizForm=quizForm)
     else:
         return render_template('home.html')
 

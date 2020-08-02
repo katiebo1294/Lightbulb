@@ -26,8 +26,11 @@ function removeClassroom(url, c_id) {
 
 // create Classroom
 function createClassroomPopup() {
+    document.getElementById("modalQuiz").style.display = "none";
     modal = document.getElementById("modalPopUpForm");
+    modalForm = document.getElementById("modalClass");
     modalText = document.getElementById("modalTextForm")
     modalText.innerHTML = "Create Classroom";
     modal.style.display = "block";
+    modalForm.style.display = "block";
 }
