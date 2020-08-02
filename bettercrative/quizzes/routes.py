@@ -184,7 +184,7 @@ def remove_question():
 
     quiz = Quiz.query.filter_by(id=question.quiz_id).first()
     if quiz is None:
-        return "oops fuk", 500
+        return "No quiz found under that id", 500
 
     if quiz is not None:
         quiz.questions.remove(question)
@@ -207,7 +207,7 @@ def remove_question():
 
     db.session.flush()
     db.session.commit()
-    return "lit", 200
+    return "Removed Question", 200
 
 
 @quizzes.route("/quiz/remove-answer")
@@ -230,7 +230,7 @@ def remove_answer():
 
     question = Question.query.filter_by(id=answer.question_id).first()
     if question is None:
-        return "oops fuk", 500
+        return "No question found under that id", 500
 
     question.answers.remove(answer)
     print(f'removed')
@@ -241,7 +241,7 @@ def remove_answer():
     # load new answer data
 
     db.session.commit()
-    return "lit", 200
+    return "Removed answer", 200
 
 
 @quizzes.route("/quiz/shift_question")
@@ -267,7 +267,7 @@ def shift_question():
 
     quiz = Quiz.query.filter_by(id=question.quiz_id).first()
     if quiz is None:
-        return "oops fuk", 500
+        return "No quiz found under that quiz id", 500
 
     # target is the question that we want to swap in a direction
     targetIdx = quiz.questions.index(question)
@@ -282,7 +282,7 @@ def shift_question():
     # load new question data
 
     db.session.commit()
-    return "lit", 200
+    return "Shifted question", 200
 
 
 @quizzes.route("/quiz/set_question_type", methods=['GET','POST']) 
@@ -404,16 +404,16 @@ def change_active_question():
 
     question = Question.query.filter_by(id=question_id).first()
     if question is None:
-        return "oops fuk", 500
+        return "No question found under that id", 500
 
     quiz = Quiz.query.filter_by(id=quiz_id).first()
     if quiz is None:
-        return "oops fuk", 500
+        return "No quiz found under that id", 500
 
     quiz.active = question.id
 
     db.session.commit()
-    return "lit", 200
+    return "active question changed", 200
 
 @quizzes.route("/account/delete_quiz")
 @login_required
