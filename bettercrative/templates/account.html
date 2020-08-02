@@ -47,107 +47,98 @@
 	</div>
 </div>
 <div class="wrapper">
-	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-	<div id="classroomListing" class="col classroomcolumn">
-            <span class="titlebar">
-                Classroom Listing
-            </span>
-		<!-- option to create a new classroom -->
-		<button class="btn-large sideClick" onclick="javascript:createClassroomPopup()">
-			Create Classroom
-		</button>
-		<table class="account-tables">
-			<tr class="row classroom_element">
-				<td style="text-align:center;">
-					Name
-				</td>
-				<td style="text-align:center;">
-					Edit
-				</td>
-				<td style="text-align:center;">
-					Delete
-				</td>
-			</tr>
-			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-			<tr class="row classroom_element">
-				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-				<td class="dropdown show room-name">
-					<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
-					        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						{{ classroom.name }}
-					</button>
-					<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        {% for quiz in classroom.added_quizzes %}
-                        {% if classroom.active_quiz == quiz.id %}
-                        <a class="dropdown-item" href="#"
-                           onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
-                            *ACTIVE* Quiz: {{ quiz.name }}
-                        </a>
-                        {% else %}
-                        <a class="dropdown-item" href="#"
-                           onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
-                            Quiz: {{ quiz.name }}
-                        </a>
-                        {% endif %}
-                        {% endfor %}
-                    </span>
-				</td>
+	<div class="account_box">
+		<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
+		<div id="classroomListing" class="col classroomcolumn">
+				<span class="titlebar">
+					Classroom Listing
+				</span>
+			<!-- option to create a new classroom -->
+			<button class="btn-large sideClick" onclick="javascript:createClassroomPopup()">
+				Create Classroom
+			</button>
+			<table class="account-tables">
+				<tr class="row classroom_element">
+					<td style="text-align:center;">
+						Name
+					</td>
+					<td style="text-align:center;">
+						Edit
+					</td>
+					<td style="text-align:center;">
+						Delete
+					</td>
+				</tr>
+				{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
+				<tr class="row classroom_element">
+					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
+					<td class="dropdown show room-name">
+						<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{ classroom.name }}
+						</button>
+						<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							{% for quiz in classroom.added_quizzes %}
+							{% if classroom.active_quiz == quiz.id %}
+							<a class="dropdown-item" href="#"
+							onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
+								*ACTIVE* Quiz: {{ quiz.name }}
+							</a>
+							{% else %}
+							<a class="dropdown-item" href="#"
+							onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
+								Quiz: {{ quiz.name }}
+							</a>
+							{% endif %}
+							{% endfor %}
+						</span>
+					</td>
 
-				<!-- can enter a class to view details, or delete it -->
-				<td class="edit_class" style="text-align:right;">
-					<a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</a>
-				</td>
-				<td class="delete_class" style="text-align:center;">
-					<button type="button" class="btn btn-sm" onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
-						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-					</button>
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
-	</div>
+					<!-- can enter a class to view details, or delete it -->
+					<td class="edit_class" style="text-align:right;">
+						<a class="btn-lg" href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
+							<i class="account-page-icons fas fa-pencil-alt"></i>
+						</a>
+					</td>
+					<td class="delete_class" style="text-align:center;">
+						<button type="button" class="btn btn-sm" onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
+							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
 
 
-	<!-- displays the user's quizzes -->
-	<div id="quizListing" class="col quizcolumn">
-            <span class="titlebar">
-                Quiz Listing
-            </span>
-		<!-- option to create a new quiz -->
-		<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
-			Create Quiz
-		</button>
-		<table class="account-tables">
-			<tr class="row classroom_element">
-				<td style="text-align:center;">
-					Name
-				</td>
-				<td style="text-align:center;">
-					Edit
-				</td>
-				<td style="text-align:center;">
-					Delete
-				</td>
-			</tr>
-			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
-			<tr class="row quiz_element">
-				<td class="show quizColumn table-quiztitle itemName">{{ quiz.name }}</td>
-				<!-- user can enter a quiz to view details, or delete it -->
-				<td class="edit_quiz" style="text-align:center;">
-					<a class="btn-lg" href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</a>
-				</td>
-				<td class="delete_quiz" style="text-align:center;">
-					<button type="button" class="btn btn-sm" onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
-						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-					</button>
-				</td>
-			</tr>
-			{% endfor %}
-		</table>
+		<!-- displays the user's quizzes -->
+		<div id="quizListing" class="col quizcolumn">
+				<span class="titlebar">
+					Quiz Listing
+				</span>
+			<!-- option to create a new quiz -->
+			<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
+				Create Quiz
+			</button>
+			<table class="account-tables">
+				{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
+				<tr class="row quiz_element">
+					<td class="show quizColumn table-quiztitle itemName">{{ quiz.name }}</td>
+					<!-- user can enter a quiz to view details, or delete it -->
+					<td class="edit_quiz">
+						<a class="btn-lg" href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+							<i class="account-page-icons fas fa-pencil-alt"></i>
+						</a>
+					</td>
+					<td class="delete_quiz">
+						<button type="button" class="btn btn-sm" onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
+							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
 	</div>
 </div>
 
