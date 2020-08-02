@@ -1,0 +1,98 @@
+<div class="question-edit-header">
+    <span class = 'show' id="question-content-display-{{ question.id }}">
+        <label>{{ question.name }}) {{ question.content }}</label>
+        <span class="btn btn-sm btn-outline-info"
+              onclick="showTrueFalse({{question.id}})"><i class="fas fa-pencil-alt"></i></span>
+    </span>
+</div>
+<div class="answerchoices">
+    <span class="menu">
+        
+        <!-- prevent things from floating after this section -->
+        <span style=" clear: both;"></span>
+        <!-- prevent things from floating after this section -->
+
+    </span>
+</div>
+
+<div class="answerContainer reset">
+    <div class='answerchoices show' id="{{question.id}}-answerchoices">
+        {%for answer in question.answers%}
+            {%if loop.first and answer.correct == loop.nextitem.correct%}
+            <span id = '{{question.id}}-true-display' class="choices btn btn-outline-success btn-success btn-lg disabled">
+                True
+            </span>
+            <span id = '{{question.id}}-false-display' class="choices btn btn-outline-danger btn-danger btn-lg disabled">
+                False
+            </span>
+            {%break%}
+            {%elif answer.content == 'True' and answer.correct %}
+            <span id = '{{question.id}}-true-display' class="choices btn btn-success btn-lg disabled">
+                True
+            </span>
+            <span id = '{{question.id}}-false-display' class="choices btn btn-outline-danger btn-danger btn-lg disabled">
+                False
+            </span>
+            {%elif answer.content == 'False' and answer.correct %}
+            <span id = '{{question.id}}-true-display' class="choices btn btn-outline-success btn-success btn-lg disabled">
+                True
+            </span>
+            <span id = '{{question.id}}-false-display' class="choices btn btn-danger btn-lg disabled">
+                False
+            </span>
+            {%endif%}
+
+        {%endfor%}
+        
+    </div>
+    
+    <!-- hover on the selected then submit button on save  -->
+    
+    
+
+    <!-- FORM -->
+    <form class='tf-form noshow' id="{{question.id}}-TF-form" action="{{ url_for('quizzes.edit_question', question_id=question.id) }}" method = "POST">
+        {{form.hidden_tag()}}
+        <div class='form-group'>
+            {{form.question_form.hidden_tag()}}
+            <span>
+                {{question.name}}) {{form.question_form.content(placeholder='Enter Question Name', value=question.content )}}
+            </span>
+        </div>
+
+        <div class='form-group'>
+            <div class='answerContainer reset'>
+                {% set answer_form = form.answer_form.append_entry() %}
+                {{answer_form.hidden_tag()}}
+                {% for answer in question.answers %}
+                
+
+                {%if answer.content == "True"%}
+                {{answer_form.content(class='noshow',value='True')}}
+                {{answer_form.correct(class='noshow', value='1',id='answer_form-true-' ~ question.id)}}
+
+                <span class="btn btn-lg btn-outline-success" id='btn-true-{{question.id}}'
+                    onclick='checked(this)' title='True'>True
+                </span>
+                {%else%}    
+                {{answer_form.content(class='noshow',value='False')}}
+                {{answer_form.correct(class='noshow', value='0',id='answer_form-false-' ~ question.id)}}
+
+                <span class="btn btn-lg btn-outline-danger"  id='btn-false-{{question.id}}'
+            onclick='checked(this)' title = 'False'>False
+                </span>                            
+                {%endif%}
+                {%endfor%}
+            </div>
+        </div>
+
+        <div class='form-group'>
+            {{form.submit(class='btn btn-sm btn-outline-info', type='submit',id='submit-quiz-'~quiz.id, value='Save')}}
+            <span class='btn btn-sm btn-outline-danger' onclick="cancelTF({{question.id}})"> Cancel</span>
+            
+        </div>
+    </form>
+    
+    
+    
+</div>
