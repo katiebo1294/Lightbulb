@@ -119,6 +119,11 @@
                     {{ question.category }}
                     <div id="question">
                         <div class='question-container'>
+                            <div class="info-bar">
+                                <button class="info-icon" onclick="javascript:openLatexAlert()">
+                                    <i id="answer_form-{{ loop.index0 }}-checkbox" class="fas fa-info-circle"></i>
+                                </button>
+                            </div>
                             <!-- Multiple Choice -->
                             {% if question.category == 'Multiple Choice' %}
                             <div class='multiple-choice'>

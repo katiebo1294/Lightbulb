@@ -34,3 +34,16 @@ setTimeout(function () {
     });
 }, 1500);
 
+function openLatexAlert() {
+    modal = document.getElementById("modalPopUp");
+    modalText = document.getElementById("modalText");
+    modalTitle = document.getElementById("modalTitle");
+    modalButton = document.getElementById("modalButton");
+    cancelButton = document.getElementById("cancelButton");
+    modalTitle.innerHTML = "Did you know?";
+    modalText.innerHTML = "We have Latex Integration! </br> Simply type anything in Latex into your question or answer, and we will convert it for you!";
+    modalButton.innerHTML = "Got it!";
+    modalButton.onclick = function() {modal.style.display="none"};
+    cancelButton.style.display = "none";
+    modal.style.display = "block";
+}

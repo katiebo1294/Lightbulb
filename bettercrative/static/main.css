@@ -680,6 +680,19 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 
 /**Account**/
 
+.info-bar {
+  height:5%;
+  background-color:transparent;
+  margin-right:-10%;
+}
+
+.info-icon {
+  border:none;
+  float:right;
+  font-size:.5em;
+  background-color:transparent;
+}
+
 .itemName {
   width: 100%;                   /* IE6 needs any width */
   overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
