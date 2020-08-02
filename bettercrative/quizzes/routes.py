@@ -54,9 +54,6 @@ def quiz(quiz_id):
                 quiz_id (int): The ID of the quiz to display.
     """
     
-    
-    
-    
     form = QuestionFormOverall()
     
     qzform = QuizForm()

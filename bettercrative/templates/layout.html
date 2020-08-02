@@ -38,9 +38,12 @@
 
 	<!-- CSS -->
 	<link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
+
+	<!-- Mathjax -->
+	<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
-<body id="body">
+<body id="body" class="tex2jax_ignore">
 	<!--NavBar-->
 	<header>
 		<nav class="nav">
@@ -234,6 +237,7 @@
 	<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 </body>
 
 </html>

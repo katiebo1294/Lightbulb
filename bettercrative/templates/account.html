@@ -69,19 +69,21 @@
 					</td>
 					<!-- user can enter a quiz to view details, or delete it -->
 					<td class="quiz_icon_col" style="text-align:right;">
-						<button type="button" class="btn btn-sm quiz-icon"href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+						<a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+						<button type="button" class="btn btn-sm quiz-icon" >
 							<i class="account-page-icons fas fa-pencil-alt"></i>
 						</button>
-						<button type="button" class="btn btn-sm quiz-icon"onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
+						</a>
+						<button type="button" class="btn btn-sm quiz-icon" onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
 							<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
 						</button>
-						<button type="button" class="btn btn-sm quiz-icon"onclick="">
+						<button type="button" class="btn btn-sm quiz-icon" onclick="">
 							<i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i>
 						</button>
-						<button type="button" class="btn btn-sm quiz-icon"onclick="">
+						<button type="button" class="btn btn-sm quiz-icon" onclick="">
 							<i class="account-page-icons fas fa-copy" aria-hidden="true"></i>
 						</button>
-						<button type="button" class="btn btn-sm quiz-icon"onclick="">
+						<button type="button" class="btn btn-sm quiz-icon" onclick="">
 							<i class="account-page-icons fas fa-download" aria-hidden="true"></i>
 						</button>
 					</td>
