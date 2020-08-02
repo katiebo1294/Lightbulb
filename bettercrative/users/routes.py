@@ -52,7 +52,6 @@ def logout():
     logout_user()
     return redirect(url_for('main.home'))
 
-
 @users.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -61,7 +60,7 @@ def account():
     classForm =  ClassroomForm()
     quizForm = QuizForm()
 
-    if quizForm.validate_on_submit():
+    if quizForm.submitQuiz.data and quizForm.validate_on_submit():
         quiz = Quiz(
             name=quizForm.name.data,
             owner=current_user
@@ -75,14 +74,14 @@ def account():
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         quiz.active = first_question.id
         print(quiz.active)
-        return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
+        return redirect(url_for('users.account'))
 
-    if classForm.validate_on_submit():
+    if classForm.submitClass.data and classForm.validate_on_submit():
         classroom = Classroom(name=classForm.name.data, owner=current_user)
         db.session.add(classroom)
         db.session.commit()
         flash(u'New classroom \"' + classroom.name + '\" created!', 'success')
-        return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
+        return redirect(url_for('users.account'))
 
     if form.validate_on_submit():
         if form.picture.data:
@@ -93,6 +92,7 @@ def account():
         db.session.commit()
         flash(u'Your account has been updated!', 'success')
         return redirect(url_for('users.account'))
+
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email

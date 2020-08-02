@@ -21,7 +21,7 @@
 							{{ classForm.name(class="form-control form-control-lg") }}
 						{% endif %}
 					</fieldset>
-					{{classForm.submit(class="btn btn-success")}} <!-- confirm button -->
+					{{classForm.submitClass(class="btn btn-success")}} <!-- confirm button -->
 					<button type="button" class="btn btn-secondary" onclick="document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
 			</form>
 		</div>
@@ -40,7 +40,7 @@
 						{{ quizForm.name(class="form-control form-control-lg") }}
 					{% endif %}
 				</fieldset>
-				{{quizForm.submit(class="btn btn-success")}} <!-- confirm button -->
+				{{quizForm.submitQuiz(class="btn btn-success")}} <!-- confirm button -->
 				<button type="button" class="btn btn-secondary" onclick="document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
 			</form>
 		</div>

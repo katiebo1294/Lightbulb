@@ -14,7 +14,7 @@ class ClassroomForm(FlaskForm):
         if name:
             raise ValidationError('That name has already been taken. Please choose another.')
 
-    submit = SubmitField('Create Classroom')
+    submitClass = SubmitField('Create Classroom')
 
 
 # Student enters a classroom by inputting the unique classroom name
