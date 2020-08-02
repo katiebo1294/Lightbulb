@@ -685,6 +685,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
   -o-text-overflow: ellipsis;    /* Opera < 11*/
   text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
+  margin:1%;
 }
 
 .itemName:hover {
@@ -702,9 +703,9 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 
 .classroomcolumn {
   height: 100%;
-  width:78%;
-  float:left;
-  min-height:50vw;
+  width:23.5%;
+  float:right;
+  min-height:30vw;
   border: .1em solid #747da8;
   background-color:#8793c7;
 }
@@ -714,9 +715,9 @@ div.col.quizcolumn {
   border: .1em solid #7a9cb6;
   border-radius: .5em;
   height: 100%;
-  width:20%;
-  float:right;
-  min-height:30vw;
+  width:75%;
+  float:left;
+  min-height:35vw;
 }
 
 #quiz-content-container {
@@ -726,9 +727,11 @@ div.col.quizcolumn {
 nav.navbar{
   width: 42vw;
 }
+
 .row.quiz_element{
   font-family: 'Source Code Pro';
   font-size:1.2vw;
+  border-bottom: 1px solid rgba(50,50,50,.35);
 }
 
 .row.classroom_element{
@@ -810,16 +813,15 @@ div.delete_quiz a{
 }
 
 .classroomcolumn, .quizcolumn {
-  padding: 1vw;
+  padding: 1%;
 }
 
 /* table itself */
 .account-tables {
   width: 100%;
   table-layout: fixed;
-  padding: 1em;
+  padding: 0.2em;
   border: none;
-  border-collapse: separate;
 }
 
 /* individual table elements */
@@ -853,7 +855,7 @@ div.delete_quiz a{
 }
 
 .table-quiztitle {
-  valign: middle;
+  vertical-align: middle;
 }
 
 .sideClick {
@@ -939,6 +941,16 @@ button.Show-Student-Response.btn:hover{
   div.edit_class{
     margin-left:0px;
   }
+}
+
+.quizIcon {
+  float:center;
+  width:8%;
+  text-align:center;
+}
+
+.quiz_icon_col {
+  margin:auto;
 }
 
 /* footer */
