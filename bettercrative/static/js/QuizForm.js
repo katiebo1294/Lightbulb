@@ -163,7 +163,7 @@ function change_active_question(url,question_id,quiz_id) {
 
 function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
     event.preventDefault();
-    
+    console.log('were in');
     $.ajax({
         type: "GET",
         data: {'answer_id': answer_id, 'classroom_id': classroom_id, 

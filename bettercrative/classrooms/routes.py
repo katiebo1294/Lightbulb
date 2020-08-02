@@ -35,8 +35,12 @@ def enter_classroom():
             # cookies
             if current_user.is_anonymous:
                 cookie = request.cookies.get('session')
-                db.session.add(Student(id = cookie))
-                db.session.commit()
+                
+                student_id= db.session.query(Student).filter(Student.id==cookie).first()
+
+                if student_id is None:
+                    db.session.add(Student(id = cookie))
+                    db.session.commit()
             return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id))
         else:
             flash(u'A classroom does not exist with that name. Please try again.', 'danger')
