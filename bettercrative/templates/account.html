@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div id="modalPopUpForm" class="modalPopUp" style="display:none;">
+<div id="modalPopUpForm" class="modalPopUp" {% if classForm.name.errors or quizForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
 	<div class="modalContent">
 		<h1 id="modalTextForm">
 		</h1>
 		<!-- forms for both the class and quiz pop ups, they need to be separate as they take diff info -->
-		<div id="modalClass" style="display:none;">
+		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
 			<form action="" method="POST">
 				{{ classForm.hidden_tag() }} <!--adds ctrf form-->
 					<fieldset>
@@ -22,12 +22,12 @@
 						{% endif %}
 					</fieldset>
 					{{classForm.submitClass(class="btn btn-success")}} <!-- confirm button -->
-					<button type="button" class="btn btn-secondary" onclick="document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
+					<button type="button" class="btn btn-secondary" onclick="refresh('#questions');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
 			</form>
 		</div>
-		<div id="modalQuiz" style="display:none;">
+		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
 			<form action="" method="POST">
-				{{ classForm.hidden_tag() }} <!--adds ctrf form-->
+				{{ quizForm.hidden_tag() }} <!--adds ctrf form-->
 				<fieldset>
 					{% if quizForm.name.errors %}
 					{{ quizForm.name(class="form-control form-control-lg is-invalid") }}
