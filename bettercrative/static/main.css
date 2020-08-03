@@ -1000,9 +1000,30 @@ footer {
   margin-top:5vw;
 }
 
+/* Short answer */
+.SAquestionbox {
+  width:60%;
+  min-height:10vw;
+  font-size:16pt;
+}
+
+.SAanswerbox {
+  width:100%;
+  min-height:15vw;
+  font-size:16pt;
+}
+
 .contentInput {
   width:60%;
-  min-height:100%;
+  min-height:5vw;
+  font-size:16pt;
+}
+
+.answerchoiceSA {
+  width:100%;
+  min-height:15vw;
+  font-size:16pt;
+  background-color:rgb(205, 245, 231);
 }
 
 .editTitle {
@@ -1165,7 +1186,6 @@ div.answerChoice{
   float: left;
   width: 100%;
 }
-
 
 span.choice{
   float: left;

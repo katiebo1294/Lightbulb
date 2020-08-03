@@ -23,12 +23,12 @@
     </span>
 </div>
 <div class="answerContainer reset" id='{{question.id}}-sa-selection'>
-    <div class='answerchoices show' id="{{question.id}}-answerchoices">
+    <div class='answerchoiceSA show' id="{{question.id}}-answerchoices">
         {%for answer in question.answers%}
             {%if answer.content%}
                 {{answer.content}}
             {%else%}
-                <h1> Pls add an Answer</h1>
+                <h1> Example Answer </h1>
             {%endif%}
         {%endfor%}
     </div>
@@ -45,12 +45,13 @@
             <div style="width:20%;float:left;">
             {{question.name}}) 
             </div>
-            {{saform.question_form.content(class="contentInput", placeholder='Enter Question Name', placeholder=question.content )}}
+            <!-- {{saform.question_form.content(class="contentInput", placeholder='Enter Question Name')}} -->
+            <textarea class="SAquestionbox" id="question_form-content" name="question_form-content">{{question.content}}</textarea>
         </div>
         <div class='form-group'>
             
-            {{saform.answer_form(class='form-group form-control form-height',style='height:10vw;',placeholder=question.answer)}}
-            
+            <!-- {{saform.answer_form(class='form-group form-control form-height',style='height:10vw;', placeholder=question.answer)}} -->
+            <textarea class="SAanswerbox" id="answer_form-content" name="answer_form-content">{{question.answers[0].content}}</textarea>
             
         </div>
 
