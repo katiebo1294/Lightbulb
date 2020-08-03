@@ -677,11 +677,12 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 /**Account**/
 
 .itemName {
-  width: 80%;                   /* IE6 needs any width */
   overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
   -o-text-overflow: ellipsis;    /* Opera < 11*/
   text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
   margin:1%;
+  height: 2.35vw;
+  width: 6.7vw;                  /* IE6 needs any width */
 }
 
 .itemName:hover {
@@ -702,6 +703,10 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   padding: .5vw;
 }
 
+div.date-box p {
+  font-size: 100%;
+}
+
 .quizcolumn, .classroomcolumn {
   min-height:30vw;
   border: .15vw solid #4f7659;
@@ -715,8 +720,22 @@ nav.navbar{
   width: 42vw;
 }
 
+#create-classroom-btn {
+  height: 3vw;
+  width: 11.7vw;
+  font-size: 1.2vw;
+  whitespace: normal;
+}
+
+#create-quiz-btn {
+  height: 3vw;
+  width: 8.5vw;
+  font-size: 1.2vw;
+  whitespace: normal;
+}
+
 .row.quiz-element, .row.classroom-element{
-  font-size:1.2vw;
+  font-size:1vw;
   border-bottom: 1px solid rgba(50,50,50,.35);
   padding: .5vw 0 .5vw 0;
 }
@@ -774,8 +793,7 @@ div.delete-quiz a{
 }
 
 .classroom-table-rows:hover{
-  background-color: rgb(177 225 208);
-  border: 2px solid rgb(177 225 208);
+  background-color: #3e5d46;
 }
 
 .quizcolumn, .quizcolumn a, .classroomcolumn a {
@@ -810,22 +828,33 @@ div.delete-quiz a{
   font-weight: bold;
 }
 
-a.Take-Active-Quiz.btn{
-  float:right;
+.Take-Active-Quiz {
+  position: absolute;
+  right: 4vw;
+}
+
+.Take-Active-Quiz.btn{
   font-size:1.5vw;
 }
 
-a.Take-Active-Quiz.btn:hover{
+#classroom-options {
+  bottom: 2vw;
+  position: absolute;
+  width: 100%;
+}
+
+.Take-Active-Quiz.btn:hover{
   color: rgb(2, 132, 69);
   font-size: 1.7vw;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
-a.View-Results.btn{
+.View-Results.btn{
   font-size:1.5vw;
+  position: relative;
 }
 
-a.View-Results.btn:hover{
+.View-Results.btn:hover{
   color: rgb(2, 132, 69);
   font-size: 1.7vw;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
@@ -934,6 +963,10 @@ footer a:hover, div.mb-5.flex-center a:hover {
   margin:auto;
   cursor: default;
   margin-top:5vw;
+}
+
+#classroom-info {
+  margin-top: 2vw;
 }
 
 .editTitle {
@@ -1162,7 +1195,6 @@ div.answerBox{
 }
 
 .quiz-options:hover {
-  font-size:1.5vw;
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }

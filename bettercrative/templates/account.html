@@ -53,15 +53,15 @@
 <div class="container-fluid account-box">
 	<div class="row">
 		<!-- displays the user's quizzes -->
-		<div class="col-8 account-column-container">
+		<div class="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-xs-12 account-column-container">
 			<div id="quizListing" class="quizcolumn theme-med">
 				<div class="titlebar theme-med">
 					<div style="float:left;">
 						Quizzes
 					</div>
 					<!-- option to create a new quiz -->
-					<div class="">
-						<button type="button" class="btn btn-lg sideClick"
+					<div>
+						<button id="create-quiz-btn" type="button" class="btn btn-lg sideClick"
 						        onclick="javascript:createQuizPopup()">
 							Create Quiz
 						</button>
@@ -77,9 +77,9 @@
 						<div class="col-5 table-quiztitle">
 							{{ quiz.name }}
 						</div>
-						<div class="col-1">{{
+						<div class="col-1 date-box"><p>{{
 							quiz.date_created.date().strftime("%m/%d/%y")
-							}}
+							}}</p>
 						</div>
 						<!-- user can enter a quiz to view details, or delete it -->
 						<div class="col-6">
@@ -108,14 +108,14 @@
 			</div>
 		</div>
 		<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-		<div class="col-4 account-column-container">
+		<div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-xs-12 account-column-container">
 			<div id="classroomListing" class="classroomcolumn theme-med">
 				<div class="titlebar theme-med">
 					<div style="float: left;">
 						Classrooms
 					</div>
 					<!-- option to create a new classroom -->
-					<button class="btn btn-lg sideClick"
+					<button id="create-classroom-btn" class="btn btn-lg sideClick"
 					        onclick="javascript:createClassroomPopup()">
 						Create Classroom
 					</button>
@@ -128,7 +128,7 @@
 					{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
 					<div class="row classroom-element">
 						<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-						<div class="col-5 dropdown room-name">
+						<div class="col-4 dropdown room-name">
 							<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
 							        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								{{ classroom.name }}
@@ -149,9 +149,9 @@
 							{% endfor %}
 						</span>
 						</div>
-						<div class="col-1">{{ classroom.date_created.date().strftime("%m/%d/%y") }}</div>
+						<div class="col-3 date-box"><p>{{ classroom.date_created.date().strftime("%m/%d/%y") }}</p></div>
 						<!-- can enter a class to view details, or delete it -->
-						<div class="col-6">
+						<div class="col-5">
 							<button type="button" class="delete-class class-icon btn btn-sm"
 							        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
 								<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
