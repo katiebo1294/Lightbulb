@@ -231,6 +231,7 @@ class Response(db.Model):
         """
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     student_id = db.Column(db.ForeignKey('student.id', ondelete='CASCADE'))
+    student = db.relationship('Student', back_populates='responses')
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id', ondelete='CASCADE'), nullable=False)
     value = db.Column(db.Text, nullable=False)
@@ -254,4 +255,4 @@ class Student(db.Model):
     """
 
     id = db.Column(db.Text, primary_key=True)
-    responses = db.relationship('Response', backref='owner', cascade='delete, all')
+    responses = db.relationship('Response', back_populates='student', cascade='delete, all')
