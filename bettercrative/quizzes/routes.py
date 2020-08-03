@@ -363,8 +363,9 @@ def edit_question(question_id):
         print(f'OVERALLSA IS {type(form)}')
         if form.validate_on_submit:
             received_form = request.form
+            print(request.form)
             question.content = received_form['question_form-content']
-            received_answer = received_form['answer_form']
+            received_answer = received_form['answer_form-content']
             print("-------------------------------------------------------------------")
             print("DEBUGGING LINE HERE")
             print(f'question content is {question.content}')
