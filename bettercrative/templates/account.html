@@ -22,7 +22,7 @@
 						{% endif %}
 					</fieldset>
 					{{classForm.submitClass(class="btn btn-success")}} <!-- confirm button -->
-					<button type="button" class="btn btn-secondary" onclick="refresh('#questions');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
+					<button type="button" class="btn btn-secondary" onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
 			</form>
 		</div>
 		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
@@ -41,7 +41,7 @@
 					{% endif %}
 				</fieldset>
 				{{quizForm.submitQuiz(class="btn btn-success")}} <!-- confirm button -->
-				<button type="button" class="btn btn-secondary" onclick="document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
+				<button type="button" class="btn btn-secondary" onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
 			</form>
 		</div>
 	</div>
