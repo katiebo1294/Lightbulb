@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
 
 body{
-  
-  background-attachment: fixed;
-  background-image: url('images/laptopmono.jpg');
-  background-repeat: no-repeat;
   background-size:100vw;
-  font-family: 'Open Sans Condensed';
+  font-family: 'Open Sans', Tahoma, Verdana, sans-serif;
   font-size: 180%;
 }
+
 .img{
   max-width: 100%;
 }
@@ -107,7 +108,6 @@ body:after{
   text-decoration: none;
   color: black;
   font-size: 2.5rem;
-  font-family: 'Source Code Pro', monospace;
 }
 .nav div.logo a:hover{
   /* setting to green for now */
@@ -129,7 +129,6 @@ body:after{
 .nav div.listofcontents a{
   text-decoration: none;
   color: black;
-  font-family: 'Source Code Pro', monospace;
 }
 
 .nav div.listofcontents ul{
@@ -174,7 +173,6 @@ body:after{
     text-decoration: none;
     color: black;
     font-size: 2rem;
-    font-family: 'Source Code Pro', monospace;
   }
 }
 
@@ -202,7 +200,6 @@ body:after{
   .nav div.listofcontents a{
     text-decoration: none;
     color:white;
-    font-family: 'Source Code Pro', monospace;
     
   }
   .nav div.logo{
@@ -564,11 +561,12 @@ legend.border-bottom.mb-4{
 }
 
 #Create-Button{
-  font-family: "Source Code Pro";
   color : white;
 }
 a#Cancel-Button{
-  font-size: 1.8vw; text-decoration: none; font-family:'Source Code Pro'; color: white;
+  font-size: 1.8vw;
+  text-decoration: none;
+  color: white;
 }
 
 a#Cancel-Button:hover{
@@ -579,7 +577,6 @@ a#Cancel-Button:hover{
 
 input#submit.btn.btn-lg.btn-outline-info{
   font-size:1.8vw;
-  font-family: "Source Code Pro";
   font-weight: bold;
 }
 
@@ -587,7 +584,6 @@ input#submit.btn.btn-lg.btn-outline-info{
 
 div.content-section{
   font-size:1vw;
-  font-family: 'Source Code Pro';
   color: white;
   
 }
@@ -681,7 +677,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 /**Account**/
 
 .itemName {
-  width: 100%;                   /* IE6 needs any width */
+  width: 80%;                   /* IE6 needs any width */
   overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
   -o-text-overflow: ellipsis;    /* Opera < 11*/
   text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
@@ -694,29 +690,21 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   overflow-x: auto;              /* "overflow" value must be different from  visible"*/ 
 }
 
-.account_box{
-  background-color:#687299;
+.account-box{
   height:100%;
   overflow:auto;
   padding:2vw;
+  margin: 5vw auto;
+  width:90%;
 }
 
-.classroomcolumn {
-  height: 100%;
-  width:23.5%;
-  float:right;
+.account-column-container {
+  padding: .5vw;
+}
+
+.quizcolumn, .classroomcolumn {
   min-height:30vw;
-  border: .1em solid #747da8;
-  background-color:#8793c7;
-}
-
-div.col.quizcolumn {
-  background-color:#8cb4d2;
-  border: .1em solid #7a9cb6;
-  height: 100%;
-  width:75%;
-  float:left;
-  min-height:35vw;
+  border: .15vw solid #4f7659;
 }
 
 #quiz-content-container {
@@ -727,14 +715,10 @@ nav.navbar{
   width: 42vw;
 }
 
-.row.quiz_element{
-  font-family: 'Source Code Pro';
+.row.quiz-element, .row.classroom-element{
   font-size:1.2vw;
   border-bottom: 1px solid rgba(50,50,50,.35);
-}
-
-.row.classroom_element{
-  font-family: 'Source Code Pro';
+  padding: .5vw 0 .5vw 0;
 }
 
 div.dropdown.show a.dropdown-item{
@@ -745,40 +729,13 @@ div.dropdown.show a:hover{
   color: #00E676;
 }
 
-.edit_class a, .edit_quiz a{
-  color: darkgreen !important;
-  font-weight: bolder;
-  text-decoration: none;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-.account-page-icons{
-  padding: 0.4em;
-}
-
-.account-page-icons.fa-trash:hover{
-  color: rgb(248, 133, 133);
-  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
-}
-
-.account-page-icons.fa-pencil-alt:hover{
-  color: #00E676;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-.delete_class a, .delete_quiz a{
-  color: darkred !important;
-  font-weight: bolder;
-  text-decoration: none;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-.delete_quiz{
+.delete-quiz{
   margin-top:.1vw;
+}
+
+.quiz-icon.delete-quiz:hover, .quiz-icon.delete-class:hover {
+  color: red;
+  border-color: red;
 }
 
 div.enter_quiz a{
@@ -792,17 +749,15 @@ div.enter_quiz a:hover{
   color: #00E676;
 }
 
-div.delete_quiz a{
+div.delete-quiz a{
   font-size:1.2vw;
   color:white;
   text-decoration:none;
 }
 
 .titlebar {
-  border: 1px solid black;
-  background-color:grey;
-  padding:.75%;
-  font-family: "Source Code Pro";
+  border: 1px solid #2f4858;
+  padding:.5vw;
   font-size:2vw;
   color:white;
   text-align:center;
@@ -811,29 +766,11 @@ div.delete_quiz a{
 }
 
 .classroomcolumn, .quizcolumn {
-  padding: 1%;
+  padding: 0.5vw;
 }
 
-/* table itself */
-.account-tables {
-  width: 100%;
-  table-layout: fixed;
-  padding: 0.2em;
-  border: none;
-}
-
-/* individual table elements */
-.account-tables * td {
-  width: 33%;
-  border: none;
-}
-
-.quiz_element:hover{
-  background-color: #7a9cb6;
-}
-
-.classroom_element:hover{
-  background-color: #747da8;
+.quiz-element:hover, .classroom-element:hover{
+  background-color: #5c8867;
 }
 
 .classroom-table-rows:hover{
@@ -843,7 +780,6 @@ div.delete_quiz a{
 
 .quizcolumn, .quizcolumn a, .classroomcolumn a {
   text-decoration: none;
-  font-family: 'Source Code Pro';
   color: black;
   font-size:1.2vw;
 }
@@ -854,22 +790,13 @@ div.delete_quiz a{
 
 .table-quiztitle {
   vertical-align: middle;
+  vertical-align: middle;
 }
 
-.sideClick {
+.btn.sideClick {
   float: right;
   margin:auto;
   display:block;
-}
-
-a.btn-large.sideClick{
-  font-size:1.2vw;
-}
-
-a.btn-large.sideClick:hover{
-  color: black;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-  border-radius: .3em;
 }
 
 #question-title {
@@ -931,13 +858,12 @@ button.Show-Student-Response.btn:hover{
 }
 
 @media screen and (max-width:710px){
-  div.row.classroom_element{
-    font-family: 'Source Code Pro';
+  div.row.classroom-element{
   }
-  div.delete_class{
+  div.delete-class{
     margin-left:0px;
   }
-  div.edit_class{
+  div.edit-class{
     margin-left:0px;
   }
 }
@@ -946,6 +872,20 @@ button.Show-Student-Response.btn:hover{
   float:center;
   width:8%;
   text-align:center;
+}
+
+.quiz-icon, .class-icon {
+  float: right;
+  margin-left: 1vw;
+  width: 2.8vw;
+  height: 2.25vw;
+  font-size: 100%;
+}
+
+.quiz-icon:hover, .class-icon:hover, .sideClick:hover, .itemName:hover {
+  border-color: #00e676;
+  color: #00e676;
+  background-color: transparent;
 }
 
 .quiz_icon_col {
@@ -971,6 +911,16 @@ footer {
 
 }
 
+footer a, div.mb-5.flex-center a {
+  color: #416249;
+}
+
+footer a:hover, div.mb-5.flex-center a:hover {
+  color: #00e676;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* Quiz Section (quiz.html)*/
 .show{
   display:block;
@@ -983,7 +933,6 @@ footer {
   width:85%;
   margin:auto;
   cursor: default;
-  font-family: "Source Code Pro";
   margin-top:5vw;
 }
 

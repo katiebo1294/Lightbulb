@@ -17,7 +17,7 @@ def home():
     """ Displays the "home" page. If the user is signed in, this becomes their "account" page. """
     if current_user.is_authenticated:
         form = UpdateAccountForm()
-        classForm =  ClassroomForm()
+        classForm = ClassroomForm()
         quizForm = QuizForm()
 
         if quizForm.submitQuiz.data and quizForm.validate_on_submit():
