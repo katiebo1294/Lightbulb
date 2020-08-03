@@ -52,9 +52,9 @@
 
     <!-- FORM -->
     <form class='tf-form noshow' id="{{question.id}}-TF-form" action="{{ url_for('quizzes.edit_question', question_id=question.id) }}" method = "POST">
-        {{form.hidden_tag()}}
+        {{tfform.hidden_tag()}}
         <div class='form-group'>
-            {{form.question_form.hidden_tag()}}
+            {{tfform.question_form.hidden_tag()}}
             <span>
                 {{question.name}}) {{form.question_form.content(placeholder='Enter Question Name', value=question.content )}}
             </span>
@@ -67,7 +67,7 @@
 
         <div class='form-group'>
             <div class='answerContainer reset'>
-                {% set answer_form = form.answer_form.append_entry() %}
+                {% set answer_form = tfform.answer_form.append_entry() %}
                 {{answer_form.hidden_tag()}}
                 {% for answer in question.answers %}
                 

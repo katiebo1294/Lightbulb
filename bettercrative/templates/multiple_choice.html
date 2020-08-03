@@ -1,0 +1,85 @@
+<!-- contents of multiple choice box -->
+<div class="question-edit-header">
+	<div class="question-number">
+		<!-- set form -->
+		<span id="question-content-display-{{ question.id }}">
+                                        <label>
+                                            {{ question.name }}) {{ question.content }}
+                                        </label>
+                                        <span class="btn btn-outline-info" style="float:right; margin:auto;"
+                                              onclick="showEditQuestionContainer(index={{question.id}})"><i
+		                                        class="fas fa-pencil-alt"></i></span>
+                                    </span>
+		<form style="display: none;" id="question-content-edit-form-{{ question.id }}"
+		      action="{{ url_for('quizzes.edit_question', question_id=question.id) }}"
+		      method="POST">
+			{{ form.hidden_tag() }}
+			{{ form.question_form.hidden_tag() }}
+			<fieldset class="form-group">
+				<label>{{ question.name }})
+					<textarea class="SAquestionbox" id="question_form-content" name="question_form-content">{{question.content}}</textarea></label>
+				<span>
+                                                {{ form.submit(class="btn btn-sm btn-outline-info") }}
+                                            </span>
+				<span class="btn btn-sm btn-outline-info"
+				      onclick="refresh('#questions')">Cancel</span>
+				<div id="displayAnswerEdit-{{ question.id }}" class="form-group">
+					{% for answer in question.answers %}
+					{{ append_form(form) }}
+					{% set aform = form.answer_form[ loop.index0 ] %}
+					{{ aform.hidden_tag() }}
+					<div class="correctness-container">
+						{{ aform.content(value=answer.content) }}
+						{% if answer.correct %}
+						<i id="answer_form-{{ loop.index0 }}-checkbox" class="fas fa-check-circle"></i>
+						{{ aform.correct(checked=True, value='y', class_="actual-checkbox") }}
+						{% else %}
+						<i id="answer_form-{{ loop.index0 }}-checkbox" class="far fa-check-circle"></i>
+						{{ aform.correct(checked=False, value='n', class_="actual-checkbox") }}
+						{% endif %}
+					</div>
+					{% endfor %}
+				</div>
+			</fieldset>
+		</form>
+		{% if form.errors %}
+		{{ form.errors }}
+		{% endif %}
+	</div>
+</div>
+<div class="answerchoices">
+    <span class="menu">
+
+        <!-- prevent things from floating after this section -->
+        <span style=" clear: both;"></span>
+        <!-- prevent things from floating after this section -->
+
+    </span>
+</div>
+<span class="reset"> </span>
+<div class="answerContainer reset">
+	{% set outer_loop = loop %}
+	<!-- This area is for the set answers -->
+	<div id="displayAnswer-{{ question.id }}">
+		{% for answer in question.answers %}
+		<div class="answerChoice">
+			<span class="btn btn-secondary active button-choices">{{ get_alphabet_index(loop.index) }}</span>
+			<div class="answerBox">
+                <span class="content-section">
+                    <button class="btn btn-sm btn-outline-danger answer-delete-button"
+                            onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
+                        <i class="fa fa-times fa-lg"></i>
+                    </button>
+                    <span id="answer-content-display-{{ answer.id }}">
+                        <label class="answer-content">{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
+                    </span>
+                </span>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	<button class="btn btn-outline-success"
+	        onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }})">
+		<i class="fa fa-plus"></i>
+	</button>
+</div>

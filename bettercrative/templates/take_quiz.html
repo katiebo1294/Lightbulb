@@ -19,10 +19,6 @@
     div.multiple-choice {
         margin-top: 7vw;
     }
-
-
-
-
 </style>
 
 <div class="multiple-choice">
@@ -36,6 +32,7 @@
                     {{ question.content }}</span>
 				<div class="options">
 					<!-- Answer Section -->
+					{% if question.category=='Multiple Choice' or question.category=='True-False' %}
 					<div class="Student-Answers">
 						{%for answer in question.answers %}
 						<div class="answerContainer reset">
@@ -71,6 +68,11 @@
 							</button>
 						</div>
 					</div>
+					{% elif question.category=='Short Answer' %}
+					<!-- put text box here -->
+					{% else %}
+					<!-- put Ace IDE here -->
+					{% endif %}
 				</div>
 			</form>
 			{% endfor %}

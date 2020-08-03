@@ -5,7 +5,7 @@ from wtforms import FormField, FieldList, RadioField
 
 from bettercrative import db
 from bettercrative.models import Quiz, Question, Answer, Classroom
-from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm, QuestionFormOverall, QuestionFormOverallSA
+from bettercrative.quizzes.forms import QuizForm, QuestionForm, AnswerForm, QuestionFormOverall, QuestionFormOverallSA, QuestionFormOverallTF
 
 quizzes = Blueprint('quizzes', __name__)
 
@@ -59,8 +59,8 @@ def quiz(quiz_id):
     qzform = QuizForm()
     quiz = Quiz.query.get_or_404(quiz_id)
     saform = QuestionFormOverallSA()
-    
-    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form, saform = saform)
+    tfform = QuestionFormOverallTF()
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form, saform = saform,tfform=tfform)
 
 
 @quizzes.route("/quiz/edit-name/<int:quiz_id>", methods=['GET', 'POST'])
@@ -330,19 +330,20 @@ def edit_question(question_id):
     qzform = QuizForm()
     
     if question.category =='True-False':
+
+        form = QuestionFormOverallTF()
         
-        #getting the form
-        received_form = request.form
-        correct_answer = 0
-        #getting the correct answer and new question name
-        for key in received_form.keys():
-            if('answer_form' and 'correct' in key):
-                correct_answer=bool(int(received_form[key]))
-        new_content_name = received_form['question_form-content']
         
         #form validation
         if form.validate_on_submit():
-            
+            #getting the form
+            received_form = request.form
+            correct_answer = 0
+            #getting the correct answer and new question name
+            for key in received_form.keys():
+                if('answer_form' and 'correct' in key):
+                    correct_answer=bool(int(received_form[key]))
+                    new_content_name = received_form['question_form-content']
             for answer in question.answers:
                 if answer.content == str(correct_answer):
                     answer.correct = True
@@ -359,10 +360,12 @@ def edit_question(question_id):
     elif question.category == 'Short Answer':
         
         form=QuestionFormOverallSA()
+        print(f'OVERALLSA IS {type(form)}')
         if form.validate_on_submit:
             received_form = request.form
+            print(request.form)
             question.content = received_form['question_form-content']
-            received_answer = received_form['answer_form']
+            received_answer = received_form['answer_form-content']
             print("-------------------------------------------------------------------")
             print("DEBUGGING LINE HERE")
             print(f'question content is {question.content}')
