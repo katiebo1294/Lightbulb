@@ -15,7 +15,7 @@
 
     </span>
 </div>
-<div class="answerContainer reset">
+<div class="answerContainer reset" id='{{question.id}}-sa-selection'>
     <div class='answerchoices show' id="{{question.id}}-answerchoices">
         {%for answer in question.answers%}
             {%if answer.content%}
@@ -48,7 +48,7 @@
             
             <span>{{saform.submit(class='btn btn-sm btn-outline-info', type='submit',id='submit-quiz-'~quiz.id, value='Save')}}</span>
             
-            <span class='btn btn-sm btn-outline-danger' onclick="refresh('#body')"> Cancel</span>
+            <span class='btn btn-sm btn-outline-danger' onclick="refresh('#questionView')"> Cancel</span>
             
         </div>
     </form>
