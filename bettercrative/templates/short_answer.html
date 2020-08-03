@@ -1,9 +1,16 @@
 
 <div class="question-edit-header">
     <span class = 'show' id="question-content-display-{{ question.id }}">
-        <label>{{ question.name }}) {{ question.content }}</label>
-        <span class="btn btn-sm btn-outline-info"
-              onclick="showShortAnswer({{question.id}})"><i class="fas fa-pencil-alt"></i></span>
+        <span class="btn btn-sm btn-outline-info" style="float:right;width:8%;"
+              onclick="showShortAnswer({{question.id}})">Edit <i class="fas fa-pencil-alt"></i></span>
+        <label style="width:90%;height:100%;">
+            <div style="width:22%;float:left;">
+            {{ question.name }}) 
+            </div>
+            <div class="contentInput" style="margin-left:22%;">
+            {{ question.content}}
+            </div>
+        </label>
     </span>
 </div>
 <div class="answerchoices">
@@ -35,11 +42,14 @@
         {{saform.hidden_tag()}}
         {{saform.question_form.hidden_tag()}}
         <div class='form-group'>
-            {{question.name}}) {{saform.question_form.content(placeholder='Enter Question Name', value=question.content )}}
+            <div style="width:20%;float:left;">
+            {{question.name}}) 
+            </div>
+            {{saform.question_form.content(class="contentInput", placeholder='Enter Question Name', placeholder=question.content )}}
         </div>
         <div class='form-group'>
             
-            {{saform.answer_form(class='form-group form-control form-height',style='height:10vw;',placeholder='Enter Answer Here')}}
+            {{saform.answer_form(class='form-group form-control form-height',style='height:10vw;',placeholder=question.answer)}}
             
             
         </div>
