@@ -46,113 +46,85 @@
 </head>
 
 <body id="body" class="tex2jax_ignore">
-	<!--NavBar-->
-	<header>
-		<nav class="navbar navbar-expand-lg">
-			<a class="navbar-brand" href="#">Bettercrative</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-			        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<div class="navTrigger"><!-- TODO Adrian's hamburger here -->
-				</div>
-			</button>
+	<div class="page-wrap">
+		<!--NavBar-->
+		<header>
+			<nav class="navbar navbar-expand-lg">
+				<a class="navbar-brand" href="#">Bettercrative</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="navTrigger"><!-- TODO Adrian's hamburger here -->
+					</div>
+				</button>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item active">
-						<a class="nav-link" href="{{ url_for('main.home') }}">Home <!--TODO use javscript to make the current tab the active one --><span class="sr-only">(current)</span></a>
-					</li>
-					{% if current_user.is_authenticated %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
-					</li><li class="nav-item">
-						<a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
-					</li>
-					{% else %}
-					<li class="nav-item">
-						<a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
-					</li><li class="nav-item">
-						<a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
-					</li>
-					{% endif %}
-				</ul>
-			</div>
-		</nav>
-
-		<!--<nav class="nav" style="padding:0;">
-			<div id="navbar" class="container-fluid navcontainer" style="background-color:#09818b;">
-				<div class="logo">
-					<a href="{{ url_for('main.home') }}">Bettercrative</a>
-				</div>
-
-				<div class="listofcontents" id="navlistcontents">
-					<ul class="navlinks">
-						<li><a href="{{ url_for('main.home') }}"> Home </a></li>
-						<li><a href="{{ url_for('main.about') }}"> About </a></li>
-
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="{{ url_for('main.home') }}">Home <!--TODO use javscript to make the current tab the active one --><span class="sr-only">(current)</span></a>
+						</li>
 						{% if current_user.is_authenticated %}
-
-						<li><a href="{{ url_for('users.account') }}"> Account </a></li>
-						<li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
+						</li><li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+						</li>
 						{% else %}
-
-						<li><a href="{{ url_for('users.register') }}"> Register </a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+						</li><li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
+						</li>
 						{% endif %}
 					</ul>
 				</div>
+			</nav>
+		</header>
+		<!--End Of NavBar-->
 
-				&lt;!&ndash; Collapse for mobile &ndash;&gt;
-				<span class="navbar-toggler-icon">
-                        <i>B</i>
-                        <i>C</i>
-                        <i> </i>
-                    </span>
-			</div> &lt;!&ndash; container close tag &ndash;&gt;
-		</nav>-->
-	</header>
-	<!--End Of NavBar-->
-
-	<!-- Home section -->
-	<!-- Message flashing -->
-	{% with messages = get_flashed_messages(with_categories=true) %}
-	{% if messages %}
-	{% for category, message in messages %}
-	<div class="alert alert-{{ category }}" role="alert">
-		{{ message }}
-	</div>
-	{% endfor %}
-	{% endif %}
-	{% endwith %}
-	<!-- Pop Ups -->
-	<div id="modalPopUp" class="modalPopUp" style="display:none;">
-		<div class="modalContent">
-			<h1 id="modalTitle">
-				Please Confirm
-			</h1>
-			<div id="modalText">
-				An unknown error has occurred
-			</div>
-			<button id="modalButton" type="button" class="btn btn-success">Confirm</button>
-			<button id="cancelButton" type="button" class="btn btn-secondary"
-			        onclick="document.getElementById('modalPopUp').style.display='none'">Cancel
-			</button>
+		<!-- Home section -->
+		<!-- Message flashing -->
+		{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+		{% for category, message in messages %}
+		<div class="alert alert-{{ category }}" role="alert">
+			{{ message }}
 		</div>
+		{% endfor %}
+		{% endif %}
+		{% endwith %}
+		<!-- Pop Ups -->
+		<div id="modalPopUp" class="modalPopUp" style="display:none;">
+			<div class="modalContent">
+				<h1 id="modalTitle">
+					Please Confirm
+				</h1>
+				<div id="modalText">
+					An unknown error has occurred
+				</div>
+				<button id="modalButton" type="button" class="btn btn-success">Confirm</button>
+				<button id="cancelButton" type="button" class="btn btn-secondary"
+						onclick="document.getElementById('modalPopUp').style.display='none'">Cancel
+				</button>
+			</div>
+		</div>
+
+		<!-- Page content -->
+		{% block content %}
+		{% endblock %}
+		<!-- End of Home Section -->
 	</div>
 
-	<!-- Page content -->
-	{% block content %}
-	{% endblock %}
-	<!-- End of Home Section -->
-
+	<!-- prevent things from floating after this section -->
 	<!-- from https://mdbootstrap.com/docs/jquery/navigation/footer/ -->
 	<!-- Footer -->
-	<footer class="page-footer font-small">
+	<footer class="page-footer font-small site-footer">
 
 		<!-- Footer Links -->
 		<div class="container-fluid text-center text-md-left">
-
+	
 			<!-- Grid row-->
 			<div class="row text-center d-flex justify-content-center pt-5 mb-3">
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -160,7 +132,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -168,7 +140,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -176,7 +148,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -184,7 +156,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -192,14 +164,14 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 			</div>
 			<!-- Grid row-->
 			<hr class="rgba-white-light" style="margin: 0 15%;">
-
+	
 			<!-- Grid row-->
 			<div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
-
+	
 				<!-- Grid column -->
 				<div class=" col-md-8 col-12 mt-3">
 					<p>Well better my bread and call me bobby, its the bettercrative
@@ -207,19 +179,19 @@
 						here to better your lives with better-ideas, better-sites, and a better-attitude</p>
 				</div>
 				<!-- Grid column -->
-
+	
 			</div>
 			<!-- Grid row-->
 			<hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
-
+	
 			<!-- Grid row-->
 			<div class="row pb-3">
-
+	
 				<!-- Grid column -->
 				<div style="margin:auto;">
-
+	
 					<div class="flex-center">
-
+	
 						<!-- Facebook -->
 						<a class="fb-ic">
 							<i class="fab fa-facebook-f fa-lg white-text mr-4"> </i>
@@ -244,24 +216,24 @@
 						<a class="pin-ic">
 							<i class="fab fa-pinterest fa-lg white-text"> </i>
 						</a>
-
+	
 					</div>
-
+	
 				</div>
 				<!-- Grid column -->
-
+	
 			</div>
 			<!-- Grid row-->
-
+	
 		</div>
 		<!-- Footer Links -->
-
+	
 		<!-- Copyright -->
 		<div class="footer-copyright text-center py-3">© 2020 Copyright:
 			<a href="https://bettercrative.com/"> bettercrative.com</a>
 		</div>
 		<!-- Copyright -->
-
+	
 	</footer>
 	<!-- Footer -->
 
@@ -272,5 +244,6 @@
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 
 </body>
+
 
 </html>

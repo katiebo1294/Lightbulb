@@ -2,14 +2,15 @@
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
 
-body{
-  
+html,body{
   background-attachment: fixed;
   background-color: #EDEAE5;
   background-repeat: no-repeat;
   background-size:100vw;
   font-family: 'Open Sans', Verdana, sans-serif;
+  min-height:100vh;
 }
+
 .img{
   max-width: 100%;
 }
@@ -37,7 +38,6 @@ body{
 .wrapper{
   margin: 5vw auto;
   width:95%;
-  min-height:100%;
   padding: 0;
 }
 
@@ -109,9 +109,17 @@ nav a:hover, footer a:hover, footer i:hover {
   cursor: pointer;
 }
 
+.page-wrap {
+  min-height: 100vh;
+}
+
+.page-wrap:after {
+  content: "";
+  display: block;
+}
+
 .page-footer {
-  bottom: 0;
-  width: 100%;
+  display:block;
 }
 
 .navbar-nav {
