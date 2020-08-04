@@ -8,8 +8,7 @@ body{
   background-color: #EDEAE5;
   background-repeat: no-repeat;
   background-size:100vw;
-  font-family: 'Open Sans Condensed';
-  font-size: 180%;
+  font-family: 'Open Sans', Verdana, sans-serif;
 }
 .img{
   max-width: 100%;
@@ -39,7 +38,7 @@ body{
   margin: 5vw auto;
   width:95%;
   min-height:100%;
-  display:flex;
+  padding: 0;
 }
 
 section {
@@ -87,7 +86,32 @@ body:after{
 
 
 /* start nav*/
-.nav {
+
+nav, footer {
+  background-color: #09818b;
+}
+
+nav a {
+  color: black;
+}
+
+footer a, footer i {
+  color: white;
+}
+
+nav a:hover, footer a:hover, footer i:hover {
+  color: #00e676;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+footer
+
+.navbar-brand {
+  font-size: 2.5rem;
+}
+
+/*.nav {
   z-index: 3;
   width: 100%;
   height: 65px;
@@ -116,10 +140,10 @@ body:after{
   text-decoration: none;
   color: black;
   font-size: 2.5rem;
-  font-family: 'Source Code Pro', monospace;
+  , monospace;
 }
 .nav div.logo a:hover{
-  /* setting to green for now */
+  *//* setting to green for now *//*
   color: #00E676;
 }
 .nav div.listofcontents{
@@ -138,7 +162,7 @@ body:after{
 .nav div.listofcontents a{
   text-decoration: none;
   color: black;
-  font-family: 'Source Code Pro', monospace;
+  , monospace;
 }
 
 .nav div.listofcontents ul{
@@ -170,20 +194,23 @@ body:after{
   -webkit-transform: all 0.4s ease;
   transition: all 0.4s ease;
 }
-.navTrigger{
+.navbar-toggler-icon{
   display:none;
-}
+}*/
 
 
 /* end of nav*/
 
 /* media query */
 @media screen and (max-width: 414px){
-  .nav div.logo a{
+  /*.nav div.logo a{
     text-decoration: none;
     color: black;
     font-size: 2rem;
-    font-family: 'Source Code Pro', monospace;
+    , monospace;
+  }*/
+  .navbar-brand {
+    font-size: 2rem;
   }
 }
 
@@ -195,7 +222,7 @@ body:after{
   }
 }
 @media screen and (max-width:990px){
-  .navTrigger{
+  .navbar-toggler-icon{
     display:block;
   }
   
@@ -211,7 +238,7 @@ body:after{
   .nav div.listofcontents a{
     text-decoration: none;
     color:white;
-    font-family: 'Source Code Pro', monospace;
+    , monospace;
     
   }
   .nav div.logo{
@@ -251,7 +278,7 @@ body:after{
 /* end media query */
 
 /* animation */
-.navTrigger{
+.navbar-toggler-icon{
   cursor: pointer;
   width: 30px;
   height:25px;
@@ -262,7 +289,7 @@ body:after{
   bottom: 0;
   padding-top: 18px;
 }
-.affix .navTrigger{
+.affix .navbar-toggler-icon{
   cursor: pointer;
   width: 30px;
   height:25px;
@@ -273,7 +300,7 @@ body:after{
   bottom: 0;
   padding: 0;
 }
-.navTrigger i {
+.navbar-toggler-icon i {
   background-color: black;
   border-radius: 2px;
   content: '';
@@ -281,24 +308,24 @@ body:after{
   width: 100%;
   height: 4px;
 }
-.navTrigger i{
+.navbar-toggler-icon i{
   font-size: 60%;
   color: black;
 }
 
-.affix .navTrigger i {
+.affix .navbar-toggler-icon i {
   background-color: white;
   color: white;
   font-size: 40%;
 }
-.navTrigger i:nth-child(1) {
+.navbar-toggler-icon i:nth-child(1) {
   -webkit-animation: outT 0.8s backwards;
   animation: outT 0.8s backwards;
   -webkit-animation-direction: reverse;
   animation-direction: reverse;
 }
 
-.navTrigger i:nth-child(2) {
+.navbar-toggler-icon i:nth-child(2) {
   margin: 5px 0;
   -webkit-animation: outM 0.8s backwards;
   animation: outM 0.8s backwards;
@@ -306,24 +333,24 @@ body:after{
   animation-direction: reverse;
 }
 
-.navTrigger i:nth-child(3) {
+.navbar-toggler-icon i:nth-child(3) {
   -webkit-animation: outBtm 0.8s backwards;
   animation: outBtm 0.8s backwards;
   -webkit-animation-direction: reverse;
   animation-direction: reverse;
 }
 
-.navTrigger.active i:nth-child(1) {
+.navbar-toggler-icon.active i:nth-child(1) {
   -webkit-animation: inT 0.8s forwards;
   animation: inT 0.8s forwards;
 }
 
-.navTrigger.active i:nth-child(2) {
+.navbar-toggler-icon.active i:nth-child(2) {
   -webkit-animation: inM 0.8s forwards;
   animation: inM 0.8s forwards;
 }
 
-.navTrigger.active i:nth-child(3) {
+.navbar-toggler-icon.active i:nth-child(3) {
   -webkit-animation: inBtm 0.8s forwards;
   animation: inBtm 0.8s forwards;
 }
@@ -482,7 +509,7 @@ body:after{
   color: #00E676;
 }
 
-.nav .affix .navTrigger i{
+.nav .affix .navbar-toggler-icon i{
   font-size: 80%;
   color: white;
 }
@@ -499,7 +526,7 @@ body:after{
   color: #00E676;
 }
 
-.nav .affix .navTrigger i{
+.nav .affix .navbar-toggler-icon i{
   font-size: 80%;
   color: white;
 }
@@ -571,7 +598,7 @@ legend.border-bottom.mb-4{
 }
 
 #Create-Button{
-  font-family: "Source Code Pro";
+  ;
   color : white;
 }
 a#Cancel-Button{
@@ -586,7 +613,7 @@ a#Cancel-Button:hover{
 
 input#submit.btn.btn-lg.btn-outline-info{
   font-size:1.8vw;
-  font-family: "Source Code Pro";
+  ;
   font-weight: bold;
 }
 
@@ -594,7 +621,7 @@ input#submit.btn.btn-lg.btn-outline-info{
 
 div.content-section{
   font-size:1vw;
-  font-family: 'Source Code Pro';
+  ;
   color: white;
   
 }
@@ -736,30 +763,21 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 }
 
 .classroomcolumn {
-  flex-grow:1;
-  float:right;
   min-height:30vw;
-  margin-left:2%;
 }
 
-div.col.quizcolumn {
+.quizcolumn {
   height: 100%;
-  flex-grow:2.5;
-  float:left;
   min-height:35%;
-  border-right:1px solid black;
 }
 
 #quiz-content-container {
   position: relative;
 }
 
-nav.navbar{
-  width: 42vw;
-}
-
 .row.table_element{
   padding:5px;
+  min-height: 3vw;
   font-size:1.2vw;
   margin:0;
   border-bottom: 1px solid rgba(50,50,50,.35);
@@ -826,7 +844,7 @@ div.delete_quiz a{
 
 .titlebar {
   padding:.75%;
-  font-family: "Source Code Pro";
+  min-height: 4vw;
   font-size:2vw;
   color:black;
   text-align:center;
@@ -834,10 +852,6 @@ div.delete_quiz a{
   cursor: default;
   border-bottom:1px solid black;
   text-align:left;
-}
-
-.classroomcolumn, .quizcolumn {
-  padding:0;
 }
 
 /* table itself */
@@ -868,7 +882,7 @@ div.delete_quiz a{
 
 .quizcolumn, .quizcolumn a, .classroomcolumn a {
   text-decoration: none;
-  font-family: 'Source Code Pro';
+  ;
   color: black;
   font-size:1.2vw;
 }
@@ -953,7 +967,7 @@ button.Show-Student-Response.btn:hover{
 
 @media screen and (max-width:710px){
   div.row.classroom_element{
-    font-family: 'Source Code Pro';
+    ;
   }
   div.delete_class{
     margin-left:0px;
@@ -973,25 +987,6 @@ button.Show-Student-Response.btn:hover{
   margin:auto;
 }
 
-/* footer */
-footer {
-  width: 100%;
-  bottom: 0;
-}
-
-.page-footer{
-  background-color:#D4D4D4;
-  font-size:1vw;
-}
-
-.footer-element{
-  margin-top:0;
-}
-
-.footer-cont{
-
-}
-
 /* Quiz Section (quiz.html)*/
 .show{
   display:block;
@@ -1004,7 +999,7 @@ footer {
   width:85%;
   margin:auto;
   cursor: default;
-  font-family: "Source Code Pro";
+  ;
   margin-top:5vw;
 }
 

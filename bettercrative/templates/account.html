@@ -55,9 +55,9 @@
 		</div>
 	</div>
 </div>
-<div class="wrapper">
+<div class="wrapper container-fluid">
 	<!-- displays the user's quizzes -->
-	<div id="quizListing" class="col quizcolumn">
+	<div id="quizListing" class="quizcolumn col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
 		<div class="titlebar">
 			<div style="float:left;">
 				Quizzes
@@ -72,11 +72,12 @@
 		<div class="account-tables">
 			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
 			<div class="row table_element">
-				<div class="show table-quiztitle itemName" style="width:60%;">
+				<div class="col-4 show table-quiztitle itemName">
 					{{ quiz.name }}
 				</div>
+				<div class="col-4 date-created" style="text-align:center;">{{ quiz.date_created.strftime("%m/%d/%y") }}</div>
 				<!-- user can enter a quiz to view details, or delete it -->
-				<div class="quiz_icon_col col" style="text-align:right;">
+				<div class="quiz_icon_col col-4" style="text-align:right;">
 					<a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
 						<button type="button" class="btn btn-sm quiz-icon">
 							<i class="account-page-icons fas fa-pencil-alt"></i>
@@ -106,7 +107,7 @@
 		</div>
 	</div>
 	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-	<div id="classroomListing" class="col classroomcolumn">
+	<div id="classroomListing" class="classroomcolumn col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
 		<div class="titlebar">
 			Classrooms
 			<!-- option to create a new classroom -->
@@ -119,7 +120,7 @@
 			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
 			<div class="table_element row">
 				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-				<div class="dropdown show room-name row" style="width:60%;">
+				<div class="dropdown show room-name col-4">
 					<button class="btn dropdown-toggle itemName col" type="button" id="dropdownMenuLink"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						{{ classroom.name }}
@@ -141,15 +142,17 @@
 					</span>
 				</div>
 
+				<div class="col-4 date-created">{{ classroom.date_created.strftime("%m/%d/%y") }}</div>
+
 				<!-- can enter a class to view details, or delete it -->
-				<div class="edit_class col" style="text-align:center; width:10%; margin-left:1%;">
+				<div class="edit_class col-2" style="text-align:center;">
 					<a href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
 						<button type="button" class="btn btn-sm">
 							<i class="account-page-icons fas fa-pencil-alt"></i>
 						</button>
 					</a>
 				</div>
-				<div class="delete_class col" style="text-align:center; width:10%; margin-left:1%;">
+				<div class="delete_class col-2" style="text-align:center;">
 					<button type="button" class="btn btn-sm"
 						onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
 						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
@@ -157,7 +160,7 @@
 				</div>
 			</div>
 			{% endfor %}
-			</table>
+		</div>
 		</div>
 	</div>
 

@@ -27,8 +27,8 @@
 	<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
 	<script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-			
+	        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 	<!-- Mathjax -->
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
@@ -48,7 +48,40 @@
 <body id="body" class="tex2jax_ignore">
 	<!--NavBar-->
 	<header>
-		<nav class="nav" style="padding:0;">
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" href="#">Bettercrative</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<div class="navTrigger"><!-- TODO Adrian's hamburger here -->
+				</div>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ url_for('main.home') }}">Home <!--TODO use javscript to make the current tab the active one --><span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('main.about') }}">About</a>
+					</li>
+					{% if current_user.is_authenticated %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
+					</li><li class="nav-item">
+						<a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+					</li>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+					</li><li class="nav-item">
+						<a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
+
+		<!--<nav class="nav" style="padding:0;">
 			<div id="navbar" class="container-fluid navcontainer" style="background-color:#09818b;">
 				<div class="logo">
 					<a href="{{ url_for('main.home') }}">Bettercrative</a>
@@ -57,68 +90,68 @@
 				<div class="listofcontents" id="navlistcontents">
 					<ul class="navlinks">
 						<li><a href="{{ url_for('main.home') }}"> Home </a></li>
+						<li><a href="{{ url_for('main.about') }}"> About </a></li>
 
 						{% if current_user.is_authenticated %}
-						<li><a href="{{ url_for('main.about') }}"> About </a></li>
+
 						<li><a href="{{ url_for('users.account') }}"> Account </a></li>
 						<li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
 						{% else %}
 
 						<li><a href="{{ url_for('users.register') }}"> Register </a></li>
-						<li><a href="{{ url_for('main.about') }}"> About </a></li>
 						{% endif %}
 					</ul>
 				</div>
 
-				<!-- Collapse for mobile-->
-				<span class="navTrigger">
+				&lt;!&ndash; Collapse for mobile &ndash;&gt;
+				<span class="navbar-toggler-icon">
                         <i>B</i>
                         <i>C</i>
                         <i> </i>
                     </span>
-			</div> <!-- container close tag-->
-		</nav>
+			</div> &lt;!&ndash; container close tag &ndash;&gt;
+		</nav>-->
 	</header>
 	<!--End Of NavBar-->
 
 	<!-- Home section -->
-	<div class="home-section">
-		<!-- Message flashing -->
-		{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-		{% for category, message in messages %}
-		<div class="alert alert-{{ category }}" role="alert">
-			{{ message }}
-		</div>
-		{% endfor %}
-		{% endif %}
-		{% endwith %}
-		<!-- Pop Ups -->
-		<div id="modalPopUp" class="modalPopUp" style="display:none;">
-			<div class="modalContent">
-				<h1 id="modalTitle">
-					Please Confirm
-				</h1>
-				<div id="modalText">
-					An unknown error has occurred
-				</div>
-				<button id="modalButton" type="button" class="btn btn-success">Confirm</button>
-				<button id="cancelButton" type="button" class="btn btn-secondary" onclick="document.getElementById('modalPopUp').style.display='none'">Cancel</button>
-			</div>
-		</div>
-		
-		<!-- Page content -->
-		{% block content %}
-		{% endblock %}
+	<!-- Message flashing -->
+	{% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+	{% for category, message in messages %}
+	<div class="alert alert-{{ category }}" role="alert">
+		{{ message }}
 	</div>
+	{% endfor %}
+	{% endif %}
+	{% endwith %}
+	<!-- Pop Ups -->
+	<div id="modalPopUp" class="modalPopUp" style="display:none;">
+		<div class="modalContent">
+			<h1 id="modalTitle">
+				Please Confirm
+			</h1>
+			<div id="modalText">
+				An unknown error has occurred
+			</div>
+			<button id="modalButton" type="button" class="btn btn-success">Confirm</button>
+			<button id="cancelButton" type="button" class="btn btn-secondary"
+			        onclick="document.getElementById('modalPopUp').style.display='none'">Cancel
+			</button>
+		</div>
+	</div>
+
+	<!-- Page content -->
+	{% block content %}
+	{% endblock %}
 	<!-- End of Home Section -->
 
 	<!-- from https://mdbootstrap.com/docs/jquery/navigation/footer/ -->
 	<!-- Footer -->
-	<footer class="page-footer font-small indigo">
+	<footer class="page-footer font-small">
 
 		<!-- Footer Links -->
-		<div class="container">
+		<div class="container-fluid text-center text-md-left">
 
 			<!-- Grid row-->
 			<div class="row text-center d-flex justify-content-center pt-5 mb-3">
@@ -172,7 +205,7 @@
 
 				<!-- Grid column -->
 				<div class=" col-md-8 col-12 mt-5">
-					<p style="line-height: 1.7rem">Well better my bread and call me bobby, its the bettercrative
+					<p>Well better my bread and call me bobby, its the bettercrative
 						bettergang
 						here to better your lives with better-ideas, better-sites, and a better-attitude</p>
 				</div>
@@ -240,7 +273,7 @@
 	<script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-		
+
 </body>
 
 </html>
