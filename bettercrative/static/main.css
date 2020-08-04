@@ -37,8 +37,9 @@ body{
 
 .wrapper{
   margin: 5vw auto;
-  width:80%;
-  border-top:1px solid black;
+  width:95%;
+  min-height:100%;
+  display:flex;
 }
 
 section {
@@ -726,7 +727,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
   -o-text-overflow: ellipsis;    /* Opera < 11*/
   text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
-  margin:1%;
 }
 
 .itemName:hover {
@@ -736,17 +736,17 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 }
 
 .classroomcolumn {
-  height: 100%;
-  width:23.5%;
+  flex-grow:1;
   float:right;
   min-height:30vw;
+  margin-left:2%;
 }
 
 div.col.quizcolumn {
   height: 100%;
-  width:75%;
+  flex-grow:2.5;
   float:left;
-  min-height:35vw;
+  min-height:35%;
   border-right:1px solid black;
 }
 
@@ -791,13 +791,11 @@ div.dropdown.show a:hover{
 }
 
 .account-page-icons.fa-trash:hover{
-  color: rgb(248, 133, 133);
-  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
+  background-color:#cfccc6;
 }
 
 .account-page-icons.fa-pencil-alt:hover{
-  color: #00E676;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+  background-color:#cfccc6;
 }
 
 .delete_class a, .delete_quiz a{
@@ -839,6 +837,7 @@ div.delete_quiz a{
   overflow:auto;
   cursor: default;
   border-bottom:1px solid black;
+  text-align:left;
 }
 
 .classroomcolumn, .quizcolumn {
@@ -890,16 +889,12 @@ div.delete_quiz a{
   float: right;
   margin:auto;
   display:block;
+  font-size:12pt;
 }
 
-a.btn-large.sideClick{
-  font-size:1.2vw;
-}
-
-a.btn-large.sideClick:hover{
-  color: black;
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-  border-radius: .3em;
+.sideClick:hover{
+  cursor:pointer;
+  background-color: #cfccc6;
 }
 
 #question-title {
@@ -1176,8 +1171,7 @@ a#Question-Edit, a#Answer-Edit{
 }
 
 a#Question-Edit:hover, a#Answer-Edit:hover{
-  color: rgb(2, 132, 69);
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
+  background-color:#cfccc6;
 }
 
 a:not([href]){
@@ -1253,9 +1247,6 @@ div.answerBox{
   color: white;
 }
 
-.btn {
-  border: 2px solid black;
-}
 .btn.btn-lg.set-active{
   font-size:1vw;
 }

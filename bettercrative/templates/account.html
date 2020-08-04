@@ -58,15 +58,15 @@
 <div class="wrapper">
 	<!-- displays the user's quizzes -->
 	<div id="quizListing" class="col quizcolumn">
-		<div class="titlebar" style="text-align:left;">
+		<div class="titlebar">
 			<div style="float:left;">
 				Quizzes
 			</div>
 			<!-- option to create a new quiz -->
 			<div class="">
-				<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
-					Create Quiz
-				</button>
+				<div class="btn-sm sideClick" onclick="javascript:createQuizPopup()">
+					<i class="fas fa-plus"></i> Create Quiz
+				</div>
 			</div>
 		</div>
 		<div class="account-tables">
@@ -107,20 +107,20 @@
 	</div>
 	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
 	<div id="classroomListing" class="col classroomcolumn">
-		<span class="titlebar">
+		<div class="titlebar">
 			Classrooms
-		</span>
-		<!-- option to create a new classroom -->
-		<button class="btn-large sideClick" style="float:left; margin:0.25vw;"
-			onclick="javascript:createClassroomPopup()">
-			Create Classroom
-		</button>
-		<table class="account-tables">
+			<!-- option to create a new classroom -->
+			<div class="btn-sm sideClick" style="float:right; margin:0.25vw;"
+				onclick="javascript:createClassroomPopup()">
+				<i class="fas fa-plus"></i> Create Classroom
+		</div>
+		</div>
+		<div class="account-tables">
 			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-			<tr class="row classroom_element">
+			<div class="classroom_element row">
 				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-				<td class="dropdown show room-name" style="width:60%;">
-					<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
+				<div class="dropdown show room-name row" style="width:60%;">
+					<button class="btn dropdown-toggle itemName col" type="button" id="dropdownMenuLink"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						{{ classroom.name }}
 					</button>
@@ -139,28 +139,28 @@
 						{% endif %}
 						{% endfor %}
 					</span>
-				</td>
+				</div>
 
 				<!-- can enter a class to view details, or delete it -->
-				<td class="edit_class" style="text-align:center; width:10%; margin-left:1%;">
+				<div class="edit_class col" style="text-align:center; width:10%; margin-left:1%;">
 					<a href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
 						<button type="button" class="btn btn-sm">
 							<i class="account-page-icons fas fa-pencil-alt"></i>
 						</button>
 					</a>
-				</td>
-				<td class="delete_class" style="text-align:center; width:10%; margin-left:1%;">
+				</div>
+				<div class="delete_class col" style="text-align:center; width:10%; margin-left:1%;">
 					<button type="button" class="btn btn-sm"
 						onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
 						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
 					</button>
-				</td>
-			</tr>
+				</div>
+			</div>
 			{% endfor %}
-		</table>
+			</table>
+		</div>
 	</div>
-</div>
 
-<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
 
-{% endblock %}
+	{% endblock %}
