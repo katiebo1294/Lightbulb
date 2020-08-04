@@ -752,21 +752,30 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 }
 
 /**Account**/
-.dropdown-content {
+.dropdown-wrapper {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  padding: 12px 16px;
   z-index: 1;
+  width:200%;
+  top:-5%;
+  left: 100%;
+}
+
+.dropdown-content {
+  border: 3px solid #cabfaa;
+  background-color: #e2dcd1;
+  position: absolute;
+  padding: 10%;
+  margin:auto;
+  left: 10%;
 }
 
 .dropdown {
   float:right;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-wrapper {
   display:block;
 }
 
@@ -1024,6 +1033,10 @@ button.Show-Student-Response.btn:hover{
 
 .quiz_icon_col {
   margin:auto;
+}
+
+.dropdown-button {
+  float:left;
 }
 
 /* Quiz Section (quiz.html)*/
