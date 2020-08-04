@@ -2,12 +2,12 @@
 
 {% block content %}
 <div class="row container wrapper">
-	<div class="col-md-6 student">
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 student">
 		<!-- Student login box -->
 		<a href="{{ url_for('classrooms.enter_classroom') }}"><img
 				src="{{url_for('static', filename='images/Student.png') }}"></a>
 	</div>
-	<div class="col-md-6 teacher">
+	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 teacher">
 		<!-- Teacher login box -->
 		<a href="{{ url_for('users.login') }}"><img src="{{url_for('static', filename='images/Teacher.png') }}"></a>
 	</div>

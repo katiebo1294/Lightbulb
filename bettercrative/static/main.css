@@ -91,8 +91,12 @@ nav, footer {
   background-color: #09818b;
 }
 
-nav a {
+.nav-item {
   color: black;
+}
+
+.navbar {
+  padding: 0;
 }
 
 footer a, footer i {
@@ -105,10 +109,32 @@ nav a:hover, footer a:hover, footer i:hover {
   cursor: pointer;
 }
 
-footer
+.navbar-nav {
+  margin-right: 1rem;
+}
 
 .navbar-brand {
   font-size: 2.5rem;
+  margin-top: .5rem;
+  margin-left: 1rem;
+  color: black;
+}
+
+.navbar-toggler{
+  margin-right: 1rem;
+}
+
+.navbar-collapse.show, .navbar-collapse.collapsing {
+  padding: 0 1rem;
+  background-color: black;
+}
+
+.nav-link {
+  color: white;
+}
+
+.nav-link:hover {
+  color: #00e676;
 }
 
 /*.nav {
