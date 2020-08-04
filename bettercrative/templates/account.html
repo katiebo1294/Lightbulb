@@ -71,7 +71,7 @@
 		</div>
 		<div class="account-tables">
 			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
-			<div class="row quiz_element">
+			<div class="row table_element">
 				<div class="show table-quiztitle itemName" style="width:60%;">
 					{{ quiz.name }}
 				</div>
@@ -117,7 +117,7 @@
 		</div>
 		<div class="account-tables">
 			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-			<div class="classroom_element row">
+			<div class="table_element row">
 				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
 				<div class="dropdown show room-name row" style="width:60%;">
 					<button class="btn dropdown-toggle itemName col" type="button" id="dropdownMenuLink"

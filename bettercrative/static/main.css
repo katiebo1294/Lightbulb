@@ -758,15 +758,11 @@ nav.navbar{
   width: 42vw;
 }
 
-.row.quiz_element{
-  font-family: 'Source Code Pro';
+.row.table_element{
+  padding:5px;
   font-size:1.2vw;
   margin:0;
   border-bottom: 1px solid rgba(50,50,50,.35);
-}
-
-.row.classroom_element{
-  font-family: 'Source Code Pro';
 }
 
 div.dropdown.show a.dropdown-item{
