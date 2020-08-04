@@ -146,6 +146,7 @@ function setQType(url,question_id, qtype) {
 
 function change_active_question(url,question_id,quiz_id) {
     event.preventDefault();
+
     $.ajax({
         type: "GET",
         data: {'question_id': question_id,
@@ -161,20 +162,22 @@ function change_active_question(url,question_id,quiz_id) {
     });
 };
 
-function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
+function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value,student_id){
     event.preventDefault();
+    console.log(student_id);
     console.log('were in');
     $.ajax({
         type: "GET",
         data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
-        'page_num': page_num, 'quiz_id':quiz_id, 'value':value},
+        'page_num': page_num, 'quiz_id':quiz_id, 'value':value,'student_id':student_id},
         url: url,
         error: function(response) {
             alert(response.statusText);
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#questionView");
+            refresh("#response-"+quiz_id);
+            
         }
     });
 }
@@ -257,9 +260,7 @@ function checked(span){
 
         var true_checkbox = document.getElementById(true_checkbox_id);
         true_checkbox.checked = false;
-        
-        
-    
+
          
     }
 
@@ -357,3 +358,14 @@ function createQuizPopup() {
     modal.style.display = "block";
     modalForm.style.display = "block";
 }
+
+function responseTF(question_id){
+    var t = document.getElementById('question-'+question_id+'-true')
+    var f = document.getElementById('question-'+question_id+'-false');
+    console.log(t);
+    console.log(f);
+}
+
+document.getElementById('SA-response').addEventListener('click' , () ->{
+    console.log('SA answer noticed');
+});

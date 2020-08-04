@@ -360,7 +360,7 @@ def edit_question(question_id):
     elif question.category == 'Short Answer':
         
         form=QuestionFormOverallSA()
-        print(f'OVERALLSA IS {type(form)}')
+        
         if form.validate_on_submit:
             received_form = request.form
             print(request.form)
