@@ -31,7 +31,7 @@ function addAnswer(url, q_id) {
 // remove Question
 function removeQuestionPopup(url, q_id) {
     modal = document.getElementById("modalPopUp");
-    modalText = document.getElementById("modalText")
+    modalText = document.getElementById("modalText");
     modalButton = document.getElementById("modalButton");
     modalText.innerHTML = "Are you sure that you want to delete this question?";
     modalButton.onclick = function() {removeQuestion(url,q_id)};

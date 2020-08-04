@@ -6,10 +6,11 @@ $('.navTrigger').click(function () {
 });
 
 $(window).scroll(function () {
+    smoothnav = document.getElementById("navbar");
     if ($(document).scrollTop() > 30) {
-        $('.nav').addClass('affix');
+        $(smoothnav).addClass('affix').animate();
     } else {
-        $('.nav').removeClass('affix');
+        $(smoothnav).removeClass('affix').animate();
     }
 });
 

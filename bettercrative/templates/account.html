@@ -1,33 +1,40 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div id="modalPopUpForm" class="modalPopUp" {% if classForm.name.errors or quizForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
+<div id="modalPopUpForm" class="modalPopUp" {% if classForm.name.errors or quizForm.name.errors %}
+	style="display:block;" {% else %} style="display:none;" {% endif %}>
 	<div class="modalContent">
 		<h1 id="modalTextForm">
 		</h1>
 		<!-- forms for both the class and quiz pop ups, they need to be separate as they take diff info -->
-		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
+		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;"
+			{% endif %}>
 			<form action="" method="POST">
-				{{ classForm.hidden_tag() }} <!--adds ctrf form-->
-					<fieldset>
-						{% if classForm.name.errors %}
-						{{ classForm.name(class="form-control form-control-lg is-invalid") }}
-						<div class="invalid-feedback">
-							{% for error in classForm.name.errors %}
-							<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-						{% else %}
-							{{ classForm.name(class="form-control form-control-lg") }}
-						{% endif %}
-					</fieldset>
-					{{classForm.submitClass(class="btn btn-success")}} <!-- confirm button -->
-					<button type="button" class="btn btn-secondary" onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
+				{{ classForm.hidden_tag() }}
+				<!--adds ctrf form-->
+				<fieldset>
+					{% if classForm.name.errors %}
+					{{ classForm.name(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in classForm.name.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ classForm.name(class="form-control form-control-lg") }}
+					{% endif %}
+				</fieldset>
+				{{classForm.submitClass(class="btn btn-success")}}
+				<!-- confirm button -->
+				<button type="button" class="btn btn-secondary"
+					onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
 			</form>
 		</div>
-		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
+		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;"
+			{% endif %}>
 			<form action="" method="POST">
-				{{ quizForm.hidden_tag() }} <!--adds ctrf form-->
+				{{ quizForm.hidden_tag() }}
+				<!--adds ctrf form-->
 				<fieldset>
 					{% if quizForm.name.errors %}
 					{{ quizForm.name(class="form-control form-control-lg is-invalid") }}
@@ -37,115 +44,120 @@
 						{% endfor %}
 					</div>
 					{% else %}
-						{{ quizForm.name(class="form-control form-control-lg") }}
+					{{ quizForm.name(class="form-control form-control-lg") }}
 					{% endif %}
 				</fieldset>
-				{{quizForm.submitQuiz(class="btn btn-success")}} <!-- confirm button -->
-				<button type="button" class="btn btn-secondary" onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
+				{{quizForm.submitQuiz(class="btn btn-success")}}
+				<!-- confirm button -->
+				<button type="button" class="btn btn-secondary"
+					onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
 			</form>
 		</div>
 	</div>
 </div>
 <div class="wrapper">
-	<div class="account_box">
-		<!-- displays the user's quizzes -->
-		<div id="quizListing" class="col quizcolumn">
-			<div class="titlebar" style="text-align:left;">
-				<div style="float:left;">
-					Quizzes
-				</div>
-				<!-- option to create a new quiz -->
-				<div class="">
-					<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
-						Create Quiz
-					</button>
-				</div>
+	<!-- displays the user's quizzes -->
+	<div id="quizListing" class="col quizcolumn">
+		<div class="titlebar" style="text-align:left;">
+			<div style="float:left;">
+				Quizzes
 			</div>
-			<table class="account-tables">
-				{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
-				<tr class="row quiz_element">
-					<td class="show table-quiztitle itemName" style="width:60%;">
-						{{ quiz.name }}
-					</td>
-					<!-- user can enter a quiz to view details, or delete it -->
-					<td class="quiz_icon_col" style="text-align:right;">
-						<a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-						<button type="button" class="btn btn-sm quiz-icon" >
+			<!-- option to create a new quiz -->
+			<div class="">
+				<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
+					Create Quiz
+				</button>
+			</div>
+		</div>
+		<div class="account-tables">
+			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
+			<div class="row quiz_element">
+				<div class="show table-quiztitle itemName" style="width:60%;">
+					{{ quiz.name }}
+				</div>
+				<!-- user can enter a quiz to view details, or delete it -->
+				<div class="quiz_icon_col col" style="text-align:right;">
+					<a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+						<button type="button" class="btn btn-sm quiz-icon">
 							<i class="account-page-icons fas fa-pencil-alt"></i>
 						</button>
-						</a>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
-							<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
-						</button>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="">
-							<i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i>
-						</button>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="">
-							<i class="account-page-icons fas fa-copy" aria-hidden="true"></i>
-						</button>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="">
-							<i class="account-page-icons fas fa-download" aria-hidden="true"></i>
-						</button>
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
+					</a>
+					<button type="button" class="btn btn-sm quiz-icon"
+						onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
+						<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
+					</button>
+					<div class="dropdown">
+						<button class="btn btn-sm dropbtn">...</button>
+						<div id="quiz_options_more" class="dropdown-content">
+							<button type="button" class="btn btn-sm quiz-icon" onclick="">
+								<i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i>
+							</button>
+							<button type="button" class="btn btn-sm quiz-icon" onclick="">
+								<i class="account-page-icons fas fa-copy" aria-hidden="true"></i>
+							</button>
+							<button type="button" class="btn btn-sm quiz-icon" onclick="">
+								<i class="account-page-icons fas fa-download" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
 		</div>
-		<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-		<div id="classroomListing" class="col classroomcolumn">
-			<span class="titlebar">
-				Classrooms
-			</span>
-			<!-- option to create a new classroom -->
-			<button class="btn-large sideClick" style="float:left; margin:0.25vw;" onclick="javascript:createClassroomPopup()">
-				Create Classroom
-			</button>
-			<table class="account-tables">
-				{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-				<tr class="row classroom_element">
-					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-					<td class="dropdown show room-name" style="width:60%;">
-						<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{{ classroom.name }}
-						</button>
-						<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							{% for quiz in classroom.added_quizzes %}
-							{% if classroom.active_quiz == quiz.id %}
-							<a class="dropdown-item" href="#"
+	</div>
+	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
+	<div id="classroomListing" class="col classroomcolumn">
+		<span class="titlebar">
+			Classrooms
+		</span>
+		<!-- option to create a new classroom -->
+		<button class="btn-large sideClick" style="float:left; margin:0.25vw;"
+			onclick="javascript:createClassroomPopup()">
+			Create Classroom
+		</button>
+		<table class="account-tables">
+			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
+			<tr class="row classroom_element">
+				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
+				<td class="dropdown show room-name" style="width:60%;">
+					<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{{ classroom.name }}
+					</button>
+					<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						{% for quiz in classroom.added_quizzes %}
+						{% if classroom.active_quiz == quiz.id %}
+						<a class="dropdown-item" href="#"
 							onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
-								*ACTIVE* Quiz: {{ quiz.name }}
-							</a>
-							{% else %}
-							<a class="dropdown-item" href="#"
+							*ACTIVE* Quiz: {{ quiz.name }}
+						</a>
+						{% else %}
+						<a class="dropdown-item" href="#"
 							onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
-								Quiz: {{ quiz.name }}
-							</a>
-							{% endif %}
-							{% endfor %}
-						</span>
-					</td>
+							Quiz: {{ quiz.name }}
+						</a>
+						{% endif %}
+						{% endfor %}
+					</span>
+				</td>
 
-					<!-- can enter a class to view details, or delete it -->
-					<td class="edit_class" style="text-align:center; width:10%; margin-left:1%;">
-						<a href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
+				<!-- can enter a class to view details, or delete it -->
+				<td class="edit_class" style="text-align:center; width:10%; margin-left:1%;">
+					<a href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
 						<button type="button" class="btn btn-sm">
 							<i class="account-page-icons fas fa-pencil-alt"></i>
 						</button>
-						</a>
-					</td>
-					<td class="delete_class" style="text-align:center; width:10%; margin-left:1%;">
-						<button type="button" class="btn btn-sm"  onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
-							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-						</button>
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
-
-
-		
+					</a>
+				</td>
+				<td class="delete_class" style="text-align:center; width:10%; margin-left:1%;">
+					<button type="button" class="btn btn-sm"
+						onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
+						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+					</button>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
 	</div>
 </div>
 

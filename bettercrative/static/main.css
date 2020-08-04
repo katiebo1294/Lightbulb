@@ -5,7 +5,7 @@
 body{
   
   background-attachment: fixed;
-  background-image: url('images/laptopmono.jpg');
+  background-color: #EDEAE5;
   background-repeat: no-repeat;
   background-size:100vw;
   font-family: 'Open Sans Condensed';
@@ -37,10 +37,8 @@ body{
 
 .wrapper{
   margin: 5vw auto;
-  width:100%;
-  overflow: auto;
-  /* background-color:rgb(255, 255, 255);
-  padding:2vw; */
+  width:80%;
+  border-top:1px solid black;
 }
 
 section {
@@ -97,10 +95,20 @@ body:after{
   text-align: center;
 }
 
+.navcontainer {
+  padding:1vw;
+  -webkit-transition: all 150ms linear;
+  -moz-transition: all 150ms linear;
+  -ms-transition: all 150ms linear;
+  -o-transition: all 150ms linear;
+  transition: all 150ms linear;
+}
+
 .nav div.logo{
   float: left;
   width: auto;
-  height: auto;
+  height: 1vw;
+  margin-left: 3vw;
 }
 
 .nav div.logo a{
@@ -276,11 +284,9 @@ body:after{
   font-size: 60%;
   color: black;
 }
-  .affix .navTrigger i{
-    background-color: white;
-  }
 
 .affix .navTrigger i {
+  background-color: white;
   color: white;
   font-size: 40%;
 }
@@ -679,6 +685,28 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 }
 
 /**Account**/
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.dropdown {
+  float:right;
+}
+
+.dropdown:hover .dropdown-content {
+  display:block;
+}
+
+.dropbtn {
+  padding:5.6px;
+  margin-left:25%;
+}
 
 .info-bar {
   height:5%;
@@ -707,29 +735,19 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   overflow-x: auto;              /* "overflow" value must be different from  visible"*/ 
 }
 
-.account_box{
-  background-color:#687299;
-  height:100%;
-  overflow:auto;
-  padding:2vw;
-}
-
 .classroomcolumn {
   height: 100%;
   width:23.5%;
   float:right;
   min-height:30vw;
-  border: .1em solid #747da8;
-  background-color:#8793c7;
 }
 
 div.col.quizcolumn {
-  background-color:#8cb4d2;
-  border: .1em solid #7a9cb6;
   height: 100%;
   width:75%;
   float:left;
   min-height:35vw;
+  border-right:1px solid black;
 }
 
 #quiz-content-container {
@@ -743,6 +761,7 @@ nav.navbar{
 .row.quiz_element{
   font-family: 'Source Code Pro';
   font-size:1.2vw;
+  margin:0;
   border-bottom: 1px solid rgba(50,50,50,.35);
 }
 
@@ -812,26 +831,24 @@ div.delete_quiz a{
 }
 
 .titlebar {
-  border: 1px solid black;
-  background-color:grey;
   padding:.75%;
   font-family: "Source Code Pro";
   font-size:2vw;
-  color:white;
+  color:black;
   text-align:center;
   overflow:auto;
   cursor: default;
+  border-bottom:1px solid black;
 }
 
 .classroomcolumn, .quizcolumn {
-  padding: 1%;
+  padding:0;
 }
 
 /* table itself */
 .account-tables {
   width: 100%;
   table-layout: fixed;
-  padding: 0.2em;
   border: none;
 }
 
