@@ -19,6 +19,16 @@
     div.multiple-choice {
         margin-top: 7vw;
     }
+
+</style>
+
+<style media="screen" type="text/css">
+	#editor {
+        height: 30vw;
+        width: 70vw;
+        position: relative;
+        margin-bottom: 3vw;
+    }
 </style>
 
 <div class="multiple-choice">
@@ -48,7 +58,7 @@
 
 									{% else %}
 									<label class="btn btn-secondary button-choices" id="question-{{answer.index+1}}"
-									onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}'  )">
+									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}'  )">
 										<input class="response" name="studentResponse" type="checkbox"
 										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
 									</label>
@@ -72,6 +82,18 @@
 					<!-- put text box here -->
 					{% else %}
 					<!-- put Ace IDE here -->
+					<div id="editor">function foo(items) {
+						var x = "All this is syntax highlighted";
+						return x;
+						}
+					</div>
+
+					<script src="{{ url_for('static', filename='js/src-min/ace.js') }}" type="text/javascript" charset="utf-8"></script>
+					<script>
+					    var editor = ace.edit("editor");
+					    editor.setTheme("ace/theme/twilight");
+					    editor.session.setMode("ace/mode/javascript");
+					</script>
 					{% endif %}
 				</div>
 			</form>
@@ -90,7 +112,9 @@
 			<!-- prevent things from floating after this section -->
 			<div style=" clear: both;"></div>
 		</div>
-		<button class="btn btn-lg btn-primary quiz-back-btn"><a href="{% if current_user.is_authenticated %}{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}{% else %}{{ url_for('main.home') }}{% endif %}"><i class="fas fa-angle-double-left"></i> Go Back</a></button>
+		<button class="btn btn-lg btn-primary quiz-back-btn"><a
+				href="{% if current_user.is_authenticated %}{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}{% else %}{{ url_for('main.home') }}{% endif %}"><i
+				class="fas fa-angle-double-left"></i> Go Back</a></button>
 	</div>
 	<div class="reset">
 	</div>
