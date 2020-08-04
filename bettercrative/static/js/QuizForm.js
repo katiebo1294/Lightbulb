@@ -366,6 +366,3 @@ function responseTF(question_id){
     console.log(f);
 }
 
-document.getElementById('SA-response').addEventListener('click' , () ->{
-    console.log('SA answer noticed');
-});
