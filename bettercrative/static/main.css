@@ -109,6 +109,11 @@ nav a:hover, footer a:hover, footer i:hover {
   cursor: pointer;
 }
 
+.page-footer {
+  bottom: 0;
+  width: 100%;
+}
+
 .navbar-nav {
   margin-right: 1rem;
 }
