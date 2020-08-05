@@ -164,6 +164,14 @@ nav a:hover, footer a:hover, footer i:hover {
   background-color: black;
 }
 
+.navbar-collapse.show .nav-link, .navbar-collapse.collapsing .nav-link {
+  color: white;
+}
+
+.navbar-collapse.show .nav-link:hover, .navbar-collapse.collapsing .nav-link:hover {
+  color: #00e676;
+}
+
 .nav-link {
   color: black;
   line-height: 4vw;
@@ -171,9 +179,8 @@ nav a:hover, footer a:hover, footer i:hover {
 }
 
 .nav-link:hover {
-  background-color: white;
+  color: #00e676;
   text-decoration: none;
-  color: black;
 }
 
 /* hamburger icon */
