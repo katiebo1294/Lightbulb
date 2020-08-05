@@ -68,14 +68,22 @@
 						</li>
 						{% if current_user.is_authenticated %}
 						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.quizzes') }}">Quizzes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.classrooms') }}">Classrooms</a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
-						</li><li class="nav-item">
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
 						</li>
 						{% else %}
 						<li class="nav-item">
 							<a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
-						</li><li class="nav-item">
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
 						</li>
 						{% endif %}
