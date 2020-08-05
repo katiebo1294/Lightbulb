@@ -127,6 +127,7 @@ nav a:hover, footer a:hover, footer i:hover {
 }
 
 .navbar-brand {
+  font-family: "Rowdies";
   font-size: 2.5rem;
   margin-top: .5rem;
   margin-left: 1rem;
@@ -240,6 +241,29 @@ nav a:hover, footer a:hover, footer i:hover {
 
 /* end of nav*/
 
+/* Bootstrap media queries */
+/*Extra small devices (portrait phones, less than 576px)
+No media query for `xs` since this is the default in Bootstrap*/
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+  .options-header {
+    text-align: center;
+  }
+}
+
 /* media query */
 @media screen and (max-width: 414px){
   /*.nav div.logo a{
@@ -252,13 +276,7 @@ nav a:hover, footer a:hover, footer i:hover {
     font-size: 2rem;
   }
 }
-
-
 @media screen and (min-width: 900px) and (max-width: 1080px){
-  .container{
-    margin:0;
-    
-  }
 }
 @media screen and (max-width:990px){
   .navbar-toggler-icon{
@@ -772,7 +790,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 }
 
 .dropdown {
-  float:right;
+  float:left;
 }
 
 .dropdown:hover .dropdown-wrapper {
@@ -829,6 +847,14 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   font-size:1.2vw;
   margin:0;
   border-bottom: 1px solid rgba(50,50,50,.35);
+}
+
+.table-header {
+  font-weight: bold;
+}
+
+.options-header {
+  text-align: right;
 }
 
 div.dropdown.show a.dropdown-item{
@@ -1031,8 +1057,9 @@ button.Show-Student-Response.btn:hover{
   text-align:center;
 }
 
-.quiz_icon_col {
+.quiz-icon-col {
   margin:auto;
+  text-align: right;
 }
 
 .dropdown-button {
