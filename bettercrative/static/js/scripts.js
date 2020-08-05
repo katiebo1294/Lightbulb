@@ -4,7 +4,7 @@ $('.navTrigger').click(function () {
 });
 
 $(window).scroll(function () {
-    smoothnav = document.getElementById("navbar");
+    smoothnav = document.getElementsByClassName("navbar")[0];
     if ($(document).scrollTop() > 30) {
         $(smoothnav).addClass('affix').animate();
     } else {

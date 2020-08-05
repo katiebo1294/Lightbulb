@@ -70,13 +70,13 @@
 			</div>
 		</div>
 		<div class="account-tables">
-			<div class="row table_element">
+			<div class="row table-element">
 				<div class="col-3 show table-header">Name</div>
 				<div class="col-6 text-center show table-header">Date Created</div>
 				<div class="col-3 show table-header options-header">Options</div>
 			</div>
 			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
-			<div class="row table_element">
+			<div class="row table-element">
 				<div class="col-4 show table-quiztitle itemName">
 					{{ quiz.name }}
 				</div>
@@ -126,13 +126,13 @@
 			</div>
 		</div>
 		<div class="account-tables">
-			<div class="row table_element">
+			<div class="row table-element header-row">
 				<div class="col-3 show table-header">Name</div>
 				<div class="col-6 text-center show table-header">Date Created</div>
 				<div class="col-3 show table-header options-header">Options</div>
 			</div>
 			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-			<div class="table_element row">
+			<div class="table-element row">
 				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
 				<div class="dropdown show room-name col-4">
 					<button class="btn dropdown-toggle itemName col" type="button" id="dropdownMenuLink"

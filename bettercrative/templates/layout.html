@@ -47,14 +47,14 @@
 </head>
 
 <body id="body" class="tex2jax_ignore">
-	<div class="page-wrap">
+	<main class="page-wrap">
 		<!--NavBar-->
 		<header>
 			<nav class="navbar navbar-expand-lg">
-				<a class="navbar-brand" href="#"><h2>Bettercrative</h2></a>
+				<a class="navbar-brand" href="{{ url_for('main.home') }}"><h2>Bettercrative</h2></a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<div class="navTrigger"><!-- TODO Adrian's hamburger here -->
+					<div class="navTrigger">
 						<span>B</span>
 						<span>C</span>
 						<span> </span>
@@ -116,7 +116,7 @@
 		{% block content %}
 		{% endblock %}
 		<!-- End of Home Section -->
-	</div>
+	</main>
 
 	<!-- prevent things from floating after this section -->
 	<!-- from https://mdbootstrap.com/docs/jquery/navigation/footer/ -->
