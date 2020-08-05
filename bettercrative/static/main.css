@@ -123,6 +123,10 @@ nav a:hover, footer a:hover, footer i:hover {
   cursor: pointer;
 }
 
+.current-page {
+  color: #00e676!important;
+}
+
 .page-wrap {
   min-height: 100vh;
 }
