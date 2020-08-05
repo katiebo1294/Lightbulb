@@ -1,8 +1,6 @@
-$('.navbar-toggler-icon').click(function () {
+$('.navTrigger').click(function () {
     $(this).toggleClass('active');
     console.log("Clicked hamburger");
-    $("#navlistcontents").toggleClass("show_list");
-    $("#navlistcontents").fadeIn();
 });
 
 $(window).scroll(function () {

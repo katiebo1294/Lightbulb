@@ -2,13 +2,27 @@
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
 
-html,body{
+html {
   background-attachment: fixed;
   background-color: #EDEAE5;
   background-repeat: no-repeat;
   background-size:100vw;
   font-family: 'Open Sans', Verdana, sans-serif;
   min-height:100vh;
+}
+
+html {
+  font-size: 16px!important;
+}
+@media screen and (min-width: 320px) {
+  html {
+    font-size: calc(16px + 6 * ((100vw - 320px) / 680))!important;
+  }
+}
+@media screen and (min-width: 1000px) {
+  html {
+    font-size: 22px!important;
+  }
 }
 
 .img{
@@ -27,7 +41,6 @@ html,body{
   margin: 5% 10% 0% 10%;
   padding: 12px;
   border-radius: 3px;
-  font-size: 1.2rem;
   border-width: 2px;
   border-style: solid;
   position: absolute;
@@ -128,7 +141,6 @@ nav a:hover, footer a:hover, footer i:hover {
 
 .navbar-brand {
   font-family: "Rowdies";
-  font-size: 2.5rem;
   margin-top: .5rem;
   margin-left: 1rem;
   color: black;
@@ -136,6 +148,14 @@ nav a:hover, footer a:hover, footer i:hover {
 
 .navbar-toggler{
   margin-right: 1rem;
+  right: 0;
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+}
+
+.navbar-toggler:focus {
+    outline: none!important;
 }
 
 .navbar-collapse.show, .navbar-collapse.collapsing {
@@ -150,6 +170,79 @@ nav a:hover, footer a:hover, footer i:hover {
 .nav-link:hover {
   color: #00e676;
 }
+
+/* hamburger icon */
+.navTrigger{
+  cursor: pointer;
+  width: 30px;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  line-height: 3.5;
+  font-style: italic;
+}
+.affix .navTrigger{
+  cursor: pointer;
+  width: 30px;
+  height:25px;
+  margin: auto;
+  position: absolute;
+  right: 30px;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+}
+.navTrigger span {
+  background-color: black;
+  border-radius: 2px;
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+}
+
+.affix .navTrigger span {
+  background-color: white;
+  color: white;
+}
+
+.navTrigger span:nth-child(1) {
+  -webkit-animation: outT 0.8s backwards;
+  animation: outT 0.8s backwards;
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
+}
+
+.navTrigger span:nth-child(2) {
+  margin: 5px 0;
+  -webkit-animation: outM 0.8s backwards;
+  animation: outM 0.8s backwards;
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
+}
+
+.navTrigger span:nth-child(3) {
+  -webkit-animation: outBtm 0.8s backwards;
+  animation: outBtm 0.8s backwards;
+  -webkit-animation-direction: reverse;
+  animation-direction: reverse;
+}
+
+.navTrigger.active span:nth-child(1) {
+  -webkit-animation: inT 0.8s forwards;
+  animation: inT 0.8s forwards;
+}
+
+.navTrigger.active span:nth-child(2) {
+  -webkit-animation: inM 0.8s forwards;
+  animation: inM 0.8s forwards;
+}
+
+.navTrigger.active span:nth-child(3) {
+  -webkit-animation: inBtm 0.8s forwards;
+  animation: inBtm 0.8s forwards;
+}
+/* end hamburger icon */
 
 /*.nav {
   z-index: 3;
@@ -234,7 +327,7 @@ nav a:hover, footer a:hover, footer i:hover {
   -webkit-transform: all 0.4s ease;
   transition: all 0.4s ease;
 }
-.navbar-toggler-icon{
+.navTrigger{
   display:none;
 }*/
 
@@ -270,28 +363,15 @@ No media query for `xs` since this is the default in Bootstrap*/
     text-decoration: none;
     color: black;
     font-size: 2rem;
-    , monospace;
   }*/
-  .navbar-brand {
-    font-size: 2rem;
-  }
 }
 @media screen and (min-width: 900px) and (max-width: 1080px){
 }
 @media screen and (max-width:990px){
-  .navbar-toggler-icon{
+ /* .navTrigger{
     display:block;
   }
-  
-  .nav div.logged_in{
-    height: 65px;
-    float: right;
-    
-    display:flex;
-  }
-  .nav div.logged_in a{
-    font-size: 80%;
-  }
+
   .nav div.listofcontents a{
     text-decoration: none;
     color:white;
@@ -322,95 +402,20 @@ No media query for `xs` since this is the default in Bootstrap*/
   .nav div.listofcontents ul li{
     width: 100%;
     text-align: center;
-    font-size: 300%;
   }
   .nav div.listofcontents ul li a{
     width: 100%;
     font-size: 50%;
     padding: 20px;
   }
-  
+  */
 }
 /* Collapse */
 /* end media query */
 
 /* animation */
-.navbar-toggler-icon{
-  cursor: pointer;
-  width: 30px;
-  height:25px;
-  margin: auto;
-  position: absolute;
-  right: 30px;
-  top: 0;
-  bottom: 0;
-  padding-top: 18px;
-}
-.affix .navbar-toggler-icon{
-  cursor: pointer;
-  width: 30px;
-  height:25px;
-  margin: auto;
-  position: absolute;
-  right: 30px;
-  top: 0;
-  bottom: 0;
-  padding: 0;
-}
-.navbar-toggler-icon i {
-  background-color: black;
-  border-radius: 2px;
-  content: '';
-  display: block;
-  width: 100%;
-  height: 4px;
-}
-.navbar-toggler-icon i{
-  font-size: 60%;
-  color: black;
-}
 
-.affix .navbar-toggler-icon i {
-  background-color: white;
-  color: white;
-  font-size: 40%;
-}
-.navbar-toggler-icon i:nth-child(1) {
-  -webkit-animation: outT 0.8s backwards;
-  animation: outT 0.8s backwards;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
 
-.navbar-toggler-icon i:nth-child(2) {
-  margin: 5px 0;
-  -webkit-animation: outM 0.8s backwards;
-  animation: outM 0.8s backwards;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
-
-.navbar-toggler-icon i:nth-child(3) {
-  -webkit-animation: outBtm 0.8s backwards;
-  animation: outBtm 0.8s backwards;
-  -webkit-animation-direction: reverse;
-  animation-direction: reverse;
-}
-
-.navbar-toggler-icon.active i:nth-child(1) {
-  -webkit-animation: inT 0.8s forwards;
-  animation: inT 0.8s forwards;
-}
-
-.navbar-toggler-icon.active i:nth-child(2) {
-  -webkit-animation: inM 0.8s forwards;
-  animation: inM 0.8s forwards;
-}
-
-.navbar-toggler-icon.active i:nth-child(3) {
-  -webkit-animation: inBtm 0.8s forwards;
-  animation: inBtm 0.8s forwards;
-}
 @-webkit-keyframes inM {
   50% {
       -webkit-transform: rotate(0deg);
@@ -545,13 +550,11 @@ No media query for `xs` since this is the default in Bootstrap*/
 
 .affix {
   padding: 0;
-  font-size: 80%;
   background-color:black;
 }
 
 .affix .container .logo a{
   color: white;
-  font-size: 100%;
 }
 
 .affix .container .logo a:hover{
@@ -566,8 +569,7 @@ No media query for `xs` since this is the default in Bootstrap*/
   color: #00E676;
 }
 
-.nav .affix .navbar-toggler-icon i{
-  font-size: 80%;
+.nav .affix .navTrigger span{
   color: white;
 }
 
@@ -583,8 +585,7 @@ No media query for `xs` since this is the default in Bootstrap*/
   color: #00E676;
 }
 
-.nav .affix .navbar-toggler-icon i{
-  font-size: 80%;
+.nav .affix .navTrigger span{
   color: white;
 }
 
@@ -638,7 +639,6 @@ No media query for `xs` since this is the default in Bootstrap*/
 .home-section-container p{
   text-align: center;
   font-family: 'Indie Flower';
-  font-size: 30px;
 }
 /* end about section */
 /* form boxes */
@@ -651,7 +651,6 @@ input#name{
 }
 
 legend.border-bottom.mb-4{
-  font-size:2vw;
 }
 
 #Create-Button{
@@ -659,7 +658,8 @@ legend.border-bottom.mb-4{
   color : white;
 }
 a#Cancel-Button{
-  font-size: 1.8vw; text-decoration: none; font-family:'Source Code Pro'; color: white;
+  text-decoration: none;
+  color: white;
 }
 
 a#Cancel-Button:hover{
@@ -669,15 +669,12 @@ a#Cancel-Button:hover{
 }
 
 input#submit.btn.btn-lg.btn-outline-info{
-  font-size:1.8vw;
-  ;
   font-weight: bold;
 }
 
 /* form boxes end*/
 
 div.content-section{
-  font-size:1vw;
   ;
   color: white;
   
@@ -689,7 +686,6 @@ div.content-section{
   height: 40%;
   width: 30%;
   bottom: 31%;
-  font-size: 100%;
   border-radius: 10px;
   box-shadow: 1px 2px 2px black;
 }
@@ -710,7 +706,6 @@ div.content-section{
 }
 
 a#dropdownMenuLink.navbar-brand.dropdown-toggle{
-  font-size: 1.7vw;
 }
 @media(max-width: 320px){
   .nav div.logo a{
@@ -747,7 +742,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   position: relative;
   background-color: transparent;
   height:500px;
-  font-size: 175%;
 }
 
 .form-container {
@@ -811,7 +805,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 .info-icon {
   border:none;
   float:right;
-  font-size:.5em;
   background-color:transparent;
 }
 
@@ -844,7 +837,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 .row.table_element{
   padding:5px;
   min-height: 3vw;
-  font-size:1.2vw;
   margin:0;
   border-bottom: 1px solid rgba(50,50,50,.35);
 }
@@ -900,7 +892,6 @@ div.dropdown.show a:hover{
 }
 
 div.enter_quiz a{
-  font-size:1.2vw;
   color: white;
   text-decoration: none;
 }
@@ -911,7 +902,6 @@ div.enter_quiz a:hover{
 }
 
 div.delete_quiz a{
-  font-size:1.2vw;
   color:white;
   text-decoration:none;
 }
@@ -919,13 +909,20 @@ div.delete_quiz a{
 .titlebar {
   padding:.75%;
   min-height: 4vw;
-  font-size:2vw;
   color:black;
   text-align:center;
   overflow:auto;
   cursor: default;
   border-bottom:1px solid black;
   text-align:left;
+}
+
+.titlebar > h5 {
+  float: left;
+}
+
+.quiz-icon-col > * {
+  float: right;
 }
 
 /* table itself */
@@ -958,7 +955,6 @@ div.delete_quiz a{
   text-decoration: none;
   ;
   color: black;
-  font-size:1.2vw;
 }
 
 #placeholder {
@@ -973,7 +969,6 @@ div.delete_quiz a{
   float: right;
   margin:auto;
   display:block;
-  font-size:12pt;
 }
 
 .sideClick:hover{
@@ -994,22 +989,18 @@ div.delete_quiz a{
 
 a.Take-Active-Quiz.btn{
   float:right;
-  font-size:1.5vw;
 }
 
 a.Take-Active-Quiz.btn:hover{
   color: rgb(2, 132, 69);
-  font-size: 1.7vw;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
 a.View-Results.btn{
-  font-size:1.5vw;
 }
 
 a.View-Results.btn:hover{
   color: rgb(2, 132, 69);
-  font-size: 1.7vw;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
@@ -1030,12 +1021,10 @@ a.View-Results.btn:hover{
 }
 
 button.Show-Student-Response.btn{
-  font-size:1.2vw;
 }
 
 button.Show-Student-Response.btn:hover{
   color: rgb(2, 132, 69);
-  font-size: 1.5vw;
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
@@ -1086,30 +1075,25 @@ button.Show-Student-Response.btn:hover{
 .SAquestionbox {
   width:60%;
   min-height:10vw;
-  font-size:16pt;
 }
 
 .SAanswerbox {
   width:100%;
   min-height:15vw;
-  font-size:16pt;
 }
 
 .contentInput {
   width:60%;
   min-height:5vw;
-  font-size:16pt;
 }
 
 .answerchoiceSA {
   width:100%;
   min-height:15vw;
-  font-size:16pt;
   background-color:rgb(205, 245, 231);
 }
 
 .editTitle {
-  font-size:3vw;
   width:30vw;
   text-align:left;
   border:0.5px solid black;
@@ -1141,7 +1125,6 @@ div.editSign{
   width:50%;
   margin:0;
   float:left;
-  font-size:2.2vw;
 }
 
 /* The actual WTForms checkbox, which we want to hide */
@@ -1163,7 +1146,6 @@ div.editSign{
 
 div.SaveExitBtn.btn{
   float:right;
-  font-size:1.5vw;
 }
 div.SaveExitBtn.btn a{
   color:black;
@@ -1175,12 +1157,10 @@ div.SaveExitBtn.btn a:hover{
 div.SaveExitBtn.btn:hover{
   
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-  font-size:1.8vw;
 }
 
 div.QuizSaveExitBtn.btn{
   float:right;
-  font-size:1.5vw;
 }
 div.QuizSaveExitBtn.btn a{
   color:black;
@@ -1197,7 +1177,6 @@ div.QuizSaveExitBtn.btn:hover{
 div#quiz-title, div.classroom-title{
   margin: 1em 0em;
   display: inline-block;
-  font-size: 3vw;
 }
 
 /*Short answer overrides the height of the input box*/
@@ -1218,7 +1197,6 @@ div.question-container{
   min-height:15em;
 
   margin-top: 3%;
-  font-size: 2vw;
 }
 
 div.question-number::before{
@@ -1245,12 +1223,10 @@ a#Question-Edit:hover, a#Answer-Edit:hover{
 }
 
 a:not([href]){
-  font-size:1.2vw;
   color:black;
 }
 
 button.btn.Remove-Button{
-  font-size: 1.2vw;
 }
 
 
@@ -1275,7 +1251,6 @@ span.choice{
   background:rgb(113,255,187);
   border: 1px solid rgb(30,155,95);
   text-align: center;
-  font-size: 2.28vw;
 }
 
 div.answerBox{
@@ -1286,7 +1261,6 @@ div.answerBox{
   padding-bottom: 0.75vw;
   padding-right: 1vw;
   padding-left: 0.5vw;
-  font-size: 2.28vw;
   font-weight: bold;
   background: darkseagreen;
   border: solid forestgreen;
@@ -1303,7 +1277,6 @@ div.answerBox{
 }
 
 .quiz-back-btn {
-  font-size: 3vw;
   font-weight: bolder;
   padding-bottom: 0.5rem;
 }
@@ -1318,30 +1291,24 @@ div.answerBox{
 }
 
 .btn.btn-lg.set-active{
-  font-size:1vw;
 }
 .btn.btn-lg.remove-active{
-  font-size:1vw;
 }
 
 .quiz-options {
-  font-size:1vw;
 }
 
 .quiz-options:hover {
-  font-size:1.5vw;
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
 
 a.Add-A-Quiz{
   float:right;
-  font-size:1.8vw;
   
 }
 
 a.Add-A-Quiz:hover{
-  font-size:2vw;
   color: rgb(2, 132, 69);
   box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
 }
@@ -1351,35 +1318,29 @@ span.choices.disabled:hover{
   cursor:default;
 }
 span.Taking-a-Quiz{
-  font-size:3vw;
   margin-left:38vw;
 }
 
 button.btn.Taking-a-Quiz-Submit{
-  font-size:1.5vw;
   margin-bottom: 1em;
 }
 
 button.btn.Taking-a-Quiz-Submit:hover{
   color: rgb(213, 219, 216);
-  font-size:1.7vw;
 }
 
 
 
 div.options{
-  font-size:3vw;
   margin-top:2vw;
 }
 
 .response{
   background:transparent;
-  font-size:2vw;
   border:none;
 }
 
 label.btn.btn-secondary.active.button-choices {
-  font-size:3.38vw;
 }
 
 label.btn.btn-secondary.button-choices.clicked {
@@ -1428,7 +1389,6 @@ div.scrollmenu a:hover {
     padding-right: 0.35rem;
     color: #999;
     line-height: normal;
-    font-size: 1rem;
   }
 }
 
@@ -1499,7 +1459,6 @@ div.scrollmenu a:hover {
 
 .question-edit-header {
     margin-bottom: 5px;
-    font-size: 2vw;
 }
 
 /* For displaying the quiz results */
