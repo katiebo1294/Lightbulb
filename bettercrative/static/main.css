@@ -110,6 +110,7 @@ nav, footer {
 
 .navbar {
   padding: 0;
+  align-items: stretch;
 }
 
 footer a, footer i {
@@ -120,6 +121,10 @@ nav a:hover, footer a:hover, footer i:hover {
   color: #00e676;
   text-decoration: none;
   cursor: pointer;
+}
+
+.current-page {
+  color: #00e676!important;
 }
 
 .page-wrap {
@@ -136,7 +141,7 @@ nav a:hover, footer a:hover, footer i:hover {
 }
 
 .navbar-nav {
-  margin-right: 1rem;
+  height: 100%;
 }
 
 .navbar-brand {
@@ -163,12 +168,23 @@ nav a:hover, footer a:hover, footer i:hover {
   background-color: black;
 }
 
-.nav-link {
+.navbar-collapse.show .nav-link, .navbar-collapse.collapsing .nav-link {
   color: white;
+}
+
+.navbar-collapse.show .nav-link:hover, .navbar-collapse.collapsing .nav-link:hover {
+  color: #00e676;
+}
+
+.nav-link {
+  color: black;
+  line-height: 4vw;
+  height: 100%;
 }
 
 .nav-link:hover {
   color: #00e676;
+  text-decoration: none;
 }
 
 /* hamburger icon */
@@ -783,6 +799,15 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   left: 10%;
 }
 
+.dropdown {
+  float:left;
+}
+
+.dropdown-menu.show {
+  border: 3px solid #cabfaa;
+  background-color: #e2dcd1;
+}
+
 .dropdown:hover .dropdown-wrapper {
   display:block;
 }
@@ -830,11 +855,15 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   position: relative;
 }
 
-.row.table_element{
+.row.table-element{
   padding:5px;
   min-height: 3vw;
   margin:0;
   border-bottom: 1px solid rgba(50,50,50,.35);
+}
+
+.row.table-element:not(.header-row):hover {
+  background-color: #e0e0e0;
 }
 
 .table-header {
@@ -847,9 +876,13 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 
 div.dropdown.show a.dropdown-item{
   color: black;
-  background-color:white;
 }
-div.dropdown.show a:hover{
+
+.dropdown-item:focus, .dropdown-item:hover {
+  background-color: #cec9c1;
+}
+
+div.show a:hover{
   color: #00E676;
 }
 

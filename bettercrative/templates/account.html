@@ -1,182 +1,27 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<div id="modalPopUpForm" class="modalPopUp" {% if classForm.name.errors or quizForm.name.errors %}
-     style="display:block;" {% else %} style="display:none;" {% endif %}>
-	<div class="modalContent">
-		<h1 id="modalTextForm">
-		</h1>
-		<!-- forms for both the class and quiz pop ups, they need to be separate as they take diff info -->
-		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;"
-		     {% endif %}>
-			<form action="" method="POST">
-				{{ classForm.hidden_tag() }}
-				<!--adds ctrf form-->
-				<fieldset>
-					{% if classForm.name.errors %}
-					{{ classForm.name(class="form-control form-control-lg is-invalid") }}
-					<div class="invalid-feedback">
-						{% for error in classForm.name.errors %}
-						<span>{{ error }}</span>
-						{% endfor %}
-					</div>
-					{% else %}
-					{{ classForm.name(class="form-control form-control-lg") }}
-					{% endif %}
-				</fieldset>
-				{{classForm.submitClass(class="btn btn-success")}}
-				<!-- confirm button -->
-				<button type="button" class="btn btn-secondary"
-				        onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">
-					Cancel
-				</button>
-			</form>
-		</div>
-		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;"
-		     {% endif %}>
-			<form action="" method="POST">
-				{{ quizForm.hidden_tag() }}
-				<!--adds ctrf form-->
-				<fieldset>
-					{% if quizForm.name.errors %}
-					{{ quizForm.name(class="form-control form-control-lg is-invalid") }}
-					<div class="invalid-feedback">
-						{% for error in quizForm.name.errors %}
-						<span>{{ error }}</span>
-						{% endfor %}
-					</div>
-					{% else %}
-					{{ quizForm.name(class="form-control form-control-lg") }}
-					{% endif %}
-				</fieldset>
-				{{quizForm.submitQuiz(class="btn btn-success")}}
-				<!-- confirm button -->
-				<button type="button" class="btn btn-secondary"
-				        onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">
-					Cancel
-				</button>
-			</form>
-		</div>
-	</div>
-</div>
-<div class="wrapper container-fluid row">
-	<!-- displays the user's quizzes -->
-	<div id="quizListing" class="quizcolumn col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
-		<div class="titlebar">
-			<h5>Quizzes</h5>
-			<!-- option to create a new quiz -->
-			<div class="btn-sm sideClick" onclick="javascript:createQuizPopup()">
-				<i class="fas fa-plus"></i> Create Quiz
-			</div>
-		</div>
-		<div class="account-tables">
-			<div class="row table_element">
-				<div class="col-3 show table-header">Name</div>
-				<div class="col-6 text-center show table-header">Date Created</div>
-				<div class="col-3 show table-header options-header">Options</div>
-			</div>
-			{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
-			<div class="row table_element">
-				<div class="col-4 show table-quiztitle itemName">
-					{{ quiz.name }}
-				</div>
-				<div class="col-4 date-created text-center">{{ quiz.date_created.strftime("%m/%d/%y")
-					}}
-				</div>
-				<!-- user can enter a quiz to view details, or delete it -->
-				<div class="quiz-icon-col col-md-4 col-sm-3 col-xs-3">
+<!-- Gradient credits: https://codepen.io/caseycallow/pen/yMNqPY -->
+<style>
+	#title-text {
+	color: #f35626;
+	background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-animation: hue 10s infinite linear;
 
-					<div class="dropdown">
-						<button class="btn dropbtn"><i class="fas fa-ellipsis-h"></i></button>
-						<div id="quiz_options_more" class="dropdown-wrapper">
-							<div class="dropdown-content">
-								<button type="button" class="btn btn-sm quiz-icon dropdown-button" onclick="">
-									<i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i>
-								</button>
-								<button type="button" class="btn btn-sm quiz-icon dropdown-button" onclick="">
-									<i class="account-page-icons fas fa-download" aria-hidden="true"></i>
-								</button>
-								<button type="button" class="btn btn-sm quiz-icon dropdown-button" onclick="">
-									<i class="account-page-icons fas fa-copy" aria-hidden="true"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-					<button type="button" class="btn btn-sm quiz-icon"
-					        onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
-						<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
-					</button>
-					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-					        type="button" class="btn btn-sm quiz-icon">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</button>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-	</div>
-	<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-	<div id="classroomListing" class="classroomcolumn col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
-		<div class="titlebar">
-			<h5>Classrooms</h5>
-			<!-- option to create a new classroom -->
-			<div class="btn-sm sideClick" style="float:right; margin:0.25vw;"
-			     onclick="javascript:createClassroomPopup()">
-				<i class="fas fa-plus"></i> Create Classroom
-			</div>
-		</div>
-		<div class="account-tables">
-			<div class="row table_element">
-				<div class="col-3 show table-header">Name</div>
-				<div class="col-6 text-center show table-header">Date Created</div>
-				<div class="col-3 show table-header options-header">Options</div>
-			</div>
-			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-			<div class="table_element row">
-				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-				<div class="dropdown show room-name col-4">
-					<button class="btn dropdown-toggle itemName col" type="button" id="dropdownMenuLink"
-					        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						{{ classroom.name }}
-					</button>
-					<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-						{% for quiz in classroom.added_quizzes %}
-						{% if classroom.active_quiz == quiz.id %}
-						<a class="dropdown-item" href="#"
-						   onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
-							*ACTIVE* Quiz: {{ quiz.name }}
-						</a>
-						{% else %}
-						<a class="dropdown-item" href="#"
-						   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
-							Quiz: {{ quiz.name }}
-						</a>
-						{% endif %}
-						{% endfor %}
-					</span>
-				</div>
+	width: 100vw;
+	position: absolute;
+	height: 50vh;
+	}
 
-				<div class="col-4 text-center date-created" style="padding-left: 3%;">{{
-					classroom.date_created.strftime("%m/%d/%y") }}
-				</div>
-
-				<!-- can enter a class to view details, or delete it -->
-				<div class="quiz-icon-col col-4">
-					<button type="button" class="btn btn-sm quiz-icon"
-					        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
-						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-					</button>
-					<button onclick="window.location.href='{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}';"
-					        type="button" class="btn btn-sm quiz-icon">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</button>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
-	</div>
-</div>
-
-<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
-
+	@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+</style>
+<h1 id="title-text" class="text-center">{{ current_user.username }}'s account page</h1>
 {% endblock %}

@@ -4,13 +4,24 @@ $('.navTrigger').click(function () {
 });
 
 $(window).scroll(function () {
-    smoothnav = document.getElementById("navbar");
+    smoothnav = document.getElementsByClassName("navbar")[0];
     if ($(document).scrollTop() > 30) {
         $(smoothnav).addClass('affix').animate();
     } else {
         $(smoothnav).removeClass('affix').animate();
     }
 });
+
+// this colors the current page's link in the navbar green
+currentLinks = document.querySelectorAll('a[href="'+ document.URL.substr(document.URL.lastIndexOf("/")) +'"].nav-link');
+console.log(currentLinks);
+    currentLinks.forEach(function(link) {
+        link.className += ' current-page';
+        var newSpan = document.createElement('span');
+        newSpan.className += 'sr-only';
+        newSpan.innerHTML = "(current)";
+        link.appendChild(newSpan);
+    });
 
 function dropDown() {
     var x = document.getElementById("navlistofcontents");
