@@ -60,7 +60,14 @@
 				</div>
 				<!-- user can enter a quiz to view details, or delete it -->
 				<div class="quiz-icon-col col-md-4 col-sm-3 col-xs-3">
-
+					<button type="button" class="btn btn-sm quiz-icon"
+					        onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
+						<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
+					</button>
+					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
+					        type="button" class="btn btn-sm quiz-icon">
+						<i class="account-page-icons fas fa-pencil-alt"></i>
+					</button>
 					<div class="dropdown">
 						<button class="btn dropbtn"><i class="fas fa-ellipsis-h"></i></button>
 						<div id="quiz_options_more" class="dropdown-wrapper">
@@ -77,14 +84,6 @@
 							</div>
 						</div>
 					</div>
-					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-					        type="button" class="btn btn-sm quiz-icon">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</button>
-					<button type="button" class="btn btn-sm quiz-icon"
-					        onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
-						<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
-					</button>
 				</div>
 			</div>
 			{% endfor %}

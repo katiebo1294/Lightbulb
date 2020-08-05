@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+<!-- Gradient credits: https://codepen.io/caseycallow/pen/yMNqPY -->
+<style>
+	#title-text {
+	color: #f35626;
+	background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-animation: hue 10s infinite linear;
+
+	width: 100vw;
+	position: absolute;
+	height: 50vh;
+	}
+
+	@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+</style>
+<h1 id="title-text" class="text-center">{{ current_user.username }}'s home page</h1>
+{% endblock %}
