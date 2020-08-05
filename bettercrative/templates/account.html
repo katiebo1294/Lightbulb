@@ -102,13 +102,13 @@
 							</div>
 						</div>
 					</div>
-					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-					        type="button" class="btn btn-sm quiz-icon">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</button>
 					<button type="button" class="btn btn-sm quiz-icon"
 					        onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
 						<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
+					</button>
+					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
+					        type="button" class="btn btn-sm quiz-icon">
+						<i class="account-page-icons fas fa-pencil-alt"></i>
 					</button>
 				</div>
 			</div>
