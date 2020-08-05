@@ -17,6 +17,10 @@ currentLinks = document.querySelectorAll('a[href="'+ document.URL.substr(documen
 console.log(currentLinks);
     currentLinks.forEach(function(link) {
         link.className += ' current-page';
+        var newSpan = document.createElement('span');
+        newSpan.className += 'sr-only';
+        newSpan.innerHTML = "(current)";
+        link.appendChild(newSpan);
     });
 
 function dropDown() {

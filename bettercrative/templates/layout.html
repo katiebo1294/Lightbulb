@@ -63,19 +63,20 @@
 
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active">
-							<a class="nav-link" href="{{ url_for('main.home') }}">Home <!--TODO use javscript to make the current tab the active one --><span class="sr-only">(current)</span></a>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
 						</li>
 						{% if current_user.is_authenticated %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.classrooms') }}">Classrooms</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{{ url_for('users.quizzes') }}">Quizzes</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="{{ url_for('users.classrooms') }}">Classrooms</a>
-						</li>
+
 						<li class="nav-item">
 							<a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
 						</li>
