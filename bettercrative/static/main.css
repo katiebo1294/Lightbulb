@@ -111,14 +111,15 @@ nav, footer {
 .navbar {
   padding: 0;
   align-items: stretch;
+  margin-bottom: 6%;
 }
 
 footer a, footer i {
-  color: white;
+  color: black;
 }
 
 nav a:hover, footer a:hover, footer i:hover {
-  color: #00e676;
+  color: white;
   text-decoration: none;
   cursor: pointer;
 }
@@ -129,6 +130,7 @@ nav a:hover, footer a:hover, footer i:hover {
 
 .page-wrap {
   min-height: 100vh;
+  padding-bottom: 6%;
 }
 
 .page-wrap:after {
@@ -168,6 +170,7 @@ nav a:hover, footer a:hover, footer i:hover {
   background-color: black;
 }
 
+/* Styles the navbar headers for small screens with hamburger collapse menu */
 .navbar-collapse.show .nav-link, .navbar-collapse.collapsing .nav-link {
   color: white;
 }
@@ -176,6 +179,7 @@ nav a:hover, footer a:hover, footer i:hover {
   color: #00e676;
 }
 
+/* Styles the navbar headers for large screens with no collapse */
 .nav-link {
   color: black;
   line-height: 4vw;
@@ -183,7 +187,7 @@ nav a:hover, footer a:hover, footer i:hover {
 }
 
 .nav-link:hover {
-  color: #00e676;
+  color: white;
   text-decoration: none;
 }
 
@@ -763,8 +767,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 .form-container {
     position: relative;
     margin: auto;
-    margin-top: 6%;
-    margin-bottom: 1%;
     background-color:rgba(50,50,50,.35);
     padding: 1%;
     border-radius:15px;
@@ -780,6 +782,30 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 }
 
 /**Account**/
+#account-info-container {
+  padding: 1.5%;
+  width: fit-content;
+  margin: auto;
+  border: 2px solid grey;
+  border-radius: 1rem;
+}
+
+#account-edit-button {
+
+  float: none;
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
 .dropdown-wrapper {
   display: none;
   position: absolute;

@@ -8,10 +8,6 @@
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	-webkit-animation: hue 10s infinite linear;
-
-	width: 100vw;
-	position: absolute;
-	height: 50vh;
 	}
 
 	@-webkit-keyframes hue {
@@ -22,6 +18,81 @@
     -webkit-filter: hue-rotate(-360deg);
   }
 }
+
 </style>
 <h1 id="title-text" class="text-center">{{ current_user.username }}'s account page</h1>
+<!-- Displays user's account information -->
+<div id="account-info-container">
+	<div id="account-info" class="media">
+	{% if current_user.image_file != 'default.jpg' %}
+	<img class="rounded-circle account-img" src="{{ url_for('static', filename=current_user.image_file) }}" alt="{{ current_user.username }}'s profile picture">
+	{% else %}
+	<i class="fas fa-user-circle fa-9x" aria-hidden="true"><span class="sr-only">default profile picture</span></i>
+	{% endif %}
+	<div class="media-body">
+		<h4>{{ current_user.username }}</h4>
+		<p class="text-secondary">{{ current_user.email }}</p>
+	</div>
+</div>
+	<button id="account-edit-button" class="btn sideClick" onclick="showAccountEditForm();"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Edit Account Information</button>
+</div>
+<!-- Acount edit form -->
+<div id="account-form" class="form-container" style="display: none;">
+	<div class="content-section">
+		<form method="POST" action="" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Account Info</legend>
+				<div class="form-group">
+					{{ form.username.label(class="form-control-label") }}
+
+					{% if form.username.errors %}
+					{{ form.username(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.username.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ form.username(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.email.label(class="form-control-label") }}
+					{% if form.email.errors %}
+					{{ form.email(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.email.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ form.email(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+				<div class="form-group">
+					{{ form.profile_pic.label() }}
+					{{ form.profile_pic(class="form-control-file") }}
+					{% if form.profile_pic.errors %}
+					{% for error in form.profile_pic.errors %}
+					<span class="text-danger">{{ error }}</span>
+					{% endfor %}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class="form-group">
+				{{ form.submit(class="btn btn-outline-success") }}
+				<input type="reset" class="btn btn-outline-danger" name="Cancel" value="Cancel" onclick="location.reload();">
+			</div>
+		</form>
+	</div>
+</div>
+<!-- User stats (number of classrooms, etc.) -->
+<div id="user-stats" class="container">
+	<div class="row" style="padding-top: 2%;"><h3 style="margin:auto;">Your Stats</h3></div>
+	<div class="row text-center">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">Number of classrooms: {{ current_user.classrooms|length  }}</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">Number of quizzes: {{ current_user.quizzes|length }}</div>
+	</div>
+</div>
 {% endblock %}

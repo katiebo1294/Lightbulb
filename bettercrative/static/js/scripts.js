@@ -57,3 +57,9 @@ function openLatexAlert() {
     cancelButton.style.display = "none";
     modal.style.display = "block";
 }
+
+function showAccountEditForm() {
+    document.getElementById("account-info-container").style.display = "none";
+    document.getElementById("user-stats").style.display = "none";
+    document.getElementById("account-form").style.display = "block";
+}
