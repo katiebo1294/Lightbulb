@@ -51,7 +51,7 @@ function openLatexAlert() {
     modalButton = document.getElementById("modalButton");
     cancelButton = document.getElementById("cancelButton");
     modalTitle.innerHTML = "Did you know?";
-    modalText.innerHTML = "We have Latex Integration! </br> Simply type anything in Latex into your question or answer, and we will convert it for you!";
+    modalText.innerHTML = "We have LaTeX Integration! </br> Simply type anything in LaTeX into your question or answer, and we will convert it for you!";
     modalButton.innerHTML = "Got it!";
     modalButton.onclick = function() {modal.style.display="none"};
     cancelButton.style.display = "none";
@@ -63,3 +63,19 @@ function showAccountEditForm() {
     document.getElementById("user-stats").style.display = "none";
     document.getElementById("account-form").style.display = "block";
 }
+
+$(".sort-buttons").click(function () {
+    var icon = $(this).find('i');
+    // Change the arrow icon to indicate sort direction
+    icon.toggleClass("fa-arrow-up sort-ascending fa-arrow-down sort-descending");
+    // Update screen reader text
+    var srSpan = $(this).find("span");
+    var screenReaderText = srSpan.text();
+    if(screenReaderText.includes("ascending")) {
+        screenReaderText = screenReaderText.replace("ascending", "descending");
+    } else if(screenReaderText.includes("descending")) {
+        screenReaderText = screenReaderText.replace("descending", "ascending");
+    }
+    srSpan.text(screenReaderText);
+    // TODO sort
+});

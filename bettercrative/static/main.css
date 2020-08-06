@@ -895,7 +895,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   background-color: #e0e0e0;
 }
 
-.table-header {
+.table-header, .sort-buttons {
   font-weight: bold;
 }
 
@@ -1043,8 +1043,7 @@ h4 {
   background: none;
 }
 
-.sideClick:hover{
-  cursor:pointer;
+.sideClick:hover, .sort-buttons:hover {
   background-color: #cfccc6;
 }
 
