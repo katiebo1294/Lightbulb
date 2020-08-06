@@ -118,7 +118,7 @@ footer a, footer i {
   color: black;
 }
 
-nav a:hover, footer a:hover, footer i:hover {
+nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer i:focus {
   color: white;
   text-decoration: none;
   cursor: pointer;
@@ -933,7 +933,6 @@ div.show a:hover{
 }
 
 .account-page-icons:hover {
-  background-color: #cfccc6;
   color: black;
 }
 
@@ -1043,7 +1042,7 @@ h4 {
   background: none;
 }
 
-.sideClick:hover, .sort-buttons:hover {
+.sideClick:hover, .sideClick:focus, .sort-buttons:hover, .sort-buttons:focus, .quiz-icon:hover, .quiz-icon:focus {
   background-color: #cfccc6;
 }
 

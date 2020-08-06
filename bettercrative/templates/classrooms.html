@@ -46,7 +46,7 @@
 		</div>
 		<div class="account-tables">
 			<div class="row table-element header-row">
-				<!-- TODO when one of these buttons is clicked, sort the list. Change the icon from up arrow to down arrow to represent ascending vs descending sort. -->
+				<!-- TODO when one of these buttons is clicked, sort the list. -->
 				<div class="col-3 text-center show table-header"><button id="sort-by-name" class="btn sort-buttons">Name <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i></button></div>
 				<div class="col-6 text-center show table-header"><button id="sort-by-date" class="btn sort-buttons">Date Created <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort classrooms by date (descending)</span></i></button></div>
 				<div class="btn col-3 show table-header options-header">Options</div>
@@ -54,26 +54,29 @@
 			{% for classroom in current_user.classrooms|sort(attribute='name') %}
 			<div class="table-element row">
 				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-				<div class="dropdown show room-name col-4">
-					<button class="btn dropdown-toggle itemName col" type="button" id="dropdownMenuLink"
+				<div class="dropdown room-name col-4">
+					<button class="btn itemName col quiz-icon" type="button" id="dropdownMenuLink"
 					        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						{{ classroom.name }}
+						{{ classroom.name }} <i class="fas fa-caret-down" aria-hidden="true"></i>
 					</button>
-					<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<button class="dropdown-item" type="button" onclick="window.location.href='{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}';">
+							Add a Quiz
+						</button>
 						{% for quiz in classroom.added_quizzes %}
 						{% if classroom.active_quiz == quiz.id %}
-						<a class="dropdown-item" href="#"
+						<button class="dropdown-item" type="button"
 						   onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
 							*ACTIVE* Quiz: {{ quiz.name }}
-						</a>
+						</button>
 						{% else %}
-						<a class="dropdown-item" href="#"
+						<button class="dropdown-item" type="button"
 						   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
 							Quiz: {{ quiz.name }}
-						</a>
+						</button>
 						{% endif %}
 						{% endfor %}
-					</span>
+					</div>
 				</div>
 
 				<time class="col-4 text-center date-created" style="padding-left: 3%;">{{

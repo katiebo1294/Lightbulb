@@ -46,9 +46,9 @@
 		</div>
 		<div class="account-tables">
 			<div class="row table-element header-row">
-				<h5 class="col-3 show table-header">Name</h5>
-				<h5 class="col-6 text-center show table-header">Date Created</h5>
-				<h5 class="col-3 show table-header options-header">Options</h5>
+				<div class="col-3 text-center show table-header"><button id="sort-by-name" class="btn sort-buttons">Name <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by name (descending)</span></i></button></div>
+				<div class="col-6 text-center show table-header"><button id="sort-by-date" class="btn sort-buttons">Date Created <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by date (descending)</span></i></button></div>
+				<div class="col-3 show table-header options-header">Options</div>
 			</div>
 			{% for quiz in current_user.quizzes|sort(attribute='name') %}
 			<div class="row table-element">
@@ -63,10 +63,10 @@
 					<div class="quiz-icon-buttons-container">
 						<!-- more options dropdown -->
 						<div class="dropdown">
-							<button id="more-options" class="btn dropbtn" type="button" data-toggle="dropdown" aria-label="more options">
+							<button id="more-options" class="btn dropbtn quiz-icon" type="button" data-toggle="dropdown" aria-haspopup="true" aria-label="more options">
 								<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
 							</button>
-							<div class="dropdown-menu" aria-labelledby="#more-options">
+							<div class="dropdown-menu" aria-labelledby="more-options">
 								<button class="dropdown-item" type="button" aria-label="share"><i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i></button>
 								<button class="dropdown-item" type="button" aria-label="download"><i class="account-page-icons fas fa-download" aria-hidden="true"></i></button>
 								<button class="dropdown-item" type="button" aria-label="copy"><i class="account-page-icons fas fa-copy" aria-hidden="true"></i></button>
