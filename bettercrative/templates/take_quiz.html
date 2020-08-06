@@ -26,6 +26,7 @@
 	<div class="answerchoices">
 		<div class="menu" style="margin-left:15vw; margin-top: ">
 			<!--Need to rework so that 1 is = to <int: id> I got error before-->
+			
 			{% for question in questions.items %}
 			<form action="" method="POST">
                 <span id="question-title" class="btn" style="font-size:2.7vw; margin-top:3vw;">
@@ -41,11 +42,25 @@
 							<div class="answerChoice">
 								<div class="btn-group-toggle" data-toggle="buttons">
 									
-									<label class="btn btn-secondary button-choices" id="question-{{answer.index+1}}"
+									
+									
+									{% if find_selected_answer(question.category,answer.response, answer.id,student.id)%}
+									<label class="btn btn-primary" id="question-{{answer.index+1}}"
 									onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">
 										<input class="response" name="studentResponse" type="checkbox"
-										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
+											value="{{ answer.content }}">{{ get_alphabet_index(answer.index+1) }}
 									</label>
+									{%else%}
+									<label class="btn btn-secondary" id="question-{{answer.index+1}}"
+									onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">
+										<input class="response" name="studentResponse" type="checkbox"
+											value="{{ answer.content }}">{{ get_alphabet_index(answer.index+1) }}
+									</label>
+									{%endif%}
+									
+									
+
+									
 									
 								</div>
 								<div class="answerBox">
@@ -68,12 +83,22 @@
 							<div class="answerChoice">
 								<div class="btn-group-toggle" data-toggle="buttons">
 									
-									<label class="btn btn-secondary button-choices"
+									{%if find_selected_answer(question.category, answer.response, answer.id, student.id) %}
+									<label class="btn btn-primary "
 									       id="question-{{answer.index+1}}"
 									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}', student= '{{student.id}}'  )">
 										<input class="response" name="studentResponse" type="checkbox"
 										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
 									</label>
+									{%else%}
+									<label class="btn btn-secondary "
+									       id="question-{{answer.index+1}}"
+									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}', student= '{{student.id}}'  )">
+										<input class="response" name="studentResponse" type="checkbox"
+										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
+									</label>
+									{%endif%}
+
 									
 								</div>
 								<div class="answerBox">

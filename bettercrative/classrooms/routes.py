@@ -177,52 +177,27 @@ def take_quiz(classroom_id):
         Parameters:
                 classroom_id (int): the ID of the classroom the student is signed in to
     """
-    print("-------------------------------------------------------------------")
-    print("TAKE QUIZ ARGS")
+    
+    
     args = request.args
-    for key in args.keys():
-        print(key, " | ", args[key])
-        
-    if args:
+    
+    
+    if 'student' not in args:
+        raise Exception(' "student" key not found')
+
+    else:
         current_student = Student.query.filter_by(id=int(args['student'])).first()
         
-    print("-------------------------------------------------------------------")
+        
+    # Things to Render: classroom, quiz, Paginate the questions , student
     classroom = Classroom.query.get_or_404(classroom_id)
-    print("-------------------------------------------------------------------")
-    print("DEBUGGING LINE HERE")
-    print(classroom.active_quiz)
-    print("-------------------------------------------------------------------")
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
-    student=Student()
-    # dictionary of true and false for each input
-    dicts = {}
-    
-    i = page - 1
-    
-    for option in quiz.questions[i].answers:
-        dicts[option.content] = option.correct
 
-    # gets a list of what the student responded with
-    answered = request.form.getlist('studentResponse')
-    response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, question_num=page)
-
-    for studentResponse in answered:
-        result = dicts[studentResponse]
-        response = Response.query.filter_by(classroom_host_id=classroom.id, quiz_reference=quiz.id, question_num=page).first()
-        if response:
-            response.value = studentResponse
-            response.correct = dicts[response.value]
-        else:
-            response = Response(classroom_host_id=classroom.id, quiz_reference=quiz.id, value=studentResponse, question_num=page, correct=result)
-            db.session.add(response)
-    
-    
-    
     db.session.commit()
-    return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions, student=current_student)
+    return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions, student=current_student )
 
 
 # query database for all responses from this specific classroom, send lists of right and wrong answers to front
@@ -255,12 +230,7 @@ def view_results(classroom_id):
     quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
     students = {response.student_id: responses for response in responses}
 
-    print("-------------------------------------------------------------------")
-    print("DEBUGGING LINE HERE")
-    print("-------------------------------------------------------------------")
-    print(quiz.questions)
-    print(len(quiz.questions))
-    print(type(quiz.questions))
+    
 
     return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
                            wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz, students=students)
@@ -278,18 +248,8 @@ def received_answer():
     current_answer = Answer.query.filter_by(id= args['answer_id']).first()
     current_question = Question.query.filter_by(id = current_answer.question_id).first()
     current_student = Student.query.filter_by(id= args['student_id']).first()
-    print("-------------------------------------------------------------------")
-    print("Received value is ")
-    print(request.args)
-
-    print("-------------------------------------------------------------------")
     
 
-    
-    
-
-
-    
     # Creating the response object of the user
     
     response = Response(
@@ -303,17 +263,21 @@ def received_answer():
     )
 
     
+    
 
     
     # Delete answer if user unclicks the button they selected.    
     if current_question.category  != 'True-False':
-        regular_responses(current_answer,response)
+        regular_responses(current_student,current_answer,response)
     else:
-        tf_responses(current_answer, response, current_question)
+        tf_responses(current_student,current_answer, response, current_question)
 
+    
     #update database
     db.session.commit()
- 
+    
+    
+    
     return "nice!"
 
 
@@ -346,7 +310,7 @@ def delete_classroom():
     flash(u'Classroom Removed!', 'success')
     return "deleted classroom", 200
 
-def regular_responses(current_answer,response):
+def regular_responses(current_student,current_answer,response):
 
     """
     if the response is in the database:
@@ -354,14 +318,19 @@ def regular_responses(current_answer,response):
     else:
         add that response to the database
     """
+    print('inside regular responses')
+    print(current_student)
+    print(current_student.id)
+    response_in_the_db = Response.query.filter_by(student_id = current_student.id,answer_reference =response.answer_reference , question_num =response.question_num).first()
     
-    response_in_the_db = Response.query.filter_by(answer_reference =response.answer_reference , question_num =response.question_num).first()
+        
     if response_in_the_db is None:
         db.session.add(response)
     else:
         db.session.delete(response_in_the_db)
+        
 
-def tf_responses(current_answer, response, current_question):
+def tf_responses(current_student,current_answer, response, current_question):
     # for answer in current_question.answers:
     """
     if the answer is in the database:

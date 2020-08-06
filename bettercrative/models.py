@@ -241,7 +241,7 @@ class Response(db.Model):
     answer_reference = db.Column(db.Integer, db.ForeignKey('answer.id'))
     
     def __repr__(self):
-        return f"Response('{self.classroom_host_id}', '{self.quiz_reference}', '{self.question_num}', '{self.value}', '{self.correct}')"
+        return f"Response('{self.classroom_host_id}','{self.student_id}', '{self.quiz_reference}', '{self.question_num}', '{self.value}', '{self.correct}')"
 
 
 class Student(db.Model):
