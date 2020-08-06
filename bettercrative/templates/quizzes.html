@@ -40,9 +40,9 @@
 		<div class="titlebar">
 			<h5>Quizzes</h5>
 			<!-- option to create a new quiz -->
-			<div class="btn-sm sideClick" onclick="javascript:createQuizPopup()">
-				<i class="fas fa-plus"></i> Create Quiz
-			</div>
+			<button class="btn-sm sideClick" onclick="javascript:createQuizPopup()">
+				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
+			</button>
 		</div>
 		<div class="account-tables">
 			<div class="row table-element header-row">
@@ -60,29 +60,28 @@
 				</div>
 				<!-- user can enter a quiz to view details, or delete it -->
 				<div class="quiz-icon-col col-md-4 col-sm-3 col-xs-3">
-					<button type="button" class="btn btn-sm quiz-icon"
-					        onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
-						<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
-					</button>
-					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-					        type="button" class="btn btn-sm quiz-icon">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</button>
-					<div class="dropdown">
-						<button class="btn dropbtn"><i class="fas fa-ellipsis-h"></i></button>
-						<div id="quiz_options_more" class="dropdown-wrapper">
-							<div class="dropdown-content">
-								<button type="button" class="btn btn-sm quiz-icon dropdown-button" onclick="">
-									<i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i>
-								</button>
-								<button type="button" class="btn btn-sm quiz-icon dropdown-button" onclick="">
-									<i class="account-page-icons fas fa-download" aria-hidden="true"></i>
-								</button>
-								<button type="button" class="btn btn-sm quiz-icon dropdown-button" onclick="">
-									<i class="account-page-icons fas fa-copy" aria-hidden="true"></i>
-								</button>
-							</div>
+					<div class="quiz-icon-buttons-container">
+						<!-- more options dropdown -->
+						<div class="dropdown">
+							<button class="btn dropbtn" type="button" data-toggle="dropdown" aria-label="more options">
+								<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#" aria-label="share"><i class="account-page-icons fas fa-share-alt" aria-hidden="true" title="share"></i></a></li>
+								<li><a class="dropdown-item" href="#" aria-label="download"><i class="account-page-icons fas fa-download" aria-hidden="true" title="download"></i></a></li>
+								<li><a class="dropdown-item" href="#" aria-label="copy"><i class="account-page-icons fas fa-copy" aria-hidden="true" title="copy"></i></a></li>
+							</ul>
 						</div>
+						<!-- edit button -->
+					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
+					        type="button" class="btn btn-sm quiz-icon" aria-label="edit">
+						<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true" title="edit"></i>
+					</button>
+						<!-- delete button -->
+						<button type="button" class="btn btn-sm quiz-icon"
+						        onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})" aria-label="delete">
+						<i class="account-page-icons fas fa-trash" aria-hidden="true" title="delete"></i>
+					</button>
 					</div>
 				</div>
 			</div>

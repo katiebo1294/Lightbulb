@@ -145,6 +145,7 @@ function setQType(url,question_id, qtype) {
 };
 
 function change_active_question(url,question_id,quiz_id) {
+    $(this).focus();
     event.preventDefault();
     $.ajax({
         type: "GET",

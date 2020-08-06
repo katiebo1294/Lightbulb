@@ -124,7 +124,7 @@ nav a:hover, footer a:hover, footer i:hover {
 }
 
 .current-page {
-  color: #00e676!important;
+  color: white!important;
 }
 
 .page-wrap {
@@ -803,6 +803,10 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   float:left;
 }
 
+.dropdown-menu {
+  min-width: 0;
+}
+
 .dropdown-menu.show {
   border: 3px solid #cabfaa;
   background-color: #e2dcd1;
@@ -814,7 +818,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 
 .dropbtn {
   padding:5.6px;
-  margin-left:25%;
 }
 
 .info-bar {
@@ -878,6 +881,10 @@ div.dropdown.show a.dropdown-item{
   color: black;
 }
 
+.dropdown-item {
+  padding: 0;
+}
+
 .dropdown-item:focus, .dropdown-item:hover {
   background-color: #cec9c1;
 }
@@ -899,13 +906,12 @@ div.show a:hover{
   padding: 0.4em;
 }
 
-.account-page-icons.fa-trash:hover{
-  background-color:#cfccc6;
+.account-page-icons:hover {
+  background-color: #cfccc6;
+  color: black;
 }
 
-.account-page-icons.fa-pencil-alt:hover{
-  background-color:#cfccc6;
-}
+
 
 .delete_class a, .delete_quiz a{
   color: darkred !important;
@@ -950,7 +956,7 @@ div.delete_quiz a{
   float: left;
 }
 
-.quiz-icon-col > * {
+.quiz-icon-buttons-container {
   float: right;
 }
 
@@ -998,6 +1004,8 @@ div.delete_quiz a{
   float: right;
   margin:auto;
   display:block;
+  border: none;
+  background: none;
 }
 
 .sideClick:hover{

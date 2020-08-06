@@ -6,7 +6,7 @@
 		<h1 id="modalTextForm">
 		</h1>
 		<!-- form for class pop up -->
-<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;"
+		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;"
 		     {% endif %}>
 			<form action="" method="POST">
 				{{ classForm.hidden_tag() }}
@@ -31,17 +31,17 @@
 				</button>
 			</form>
 		</div>
-		</div>
+	</div>
 </div>
 <div class="wrapper">
-<!-- displays the user's classrooms and dropdowns for quizzes attached to them -->
+	<!-- displays the user's classrooms and dropdowns for quizzes attached to them -->
 	<div id="classroomListing" class="classroomcolumn">
 		<div class="titlebar">
 			<h5>Classrooms</h5>
 			<!-- option to create a new classroom -->
 			<div class="btn-sm sideClick" style="float:right; margin:0.25vw;"
 			     onclick="javascript:createClassroomPopup()">
-				<i class="fas fa-plus"></i> Create Classroom
+				<i class="fas fa-plus" aria-hidden="true"></i> Create Classroom
 			</div>
 		</div>
 		<div class="account-tables">
@@ -81,14 +81,16 @@
 
 				<!-- can enter a class to view details, or delete it -->
 				<div class="quiz-icon-col col-4">
-					<button type="button" class="btn btn-sm quiz-icon"
-					        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
-						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-					</button>
-					<button onclick="window.location.href='{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}';"
-					        type="button" class="btn btn-sm quiz-icon">
-						<i class="account-page-icons fas fa-pencil-alt"></i>
-					</button>
+					<span class="quiz-icon-buttons-container">
+						<button onclick="window.location.href='{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}';"
+						        type="button" class="btn btn-sm quiz-icon" aria-label="edit">
+							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true" title="edit"></i>
+						</button>
+						<button type="button" class="btn btn-sm quiz-icon"
+						        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})" aria-label="delete">
+							<i class="account-page-icons fa fa-trash" aria-hidden="true" title="delete"></i>
+						</button>
+					</span>
 				</div>
 			</div>
 			{% endfor %}

@@ -44,7 +44,7 @@
     <div id="editing-container">
         <!--  want to change this later to classroom name  -->
             <div class="headerSection">
-                <div class="btn QuizSaveExitBtn"><a href="{{ url_for('user.quizzes') }}">Save and Exit</a></div>
+                <div class="btn QuizSaveExitBtn"><a href="{{ url_for('users.quizzes') }}">Save and Exit</a></div>
             </div>
 
         <!-- Quiz Title -->
@@ -79,9 +79,9 @@
             <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
             <div class="scrollmenu .all-items .slides">
                 {% for question in quiz.questions %}
-                <a class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
-                id="qbtn-{{ loop.index }}"
-                onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }})">
+                <a href="#" role="button" tabindex="0" class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
+                   id="qbtn-{{ loop.index }}"
+                   onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
                     {% if not loop.first %}
                     <button class="btn btn-outline-info shift-Button"
                             onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
