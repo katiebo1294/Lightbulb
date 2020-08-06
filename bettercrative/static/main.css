@@ -952,8 +952,17 @@ div.delete_quiz a{
   text-align:left;
 }
 
-.titlebar > h5 {
+h4 {
   float: left;
+}
+
+.editTitle, .edit-classroom-title {
+  float: left;
+}
+
+.classroomname {
+  vertical-align: middle;
+  font-size: 2.8vw;
 }
 
 .quiz-icon-buttons-container {

@@ -37,20 +37,20 @@
 	<!-- displays the user's classrooms and dropdowns for quizzes attached to them -->
 	<div id="classroomListing" class="classroomcolumn">
 		<div class="titlebar">
-			<h5>Classrooms</h5>
+			<h4>Classrooms</h4>
 			<!-- option to create a new classroom -->
-			<div class="btn-sm sideClick" style="float:right; margin:0.25vw;"
+			<button class="btn-sm sideClick"
 			     onclick="javascript:createClassroomPopup()">
 				<i class="fas fa-plus" aria-hidden="true"></i> Create Classroom
-			</div>
+			</button>
 		</div>
 		<div class="account-tables">
 			<div class="row table-element header-row">
-				<div class="col-3 show table-header">Name</div>
-				<div class="col-6 text-center show table-header">Date Created</div>
-				<div class="col-3 show table-header options-header">Options</div>
+				<h5 class="col-3 show table-header">Name</h5>
+				<h5 class="col-6 text-center show table-header">Date Created</h5>
+				<h5 class="col-3 show table-header options-header">Options</h5>
 			</div>
-			{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
+			{% for classroom in current_user.classrooms|sort(attribute='name') %}
 			<div class="table-element row">
 				<!-- dropdown for a classroom's added quizzes and which one if any is active -->
 				<div class="dropdown show room-name col-4">
@@ -75,20 +75,20 @@
 					</span>
 				</div>
 
-				<div class="col-4 text-center date-created" style="padding-left: 3%;">{{
+				<time class="col-4 text-center date-created" style="padding-left: 3%;">{{
 					classroom.date_created.strftime("%m/%d/%y") }}
-				</div>
+				</time>
 
 				<!-- can enter a class to view details, or delete it -->
 				<div class="quiz-icon-col col-4">
 					<span class="quiz-icon-buttons-container">
 						<button onclick="window.location.href='{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}';"
 						        type="button" class="btn btn-sm quiz-icon" aria-label="edit">
-							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true" title="edit"></i>
+							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
 						</button>
 						<button type="button" class="btn btn-sm quiz-icon"
 						        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})" aria-label="delete">
-							<i class="account-page-icons fa fa-trash" aria-hidden="true" title="delete"></i>
+							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
 						</button>
 					</span>
 				</div>

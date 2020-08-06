@@ -1,45 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<style>
-    body{
-        background-image: none;
-    }
-
-    section.nav-section {
-        background-color: rgb(188, 252, 231)
-    }
-
-    .affix {
-        padding: 0;
-        font-size: 80%;
-        background-color: rgb(188, 252, 231);
-    }
-
-    .affix .container .logo a {
-        color: black;
-        font-size: 100%;
-    }
-    .affix .container .navlinks a{
-    color: black;
-    }
-
-    .nav .affix .navTrigger i {
-        font-size: 80%;
-        color: black;
-    }
-
-    .affix .navTrigger i {
-        background-color: black;
-    }
-
-    .affix .navTrigger p {
-        color: black;
-    }
-
-
-
-</style>
 
 <div id="quiz-content-container">
 
@@ -53,31 +14,39 @@
 
 		<div id="edit-section">
 			<div class="headerSection">
-				<div class="SaveExitBtn btn"><a href="{{ url_for('users.classrooms') }}">Save and Exit</a></div>
+				<div class="titlebar">
+					<!-- Classroom Title -->
+					<button class="btn classroom-title editTitle classroomname" id="classroom-{{classroom.id}}"
+					     onclick="showEditClassroom({{classroom.id}})" aria-label="edit classroom name">
+            {{ classroom.name }}
+						<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
+				<i class="fas fa-pencil-alt" aria-hidden="true"></i>
+			</span>
+					</button>
+					<form class="edit-classroom-title"
+					      action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
+						{{form.hidden_tag()}}
+						<div class="edit-classroom-form" id="classroom-form-{{classroom.id}}" style="display:none;">
+							<!-- <input placeholder="enter new name here" value='{{classroom.name}}' id='classroomname-content-{{classroom.id}}' type='text'>  -->
+							{{form.name(placeholder='Enter new name '
+							,id='classroomname-content-'~classroom.id,value=classroom.name)}}
+							{{form.submitClass(class='btn btn-sm btn-outline-info',
+							type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
+							<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel" onclick="cancelEditClassroom({{classroom.id}})">
+
+						</div>
+					</form>
+					<button class="btn-sm sideClick"
+					        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
+						<i class="fas fa-save" aria-hidden="true"></i> Save and Exit
+					</button>
+				</div>
 			</div>
 		</div>
 
 		{% endif %}
 
-		<!-- Classroom Title -->
-		<div class="btn classroom-title editTitle" id='classroom-{{classroom.id}}' onclick='showEditClassroom({{classroom.id}})'>
-            <span id="classroomname">
-                {{ classroom.name }}
-			</span>
-			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
-				<i class="fas fa-pencil-alt"></i>
-			</span>
-		</div>										
-		<form class="edit-classroom-title" action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
-			{{form.hidden_tag()}}
-			<div class='edit-classroom-form' id='classroom-form-{{classroom.id}}'style='display:none;'>
-				<!-- <input placeholder="enter new name here" value='{{classroom.name}}' id='classroomname-content-{{classroom.id}}' type='text'>  -->
-				{{form.name(placeholder='Enter new name ' ,id='classroomname-content-'~classroom.id,value=classroom.name)}}
-				{{form.submitClass(class='btn btn-sm btn-outline-info', type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
-				<span class='btn btn-sm btn-outline-danger' onclick='cancelEditClassroom({{classroom.id}})'> Cancel</span>
 
-			</div>
-		</form>
 		<!-- prevent things from floating after this section -->
 		<div style=" clear: both;"></div>
 		<!-- prevent things from floating after this section -->
@@ -98,45 +67,46 @@
 
 							</div>
 							<table class="account-tables">
-							{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
-							<!-- JavaScript option to set the current quiz in the list to active -->
-							<tr class="classroom-table-rows">
-								<td {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>
-									{{ quiz.name }}
-								</td>
-								<td>
-									<a class="btn btn-lg quiz-options"
-									        href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-										Edit Quiz
-									</a>
-								</td>
-								{% if quiz.id != classroom.active_quiz %}
-								<td>
-									<a id='set-active-{{classroom.id}}' class="btn btn-lg quiz-options"
-									        onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-										Set Active
-									</a>
-								</td><td>
-									<a class="btn btn-lg quiz-options"
-									        href="{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}">
-										Remove Quiz
-									</a>
-								</td>
-								{% else %}
-								<td>
-									<a id='remove-active-{{classroom.id}}' class="btn btn-lg quiz-options"
-									        onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-										Unset Active
-									</a>
-								</td>
-								<td>
-									<a id="placeholder" class="btn btn-lg">
-										Placeholder
-									</a>
-								</td>
-								{% endif %}
-							</tr>
-							{%endfor%}
+								{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
+								<!-- JavaScript option to set the current quiz in the list to active -->
+								<tr class="classroom-table-rows">
+									<td {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>
+										{{ quiz.name }}
+									</td>
+									<td>
+										<a class="btn btn-lg quiz-options"
+										   href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
+											Edit Quiz
+										</a>
+									</td>
+									{% if quiz.id != classroom.active_quiz %}
+									<td>
+										<a id="set-active-{{classroom.id}}" class="btn btn-lg quiz-options"
+										   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+											Set Active
+										</a>
+									</td>
+									<td>
+										<a class="btn btn-lg quiz-options"
+										   href="{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}">
+											Remove Quiz
+										</a>
+									</td>
+									{% else %}
+									<td>
+										<a id="remove-active-{{classroom.id}}" class="btn btn-lg quiz-options"
+										   onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+											Unset Active
+										</a>
+									</td>
+									<td>
+										<a id="placeholder" class="btn btn-lg">
+											Placeholder
+										</a>
+									</td>
+									{% endif %}
+								</tr>
+								{%endfor%}
 							</table>
 						</div>
 					</div>

@@ -21,12 +21,11 @@ function removeClassroom(url, c_id) {
             refresh("#classroomListing");
         }
     });
-    document.getElementById("modalPopUp").style.display = "none";;
+    document.getElementById("modalPopUp").style.display = "none";
 }
 
 // create Classroom
 function createClassroomPopup() {
-    document.getElementById("modalQuiz").style.display = "none";
     modal = document.getElementById("modalPopUpForm");
     modalForm = document.getElementById("modalClass");
     modalText = document.getElementById("modalTextForm")
