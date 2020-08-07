@@ -146,7 +146,7 @@ function setQType(url,question_id, qtype) {
 
 function change_active_question(url,question_id,quiz_id) {
     event.preventDefault();
-
+    
     $.ajax({
         type: "GET",
         data: {'question_id': question_id,
@@ -157,15 +157,15 @@ function change_active_question(url,question_id,quiz_id) {
             console.log(response.statusText);
         },
         success: function() {
+            
             refresh("#questionView");
         }
     });
 };
 
 function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value,student_id){
-    event.preventDefault();
-    console.log(student_id);
-    console.log('were in');
+    
+
     $.ajax({
         type: "GET",
         data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
@@ -366,3 +366,20 @@ function responseTF(question_id){
     console.log(f);
 }
 
+function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
+
+    var textarea = document.getElementById('textareabox-'+student_id);
+    $.ajax({
+        type: "GET",
+        data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
+        'page_num': page_num, 'quiz_id':quiz_id, 'value':textarea.value,'student_id':student_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            
+        }
+    });
+}

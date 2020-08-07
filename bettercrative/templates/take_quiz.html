@@ -115,18 +115,26 @@
 							</button>
 						</div>
 					{% elif question.category=='Short Answer' %}
+					
 					<div class="answerContainer reset">
-						<div class="answerChoice">
-							
-							<textarea>
+						{%for answer in question.answers%}
+						<div class="answerContainer reset">
+							{{question.category}}
+							<div class="textareabox">
+								<textarea id='textareabox-{{student.id}}' onblur = "setTextArea( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}},student= '{{student.id}}'  )">{{find_selected_answer(question.category, answer.response, answer.id, student.id)}}</textarea>
+							</div>
 
-							</textarea>
+							<button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
+									type="submit" onclick="">Submit
+							</button>
 						</div>
+						{%endfor%}
 
 					
 						
 						
 					</div>
+					
 					{% else %}
 					<!-- put Ace IDE here -->
 					{% endif %}

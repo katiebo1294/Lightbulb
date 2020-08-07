@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import exists, and_
 
 from bettercrative import db
+from bettercrative.classrooms.response_handling import *
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
 from bettercrative.models import Classroom, Quiz, Response, Question, assoc, Answer, Student
 
@@ -195,7 +196,8 @@ def take_quiz(classroom_id):
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
-
+    
+    
     db.session.commit()
     return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions, student=current_student )
 
@@ -267,11 +269,12 @@ def received_answer():
 
     
     # Delete answer if user unclicks the button they selected.    
-    if current_question.category  != 'True-False':
+    if current_question.category  == 'Multiple Choice':
         regular_responses(current_student,current_answer,response)
-    else:
+    elif current_question.category == 'True-False':
         tf_responses(current_student,current_answer, response, current_question)
-
+    else:
+        sa_response(current_student,current_answer,response, current_question)
     
     #update database
     db.session.commit()
@@ -310,47 +313,6 @@ def delete_classroom():
     flash(u'Classroom Removed!', 'success')
     return "deleted classroom", 200
 
-def regular_responses(current_student,current_answer,response):
 
-    """
-    if the response is in the database:
-        delete that response
-    else:
-        add that response to the database
-    """
-    print('inside regular responses')
-    print(current_student)
-    print(current_student.id)
-    response_in_the_db = Response.query.filter_by(student_id = current_student.id,answer_reference =response.answer_reference , question_num =response.question_num).first()
+
     
-        
-    if response_in_the_db is None:
-        db.session.add(response)
-    else:
-        db.session.delete(response_in_the_db)
-        
-
-def tf_responses(current_student,current_answer, response, current_question):
-    # for answer in current_question.answers:
-    """
-    if the answer is in the database:
-        is it identical to the current answer? (case 3)
-            don't do anything
-        is it different from the current answer? (case 2)
-            delete this answer
-            add the response
-    else:
-        add the response
-    """
-
-    for answer in current_question.answers:
-    
-        response_in_the_db = Response.query.filter_by(answer_reference =answer.id, question_num =response.question_num).first()
-        if response_in_the_db is None:
-            db.session.add(response)
-        else:
-            db.session.delete(response_in_the_db)
-
-
-            
-

@@ -146,7 +146,7 @@ class Quiz(db.Model):
                                 collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
     active = db.Column(db.Integer, unique=False, nullable=True, default=None)
-
+    responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
@@ -203,7 +203,7 @@ class Answer(db.Model):
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     index = db.Column(db.Integer)
-    response_id = db.Column(db.Integer, db.ForeignKey('answer.id'))
+    
     response = db.relationship("Response", backref='answer', cascade='all, delete')
 
     def __repr__(self):
