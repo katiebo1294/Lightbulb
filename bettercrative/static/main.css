@@ -985,9 +985,12 @@ h4 {
   float: left;
 }
 
+button.editTitle:focus {
+  border-radius: 25px;
+}
+
 .classroomname {
-  vertical-align: middle;
-  font-size: 2.8vw;
+  font-size: 2vw;
 }
 
 .quiz-icon-buttons-container {
@@ -1042,7 +1045,7 @@ h4 {
   background: none;
 }
 
-.sideClick:hover, .sideClick:focus, .sort-buttons:hover, .sort-buttons:focus, .quiz-icon:hover, .quiz-icon:focus {
+.sideClick:hover, .sideClick:focus, .sort-buttons:hover, .sort-buttons:focus, .quiz-icon:hover, .quiz-icon:focus, .editTitle:hover, .editTitle:focus, .classroom-options > button:hover, .classroom-options > button:focus {
   background-color: #cfccc6;
 }
 
@@ -1172,10 +1175,6 @@ button.Show-Student-Response.btn:hover{
               ease-in-out, background-color .5s;
 }
 
-.editTitle:hover {
-  background-color:#87b8e6;
-}
-
 div.headerSection::before{
   content: "";
   display: table;
@@ -1247,6 +1246,33 @@ div.QuizSaveExitBtn.btn:hover{
 div#quiz-title, div.classroom-title{
   margin: 1em 0em;
   display: inline-block;
+}
+
+.classroom-title{
+  height: calc(1.5em + 1rem + 2px)!important;
+}
+
+.classroom-options {
+  width: 90%;
+  margin: auto;
+  margin-top: 30vh;
+}
+
+#take-active-quiz {
+  float: left;
+}
+
+#view-results {
+  float: right;
+}
+
+#ActiveRoomsHeader {
+margin-top: 1%;
+}
+
+#classroom-container {
+  width: 95%;
+  margin: auto;
 }
 
 /*Short answer overrides the height of the input box*/

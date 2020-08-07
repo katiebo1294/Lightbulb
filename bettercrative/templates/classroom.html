@@ -2,133 +2,136 @@
 
 {% block content %}
 
-<div id="quiz-content-container">
-
-	<!-- Quiz Edit Container for users -->
-	<div id="editing-container">
-		<!--  want to change this later to classroom name  -->
-
-		<div id="quizTitle"></div>
-
-		{% if current_user.is_authenticated %}
-
-		<div id="edit-section">
-			<div class="headerSection">
-				<div class="titlebar">
-					<!-- Classroom Title -->
-					<button class="btn classroom-title editTitle classroomname" id="classroom-{{classroom.id}}"
-					     onclick="showEditClassroom({{classroom.id}})" aria-label="edit classroom name">
-            {{ classroom.name }}
-						<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
-				<i class="fas fa-pencil-alt" aria-hidden="true"></i>
-			</span>
-					</button>
-					<form class="edit-classroom-title"
-					      action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
-						{{form.hidden_tag()}}
-						<div class="edit-classroom-form" id="classroom-form-{{classroom.id}}" style="display:none;">
-							<!-- <input placeholder="enter new name here" value='{{classroom.name}}' id='classroomname-content-{{classroom.id}}' type='text'>  -->
-							{{form.name(placeholder='Enter new name '
-							,id='classroomname-content-'~classroom.id,value=classroom.name)}}
-							{{form.submitClass(class='btn btn-sm btn-outline-info',
-							type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
-							<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel" onclick="cancelEditClassroom({{classroom.id}})">
-
-						</div>
-					</form>
-					<button class="btn-sm sideClick"
-					        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
-						<i class="fas fa-save" aria-hidden="true"></i> Save and Exit
-					</button>
-				</div>
-			</div>
-		</div>
-
-		{% endif %}
-
-
-		<!-- prevent things from floating after this section -->
-		<div style=" clear: both;"></div>
-		<!-- prevent things from floating after this section -->
-
-
-		<div id="question">
-
-			<div class="question-container">
-
-				<!-- contents of multiple choice box -->
-				<div class="question-edit-header">
-					<div class="question-number">
-						<div class="quizlist" id="quizzes-{{classroom.id}}">
-							<div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
-								<span class="Active-Rooms">Added Quizzes</span>
-								<a class="btn Add-A-Quiz"
-								   href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
-
-							</div>
-							<table class="account-tables">
-								{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
-								<!-- JavaScript option to set the current quiz in the list to active -->
-								<tr class="classroom-table-rows">
-									<td {% if quiz.id == classroom.active_quiz %} style="color: white;" {% endif %}>
-										{{ quiz.name }}
-									</td>
-									<td>
-										<a class="btn btn-lg quiz-options"
-										   href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-											Edit Quiz
-										</a>
-									</td>
-									{% if quiz.id != classroom.active_quiz %}
-									<td>
-										<a id="set-active-{{classroom.id}}" class="btn btn-lg quiz-options"
-										   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-											Set Active
-										</a>
-									</td>
-									<td>
-										<a class="btn btn-lg quiz-options"
-										   href="{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}">
-											Remove Quiz
-										</a>
-									</td>
-									{% else %}
-									<td>
-										<a id="remove-active-{{classroom.id}}" class="btn btn-lg quiz-options"
-										   onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
-											Unset Active
-										</a>
-									</td>
-									<td>
-										<a id="placeholder" class="btn btn-lg">
-											Placeholder
-										</a>
-									</td>
-									{% endif %}
-								</tr>
-								{%endfor%}
-							</table>
-						</div>
+<div id="classroom-container">
+	{% if current_user.is_authenticated %}
+	<div class="titlebar">
+		<!-- Classroom Title -->
+		<button class="btn-sm classroom-title editTitle classroomname" id="classroom-{{classroom.id}}"
+		        onclick="showEditClassroom({{classroom.id}})" aria-label="edit classroom name">
+			{{ classroom.name }}
+			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
+						<i class="fas fa-pencil-alt" aria-hidden="true"></i>
+					</span>
+		</button>
+		<!-- Title edit form -->
+		<form class="edit-classroom-title" id="classroom-form-{{classroom.id}}" style="display: none;"
+		      action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
+			{{form.hidden_tag()}}
+			<fieldset class=" form-group edit-classroom-form">
+				<div class="form-group">
+					{% if form.name.errors %}
+					{{form.name(placeholder='Enter new name '
+					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
+					form-control-lg is-invalid classroom-title editTitle classroomname')}}
+					<div class="invalid-feedback">
+						{% for error in form.name.errors %}
+						{{ error }}
+						{% endfor %}
 					</div>
-
+					{% else %}
+					{{form.name(placeholder='Enter new name '
+					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
+					form-control-lg classroom-title editTitle classroomname')}}
+					{% endif %}
 				</div>
-				{% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
-				{% if classroom.active_quiz %}
-				<div>
-					<a class="Take-Active-Quiz btn "
-					   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
-				</div>
-				{% endif %}
+			</fieldset>
+			<div class=form-group"> {{form.submitClass(class='btn btn-sm btn-outline-info',
+				type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
+				<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel"
+				       onclick="cancelEditClassroom({{classroom.id}})">
+			</div>
+		</form>
+		<!-- Save button -->
+		<button class="btn-sm sideClick"
+		        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
+			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
+		</button>
+	</div>
+	{% endif %}
 
-				<!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
-				<!--TODO make this invisible if there aren't any responses yet -->
-				<div>
-					<a class="View-Results btn"
-					   href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
+	<!-- prevent things from floating after this section -->
+	<div style=" clear: both;"></div>
+	<!-- prevent things from floating after this section -->
+
+	<!-- List of added quizzes -->
+	<div class="quizlist" id="quizzes-{{classroom.id}}">
+		<!-- Heading and add-quiz button -->
+		<div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
+			<h4 class="Active-Rooms">Added Quizzes</h4>
+			<button class="btn-sm sideClick"
+			        onclick="window.location.href='{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}';"><i
+					class="fas fa-plus" aria-hidden="true"></i> Add a Quiz
+			</button>
+		</div>
+		<div style="clear: both;"></div>
+		<!-- actual quiz data/options -->
+		<div class="account-tables">
+			<div class="row table-element header-row">
+				<!-- TODO when one of these buttons is clicked, sort the list. -->
+				<div class="col-3 text-center show table-header">
+					<button id="sort-by-name" class="btn sort-buttons">Name <i class="fas fa-arrow-up sort-ascending"
+					                                                           aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i>
+					</button>
+				</div>
+				<div class="col-6 text-center show table-header">
+					<button id="sort-by-date" class="btn sort-buttons">Date Created <i
+							class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort classrooms by date (descending)</span></i>
+					</button>
+				</div>
+				<div class="btn col-3 show table-header options-header">Options</div>
+			</div>
+			{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
+			<!-- JavaScript option to set the current quiz in the list to active -->
+			<div class="row table-element">
+				<div class="col-4">{{ quiz.name }}
+					{% if quiz.id == classroom.active_quiz %}
+					(active)
+					{% endif %}
+				</div>
+				<div class="col-4 text-center date-created" style="padding-left: 3%;">
+					{{ quiz.date_created.strftime("%m/%d/%y") }}
+				</div>
+				{% if quiz.id != classroom.active_quiz %}
+				<div class="col-4 quiz-icon-col">
+					<button class="btn quiz-icon"
+					   onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}';">
+						Edit Quiz
+					</button>
+					<button id="set-active-{{classroom.id}}" class="btn quiz-icon"
+					   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+						Set Active
+					</button>
+					<button class="btn quiz-icon"
+					   onclick="window.location.href='{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}';">
+						Remove Quiz
+					</button>
+				</div>
+
+				{% else %}
+				<div class="col-4 quiz-icon-col">
+					<button id="remove-active-{{classroom.id}}" class="btn quiz-icon"
+					   onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+						Unset Active
+					</button>
 				</div>
 				{% endif %}
 			</div>
+			{%endfor%}
 		</div>
 	</div>
 </div>
+
+{% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
+<div class="classroom-options">
+{% if classroom.active_quiz %}
+	<button id="take-active-quiz" class="btn"
+	   onclick="window.location.href='{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}';">Take Active Quiz <i class="fas fa-door-open"></i></button>
+{% endif %}
+
+<!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
+<!--TODO make this invisible if there aren't any responses yet -->
+	<button id="view-results" class="btn"
+	   onclick="window.location.href='{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}';"><i class="fas fa-chart-bar" aria-hidden="true"></i> View Results</button>
+</div>
+{% endif %}
 {% endblock %}

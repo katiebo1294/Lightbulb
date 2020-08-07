@@ -64,7 +64,7 @@ function showAccountEditForm() {
     document.getElementById("account-form").style.display = "block";
 }
 
-$(".sort-buttons").click(function () {
+$(".sort-buttons").click(function() {
     var icon = $(this).find('i');
     // Change the arrow icon to indicate sort direction
     icon.toggleClass("fa-arrow-up sort-ascending fa-arrow-down sort-descending");
@@ -77,5 +77,33 @@ $(".sort-buttons").click(function () {
         screenReaderText = screenReaderText.replace("descending", "ascending");
     }
     srSpan.text(screenReaderText);
-    // TODO sort
+    // Get sorting parameters
+    // Attribute to sort by (name or date)
+    var attr = this.id.slice(this.id.length - 4);
+    console.log(attr);
+    // Whether to sort ascending or descending
+    var descend = screenReaderText.includes("descending");
+    // Sorting classrooms or quizzes
+    var type;
+    if(screenReaderText.includes("classrooms")) {
+        type = "classrooms";
+    } else {
+        type = "quizzes";
+    }
+    console.log("attr = " + attr + ", descend = " + descend + ", type = " + type);
+    console.log(document.URL);
+    // Send a GET request to reload the page TODO doesn't work
+    $.ajax({
+        method: "GET",
+        data: {sort_on: attr, sort_direction: descend},
+        url: document.URL,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            console.log(document.getElementById(type + "-data"));
+            $("#" + type + "-data").load(" #" + type + "-data > *");
+        }
+    });
 });
