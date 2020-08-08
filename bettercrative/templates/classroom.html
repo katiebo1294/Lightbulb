@@ -42,7 +42,7 @@
 </style>
 
 <div id="quiz-content-container">
-
+	
 	<!-- Quiz Edit Container for users -->
 	<div id="editing-container">
 		<!--  want to change this later to classroom name  -->
@@ -93,6 +93,7 @@
 						<div class="quizlist" id="quizzes-{{classroom.id}}">
 							<div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
 								<span class="Active-Rooms">Added Quizzes</span>
+								
 								<a class="btn Add-A-Quiz"
 								   href="{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}">Add a Quiz</a>
 
@@ -143,19 +144,24 @@
 
 				</div>
 				{% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
-				{% if classroom.active_quiz %}
-				<div>
-					<a class="Take-Active-Quiz btn "
-					   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
-				</div>
-				{% endif %}
+					{% if classroom.active_quiz %}
+						<div>
+							<a class="Take-Active-Quiz btn "
+							href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}">Take active Quiz</a>
+						</div>
+					{% endif %}
 
 				<!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
 				<!--TODO make this invisible if there aren't any responses yet -->
-				<div>
-					<a class="View-Results btn"
-					   href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
-				</div>
+					
+					{%if classroom.active_quiz != None%}
+						<div>
+							
+							<a class="View-Results btn"
+							href="{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}">View Results</a>
+						</div>
+					{%endif%}
+
 				{% endif %}
 			</div>
 		</div>

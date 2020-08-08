@@ -12,7 +12,7 @@ function set_active(url, quiz_id, classroom_id) {
         success: function() {
             console.log("success");
 
-            refresh('#quizzes-'+classroom_id)
+            refresh('#question');
         }
     });
 }

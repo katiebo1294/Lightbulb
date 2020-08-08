@@ -28,7 +28,7 @@
 			<!--Need to rework so that 1 is = to <int: id> I got error before-->
 			
 			{% for question in questions.items %}
-			<form action="" method="POST">
+			<form action="{{url_for('main.home')}}" method="POST">
                 <span id="question-title" class="btn" style="font-size:2.7vw; margin-top:3vw;">
 					{{ question.content }}</span>
 					
@@ -73,7 +73,7 @@
 						{%endfor%}
 							<!-- TODO automatically go to the next question on submit... or just change the form so there's just one submit button at the end -->
 							<button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
-							        type="submit" onclick="">Submit
+							        type="submit">Submit
 							</button>
 						</div>
 					
@@ -111,7 +111,7 @@
 						{%endfor%}
 							<!-- TODO automatically go to the next question on submit... or just change the form so there's just one submit button at the end -->
 							<button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
-							        type="submit" onclick="">Submit
+							        type="submit">Submit
 							</button>
 						</div>
 					{% elif question.category=='Short Answer' %}
@@ -125,7 +125,7 @@
 							</div>
 
 							<button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
-									type="submit" onclick="">Submit
+									type="submit">Submit
 							</button>
 						</div>
 						{%endfor%}
