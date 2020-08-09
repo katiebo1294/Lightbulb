@@ -64,46 +64,35 @@ function showAccountEditForm() {
     document.getElementById("account-form").style.display = "block";
 }
 
-$(".sort-buttons").click(function() {
-    var icon = $(this).find('i');
-    // Change the arrow icon to indicate sort direction
-    icon.toggleClass("fa-arrow-up sort-ascending fa-arrow-down sort-descending");
-    // Update screen reader text
-    var srSpan = $(this).find("span");
-    var screenReaderText = srSpan.text();
-    if(screenReaderText.includes("ascending")) {
-        screenReaderText = screenReaderText.replace("ascending", "descending");
-    } else if(screenReaderText.includes("descending")) {
-        screenReaderText = screenReaderText.replace("descending", "ascending");
-    }
-    srSpan.text(screenReaderText);
-    // Get sorting parameters
-    // Attribute to sort by (name or date)
-    var attr = this.id.slice(this.id.length - 4);
-    console.log(attr);
-    // Whether to sort ascending or descending
-    var descend = screenReaderText.includes("descending");
-    // Sorting classrooms or quizzes
-    var type;
-    if(screenReaderText.includes("classrooms")) {
-        type = "classrooms";
+function sortList(element) {
+    // get decendant that has <i>
+    var itag = element.getElementsByTagName("i")[0];
+    var direction;
+    // changes the direction of ordering 
+    if(itag.classList.contains('sort-descending')) {
+        itag.className = ('fas fa-arrow-up sort-ascending');
+        direction = false;
     } else {
-        type = "quizzes";
+        itag.className = ('fas fa-arrow-down sort-descending');
+        direction = true;
     }
-    console.log("attr = " + attr + ", descend = " + descend + ", type = " + type);
-    console.log(document.URL);
+
     // Send a GET request to reload the page TODO doesn't work
+    console.log("success sort on " + element.id + " " + direction);
     $.ajax({
-        method: "GET",
-        data: {sort_on: attr, sort_direction: descend},
+        type: "GET",
+        data: {
+            sort_on: element.id, 
+            sort_direction: direction
+        },
         url: document.URL,
         error: function(response) {
             alert(response.statusText);
             console.log(response.statusText);
         },
         success: function() {
-            console.log(document.getElementById(type + "-data"));
-            $("#" + type + "-data").load(" #" + type + "-data > *");
+            console.log("success sort on " + element.id + " " + direction);
+            // $("#" + type + "-data").load(" #" + type + "-data > *");
         }
     });
-});
+}
