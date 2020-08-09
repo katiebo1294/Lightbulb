@@ -31,6 +31,9 @@ def get_alphabet_index(index):
 def append_form(form):
     form.answer_form.append_entry()
 
+def remove_form(form):
+    form.answer_form.pop()
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)

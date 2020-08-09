@@ -322,46 +322,13 @@ def set_question_type():
 def edit_question(question_id):
     question = Question.query.get_or_404(question_id)
     quiz = question.quiz
-
-    
-    
-    
-    form = QuestionFormOverall()
     qzform = QuizForm()
-    
-    if question.category =='True-False':
 
-        form = QuestionFormOverallTF()
+    if question.category == 'Short Answer':
         
-        
-        #form validation
-        if form.validate_on_submit():
-            #getting the form
-            received_form = request.form
-            correct_answer = 0
-            #getting the correct answer and new question name
-            for key in received_form.keys():
-                if('answer_form' and 'correct' in key):
-                    correct_answer=bool(int(received_form[key]))
-                    new_content_name = received_form['question_form-content']
-            for answer in question.answers:
-                if answer.content == str(correct_answer):
-                    answer.correct = True
-                    db.session.add(answer)
-                else:
-                    answer.correct = False
-                    db.session.add(answer)
-            
-            question.content = new_content_name
-            db.session.add(question)
-            db.session.commit()
-            flash(u'Successfully updated question!', 'success')
-            return redirect(url_for('quizzes.quiz', quiz_id = quiz.id))
-    elif question.category == 'Short Answer':
-        
-        form=QuestionFormOverallSA()
+        form = QuestionFormOverallSA()
         print(f'OVERALLSA IS {type(form)}')
-        if form.validate_on_submit:
+        if form.validate_on_submit():
             received_form = request.form
             print(request.form)
             question.content = received_form['question_form-content']
@@ -377,16 +344,22 @@ def edit_question(question_id):
             answer.correct = True
             db.session.add(answer)
             db.session.commit()
-
-            
-
             return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
+
     else:
+        if question.category == 'True-False':
+            form = QuestionFormOverallTF()
+            print("checking form data:")
+            print(request.form)
+        else:
+            form = QuestionFormOverall()
+
         if form.validate_on_submit():
-        
-            question.content = form.question_form.content.data
+            if form.question_form.content.data:
+                question.content = form.question_form.content.data
             for i, aform in enumerate(form.answer_form):
-                question.answers[i].content = aform.content.data
+                if aform.content.data:
+                    question.answers[i].content = aform.content.data
                 question.answers[i].correct = aform.correct.data
 
             db.session.commit()
@@ -464,4 +437,3 @@ def form_errors(form):
     print("Form Errors HERE")
     print(form.errors)
     print("-------------------------------------------------------------------")
-    

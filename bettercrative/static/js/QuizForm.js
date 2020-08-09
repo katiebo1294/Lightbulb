@@ -14,7 +14,7 @@ function addQuestion(url, q_id) {
     });
 }
 
-function addAnswer(url, q_id) {
+function addAnswer(url, q_id, index) {
     $.ajax({
         type: "GET",
         data: {'question_id': q_id},
@@ -24,7 +24,7 @@ function addAnswer(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#questionView");
+            refresh("#question-edit-" + index);
         }
     });
 }
@@ -54,7 +54,7 @@ function removeQuestion(url, q_id) {
     document.getElementById("modalPopUp").style.display = "none";;
 }
 
-function removeAnswer(url, a_id) {
+function removeAnswer(url, a_id, index) {
      $.ajax({
         type: "GET",
         data: {'answer_id': a_id},
@@ -64,7 +64,7 @@ function removeAnswer(url, a_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#questionView");
+            refresh("#question-edit-" + index);
         }
     });
 }
@@ -114,16 +114,23 @@ function refresh(section)
 };
 
 function showEditQuestionContainer(index) {
-    
-    document.getElementById("question-content-display-" + index).style.display = "none";
-    document.getElementById("question-content-edit-form-" + index).style.display = "block";
-    document.getElementById("displayAnswer-" + index).style.display = "none";
-    document.getElementById("displayAnswerEdit-" + index).style.display = "block";
-};
+    document.getElementById("question-display-" + index).style.display = "none";
+    document.getElementById("question-edit-" + index).style.display = "block";
+}
+
+function resetEditQuestionContainer(index) {
+    document.getElementById("question-display-" + index).style.display = "block";
+    document.getElementById("question-edit-" + index).style.display = "none";
+}
 
 function showEditQuizNameContainer() {
     document.getElementById("quizname").style.display = "none";
     document.getElementById("quiz-name-edit-form").style.display = "inline-block";
+}
+
+function resetEditQuizNameContainer() {
+    document.getElementById("quizname").style.display = "inline-block";
+    document.getElementById("quiz-name-edit-form").style.display = "none";
 }
 
 function setQType(url,question_id, qtype) {
@@ -191,7 +198,6 @@ function showTrueFalse(answer_id){
     
 }
 
-
 function  cancelTF(answer_id){
     event.preventDefault();
     var form_content = document.getElementById(answer_id+'-TF-form');
@@ -201,6 +207,51 @@ function  cancelTF(answer_id){
     form_content.classList.replace('show', 'noshow');
     question_content.classList.replace('noshow', 'show');
 }
+
+function setTF(number, index, span) {
+    console.log(span);
+    var choice = span.innerHTML;
+    console.log(choice);
+    // find the form checkbox
+    console.log("looking for " + "aform-" + choice.toLowerCase() + "-" + index);
+    var checkbox = document.getElementById("aform-" + choice.toLowerCase() + "-" + index);
+    console.log("checkbox: ");
+    console.log(checkbox);
+    // figure out which button it is and color it accordingly
+    if(choice == 'True') {
+        var other = document.getElementById("aform-false-" + (index+1));
+        var otherBtn = document.getElementById("btn-false-" + (index+1));
+         $(span).toggleClass('btn-success btn-outline-success');
+         $(otherBtn).toggleClass('btn-danger btn-outline-danger');
+    } else {
+        var other = document.getElementById("aform-true-" + (index-1));
+        var otherBtn = document.getElementById("btn-true-" + (index-1));
+        $(span).toggleClass('btn-danger btn-outline-danger');
+        $(otherBtn).toggleClass('btn-success btn-outline-success');
+    }
+    console.log("other: ");
+    console.log(other);
+    // toggle the checkbox
+    if(checkbox.checked) {
+            console.log("was checked");
+            checkbox.removeAttribute("checked");
+            checkbox.value = 'n';
+            other.setAttribute("checked", "checked");
+            other.value = 'y';
+        } else {
+            console.log("was unchecked");
+            checkbox.setAttribute("checked", "checked");
+            checkbox.value = 'y';
+            other.removeAttribute("checked");
+            other.value = 'n';
+        }
+        console.log("checkbox: ");
+    console.log(checkbox);
+    console.log("other: ");
+    console.log(other);
+    refresh("#question-edit-" + number);
+}
+
 
 /**
  * Description:
@@ -220,8 +271,8 @@ function checked(span){
         var id = span.id.slice(10);
     }
     
-    var true_checkbox_id = 'answer_form-true-' + id;
-    var false_checkbox_id = 'answer_form-false-' + id;
+    var true_checkbox_id = 'aform-true-' + id;
+    var false_checkbox_id = 'aform-false-' + id;
     
     //Display Processing variables
     var true_display = document.getElementById(id+'-true-display');
@@ -304,23 +355,22 @@ function showShortAnswer(question_id){
     question_content.classList.replace('show', 'noshow');
 }
 
-$('.correctness-container').click(function() {
-    var icon = $(this).find('i');
-    var id = icon.attr('id');
-    id = id.slice(0, id.length - 8);
-    console.log(id);
-    icon.toggleClass('far fa-check-circle fas fa-check-circle');
-    var checkbox = $(this).find('#' + id + "correct");
+function checkCorrect(index) {
+    var icon = document.getElementById("checkbox-" + index);
+    console.log(icon);
+    $(icon).toggleClass("fas far");
+    // change appearance of checkbox icon
+    var checkbox = document.getElementById("answer_form-" + index + "-correct");
     console.log(checkbox);
-    if(checkbox.prop('checked')) {
-        console.log('was checked');
-        checkbox.prop('checked', false);
+    // check the form's actual checkbox
+    if(checkbox.checked) {
+        console.log("checkbox was checked");
+        checkbox.checked = false;
     } else {
-        console.log('was not checked');
-        checkbox.prop('checked', true);
+        console.log("checkbox was unchecked");
+        checkbox.checked = true;
     }
-});
-
+}
 
 /*  Removal of a Quiz*/
 function removeQuizPopup(url, q_id) {
