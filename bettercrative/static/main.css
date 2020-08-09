@@ -849,7 +849,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 .info-bar {
   height:5%;
   background-color:transparent;
-  margin-right:-10%;
+  margin-right:-5%;
 }
 
 .info-icon {
@@ -880,7 +880,7 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   min-height:35%;
 }
 
-#quiz-content-container {
+#quiz-container {
   position: relative;
 }
 
@@ -1129,6 +1129,58 @@ button.Show-Student-Response.btn:hover{
 }
 
 /* Quiz Section (quiz.html)*/
+.question-content {
+  float: left;
+}
+
+.mc-choice {
+  margin-bottom: 1vh;
+}
+
+button.remove-answer {
+  height: 50%;
+  margin: auto;
+  font-size: 2.25rem;
+  margin-right: 0.5%;
+}
+
+button.remove-answer:hover {
+  color: red!important;
+}
+
+/* this selects all elements with an id that starts with "question-edit-" */
+[id^="question-edit-"] {
+  background-color: #ced4da;
+  padding: 1rem;
+  margin-top: 1vh;
+  border-radius: .25rem;
+}
+
+[id^="question-edit-"] .answer-button, .correctness-container {
+  margin: auto;
+}
+
+[id^="question-edit-"] .answer-button {
+  margin-left: 1%;
+  flex: none;
+}
+
+[id^="question-display-"] .answer-button {
+  margin-right: 1vw;
+}
+
+.mc-choice > p {
+  margin: auto 0 auto 0;
+}
+
+.sa-choice {
+  background-color: #efefef;
+  border-radius: .5rem;
+  padding: .5rem;
+  margin-top: 1vh;
+  min-height: 35vh;
+}
+
 .show{
   display:block;
 }
@@ -1206,11 +1258,22 @@ div.editSign{
 }
 
 .fa-check-circle {
-  color: green;
+  font-size: 2.25rem;
+}
+
+.answer-button {
+  border-radius: 50%;
+  background-color: #6c757d;
+  color: white;
+  height: 2.25rem;
+  text-align: center;
+  width: 2.25rem;
+  font-size: xx-large;
 }
 
 .fa-check-circle:hover {
   cursor: pointer;
+  color: green!important;
 }
 
 div.SaveExitBtn.btn{
@@ -1270,8 +1333,8 @@ div#quiz-title, div.classroom-title{
 margin-top: 1%;
 }
 
-#classroom-container {
-  width: 95%;
+#classroom-container, #quiz-container {
+  width: 80%;
   margin: auto;
 }
 
@@ -1546,11 +1609,6 @@ div.scrollmenu a:hover {
 .answer-delete-button, .answer-edit-button {
     float: right;
     margin-right: 0.5vw;
-}
-
-.answer-content {
-    margin-left: 10px;
-    margin-bottom: 0;
 }
 
 .question-edit-header {
