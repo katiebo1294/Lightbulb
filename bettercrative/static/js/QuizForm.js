@@ -350,11 +350,12 @@ function removeQuiz(url, q_id) {
 
 // create Quiz
 function createQuizPopup() {
-    document.getElementById("modalClass").style.display = "none";
+    document.getElementById("modalPopUpForm").style.display = "none";
     modal = document.getElementById("modalPopUpForm");
     modalForm = document.getElementById("modalQuiz");
-    modalText = document.getElementById("modalTextForm")
+    modalText = document.getElementById("modalTextForm");
     modalText.innerHTML = "Create Quiz";
     modal.style.display = "block";
     modalForm.style.display = "block";
+    refresh("#quizListing");
 }

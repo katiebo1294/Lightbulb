@@ -46,20 +46,27 @@
 		</div>
 		<div class="account-tables">
 			<div class="row table-element header-row">
-				<div class="col-3 text-center show table-header"><button id="sort-by-name" class="btn sort-buttons">Name <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by name (descending)</span></i></button></div>
-				<div class="col-6 text-center show table-header"><button id="sort-by-date" class="btn sort-buttons">Date Created <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by date (descending)</span></i></button></div>
+				<div class="col-3 text-center show table-header"><button id="name" class="btn sort-buttons" onclick="javascript:sortList(this)">Name <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by name (descending)</span></i></button></div>
+				<div class="col-4 text-center show table-header"><button id="date_created" class="btn sort-buttons" onclick="javascript:sortList(this)">Date Created <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by date (descending)</span></i></button></div>
+				<div class="col-2 text-center show table-header"><button id="date_accessed" class="btn sort-buttons" onclick="javascript:sortList(this)">Date last accessed <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort number of questions (descending)</span></i></button></div>
 				<div class="col-3 show table-header options-header">Options</div>
 			</div>
-			{% for quiz in current_user.quizzes|sort(attribute='name') %}
+			{% set sort_on = request.args.get('sort_on', None) | default('name')  %}
+			{% set sort_direction = request.args.get('sort_direction', None) | default(false)  %}
+			{% for quiz in current_user.quizzes|sort(attribute=sort_on, reverse = sort_direction) %}
 			<div class="row table-element">
-				<div class="col-4 show table-quiztitle itemName">
+				<div class="col-3 show table-quiztitle itemName">
 					{{ quiz.name }}
 				</div>
 				<time class="col-4 date-created text-center">{{ quiz.date_created.strftime("%m/%d/%y")
 					}}
 				</time>
+				<!-- Number of questions -->
+				<div class="col-2 text-center">
+					last date viewed
+				</div>
 				<!-- user can enter a quiz to view details, or delete it -->
-				<div class="quiz-icon-col col-md-4 col-sm-3 col-xs-3">
+				<div class="quiz-icon-col col-md-3 col-sm-3 col-xs-3">
 					<div class="quiz-icon-buttons-container">
 						<!-- more options dropdown -->
 						<div class="dropdown">
