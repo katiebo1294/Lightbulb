@@ -1,317 +1,269 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div id="quiz-container">
-	<div class="titlebar">
-		<!-- Quiz Title -->
-		<button class="btn-sm classroom-title editTitle classroomname" id="quiz-{{quiz.id}}"
-		        onclick="showEditQuizNameContainer()" aria-label="edit quiz name">
-			{{quiz.name}}
-			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
-                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+<style>
+    body {
+        background-image: none;
+    }
+
+    section.nav-section {
+        background-color: rgb(188, 252, 231)
+    }
+
+    .affix {
+        padding: 0;
+        font-size: 80%;
+        background-color: rgb(188, 252, 231);
+    }
+
+    .affix .container .logo a {
+        color: black;
+        font-size: 100%;
+    }
+
+    .affix .container .navlinks a {
+        color: black;
+    }
+
+    .nav .affix .navTrigger i {
+        font-size: 80%;
+        color: black;
+    }
+
+    .affix .navTrigger i {
+        background-color: black;
+    }
+
+    .affix .navTrigger p {
+        color: black;
+    }
+</style>
+
+<div id="quiz-content-container">
+    <!-- Quiz Edit Container for users -->
+    <div id="editing-container">
+        <!--  want to change this later to classroom name  -->
+            <div class="headerSection">
+                <div class="btn QuizSaveExitBtn"><a href="{{ url_for('users.quizzes') }}">Save and Exit</a></div>
+            </div>
+
+        <!-- Quiz Title -->
+        <div id="quiz-title">
+            <span class="btn editTitle" id="quizname" onclick="showEditQuizNameContainer()">
+                {{quiz.name}}
+                <span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
+                    <i class="fas fa-pencil-alt"></i>
                 </span>
-		</button>
-		<!-- Title edit form -->
-		<form class="edit-classroom-title" id="quiz-form-{{quiz.id}}" style="display: none;"
-		      action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
-			{{qzform.hidden_tag()}}
-			<fieldset class=" form-group edit-classroom-form">
-				<div class="form-group">
-					{% if qzform.name.errors %}
-					{{qzform.name(placeholder='Enter new name '
-					,id='quizname-content-'~quiz.id,value=quiz.name, maxlength='20', class='form-control
-					form-control-lg is-invalid classroom-title editTitle classroomname')}}
-					<div class="invalid-feedback">
-						{% for error in qzform.name.errors %}
-						{{ error }}
-						{% endfor %}
-					</div>
-					{% else %}
-					{{qzform.name(placeholder='Enter new name '
-					,id='quizname-content-'~quiz.id,value=quiz.name, maxlength='20', class='form-control
-					form-control-lg classroom-title editTitle classroomname')}}
-					{% endif %}
-				</div>
-			</fieldset>
-			<div class=form-group"> {{qzform.submitQuiz(class='btn btn-sm btn-outline-info',
-				type='submit',id='submit-quiz-'~quiz.id, value='Save')}}
-				<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel"
-				       onclick="cancelEditQuiz({{quiz.id}})">
-			</div>
-		</form>
-		<!-- Save button -->
-		<button class="btn-sm sideClick"
-		        onclick="window.location.href='{{ url_for('users.quizzes') }}';">
-			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
-		</button>
-	</div>
+            </span>
+            <!-- Quiz name edit form -->
+            
+            <form style="display: none;" id="quiz-name-edit-form"
+                  action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}"
+                  method="POST">
+                
+                {{qzform.hidden_tag()}}
+                {{ qzform.name(value=quiz.name) }}
+                <!-- This area will hold the save and edit stuff, this is what changes when the input is clicked into -->
+                {{ qzform.submitQuiz(class="btn btn-outline-info", value="Save") }} 
+                <span style="margin-right: .5vw;" class="btn btn-outline-secondary"
+                        onclick="refresh('#quiz-content-container')">
+                        Cancel
+                </span>
+            </form>
+            {% if qzform.errors %}
+            {{ qzform.errors }}
+            {% endif %}
+        </div>
 
-	<div id="questionView">
-		<!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
-		<div class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
-			{% for question in quiz.questions %}
-			<div role="button" class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
-			     id="qbtn-{{ loop.index }}"
-			     onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
-				{% if not loop.first %}
-				<button class="btn btn-outline-info shift-Button"
-				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
-					<i class="fa fa-arrow-left"></i>
-				</button>
-				{% endif %}
-				ID: {{question.id}}
-				<button class="btn btn-outline-danger Remove-Button"
-				        onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
-					<i class="fa fa-times fa-2x"></i>
-				</button>
-				{% if not loop.last %}
-				<button class="btn btn-outline-info shift-Button"
-				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='right')">
-					<i class="fa fa-arrow-right"></i>
-				</button>
-				{% endif %}
-			</div>
-			{% endfor %}
+        <div id="questionView">
+            <!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
+            <div class="scrollmenu .all-items .slides">
+                {% for question in quiz.questions %}
+                <a href="#" role="button" tabindex="0" class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
+                   id="qbtn-{{ loop.index }}"
+                   onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
+                    {% if not loop.first %}
+                    <button class="btn btn-outline-info shift-Button"
+                            onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
+                        <i class="fa fa-arrow-left"></i>
+                    </button>
+                    {% endif %}
+                    ID: {{question.id}}
+                    <button class="btn btn-outline-danger Remove-Button"
+                            onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
+                        <i class="fa fa-times fa-2x"></i>
+                    </button>
+                    {% if not loop.last %}
+                    <button class="btn btn-outline-info shift-Button"
+                            onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='right')">
+                        <i class="fa fa-arrow-right"></i>
+                    </button>
+                    {% endif %}
+                </a>
+                {% endfor %}
 
-			<button class="btn btn-outline-success .item .slide"
-			        onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
-				<i class="fa fa-plus"></i>
-			</button>
-		</div>
+                <button class="btn btn-outline-success .item .slide"
+                        onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
+                    <i class="fa fa-plus"></i>
+                </button>
+            </div>
 
-		<!-- prevent things from floating after this section -->
-		<div style=" clear: both;"></div>
-		<!-- prevent things from floating after this section -->
+            <!-- prevent things from floating after this section -->
+            <div style=" clear: both;"></div>
+            <!-- prevent things from floating after this section -->
 
-		<div id="questions">
-			{% for question in quiz.questions %}
-			<div id="question-{{ loop.index }}" {% if quiz.active !=question.id %} style="display: none;" {% endif %}>
-				{% if question.category %}
-				<!-- Question display (no edit) -->
-				<div id="question-display-{{ loop.index }}">
-					<!-- Header for all question types is the same -->
-					<div class="question-header" style="padding-top: 1%;">
-						<div id="question-content-display-{{ question.id }}">
-							<!-- Displays the question content -->
-							<h5 class="question-content">
-								{{ question.name }}) {{ question.content }}
-							</h5>
-							<!-- Edit button -->
-							<div class="icon-container" style="float: right;">
-								<button style="margin-right: .5vw;" class="btn btn-outline-info"
-								        onclick="showEditQuestionContainer(index={{ loop.index }})"
-								        aria-label="edit question">
-									<i class="fas fa-pencil-alt" aria-hidden="true"></i>
-								</button>
-								<!-- LaTeX notice -->
-								<span class="info-bar">
-								<button class="info-icon" onclick="javascript:openLatexAlert()">
-									<i class="fas fa-info-circle"></i>
-								</button>
-							</span>
-							</div>
-							<div style="clear:both;"></div>
-						</div>
-					</div>
+            <div id="questions" class="">
+                {% for question in quiz.questions %}
+                <div id="question-{{ loop.index }}" {% if quiz.active != question.id %} style="display: none;" {% endif %}>
+                    {% if question.category %}
+                    {{ question.category }}
+                    <div id="question">
+                        <div class='question-container'>
+                            <div class="info-bar">
+                                <button class="info-icon" onclick="javascript:openLatexAlert()">
+                                    <i id="answer_form-{{ loop.index0 }}-checkbox" class="fas fa-info-circle"></i>
+                                </button>
+                            </div>
+                            <!-- Multiple Choice -->
+                            {% if question.category == 'Multiple Choice' %}
+                            <div class='multiple-choice'>
+                                <!-- contents of multiple choice box -->
+                            <div class="question-edit-header">
+                                <div class="question-number">
+                                    <!-- set form -->
+                                    <span id="question-content-display-{{ question.id }}">
+                                        <label class="">
+                                            {{ question.name }}) {{ question.content }}
+                                        </label>
+                                        <span class="btn btn-outline-info" style="float:right; margin:auto;"
+                                            onclick="showEditQuestionContainer(index={{question.id}})"><i class="fas fa-pencil-alt"></i></span>
+                                    </span>
+                                    <form style="display: none;" id="question-content-edit-form-{{ question.id }}"
+                                        action="{{ url_for('quizzes.edit_question', question_id=question.id) }}"
+                                        method="POST">
+                                        {{ form.hidden_tag() }}
+                                        {{ form.question_form.hidden_tag() }}
+                                        <fieldset class="form-group">
+                                            <label>{{ question.name }})
+                                                {{ form.question_form.content(value=question.content) }}</label>
+                                            <span>
+                                                {{ form.submit(class="btn btn-sm btn-outline-info") }}
+                                            </span>
+                                            <span class="btn btn-sm btn-outline-info"
+                                                onclick="refresh('#questions')">Cancel</span>
+                                            <div id="displayAnswerEdit-{{ question.id }}" class="form-group">
+                                            {% for answer in question.answers %}
+                                                {{ append_form(form) }}
+                                                {% set aform = form.answer_form[ loop.index0 ] %}
+                                                {{ aform.hidden_tag() }}
+                                                <div class="correctness-container">
+                                                        {{ aform.content(value=answer.content) }}
+                                                        {% if answer.correct %}
+                                                            <i id="answer_form-{{ loop.index0 }}-checkbox" class="fas fa-check-circle"></i>
+                                                            {{ aform.correct(checked=True, value='y', class_="actual-checkbox") }}
+                                                        {% else %}
+                                                            <i id="answer_form-{{ loop.index0 }}-checkbox" class="far fa-check-circle"></i>
+                                                            {{ aform.correct(checked=False, value='n', class_="actual-checkbox") }}
+                                                        {% endif %}
+                                                    </div>
+                                            {% endfor %}
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                    {% if form.errors %}
+                                    {{ form.errors }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                                <div class="answerchoices">
+                                    <span class="menu">
+                                        
+                                        <!-- prevent things from floating after this section -->
+                                        <span style=" clear: both;"></span>
+                                        <!-- prevent things from floating after this section -->
 
-					<!-- Each question type has a different display for answers -->
-					<!-- Multiple Choice -->
-					{% if question.category == 'Multiple Choice' %}
-					<div class="multiple-choice container-fluid">
-						{% for answer in question.answers %}
-						<div class="row mc-choice form-group">
-							<span class="answer-button{% if answer.correct %} bg-success{% endif %}">
-								{{ get_alphabet_index( loop.index ) }}
-							</span>
-							<p>{{ answer.content }}</p>
-						</div>
-						{% endfor %}
-					</div>
-					<!-- True or False -->
-					{% elif question.category == 'True-False' %}
-					<div class="true-false">
-						{% if question.answers[0].correct %}
-						<button class="btn btn-success tf-choice" disabled aria-disabled="true">True</button>
-						<button class="btn btn-outline-danger tf-choice" disabled aria-disabled="true">False</button>
-						{% elif question.answers[1].correct %}
-						<button class="btn btn-outline-success tf-choice" disabled aria-disabled="true">True</button>
-						<button class="btn btn-danger tf-choice" disabled aria-disabled="true">False</button>
-						{% else %}
-						<h5>Press the edit button to choose the answer to this question</h5>
-						<button class="btn btn-outline-success tf-choice" disabled aria-disabled="true">True</button>
-						<button class="btn btn-outline-danger tf-choice" disabled aria-disabled="true">False</button>
-						{% endif %}
-					</div>
-					<!-- Short Answer -->
-					{% elif question.category == 'Short Answer' %}
-					<div class="short-answer">
-						<div class="sa-choice" id="{{question.id}}-sa-selection">
-							<ul>
-								{% for answer in question.answers %}
-								{% if answer.content %}
-								<li>
-									{{ answer.content }}
-								</li>
-								{% else %}
-								<li><h6> Example Answer </h6></li>
-								{% endif %}
-								{% endfor %}
-							</ul>
-						</div>
-					</div>
-					<!-- IDE -->
-					{% elif question.category == 'IDE' %}
-					<div class="IDE" aria-label="coding question" style="text-align: center; margin-top: 1vh;">
-						<i class="fas fa-5x fa-code" aria-hidden="true" style="margin-bottom: 1vh;"></i>
-						<h5>This is a coding question</h5>
-						<span>Students will have access to an IDE, courtesy of Ace.js. They will not be able to compile or auto-complete their code.</span>
-					</div>
-					{% endif %}
-				</div>
-				<!-- Question form (editable) -->
-				<div id="question-edit-{{ loop.index }}" style="display: none;">
-					<form action="{{ url_for('quizzes.edit_question', question_id=question.id) }}" method="POST">
-						{{ form.hidden_tag() }}
-						{{ form.question_form.hidden_tag() }}
-						<fieldset class="form-group">
-							<div class="form-group" style="float:right;">
-								{{ form.submit(class="btn btn-sm btn-success") }}
-								<input type="reset" name="Cancel" value="Cancel" class="btn btn-sm btn-secondary"
-								       onclick="resetEditQuestionContainer({{ loop.index }});">
-							</div>
-							<!-- Question header edit -->
-							<div class="form-group">
-								{{ question.name }})
-								{% if form.question_form.content.errors %}
-								{{ form.question_form.content(class='form-control form-control-lg is-invalid',
-								placeholder=question.content, value=question.content) }}
-								<div class="invalid-feedback">
-									{% for error in form.question_form.content.errors %}
-									<span>{{ error }}</span>
-									{% endfor %}
-								</div>
-								{% else %}
-								{{ form.question_form.content(class='form-control form-control-lg',
-								placeholder=question.content, value=question.content) }}
-								{% endif %}
-							</div>
-							<!-- Multiple Choice -->
-							{% if question.category == 'Multiple Choice' %}
-							{% set outer_loop = loop %}
-							{% for answer in question.answers %}
-							<span hidden aria-hidden="true">{{ append_form(form) }}</span>
-							{% set aform = form.answer_form[ loop.index0 ] %}
-							{{ aform.hidden_tag() }}
-							<div class="row mc-choice">
-								<!-- Button to show answer letter -->
-								<span class="answer-button col-1">
-									{{ get_alphabet_index( loop.index ) }}
-								</span>
-								<!-- Our custom checkbox for answer correctness -->
-								<div class="form-group correctness-container col-1"
-								     onclick="checkCorrect(index={{ loop.index0 }});">
-									{% if answer.correct %}
-									<i tabindex="0" style="color: #6c757d;" id="checkbox-{{ loop.index0 }}"
-									   class="fas fa-check-circle">
-										<span class="sr-only">mark as incorrect</span>
-									</i>
-									{{ aform.correct(checked=True, value='y', class="actual-checkbox") }}
-									{% else %}
-									<i tabindex="0" style="color: #6c757d;" id="checkbox-{{ loop.index0 }}"
-									   class="far fa-check-circle">
-										<span class="sr-only">mark as correct</span>
-									</i>
-									{{ aform.correct(value='n', class="actual-checkbox") }}
-									{% endif %}
-								</div>
-								<!-- Actual answer content, with current value as a placeholder -->
-								<div class="answer-content col-9">
-									{% if aform.content.errors %}
-									{{ aform.content(class='form-control form-control-lg is-invalid',
-									placeholder=answer.content, value=answer.content) }}
-									<div class="invalid-feedback">
-										{% for error in aform.content.errors %}
-										<span>{{ error }}</span>
-										{% endfor %}
-									</div>
-									{% else %}
-									{{ aform.content(class='form-control form-control-lg', placeholder=answer.content,
-									value=answer.content) }}
-									{% endif %}
-								</div>
-								<button aria-label="remove answer"
-								        style="border: none; background: transparent; color: #6c757d;"
-								        class="fas fa-times remove-answer col-1"
-								        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }}, index={{ outer_loop.index }}); remove_form(form);">
-								</button>
-							</div>
-							{% endfor %}
-							<!-- Add an answer -->
-							<button class="btn btn-outline-success"
-							        onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }}, index={{ loop.index }})"
-							        aria-label="add answer">
-								<i class="fa fa-plus" aria-hidden="true"></i>
-							</button>
-							<!-- True or False -->
-							{% elif question.category == 'True-False' %}
-							true option is {{ question.answers[0].correct }}
-							false option is {{ question.answers[1].correct }}
-							{% set outer_loop = loop %}
-							{% for answer in question.answers %}
-							{% set aform = tfform.answer_form[ loop.index0 ] %}
-							{{ aform.hidden_tag() }}
-							{% if answer.content == "True" %}
-								{% if answer.correct %}
-								{{ aform.correct(class='noshow', id='aform-true-'~loop.index0, checked='checked', value='y') }}
-								<span class="btn btn-lg btn-success" id="btn-true-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">True</span>
-								{% else %}
-								{{ aform.correct(class='noshow', id='aform-true-'~loop.index0) }}
-								<span class="btn btn-lg btn-outline-success" id="btn-true-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">True</span>
-								{% endif %}
-							{% else %}
-								{% if answer.correct %}
-								{{ aform.correct(class='noshow', id='aform-false-'~loop.index0, checked='checked', value='y') }}
-								<span class="btn btn-lg btn-danger" id="btn-false-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">False</span>
-								{% else %}
-								{{ aform.correct(class='noshow', id='aform-false-'~loop.index0) }}
-								<span class="btn btn-lg btn-outline-danger" id="btn-false-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">False</span>
-								{% endif %}
-							{% endif %}
-							{% endfor %}
-							{% elif question.category == 'Short Answer' %}
-							{% elif question.category == 'IDE' %}
-							{% endif %}
-						</fieldset>
-					</form>
-				</div>
-				{% else %}
-				<!-- four buttons to choose question type -->
-				<div class="question-type-container">
-					<button class="question-type-choice-box btn-primary"
-					        onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Multiple Choice')">
-						Multiple
-						Choice
-					</button>
-					<button class="question-type-choice-box btn-danger"
-					        onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='True-False')">
-						True
-						or False
-					</button>
-					<button class="question-type-choice-box btn-warning"
-					        onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Short Answer')">
-						Short
-						Answer
-					</button>
-					<button class="question-type-choice-box btn-secondary"
-					        onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='IDE')">
-						Coding
-					</button>
-				</div>
-				{% endif %}
-			</div>
-			{% endfor %}
-		</div>
-	</div>
+                                    </span>
+                                </div>
+                                <span class="reset"> </span>
+                                <div class="answerContainer reset">
+                                    {% set outer_loop = loop %}
+                                    <!-- This area is for the set answers -->
+                                    <div id="displayAnswer-{{ question.id }}">
+                                        {% for answer in question.answers %}
+                                        <div class="answerChoice">
+                                            <span class="btn btn-secondary active button-choices">{{ get_alphabet_index(loop.index) }}</span>
+                                            <div class="answerBox">
+                                                <span class="content-section">
+                                                    <button class="btn btn-sm btn-outline-danger answer-delete-button"
+                                                            onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }})">
+                                                        <i class="fa fa-times fa-lg"></i>
+                                                    </button>
+                                                    <span id="answer-content-display-{{ answer.id }}">
+                                                        <label class="answer-content">{{ answer.content }}{% if answer.correct %}(Correct){% endif %}</label>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <button class="btn btn-outline-success"
+                                            onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }})">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- True/False -->
+                            {% elif question.category == 'True-False' %}
+                            <div class='true-false'>
+                                {%include 'true_false.html'%}
+                            </div>
+                            
+                            
+
+
+                            <!-- Short Answer -->
+                            {% elif question.category == 'Short Answer'%}
+                            <div class='short-answer'>
+                                {%include 'short_answer.html'%}
+                            </div>
+
+                            <!-- IDE -->
+                            {% else %}
+                            <div class='IDE'>
+                            </div>
+                            {%endif%}
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- four buttons to choose question type -->
+                    <div class="question-type-container">
+                        <button class="question-type-choice-box btn-primary"
+                                onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Multiple Choice')">
+                            Multiple
+                            Choice
+                        </button>
+                        <button class="question-type-choice-box btn-danger"
+                                onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='True-False')">
+                            True
+                            or False
+                        </button>
+                        <button class="question-type-choice-box btn-warning"
+                                onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='Short Answer')">
+                            Short
+                            Answer
+                        </button>
+                        <button class="question-type-choice-box btn-secondary"
+                                onclick="setQType('{{ url_for('quizzes.set_question_type') }}',question_id={{ question.id }}, qtype='IDE')">
+                            Coding
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 <script src="{{ url_for('static', filename='js/horizontalscroll.js') }}"></script>
 {% endblock %}

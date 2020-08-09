@@ -121,39 +121,13 @@ def set_active():
     quiz_id = request.args.get('quiz_id', None)
     classroom_id = request.args.get('classroom_id', None)
     classroom = Classroom.query.get_or_404(classroom_id)
-    quiz = Quiz.query.get_or_404(quiz_id)
-
-    # TODO flash messages don't show up and I'm not sure if it works properly for question types other than multiple choice, so I'm commenting it out for now
-    # # Check if quiz is finished first
-    # is_finished = True
-    # for question in quiz.questions:
-    #     # questions must all have content
-    #     if question.content == 'None':
-    #         is_finished = False
-    #         break
-    #     # questions must all have at least one answer
-    #     if not question.answers:
-    #         is_finished = False
-    #         break
-    #     # each answer must have content and at least one must be marked correct
-    #     has_correct_answer = False
-    #     for answer in question.answers:
-    #         if answer.content == 'None':
-    #             is_finished = False
-    #             break
-    #         if answer.correct:
-    #             has_correct_answer = True
-    #     if not has_correct_answer:
-    #         is_finished = False
-    #         break
-    # if not is_finished:
-    #     print("quiz isn't finished")
-    #     flash(u'Cannot set this quiz as active - please make sure all questions have sufficient content and at least one correct answer!', 'error')
-    # else:
+    print("-------------------------------------------------------------------")
+    print("DEBUGGING LINE HERE")
+    print(classroom)
+    print("-------------------------------------------------------------------")
     classroom.active_quiz = quiz_id
     db.session.commit()
-    flash(u'\"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
-
+   
     form = ClassroomForm()
     return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
 
