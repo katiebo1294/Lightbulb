@@ -35,7 +35,7 @@ class QuestionFormOverall(FlaskForm):
 
 
 class QuestionFormOverallTF(FlaskForm):
-    answer_form = FieldList(FormField(TFform), min_entries=2, max_entries=2)
+    answer_form = FieldList(FormField(TFform))
     question_form = FormField(QuestionForm)
     submit = SubmitField('Save Changes')
 

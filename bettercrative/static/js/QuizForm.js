@@ -278,8 +278,8 @@ function checked(span){
         var id = span.id.slice(10);
     }
     
-    var true_checkbox_id = 'aform-true-' + id;
-    var false_checkbox_id = 'aform-false-' + id;
+    var true_checkbox_id = 'answer_form-true-' + id;
+    var false_checkbox_id = 'answer_form-false-' + id;
     
     //Display Processing variables
     var true_display = document.getElementById(id+'-true-display');

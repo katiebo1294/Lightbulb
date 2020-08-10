@@ -314,6 +314,9 @@ def set_question_type():
         return redirect(url_for('quizzes.quiz', quiz_id=quiz.id, question_type='Short Answer'))
 
     db.session.commit()
+    print("-------------------------------------------------------------------")
+    print("done w/ setting q type")
+    print("-------------------------------------------------------------------")
     return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
 
 
@@ -327,17 +330,12 @@ def edit_question(question_id):
     if question.category == 'Short Answer':
         
         form = QuestionFormOverallSA()
-        print(f'OVERALLSA IS {type(form)}')
+        
         if form.validate_on_submit():
             received_form = request.form
             print(request.form)
             question.content = received_form['question_form-content']
             received_answer = received_form['answer_form-content']
-            print("-------------------------------------------------------------------")
-            print("DEBUGGING LINE HERE")
-            print(f'question content is {question.content}')
-            print(f'answer is {received_answer}')
-            print("-------------------------------------------------------------------")
             db.session.add(question)
             answer = question.answers[0]
             answer.content = received_answer
@@ -348,24 +346,45 @@ def edit_question(question_id):
 
     else:
         if question.category == 'True-False':
+
             form = QuestionFormOverallTF()
-            print("checking form data:")
-            print(request.form)
+            #form validation
+            if form.validate_on_submit():
+                #getting the form
+                received_form = request.form
+                correct_answer = 0
+                #getting the correct answer and new question name
+                for key in received_form.keys():
+                    if('answer_form' and 'correct' in key):
+                        correct_answer=bool(int(received_form[key]))
+                        new_content_name = received_form['question_form-content']
+                for answer in question.answers:
+                    if answer.content == str(correct_answer):
+                        answer.correct = True
+                        db.session.add(answer)
+                    else:
+                        answer.correct = False
+                        db.session.add(answer)
+                
+                question.content = new_content_name
+                db.session.add(question)
+                db.session.commit()
+                flash(u'Successfully updated question!', 'success')
+                return redirect(url_for('quizzes.quiz', quiz_id = quiz.id))
         else:
             form = QuestionFormOverall()
+            if form.validate_on_submit():
+                if form.question_form.content.data:
+                    question.content = form.question_form.content.data
+                for i, aform in enumerate(form.answer_form):
+                    if aform.content.data:
+                        question.answers[i].content = aform.content.data
+                    question.answers[i].correct = aform.correct.data
 
-        if form.validate_on_submit():
-            if form.question_form.content.data:
-                question.content = form.question_form.content.data
-            for i, aform in enumerate(form.answer_form):
-                if aform.content.data:
-                    question.answers[i].content = aform.content.data
-                question.answers[i].correct = aform.correct.data
-
-            db.session.commit()
-            flash(u'Successfully updated question!', 'success')
-            return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
-        return render_template('quiz.html', quiz=quiz, form=form, qzform=qzform)
+                db.session.commit()
+                flash(u'Successfully updated question!', 'success')
+                return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
+            return render_template('quiz.html', quiz=quiz, form=form, qzform=qzform)
 
 @quizzes.route("/quiz/change_active_question")
 @login_required
@@ -426,6 +445,17 @@ DEBUGGING FUNCTIONS SECTION [REMOVE LATER]
 """
 
 
+def printQuestion(question: Question) -> None:
+    print(f'question id: {question.id} | question name: {question.name} | \
+        question content: {question.content} | question category: {question.category} \
+            | quiz_id(FOREIGN KEY): {question.quiz_id} | \
+                question index : {question.index}')
+
+def form_errors(form):
+    print("-------------------------------------------------------------------")
+    print("Form Errors HERE")
+    print(form.errors)
+    print("-------------------------------------------------------------------")
 def printQuestion(question: Question) -> None:
     print(f'question id: {question.id} | question name: {question.name} | \
         question content: {question.content} | question category: {question.category} \

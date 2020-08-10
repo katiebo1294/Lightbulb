@@ -130,17 +130,33 @@
 					<!-- True or False -->
 					{% elif question.category == 'True-False' %}
 					<div class="true-false">
-						{% if question.answers[0].correct %}
-						<button class="btn btn-success tf-choice" disabled aria-disabled="true">True</button>
-						<button class="btn btn-outline-danger tf-choice" disabled aria-disabled="true">False</button>
-						{% elif question.answers[1].correct %}
-						<button class="btn btn-outline-success tf-choice" disabled aria-disabled="true">True</button>
-						<button class="btn btn-danger tf-choice" disabled aria-disabled="true">False</button>
-						{% else %}
-						<h5>Press the edit button to choose the answer to this question</h5>
-						<button class="btn btn-outline-success tf-choice" disabled aria-disabled="true">True</button>
-						<button class="btn btn-outline-danger tf-choice" disabled aria-disabled="true">False</button>
-						{% endif %}
+						
+						{%for answer in question.answers%}
+						{%if loop.first and answer.correct == loop.nextitem.correct%}
+						<span id = '{{question.id}}-true-display' class="choices btn btn-outline-success btn-success btn-lg disabled">
+							True
+						</span>
+						<span id = '{{question.id}}-false-display' class="choices btn btn-outline-danger btn-danger btn-lg disabled">
+							False
+						</span>
+						{%break%}
+						{%elif answer.content == 'True' and answer.correct %}
+						<span id = '{{question.id}}-true-display' class="choices btn btn-success btn-lg disabled">
+							True
+						</span>
+						<span id = '{{question.id}}-false-display' class="choices btn btn-outline-danger btn-danger btn-lg disabled">
+							False
+						</span>
+						{%elif answer.content == 'False' and answer.correct %}
+						<span id = '{{question.id}}-true-display' class="choices btn btn-outline-success btn-success btn-lg disabled">
+							True
+						</span>
+						<span id = '{{question.id}}-false-display' class="choices btn btn-danger btn-lg disabled">
+							False
+						</span>
+						{%endif%}
+			
+					{%endfor%}
 					</div>
 					<!-- Short Answer -->
 					{% elif question.category == 'Short Answer' %}
@@ -173,6 +189,7 @@
 					<form action="{{ url_for('quizzes.edit_question', question_id=question.id) }}" method="POST">
 						{{ form.hidden_tag() }}
 						{{ form.question_form.hidden_tag() }}
+						
 						<fieldset class="form-group">
 							<div class="form-group" style="float:right;">
 								{{ form.submit(class="btn btn-sm btn-success") }}
@@ -195,6 +212,7 @@
 								placeholder=question.content, value=question.content) }}
 								{% endif %}
 							</div>
+						
 							<!-- Multiple Choice -->
 							{% if question.category == 'Multiple Choice' %}
 							{% set outer_loop = loop %}
@@ -252,32 +270,48 @@
 							        aria-label="add answer">
 								<i class="fa fa-plus" aria-hidden="true"></i>
 							</button>
+							
+
+
+
 							<!-- True or False -->
 							{% elif question.category == 'True-False' %}
-							true option is {{ question.answers[0].correct }}
-							false option is {{ question.answers[1].correct }}
-							{% set outer_loop = loop %}
-							{% for answer in question.answers %}
-							{% set aform = tfform.answer_form[ loop.index0 ] %}
-							{{ aform.hidden_tag() }}
-							{% if answer.content == "True" %}
-								{% if answer.correct %}
-								{{ aform.correct(class='noshow', id='aform-true-'~loop.index0, checked='checked', value='y') }}
-								<span class="btn btn-lg btn-success" id="btn-true-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">True</span>
-								{% else %}
-								{{ aform.correct(class='noshow', id='aform-true-'~loop.index0) }}
-								<span class="btn btn-lg btn-outline-success" id="btn-true-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">True</span>
-								{% endif %}
-							{% else %}
-								{% if answer.correct %}
-								{{ aform.correct(class='noshow', id='aform-false-'~loop.index0, checked='checked', value='y') }}
-								<span class="btn btn-lg btn-danger" id="btn-false-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">False</span>
-								{% else %}
-								{{ aform.correct(class='noshow', id='aform-false-'~loop.index0) }}
-								<span class="btn btn-lg btn-outline-danger" id="btn-false-{{ loop.index0 }}" onclick="setTF({{ outer_loop.index0 }}, {{ loop.index0 }}, this);">False</span>
-								{% endif %}
-							{% endif %}
-							{% endfor %}
+								{%set answer_form = form.answer_form.append_entry()%}
+								{{answer_form.hidden_tag()}}
+															
+								
+								
+
+								{%for answer in question.answers%}
+									{%if answer.content == "True"%}
+										{{answer_form.content(class='noshow',value='True')}}
+										{{answer_form.correct(class='noshow', value='1',id='answer_form-true-' ~ question.id)}}
+										{%if answer.correct%}
+											<span class="btn btn-lg btn-outline-success active" id='btn-true-{{question.id}}'
+											onclick='checked(this)' title='True'>True
+											</span>	
+										{%else%}
+											<span class="btn btn-lg btn-outline-success" id='btn-true-{{question.id}}'
+											onclick='checked(this)' title='True'>True
+											</span>	
+										{%endif%}
+									{%else%}
+										{{answer_form.content(class='noshow',value='False')}}
+										{{answer_form.correct(class='noshow', value='0',id='answer_form-false-' ~ question.id)}}
+										{%if answer.correct%}
+											<span class="btn btn-lg btn-outline-danger active"  id='btn-false-{{question.id}}'
+											onclick='checked(this)' title = 'False'>False
+											</span>       
+										{%else%}                     
+											<span class="btn btn-lg btn-outline-danger"  id='btn-false-{{question.id}}'
+											onclick='checked(this)' title = 'False'>False
+											</span>
+										{%endif%}
+									{%endif%}
+									
+								
+
+								{%endfor%}
 							{% elif question.category == 'Short Answer' %}
 							{% elif question.category == 'IDE' %}
 							{% endif %}
