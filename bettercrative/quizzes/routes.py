@@ -346,7 +346,7 @@ def edit_question(question_id):
 
     else:
         if question.category == 'True-False':
-
+            new_content_name = question.content
             form = QuestionFormOverallTF()
             #form validation
             if form.validate_on_submit():
