@@ -44,56 +44,56 @@
 				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
 			</button>
 		</div>
-		<div class="account-tables">
-			<div class="row table-element header-row">
-				<div class="col-3 text-center show table-header"><button id="name" class="btn sort-buttons" onclick="javascript:sortList(this)">Name <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by name (descending)</span></i></button></div>
-				<div class="col-4 text-center show table-header"><button id="date_created" class="btn sort-buttons" onclick="javascript:sortList(this)">Date Created <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort quizzes by date (descending)</span></i></button></div>
-				<div class="col-2 text-center show table-header"><button id="date_accessed" class="btn sort-buttons" onclick="javascript:sortList(this)">Date last accessed <i class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort number of questions (descending)</span></i></button></div>
-				<div class="col-3 show table-header options-header">Options</div>
-			</div>
-			{% set sort_on = request.args.get('sort_on', None) | default('name')  %}
-			{% set sort_direction = request.args.get('sort_direction', None) | default(false)  %}
-			{% for quiz in current_user.quizzes|sort(attribute=sort_on, reverse = sort_direction) %}
-			<div class="row table-element">
-				<div class="col-3 show table-quiztitle itemName">
-					{{ quiz.name }}
-				</div>
-				<time class="col-4 date-created text-center">{{ quiz.date_created.strftime("%m/%d/%y")
-					}}
-				</time>
-				<!-- Number of questions -->
-				<div class="col-2 text-center">
-					last date viewed
-				</div>
-				<!-- user can enter a quiz to view details, or delete it -->
-				<div class="quiz-icon-col col-md-3 col-sm-3 col-xs-3">
-					<div class="quiz-icon-buttons-container">
-						<!-- more options dropdown -->
-						<div class="dropdown">
-							<button id="more-options" class="btn dropbtn quiz-icon" type="button" data-toggle="dropdown" aria-haspopup="true" aria-label="more options">
-								<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
-							</button>
-							<div class="dropdown-menu" aria-labelledby="more-options">
-								<button class="dropdown-item" type="button" aria-label="share"><i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i></button>
-								<button class="dropdown-item" type="button" aria-label="download"><i class="account-page-icons fas fa-download" aria-hidden="true"></i></button>
-								<button class="dropdown-item" type="button" aria-label="copy"><i class="account-page-icons fas fa-copy" aria-hidden="true"></i></button>
+		<table id="account-tables" class="account-tables">
+			<thead>
+				<th>Name</th>
+				<th>Date Created</th>
+				<th>Date last accessed</th>
+				<th>Options</th>
+			</tr>
+			<tbody>
+				{% for quiz in current_user.quizzes %}
+				<tr>
+					<td class="itemName">
+						{{ quiz.name }}
+					</td>
+					<td>{{ quiz.date_created.strftime("%m/%d/%y")
+						}}
+					</td>
+					<!-- Number of questions -->
+					<td class="text-center">
+						last date viewed
+					</td>
+					<!-- user can enter a quiz to view details, or delete it -->
+					<td class="quiz-icon-col">
+						<div class="quiz-icon-buttons-container">
+							<!-- more options dropdown -->
+							<div class="dropdown">
+								<button id="more-options" class="btn dropbtn quiz-icon" type="button" data-toggle="dropdown" aria-haspopup="true" aria-label="more options">
+									<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
+								</button>
+								<div class="dropdown-menu" aria-labelledby="more-options">
+									<button class="dropdown-item" type="button" aria-label="share"><i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i></button>
+									<button class="dropdown-item" type="button" aria-label="download"><i class="account-page-icons fas fa-download" aria-hidden="true"></i></button>
+									<button class="dropdown-item" type="button" aria-label="copy"><i class="account-page-icons fas fa-copy" aria-hidden="true"></i></button>
+								</div>
 							</div>
-						</div>
-						<!-- edit button -->
-					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-					        type="button" class="btn btn-sm quiz-icon" aria-label="edit">
-						<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
-					</button>
-						<!-- delete button -->
-						<button type="button" class="btn btn-sm quiz-icon"
-						        onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})" aria-label="delete">
-						<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
+							<!-- edit button -->
+						<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
+								type="button" class="btn btn-sm quiz-icon" aria-label="edit">
+							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
 						</button>
-					</div>
-				</div>
-			</div>
-			{% endfor %}
-		</div>
+							<!-- delete button -->
+							<button type="button" class="btn btn-sm quiz-icon"
+									onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})" aria-label="delete">
+							<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
+							</button>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</div>
 </div>
 

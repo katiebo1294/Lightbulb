@@ -105,7 +105,14 @@ function refresh(section)
         contentType: "text",
         success: function(data) {
             var result = $('<div />').append(data).find(section).html();
-            $(section)[0].innerHTML = result;
+            if(typeof $(section)[0] !== 'undefined')
+            {
+                $(section)[0].innerHTML = result;
+            }
+            if(document.URL.indexOf("quizzes"))
+            {
+                $('#account-tables').DataTable();
+            }
             MathJax.typeset();
             console.log("Refreshed");
         }

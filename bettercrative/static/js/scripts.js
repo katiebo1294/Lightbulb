@@ -1,3 +1,10 @@
+window.onload = function() {    
+    if(document.URL.indexOf("quizzes") || document.URL.indexOf("classrooms"))
+    {
+        $('#account-tables').DataTable();
+    }
+}
+
 $('.navTrigger').click(function () {
     $(this).toggleClass('active');
     console.log("Clicked hamburger");
@@ -64,7 +71,7 @@ function showAccountEditForm() {
     document.getElementById("account-form").style.display = "block";
 }
 
-function sortList(element) {
+function reverse_icon(element) {
     // get decendant that has <i>
     var itag = element.getElementsByTagName("i")[0];
     var direction;
@@ -77,22 +84,6 @@ function sortList(element) {
         direction = true;
     }
 
-    // Send a GET request to reload the page TODO doesn't work
-    console.log("success sort on " + element.id + " " + direction);
-    $.ajax({
-        type: "GET",
-        data: {
-            sort_on: element.id, 
-            sort_direction: direction
-        },
-        url: document.URL,
-        error: function(response) {
-            alert(response.statusText);
-            console.log(response.statusText);
-        },
-        success: function() {
-            console.log("success sort on " + element.id + " " + direction);
-            // $("#" + type + "-data").load(" #" + type + "-data > *");
-        }
-    });
+    //refresh page
+    refresh("#quizListings");
 }

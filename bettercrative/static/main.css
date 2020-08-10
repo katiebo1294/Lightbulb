@@ -884,17 +884,6 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   position: relative;
 }
 
-.row.table-element{
-  padding:5px;
-  min-height: 3vw;
-  margin:0;
-  border-bottom: 1px solid rgba(50,50,50,.35);
-}
-
-.row.table-element:not(.header-row):hover {
-  background-color: #e0e0e0;
-}
-
 .table-header, .sort-buttons {
   font-weight: bold;
 }
