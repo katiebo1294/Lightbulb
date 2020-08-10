@@ -209,7 +209,7 @@
 								</div>
 								{% else %}
 								{{ form.question_form.content(class='form-control form-control-lg',
-								placeholder=question.content, value=question.content) }}
+								placeholder='Fill in Question Content Here', value=question.content) }}
 								{% endif %}
 							</div>
 						
@@ -312,7 +312,14 @@
 								
 
 								{%endfor%}
+
+							
 							{% elif question.category == 'Short Answer' %}
+								{{saform.answer_form(id='answer_form-content')}}
+								
+								
+							
+
 							{% elif question.category == 'IDE' %}
 							{% endif %}
 						</fieldset>

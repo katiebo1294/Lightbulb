@@ -59,8 +59,7 @@ def quiz(quiz_id):
     qzform = QuizForm()
     quiz = Quiz.query.get_or_404(quiz_id)
     saform = QuestionFormOverallSA()
-    tfform = QuestionFormOverallTF()
-    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form, saform = saform,tfform=tfform)
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form, saform=saform)
 
 
 @quizzes.route("/quiz/edit-name/<int:quiz_id>", methods=['GET', 'POST'])
@@ -306,17 +305,13 @@ def set_question_type():
         db.session.add(true)
         db.session.add(false)
     elif current_question.category == 'Short Answer':
-        short_answer = Answer(question_id=question_id, index = 0)
+        short_answer = Answer(question_id=question_id, index = 0, correct=True)
         db.session.add(short_answer)
-        db.session.commit()
-        print(f'q type is {current_question.category}')
-        print('REDIRECTING WITH FORM')
-        return redirect(url_for('quizzes.quiz', quiz_id=quiz.id, question_type='Short Answer'))
+        
+        
 
     db.session.commit()
-    print("-------------------------------------------------------------------")
-    print("done w/ setting q type")
-    print("-------------------------------------------------------------------")
+
     return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
 
 
@@ -335,7 +330,7 @@ def edit_question(question_id):
             received_form = request.form
             print(request.form)
             question.content = received_form['question_form-content']
-            received_answer = received_form['answer_form-content']
+            received_answer = received_form['answer_form']
             db.session.add(question)
             answer = question.answers[0]
             answer.content = received_answer
@@ -343,7 +338,7 @@ def edit_question(question_id):
             db.session.add(answer)
             db.session.commit()
             return redirect(url_for('quizzes.quiz', quiz_id=quiz.id))
-
+        return render_template('quiz.html', quiz=quiz, form=form, qzform=qzform)
     else:
         if question.category == 'True-False':
             new_content_name = question.content
@@ -371,6 +366,7 @@ def edit_question(question_id):
                 db.session.commit()
                 flash(u'Successfully updated question!', 'success')
                 return redirect(url_for('quizzes.quiz', quiz_id = quiz.id))
+            return render_template('quiz.html', quiz=quiz, form=form, qzform=qzform)
         else:
             form = QuestionFormOverall()
             if form.validate_on_submit():
