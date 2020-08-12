@@ -1146,6 +1146,11 @@ button.add-answer:hover {
   color: green!important;
 }
 
+[id^='qbtn-']:hover, [id^='qbtn-']:focus {
+  background-color: #A2A2A2;
+  box-shadow: none;
+}
+
 /* this selects all elements with an id that starts with "question-edit-" */
 [id^="question-edit-"] {
   background-color: #ced4da;

@@ -5,7 +5,7 @@
 	<div class="titlebar">
 		<!-- Quiz Title -->
 		<button class="btn-sm classroom-title editTitle classroomname" id="quiz-{{quiz.id}}"
-		        onclick="showEditQuizNameContainer()" aria-label="edit quiz name">
+		        onclick="showEditQuizNameContainer({{ quiz.id }})" aria-label="edit quiz name">
 			{{quiz.name}}
 			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
@@ -23,7 +23,7 @@
 					form-control-lg is-invalid classroom-title editTitle classroomname')}}
 					<div class="invalid-feedback">
 						{% for error in qzform.name.errors %}
-						{{ error }}
+							{{ error }}
 						{% endfor %}
 					</div>
 					{% else %}
@@ -50,32 +50,32 @@
 		<!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
 		<div class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
 			{% for question in quiz.questions %}
-			<div role="button" class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
+			<div tabindex="0" role="button" class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
 			     id="qbtn-{{ loop.index }}"
 			     onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
 				{% if not loop.first %}
-				<button class="btn btn-outline-info shift-Button"
+				<button aria-label="shift question left" class="btn btn-outline-info shift-Button"
 				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
-					<i class="fa fa-arrow-left"></i>
+					<i class="fa fa-arrow-left" aria-hidden="true"></i>
 				</button>
 				{% endif %}
 				ID: {{question.id}}
-				<button class="btn btn-outline-danger Remove-Button"
+				<button aria-label="remove question" class="btn btn-outline-danger Remove-Button"
 				        onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
-					<i class="fa fa-times fa-2x"></i>
+					<i class="fa fa-times" aria-hidden="true"></i>
 				</button>
 				{% if not loop.last %}
-				<button class="btn btn-outline-info shift-Button"
+				<button aria-label="shift question right" class="btn btn-outline-info shift-Button"
 				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='right')">
-					<i class="fa fa-arrow-right"></i>
+					<i class="fa fa-arrow-right" aria-hidden="true"></i>
 				</button>
 				{% endif %}
 			</div>
 			{% endfor %}
 
-			<button class="btn btn-outline-success .item .slide"
+			<button aria-label="add a question" class="btn btn-outline-success .item .slide"
 			        onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
-				<i class="fa fa-plus"></i>
+				<i class="fa fa-plus" aria-hidden="true"></i>
 			</button>
 		</div>
 

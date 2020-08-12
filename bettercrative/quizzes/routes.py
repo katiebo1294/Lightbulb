@@ -67,19 +67,18 @@ def quiz(quiz_id):
 def edit_quiz_name(quiz_id):
     
     quiz = Quiz.query.get_or_404(quiz_id)
-    
-    
 
     qzform = QuizForm()
     form = QuestionFormOverall()
-    
+    saform = QuestionFormOverallSA()
+    print("got here")
     if qzform.validate_on_submit():
-        
+        print(qzform.data)
         quiz.name = qzform.name.data
         db.session.commit()
         return redirect(url_for('quizzes.quiz', quiz_id=quiz_id))
         
-    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form)
+    return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form, saform=saform)
 
 
 @quizzes.route("/quiz/add")
