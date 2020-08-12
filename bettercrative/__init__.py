@@ -15,6 +15,9 @@ from bettercrative.errors.routes import bad_request, unauthorized, forbidden,  n
 
 
 
+def remove_form(form):
+    form.answer_form.pop()
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)

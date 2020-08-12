@@ -7,7 +7,7 @@ from bettercrative.models import Classroom
 
 # Teacher can create an empty classroom with a unique name
 class ClassroomForm(FlaskForm):
-    name = BetterStringField('Title', validators=[InputRequired(), Length(min=4, max=15, message='Must be at least 4 chars')])
+    name = BetterStringField('Title', validators=[InputRequired(), Length(max=20, message='Must be shorter than 20 characters')])
 
     def validate_name(self, name):
         name = Classroom.query.filter_by(name=name.data).first()

@@ -27,8 +27,8 @@
 	<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
 	<script crossorigin="anonymous" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-			
+	        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 	<!-- Mathjax -->
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
@@ -38,51 +38,66 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@400&display=swap" rel="stylesheet">
 
 	<!-- CSS -->
 	<link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{url_for('static', filename='theme-00e676.css') }}" rel="stylesheet" type="text/css">
+	
+	<!-- CSS for datatables -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 
 </head>
 
 <body id="body" class="tex2jax_ignore">
-	<!--NavBar-->
-	<header>
-		<nav class="nav">
-			<div class="container">
-				<div class="logo">
-					<a href="{{ url_for('main.home') }}">Bettercrative</a>
-				</div>
+	<main class="page-wrap">
+		<!--NavBar-->
+		<header>
+			<nav class="navbar navbar-expand-lg">
+				<a class="navbar-brand" href="{{ url_for('main.home') }}"><h2>Bettercrative</h2></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<div class="navTrigger">
+						<span>B</span>
+						<span>C</span>
+						<span> </span>
+					</div>
+				</button>
 
-				<div class="listofcontents" id="navlistcontents">
-					<ul class="navlinks">
-						<li><a href="{{ url_for('main.home') }}"> Home </a></li>
-
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('main.home') }}">Home</a>
+						</li>
 						{% if current_user.is_authenticated %}
-						<li><a href="{{ url_for('main.about') }}"> About </a></li>
-						<li><a href="{{ url_for('users.account') }}"> Account </a></li>
-						<li><a href="{{ url_for('users.logout') }}"> Logout </a></li>
-						{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.classrooms') }}">Classrooms</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.quizzes') }}">Quizzes</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.account') }}">Account</a>
+						</li>
 
-						<li><a href="{{ url_for('users.register') }}"> Register </a></li>
-						<li><a href="{{ url_for('main.about') }}"> About </a></li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+						</li>
+						{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
+						</li>
 						{% endif %}
 					</ul>
 				</div>
+			</nav>
+		</header>
+		<!--End Of NavBar-->
 
-				<!-- Collapse for mobile-->
-				<span class="navTrigger">
-                        <i>B</i>
-                        <i>C</i>
-                        <i> </i>
-                    </span>
-			</div> <!-- container close tag-->
-		</nav>
-	</header>
-	<!--End Of NavBar-->
-
-	<!-- Home section -->
-	<div class="home-section">
+		<!-- Home section -->
 		<!-- Message flashing -->
 		{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
@@ -103,26 +118,29 @@
 					An unknown error has occurred
 				</div>
 				<button id="modalButton" type="button" class="btn btn-success">Confirm</button>
-				<button id="cancelButton" type="button" class="btn btn-secondary" onclick="document.getElementById('modalPopUp').style.display='none'">Cancel</button>
+				<button id="cancelButton" type="button" class="btn btn-secondary"
+						onclick="document.getElementById('modalPopUp').style.display='none'">Cancel
+				</button>
 			</div>
 		</div>
-		
+
 		<!-- Page content -->
 		{% block content %}
 		{% endblock %}
-	</div>
-	<!-- End of Home Section -->
+		<!-- End of Home Section -->
+	</main>
 
+	<!-- prevent things from floating after this section -->
 	<!-- from https://mdbootstrap.com/docs/jquery/navigation/footer/ -->
 	<!-- Footer -->
-	<footer class="page-footer font-small indigo">
+	<footer class="font-small site-footer">
 
 		<!-- Footer Links -->
-		<div class="container">
-
+		<div class="container-fluid text-center text-md-left">
+	
 			<!-- Grid row-->
 			<div class="row text-center d-flex justify-content-center pt-5 mb-3">
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -130,7 +148,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -138,7 +156,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -146,7 +164,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -154,7 +172,7 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 				<!-- Grid column -->
 				<div class="col-md-2 mb-3">
 					<h6 class="text-uppercase font-weight-bold">
@@ -162,34 +180,34 @@
 					</h6>
 				</div>
 				<!-- Grid column -->
-
+	
 			</div>
 			<!-- Grid row-->
 			<hr class="rgba-white-light" style="margin: 0 15%;">
-
+	
 			<!-- Grid row-->
 			<div class="row d-flex text-center justify-content-center mb-md-0 mb-4">
-
+	
 				<!-- Grid column -->
-				<div class=" col-md-8 col-12 mt-5">
-					<p style="line-height: 1.7rem">Well better my bread and call me bobby, its the bettercrative
+				<div class=" col-md-8 col-12 mt-3">
+					<p>Well better my bread and call me bobby, its the bettercrative
 						bettergang
 						here to better your lives with better-ideas, better-sites, and a better-attitude</p>
 				</div>
 				<!-- Grid column -->
-
+	
 			</div>
 			<!-- Grid row-->
 			<hr class="clearfix d-md-none rgba-white-light" style="margin: 10% 15% 5%;">
-
+	
 			<!-- Grid row-->
 			<div class="row pb-3">
-
+	
 				<!-- Grid column -->
 				<div style="margin:auto;">
-
-					<div class="mb-5 flex-center">
-
+	
+					<div class="flex-center">
+	
 						<!-- Facebook -->
 						<a class="fb-ic">
 							<i class="fab fa-facebook-f fa-lg white-text mr-4"> </i>
@@ -214,24 +232,24 @@
 						<a class="pin-ic">
 							<i class="fab fa-pinterest fa-lg white-text"> </i>
 						</a>
-
+	
 					</div>
-
+	
 				</div>
 				<!-- Grid column -->
-
+	
 			</div>
 			<!-- Grid row-->
-
+	
 		</div>
 		<!-- Footer Links -->
-
+	
 		<!-- Copyright -->
 		<div class="footer-copyright text-center py-3">© 2020 Copyright:
 			<a href="https://bettercrative.com/"> bettercrative.com</a>
 		</div>
 		<!-- Copyright -->
-
+	
 	</footer>
 	<!-- Footer -->
 
@@ -240,7 +258,9 @@
 	<script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/set_active.js') }}"></script>
 	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-		
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
 </body>
+
 
 </html>

@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="modalPopUpForm" class="modalPopUp" {% if classForm.name.errors %}
+     style="display:block;" {% else %} style="display:none;" {% endif %}>
+	<div class="modalContent">
+		<h1 id="modalTextForm">
+		</h1>
+		<!-- form for class pop up -->
+		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;"
+		     {% endif %}>
+			<form action="" method="POST">
+				{{ classForm.hidden_tag() }}
+				<!--adds ctrf form-->
+				<fieldset>
+					{% if classForm.name.errors %}
+					{{ classForm.name(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in classForm.name.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ classForm.name(class="form-control form-control-lg") }}
+					{% endif %}
+				</fieldset>
+				{{classForm.submitClass(class="btn btn-success")}}
+				<!-- confirm button -->
+				<button type="button" class="btn btn-secondary"
+				        onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">
+					Cancel
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="wrapper">
+	<!-- displays the user's classrooms and dropdowns for quizzes attached to them -->
+	<div id="classroomListing" class="classroomcolumn">
+		<div class="titlebar">
+			<h4>Classrooms</h4>
+			<!-- option to create a new classroom -->
+			<button class="btn-sm sideClick"
+			        onclick="javascript:createClassroomPopup()">
+				<i class="fas fa-plus" aria-hidden="true"></i> Create Classroom
+			</button>
+		</div>
+		<div id="account-tables" class="account-tables">
+			<div class="row table-element header-row">
+				<!-- TODO when one of these buttons is clicked, sort the list. -->
+				<div class="col-3 text-center show table-header">
+					<button id="sort-by-name" class="btn sort-buttons">Name <i class="fas fa-arrow-up sort-ascending"
+					                                                           aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i>
+					</button>
+				</div>
+				<div class="col-6 text-center show table-header">
+					<button id="sort-by-date" class="btn sort-buttons">Date Created <i
+							class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort classrooms by date (descending)</span></i>
+					</button>
+				</div>
+				<div class="btn col-3 show table-header options-header">Options</div>
+			</div>
+			{% set sort_on = request.args.get['sort_on']|default('name') %}
+			{% set sort_direction = request.args.get['sort_direction']|default(false) %}
+			<div id="classrooms-data">
+				<span style="display: none;">{{ request.args }} {{sort_on}} {{sort_direction}}</span>
+				{% for classroom in current_user.classrooms|sort(attribute=sort_on, reverse=sort_direction) %}
+				<div class="table-element row">
+					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
+					<div class="dropdown room-name col-4">
+						<button class="btn itemName col quiz-icon" type="button" id="dropdownMenuLink"
+						        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							{{ classroom.name }} <i class="fas fa-caret-down" aria-hidden="true"></i>
+						</button>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<button class="dropdown-item" type="button"
+							        onclick="window.location.href='{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}';">
+								Add a Quiz
+							</button>
+							{% for quiz in classroom.added_quizzes %}
+							{% if classroom.active_quiz == quiz.id %}
+							<button class="dropdown-item" type="button"
+							        onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
+								*ACTIVE* Quiz: {{ quiz.name }}
+							</button>
+							{% else %}
+							<button class="dropdown-item" type="button"
+							        onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
+								Quiz: {{ quiz.name }}
+							</button>
+							{% endif %}
+							{% endfor %}
+						</div>
+					</div>
+
+					<time class="col-4 text-center date-created" style="padding-left: 3%;">{{
+						classroom.date_created.strftime("%m/%d/%y") }}
+					</time>
+
+					<!-- can enter a class to view details, or delete it -->
+					<div class="quiz-icon-col col-4">
+					<span class="quiz-icon-buttons-container">
+						<button onclick="window.location.href='{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}';"
+						        type="button" class="btn btn-sm quiz-icon" aria-label="edit">
+							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
+						</button>
+						<button type="button" class="btn btn-sm quiz-icon"
+						        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})"
+						        aria-label="delete">
+							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</span>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
+{% endblock %}

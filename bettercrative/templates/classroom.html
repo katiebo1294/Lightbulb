@@ -1,83 +1,47 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<style>
-    body{
-        background-image: none;
-    }
 
-    section.nav-section {
-        background-color: rgb(188, 252, 231)
-    }
-
-    .affix {
-        padding: 0;
-        font-size: 80%;
-        background-color: rgb(188, 252, 231);
-    }
-
-    .affix .container .logo a {
-        color: black;
-        font-size: 100%;
-    }
-    .affix .container .navlinks a{
-    color: black;
-    }
-
-    .nav .affix .navTrigger i {
-        font-size: 80%;
-        color: black;
-    }
-
-    .affix .navTrigger i {
-        background-color: black;
-    }
-
-    .affix .navTrigger p {
-        color: black;
-    }
-
-
-
-</style>
-
-<div id="quiz-content-container">
-	
-	<!-- Quiz Edit Container for users -->
-	<div id="editing-container">
-		<!--  want to change this later to classroom name  -->
-
-		<div id="quizTitle"></div>
-
-		{% if current_user.is_authenticated %}
-
-		<div id="edit-section">
-			<div class="headerSection">
-				<div class="SaveExitBtn btn"><a href="{{ url_for('main.home') }}">Save and Exit</a></div>
-			</div>
-		</div>
-
-		{% endif %}
-
+<div id="classroom-container">
+	{% if current_user.is_authenticated %}
+	<div class="titlebar">
 		<!-- Classroom Title -->
-		<div class="btn classroom-title editTitle" id='classroom-{{classroom.id}}' onclick='showEditClassroom({{classroom.id}})'>
-            <span id="classroomname">
-                {{ classroom.name }}
-			</span>
+		<button class="btn-sm classroom-title editTitle classroomname" id="classroom-{{classroom.id}}"
+		        onclick="showEditClassroom({{classroom.id}})" aria-label="edit classroom name">
+			{{ classroom.name }}
 			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
-				<i class="fas fa-pencil-alt"></i>
-			</span>
-		</div>										
-		<form class="edit-classroom-title" action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
+						<i class="fas fa-pencil-alt" aria-hidden="true"></i>
+					</span>
+		</button>
+		<!-- Title edit form -->
+		<form class="edit-classroom-title" id="classroom-form-{{classroom.id}}" style="display: none;"
+		      action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
 			{{form.hidden_tag()}}
-			<div class='edit-classroom-form' id='classroom-form-{{classroom.id}}'style='display:none;'>
-				<!-- <input placeholder="enter new name here" value='{{classroom.name}}' id='classroomname-content-{{classroom.id}}' type='text'>  -->
-				{{form.name(placeholder='Enter new name ' ,id='classroomname-content-'~classroom.id,value=classroom.name)}}
-				{{form.submitClass(class='btn btn-sm btn-outline-info', type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
-				<span class='btn btn-sm btn-outline-danger' onclick='cancelEditClassroom({{classroom.id}})'> Cancel</span>
-
+			<fieldset class=" form-group edit-classroom-form">
+				<div class="form-group">
+					{% if form.name.errors %}
+					{{form.name(placeholder='Enter new name '
+					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
+					form-control-lg is-invalid classroom-title editTitle classroomname')}}
+					<div class="invalid-feedback">
+						{% for error in form.name.errors %}
+						{{ error }}
+						{% endfor %}
+					</div>
+					{% else %}
+					{{form.name(placeholder='Enter new name '
+					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
+					form-control-lg classroom-title editTitle classroomname')}}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class=form-group"> {{form.submitClass(class='btn btn-sm btn-outline-info',
+				type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
+				<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel"
+				       onclick="cancelEditClassroom({{classroom.id}})">
 			</div>
 		</form>
+<<<<<<< HEAD
 		<!-- prevent things from floating after this section -->
 		<div style=" clear: both;"></div>
 		<!-- prevent things from floating after this section -->
@@ -162,9 +126,99 @@
 						</div>
 					{%endif%}
 
+=======
+		<!-- Save button -->
+		<button class="btn-sm sideClick"
+		        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
+			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
+		</button>
+	</div>
+	{% endif %}
+
+	<!-- prevent things from floating after this section -->
+	<div style=" clear: both;"></div>
+	<!-- prevent things from floating after this section -->
+
+	<!-- List of added quizzes -->
+	<div class="quizlist" id="quizzes-{{classroom.id}}">
+		<!-- Heading and add-quiz button -->
+		<div id="ActiveRoomsHeader" style="font-size: 2.2vw;">
+			<h4 class="Active-Rooms">Added Quizzes</h4>
+			<button class="btn-sm sideClick"
+			        onclick="window.location.href='{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}';"><i
+					class="fas fa-plus" aria-hidden="true"></i> Add a Quiz
+			</button>
+		</div>
+		<div style="clear: both;"></div>
+		<!-- actual quiz data/options -->
+		<div class="account-tables">
+			<div class="row table-element header-row">
+				<!-- TODO when one of these buttons is clicked, sort the list. -->
+				<div class="col-3 text-center show table-header">
+					<button id="sort-by-name" class="btn sort-buttons">Name <i class="fas fa-arrow-up sort-ascending"
+					                                                           aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i>
+					</button>
+				</div>
+				<div class="col-6 text-center show table-header">
+					<button id="sort-by-date" class="btn sort-buttons">Date Created <i
+							class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort classrooms by date (descending)</span></i>
+					</button>
+				</div>
+				<div class="btn col-3 show table-header options-header">Options</div>
+			</div>
+			{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
+			<!-- JavaScript option to set the current quiz in the list to active -->
+			<div class="row table-element">
+				<div class="col-4">{{ quiz.name }}
+					{% if quiz.id == classroom.active_quiz %}
+					(active)
+					{% endif %}
+				</div>
+				<div class="col-4 text-center date-created" style="padding-left: 3%;">
+					{{ quiz.date_created.strftime("%m/%d/%y") }}
+				</div>
+				{% if quiz.id != classroom.active_quiz %}
+				<div class="col-4 quiz-icon-col">
+					<button class="btn quiz-icon"
+					   onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}';">
+						Edit Quiz
+					</button>
+					<button id="set-active-{{classroom.id}}" class="btn quiz-icon"
+					   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+						Set Active
+					</button>
+					<button class="btn quiz-icon"
+					   onclick="window.location.href='{{ url_for('classrooms.remove_quiz', quiz_id=quiz.id,classroom_id=classroom.id) }}';">
+						Remove Quiz
+					</button>
+				</div>
+
+				{% else %}
+				<div class="col-4 quiz-icon-col">
+					<button id="remove-active-{{classroom.id}}" class="btn quiz-icon"
+					   onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+						Unset Active
+					</button>
+				</div>
+>>>>>>> designNew
 				{% endif %}
 			</div>
+			{%endfor%}
 		</div>
 	</div>
 </div>
+
+{% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
+<div class="classroom-options">
+{% if classroom.active_quiz %}
+	<button id="take-active-quiz" class="btn"
+	   onclick="window.location.href='{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}';">Take Active Quiz <i class="fas fa-door-open"></i></button>
+{% endif %}
+
+<!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
+<!--TODO make this invisible if there aren't any responses yet -->
+	<button id="view-results" class="btn"
+	   onclick="window.location.href='{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}';"><i class="fas fa-chart-bar" aria-hidden="true"></i> View Results</button>
+</div>
+{% endif %}
 {% endblock %}

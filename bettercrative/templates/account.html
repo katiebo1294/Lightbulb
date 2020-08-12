@@ -1,154 +1,98 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<div id="modalPopUpForm" class="modalPopUp" {% if classForm.name.errors or quizForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
-	<div class="modalContent">
-		<h1 id="modalTextForm">
-		</h1>
-		<!-- forms for both the class and quiz pop ups, they need to be separate as they take diff info -->
-		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
-			<form action="" method="POST">
-				{{ classForm.hidden_tag() }} <!--adds ctrf form-->
-					<fieldset>
-						{% if classForm.name.errors %}
-						{{ classForm.name(class="form-control form-control-lg is-invalid") }}
-						<div class="invalid-feedback">
-							{% for error in classForm.name.errors %}
-							<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-						{% else %}
-							{{ classForm.name(class="form-control form-control-lg") }}
-						{% endif %}
-					</fieldset>
-					{{classForm.submitClass(class="btn btn-success")}} <!-- confirm button -->
-					<button type="button" class="btn btn-secondary" onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
-			</form>
-		</div>
-		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;" {% endif %}>
-			<form action="" method="POST">
-				{{ quizForm.hidden_tag() }} <!--adds ctrf form-->
-				<fieldset>
-					{% if quizForm.name.errors %}
-					{{ quizForm.name(class="form-control form-control-lg is-invalid") }}
+<!-- Gradient credits: https://codepen.io/caseycallow/pen/yMNqPY -->
+<style>
+	#title-text {
+	color: #f35626;
+	background-image: -webkit-linear-gradient(92deg, #f35626, #feab3a);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	-webkit-animation: hue 10s infinite linear;
+	}
+
+	@-webkit-keyframes hue {
+  from {
+    -webkit-filter: hue-rotate(0deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(-360deg);
+  }
+}
+
+</style>
+<h1 id="title-text" class="text-center">{{ current_user.username }}'s account page</h1>
+<!-- Displays user's account information -->
+<div id="account-info-container">
+	<div id="account-info" class="media">
+	{% if current_user.image_file != 'default.jpg' %}
+	<img class="rounded-circle account-img" src="{{ url_for('static', filename=current_user.image_file) }}" alt="{{ current_user.username }}'s profile picture">
+	{% else %}
+	<i class="fas fa-user-circle fa-9x" aria-hidden="true"><span class="sr-only">default profile picture</span></i>
+	{% endif %}
+	<div class="media-body">
+		<h4>{{ current_user.username }}</h4>
+		<p class="text-secondary">{{ current_user.email }}</p>
+	</div>
+</div>
+	<button id="account-edit-button" class="btn sideClick" onclick="showAccountEditForm();"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Edit Account Information</button>
+</div>
+<!-- Acount edit form -->
+<div id="account-form" class="form-container" style="display: none;">
+	<div class="content-section">
+		<form method="POST" action="" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Account Info</legend>
+				<div class="form-group">
+					{{ form.username.label(class="form-control-label") }}
+
+					{% if form.username.errors %}
+					{{ form.username(class="form-control form-control-lg is-invalid") }}
 					<div class="invalid-feedback">
-						{% for error in quizForm.name.errors %}
+						{% for error in form.username.errors %}
 						<span>{{ error }}</span>
 						{% endfor %}
 					</div>
 					{% else %}
-						{{ quizForm.name(class="form-control form-control-lg") }}
+					{{ form.username(class="form-control form-control-lg") }}
 					{% endif %}
-				</fieldset>
-				{{quizForm.submitQuiz(class="btn btn-success")}} <!-- confirm button -->
-				<button type="button" class="btn btn-secondary" onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">Cancel</button>
-			</form>
-		</div>
-	</div>
-</div>
-<div class="wrapper">
-	<div class="account_box">
-		<!-- displays the user's quizzes -->
-		<div id="quizListing" class="col quizcolumn">
-			<div class="titlebar" style="text-align:left;">
-				<div style="float:left;">
-					Quizzes
 				</div>
-				<!-- option to create a new quiz -->
-				<div class="">
-					<button class="btn-large sideClick" onclick="javascript:createQuizPopup()">
-						Create Quiz
-					</button>
+				<div class="form-group">
+					{{ form.email.label(class="form-control-label") }}
+					{% if form.email.errors %}
+					{{ form.email(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in form.email.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ form.email(class="form-control form-control-lg") }}
+					{% endif %}
 				</div>
+				<div class="form-group">
+					{{ form.profile_pic.label() }}
+					{{ form.profile_pic(class="form-control-file") }}
+					{% if form.profile_pic.errors %}
+					{% for error in form.profile_pic.errors %}
+					<span class="text-danger">{{ error }}</span>
+					{% endfor %}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class="form-group">
+				{{ form.submit(class="btn btn-outline-success") }}
+				<input type="reset" class="btn btn-outline-danger" name="Cancel" value="Cancel" onclick="location.reload();">
 			</div>
-			<table class="account-tables">
-				{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
-				<tr class="row quiz_element">
-					<td class="show table-quiztitle itemName" style="width:60%;">
-						{{ quiz.name }}
-					</td>
-					<!-- user can enter a quiz to view details, or delete it -->
-					<td class="quiz_icon_col" style="text-align:right;">
-						<a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id)}}">
-						<button type="button" class="btn btn-sm quiz-icon" >
-							<i class="account-page-icons fas fa-pencil-alt"></i>
-						</button>
-						</a>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})">
-							<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
-						</button>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="">
-							<i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i>
-						</button>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="">
-							<i class="account-page-icons fas fa-copy" aria-hidden="true"></i>
-						</button>
-						<button type="button" class="btn btn-sm quiz-icon" onclick="">
-							<i class="account-page-icons fas fa-download" aria-hidden="true"></i>
-						</button>
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
-		<!-- displays a list of the user's classrooms and dropdowns for quizzes attached to them -->
-		<div id="classroomListing" class="col classroomcolumn">
-			<span class="titlebar">
-				Classrooms
-			</span>
-			<!-- option to create a new classroom -->
-			<button class="btn-large sideClick" style="float:left; margin:0.25vw;" onclick="javascript:createClassroomPopup()">
-				Create Classroom
-			</button>
-			<table class="account-tables">
-				{% for classroom in current_user.classrooms|sort(attribute="date_created") %}
-				<tr class="row classroom_element">
-					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-					<td class="dropdown show room-name" style="width:60%;">
-						<button class="btn btn-outline dropdown-toggle itemName" type="button" id="dropdownMenuLink"
-								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{{ classroom.name }}
-						</button>
-						<span class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							{% for quiz in classroom.added_quizzes %}
-							{% if classroom.active_quiz == quiz.id %}
-							<a class="dropdown-item" href="#"
-							onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); location.reload();">
-								*ACTIVE* Quiz: {{ quiz.name }}
-							</a>
-							{% else %}
-							<a class="dropdown-item" href="#"
-							onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); location.reload();">
-								Quiz: {{ quiz.name }}
-							</a>
-							{% endif %}
-							{% endfor %}
-						</span>
-					</td>
-
-					<!-- can enter a class to view details, or delete it -->
-					<td class="edit_class" style="text-align:center; width:10%; margin-left:1%;">
-						<a href="{{url_for('classrooms.classroom', classroom_id=classroom.id )}}">
-						<button type="button" class="btn btn-sm">
-							<i class="account-page-icons fas fa-pencil-alt"></i>
-						</button>
-						</a>
-					</td>
-					<td class="delete_class" style="text-align:center; width:10%; margin-left:1%;">
-						<button type="button" class="btn btn-sm"  onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})">
-							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-						</button>
-					</td>
-				</tr>
-				{% endfor %}
-			</table>
-		</div>
-
-
-		
+		</form>
 	</div>
 </div>
-
-<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
-
+<!-- User stats (number of classrooms, etc.) -->
+<div id="user-stats" class="container">
+	<div class="row" style="padding-top: 2%;"><h3 style="margin:auto;">Your Stats</h3></div>
+	<div class="row text-center">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">Number of classrooms: {{ current_user.classrooms|length  }}</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">Number of quizzes: {{ current_user.quizzes|length }}</div>
+	</div>
+</div>
 {% endblock %}

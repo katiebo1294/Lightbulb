@@ -4,13 +4,13 @@
 <style>
     div.multiple-choice {
         color: rgb(3, 8, 80);
-        font-family: "Source Code Pro";
+        ;
         font-size: 1.2vw;
         height: 60rem;
     }
 
     div.headerSection {
-        font-family: 'Source Code Pro';
+        ;
         font-size: 1.5vw;
 
         color: rgb(3, 8, 80);
@@ -157,7 +157,7 @@
 			<!-- prevent things from floating after this section -->
 			<div style=" clear: both;"></div>
 		</div>
-		<button class="btn btn-lg btn-primary quiz-back-btn"><a href="{% if current_user.is_authenticated %}{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}{% else %}{{ url_for('main.home') }}{% endif %}"><i class="fas fa-angle-double-left"></i> Go Back</a></button>
+		<button class="btn btn-lg btn-primary quiz-back-btn" onclick="window.location.href='{% if current_user.is_authenticated %}{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}{% else %}{{ url_for('main.home') }}{% endif %}';"><i class="fas fa-long-arrow-alt-left"></i> Go Back</button>
 	</div>
 	<div class="reset">
 	</div>

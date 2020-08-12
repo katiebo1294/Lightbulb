@@ -52,14 +52,12 @@ def logout():
     logout_user()
     return redirect(url_for('main.home'))
 
-@users.route("/account", methods=['GET', 'POST'])
-@login_required
-def account():
-    """ Display the current user's account page. Shows a list of their created classrooms and quizzes. """
-    form = UpdateAccountForm()
-    classForm =  ClassroomForm()
-    quizForm = QuizForm()
 
+@users.route("/quizzes", methods=['GET', 'POST'])
+@login_required
+def quizzes():
+    """ Display the current user's created quizzes. """
+    quizForm = QuizForm()
     if quizForm.submitQuiz.data and quizForm.validate_on_submit():
         quiz = Quiz(
             name=quizForm.name.data,
@@ -74,18 +72,34 @@ def account():
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         quiz.active = first_question.id
         print(quiz.active)
-        return redirect(url_for('users.account'))
+        return redirect(url_for('users.quizzes'))
+    return render_template('quizzes.html', title="Quizzes", quizForm=quizForm)
+
+
+@users.route("/classrooms", methods=['GET', 'POST'])
+@login_required
+def classrooms():
+    """ Display the current user's created classrooms. """
+    classForm = ClassroomForm()
 
     if classForm.submitClass.data and classForm.validate_on_submit():
         classroom = Classroom(name=classForm.name.data, owner=current_user)
         db.session.add(classroom)
         db.session.commit()
         flash(u'New classroom \"' + classroom.name + '\" created!', 'success')
-        return redirect(url_for('users.account'))
+        return redirect(url_for('users.classrooms'))
+    return render_template('classrooms.html', title="Classrooms", classForm=classForm)
+
+
+@users.route("/account", methods=['GET', 'POST'])
+@login_required
+def account():
+    """ Display the current user's account page. """
+    form = UpdateAccountForm()
 
     if form.validate_on_submit():
-        if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+        if form.profile_pic.data:
+            picture_file = save_picture(form.profile_pic.data)
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -96,9 +110,9 @@ def account():
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-    image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+    image_file = current_user.image_file
     return render_template('account.html', title='Account',
-                           image_file=image_file, form=form, classForm=classForm, quizForm=quizForm)
+                           image_file=image_file, form=form)
 
 
 @users.route("/reset_password", methods=['GET', 'POST'])

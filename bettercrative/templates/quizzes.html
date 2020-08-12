@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="modalPopUpForm" class="modalPopUp" {% if quizForm.name.errors %}
+     style="display:block;" {% else %} style="display:none;" {% endif %}>
+	<div class="modalContent">
+		<h1 id="modalTextForm">
+		</h1>
+		<!-- form for quiz pop up -->
+		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;"
+		     {% endif %}>
+			<form action="" method="POST">
+				{{ quizForm.hidden_tag() }}
+				<!--adds ctrf form-->
+				<fieldset>
+					{% if quizForm.name.errors %}
+					{{ quizForm.name(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in quizForm.name.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ quizForm.name(class="form-control form-control-lg") }}
+					{% endif %}
+				</fieldset>
+				{{quizForm.submitQuiz(class="btn btn-success")}}
+				<!-- confirm button -->
+				<button type="button" class="btn btn-secondary"
+				        onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">
+					Cancel
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="wrapper">
+	<!-- displays the user's quizzes -->
+	<div id="quizListing" class="quizcolumn">
+		<div class="titlebar">
+			<h4>Quizzes</h4>
+			<!-- option to create a new quiz -->
+			<button class="btn-sm sideClick" onclick="javascript:createQuizPopup()">
+				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
+			</button>
+		</div>
+		<table id="account-tables" class="account-tables">
+			<thead>
+				<th>Name</th>
+				<th>Date Created</th>
+				<th>Date last accessed</th>
+				<th>Options</th>
+			</tr>
+			<tbody>
+				{% for quiz in current_user.quizzes %}
+				<tr>
+					<td class="itemName">
+						{{ quiz.name }}
+					</td>
+					<td>{{ quiz.date_created.strftime("%m/%d/%y")
+						}}
+					</td>
+					<!-- Number of questions -->
+					<td class="text-center">
+						last date viewed
+					</td>
+					<!-- user can enter a quiz to view details, or delete it -->
+					<td class="quiz-icon-col">
+						<div class="quiz-icon-buttons-container">
+							<!-- more options dropdown -->
+							<div class="dropdown">
+								<button id="more-options" class="btn dropbtn quiz-icon" type="button" data-toggle="dropdown" aria-haspopup="true" aria-label="more options">
+									<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
+								</button>
+								<div class="dropdown-menu" aria-labelledby="more-options">
+									<button class="dropdown-item" type="button" aria-label="share"><i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i></button>
+									<button class="dropdown-item" type="button" aria-label="download"><i class="account-page-icons fas fa-download" aria-hidden="true"></i></button>
+									<button class="dropdown-item" type="button" aria-label="copy"><i class="account-page-icons fas fa-copy" aria-hidden="true"></i></button>
+								</div>
+							</div>
+							<!-- edit button -->
+						<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
+								type="button" class="btn btn-sm quiz-icon" aria-label="edit">
+							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
+						</button>
+							<!-- delete button -->
+							<button type="button" class="btn btn-sm quiz-icon"
+									onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})" aria-label="delete">
+							<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
+							</button>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
+
+{% endblock %}
