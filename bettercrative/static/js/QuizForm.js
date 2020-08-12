@@ -441,3 +441,27 @@ function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
         }
     });
 }
+
+$("#questions-menu").sortable({
+    start: function(event, ui) {
+        console.log("begin sort");
+        ui.item.startPos = ui.item.index();
+    }, stop: function(event, ui) {
+        console.log("end sort");
+        ui.item.endPos = ui.item.index();
+        console.log("moved from " + ui.item.startPos + " to " + ui.item.endPos);
+        var quiz_id = document.getElementsByClassName('editTitle')[0].id.slice(5);
+        console.log(quiz_id);
+        $.ajax({
+           type: "GET",
+           data: {'startPos': ui.item.startPos, 'endPos': ui.item.endPos, 'quiz_id': quiz_id},
+           url: '/quiz/shift_question',
+           error: function(response) {
+            console.log(response.statusText);
+           },
+           success: function() {
+               window.location.reload();
+           }
+        });
+    }
+});

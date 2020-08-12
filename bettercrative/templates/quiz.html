@@ -48,28 +48,28 @@
 
 	<div id="questionView">
 		<!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
-		<div class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
+		<div id="questions-menu" class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
 			{% for question in quiz.questions %}
 			<div tabindex="0" role="button" class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
 			     id="qbtn-{{ loop.index }}"
 			     onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
-				{% if not loop.first %}
+				<!--{% if not loop.first %}
 				<button aria-label="shift question left" class="btn btn-outline-info shift-Button"
 				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
 					<i class="fa fa-arrow-left" aria-hidden="true"></i>
 				</button>
-				{% endif %}
+				{% endif %}-->
 				ID: {{question.id}}
 				<button aria-label="remove question" class="btn btn-outline-danger Remove-Button"
 				        onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
 					<i class="fa fa-times" aria-hidden="true"></i>
 				</button>
-				{% if not loop.last %}
+				<!--{% if not loop.last %}
 				<button aria-label="shift question right" class="btn btn-outline-info shift-Button"
 				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='right')">
 					<i class="fa fa-arrow-right" aria-hidden="true"></i>
 				</button>
-				{% endif %}
+				{% endif %}-->
 			</div>
 			{% endfor %}
 
