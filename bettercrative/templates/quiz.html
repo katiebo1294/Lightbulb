@@ -36,7 +36,7 @@
 			<div class=form-group"> {{qzform.submitQuiz(class='btn btn-sm btn-outline-info',
 				type='submit',id='submit-quiz-'~quiz.id, value='Save')}}
 				<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel"
-				       onclick="cancelEditQuiz({{quiz.id}})">
+				       onclick="resetEditQuizNameContainer({{quiz.id}})">
 			</div>
 		</form>
 		<!-- Save button -->
@@ -208,8 +208,13 @@
 									{% endfor %}
 								</div>
 								{% else %}
+								{% if question.content %}
+								{{ form.question_form.content(class='form-control form-control-lg',
+								placeholder=question.content, value=question.content) }}
+								{% else %}
 								{{ form.question_form.content(class='form-control form-control-lg',
 								placeholder='Fill in Question Content Here', value=question.content) }}
+								{% endif %}
 								{% endif %}
 							</div>
 						
@@ -257,8 +262,8 @@
 									value=answer.content) }}
 									{% endif %}
 								</div>
+								<!-- Remove this answer -->
 								<button aria-label="remove answer"
-								        style="border: none; background: transparent; color: #6c757d;"
 								        class="fas fa-times remove-answer col-1"
 								        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }}, index={{ outer_loop.index }}); remove_form(form);">
 								</button>
@@ -270,18 +275,10 @@
 							        aria-label="add answer">
 								<i class="fa fa-plus" aria-hidden="true"></i>
 							</button>
-							
-
-
-
 							<!-- True or False -->
 							{% elif question.category == 'True-False' %}
 								{%set answer_form = form.answer_form.append_entry()%}
 								{{answer_form.hidden_tag()}}
-															
-								
-								
-
 								{%for answer in question.answers%}
 									{%if answer.content == "True"%}
 										{{answer_form.content(class='noshow',value='True')}}
@@ -308,19 +305,38 @@
 											</span>
 										{%endif%}
 									{%endif%}
-									
-								
-
 								{%endfor%}
-
-							
+							<!-- Short Answer -->
 							{% elif question.category == 'Short Answer' %}
-								{{saform.answer_form(id='answer_form-content')}}
-								
-								
-							
-
-							{% elif question.category == 'IDE' %}
+							{% set outer_loop = loop %}
+							{% for answer in question.answers %}
+							<div class="row" style="margin-bottom: 1vh;">
+								{% set aform = saform.answer_form %}
+								<div class="answer-content col-10">
+									{% if aform.errors %}
+									{{ aform(class='form-control form-control-lg is-invalid',
+									placeholder=answer.content, value=answer.content) }}
+									<div class="invalid-feedback">
+										{% for error in aform.errors %}
+										<span>{{ error }}</span>
+										{% endfor %}
+									</div>
+									{% else %}
+									{{ aform(class='form-control form-control-lg', placeholder=answer.content,
+									value=answer.content) }}
+									{% endif %}
+								</div>
+								<!-- Remove this answer -->
+								<button aria-label="remove answer"
+								        class="fas fa-times remove-answer col-2"
+								        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }}, index={{ outer_loop.index }}); remove_form(form);">
+								</button>
+							</div>
+							{% endfor %}
+							<!-- Add an answer -->
+							<button aria-label="add answer" class="fa fa-plus add-answer"
+							        onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }}, index={{ loop.index }})">
+							</button>
 							{% endif %}
 						</fieldset>
 					</form>

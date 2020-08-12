@@ -130,14 +130,14 @@ function resetEditQuestionContainer(index) {
     document.getElementById("question-edit-" + index).style.display = "none";
 }
 
-function showEditQuizNameContainer() {
-    document.getElementById("quizname").style.display = "none";
-    document.getElementById("quiz-name-edit-form").style.display = "inline-block";
+function showEditQuizNameContainer(quiz_id) {
+    document.getElementById("quiz-" + quiz_id).style.display = "none";
+    document.getElementById("quiz-form-" + quiz_id).style.display = "inline-block";
 }
 
-function resetEditQuizNameContainer() {
-    document.getElementById("quizname").style.display = "inline-block";
-    document.getElementById("quiz-name-edit-form").style.display = "none";
+function resetEditQuizNameContainer(quiz_id) {
+    document.getElementById("quiz-" + quiz_id).style.display = "inline-block";
+    document.getElementById("quiz-form-" + quiz_id).style.display = "none";
 }
 
 function setQType(url,question_id, qtype) {

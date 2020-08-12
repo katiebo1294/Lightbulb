@@ -1129,12 +1129,21 @@ button.Show-Student-Response.btn:hover{
 button.remove-answer {
   height: 50%;
   margin: auto;
+}
+
+button.add-answer, button.remove-answer {
+  border: none;
+  background: transparent;
+  color: #6c757d;
   font-size: 2.25rem;
-  margin-right: 0.5%;
 }
 
 button.remove-answer:hover {
   color: red!important;
+}
+
+button.add-answer:hover {
+  color: green!important;
 }
 
 /* this selects all elements with an id that starts with "question-edit-" */

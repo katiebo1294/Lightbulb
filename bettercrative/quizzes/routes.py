@@ -329,7 +329,8 @@ def edit_question(question_id):
         if form.validate_on_submit():
             received_form = request.form
             print(request.form)
-            question.content = received_form['question_form-content']
+            if received_form['question_form-content']:
+                question.content = received_form['question_form-content']
             received_answer = received_form['answer_form']
             db.session.add(question)
             answer = question.answers[0]
@@ -351,8 +352,9 @@ def edit_question(question_id):
                 #getting the correct answer and new question name
                 for key in received_form.keys():
                     if('answer_form' and 'correct' in key):
-                        correct_answer=bool(int(received_form[key]))
-                        new_content_name = received_form['question_form-content']
+                        correct_answer = bool(int(received_form[key]))
+                        if received_form['question_form-content']:
+                            new_content_name = received_form['question_form-content']
                 for answer in question.answers:
                     if answer.content == str(correct_answer):
                         answer.correct = True
