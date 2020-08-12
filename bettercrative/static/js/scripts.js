@@ -21,7 +21,6 @@ $(window).scroll(function () {
 
 // this colors the current page's link in the navbar green
 currentLinks = document.querySelectorAll('a[href="'+ document.URL.substr(document.URL.lastIndexOf("/")) +'"].nav-link');
-console.log(currentLinks);
     currentLinks.forEach(function(link) {
         link.className += ' current-page';
         var newSpan = document.createElement('span');

@@ -9,7 +9,7 @@ function addQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#questionView");
+            window.location.reload();
         }
     });
 }
@@ -48,7 +48,7 @@ function removeQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#questionView");
+            window.location.reload();
         }
     });
     document.getElementById("modalPopUp").style.display = "none";;
@@ -76,10 +76,10 @@ function addQuestionContent(q_id){
 
 function addAnswerContent(q_id, a_id){
     document.getElementById("answer-form-" + q_id + "-" + a_id).style.display = "block";
-};
+};/*
 
 function shiftQuestion(url, q_id, direction) {
-    
+
     $.ajax({
         type: "GET",
         data: {'question_id': q_id,
@@ -93,7 +93,7 @@ function shiftQuestion(url, q_id, direction) {
             refresh("#questionView");
         }
     });
-};
+};*/
 
 function refresh(section)
 {
@@ -152,7 +152,7 @@ function setQType(url,question_id, qtype) {
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#questionView");
+            window.location.reload();
         }
     });
     
@@ -172,8 +172,7 @@ function change_active_question(url,question_id,quiz_id) {
             console.log(response.statusText);
         },
         success: function() {
-            
-            refresh("#questionView");
+            window.location.reload();
         }
     });
 };
@@ -442,6 +441,7 @@ function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
     });
 }
 
+// makes question buttons draggable and calls shift_question
 $("#questions-menu").sortable({
     start: function(event, ui) {
         console.log("begin sort");

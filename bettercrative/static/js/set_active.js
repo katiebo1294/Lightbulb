@@ -11,8 +11,7 @@ function set_active(url, quiz_id, classroom_id) {
         },
         success: function() {
             console.log("success");
-
-            refresh('#question');
+            refresh('#quiz-' + quiz_id);
         }
     });
 }
