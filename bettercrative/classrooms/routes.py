@@ -81,8 +81,8 @@ def add_quiz(classroom_id):
     default_choice = (0, "Create a Quiz")
     quizzes = Quiz.query.filter_by(user_id=current_user.id).filter(~exists().where(and_(assoc.c.quiz_id == Quiz.id, assoc.c.classroom_id == classroom.id)))
 
-    # putting all quizzes of that user in the list
-    quiz_list = [(quiz.id, quiz.name) for quiz in quizzes]
+    # putting all quizzes of that user (that have names set) in the list
+    quiz_list = [(quiz.id, quiz.name) for quiz in quizzes if quiz.name]
     quiz_list.append(default_choice)
     list.reverse(quiz_list)
     form.quiz.choices = quiz_list
@@ -116,7 +116,7 @@ def set_active():
             quiz_id (int): the ID of the quiz to set active
             classroom_id (int): the ID of the classroom to make it active in
     """
-   
+
     quiz_id = request.args.get('quiz_id', None)
     classroom_id = request.args.get('classroom_id', None)
     classroom = Classroom.query.get_or_404(classroom_id)
