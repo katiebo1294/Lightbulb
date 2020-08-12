@@ -21,38 +21,47 @@
     }
 </style>
 
-<div class="multiple-choice">
+<div class="multiple-choice" id='response-{{quiz.id}}'>
 	<span class="Taking-a-Quiz">{{ quiz.name }}</span>
 	<div class="answerchoices">
 		<div class="menu" style="margin-left:15vw; margin-top: ">
 			<!--Need to rework so that 1 is = to <int: id> I got error before-->
+			
 			{% for question in questions.items %}
-			<form action="" method="POST">
+			<form action="{{url_for('main.home')}}" method="POST">
                 <span id="question-title" class="btn" style="font-size:2.7vw; margin-top:3vw;">
-                    {{ question.content }}</span>
+					{{ question.content }}</span>
+					
+					
 				<div class="options">
 					<!-- Answer Section -->
-					{% if question.category=='Multiple Choice' or question.category=='True-False' %}
+					{% if question.category=='Multiple Choice'%}
 					<div class="Student-Answers">
 						{%for answer in question.answers %}
 						<div class="answerContainer reset">
 							<div class="answerChoice">
 								<div class="btn-group-toggle" data-toggle="buttons">
-									{% if answer.clicked %}
-									<label class="btn btn-secondary button-choices clicked"
-									       id="question-{{answer.index+1}}"
-									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}'  )">
+									
+									
+									
+									{% if find_selected_answer(question.category,answer.response, answer.id,student.id)%}
+									<label class="btn btn-primary" id="question-{{answer.index+1}}"
+									onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">
 										<input class="response" name="studentResponse" type="checkbox"
-										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
+											value="{{ answer.content }}">{{ get_alphabet_index(answer.index+1) }}
 									</label>
-
-									{% else %}
-									<label class="btn btn-secondary button-choices" id="question-{{answer.index+1}}"
-									onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}'  )">
+									{%else%}
+									<label class="btn btn-secondary" id="question-{{answer.index+1}}"
+									onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">
 										<input class="response" name="studentResponse" type="checkbox"
-										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
+											value="{{ answer.content }}">{{ get_alphabet_index(answer.index+1) }}
 									</label>
 									{%endif%}
+									
+									
+
+									
+									
 								</div>
 								<div class="answerBox">
 									<div class="answerBox-answer">
@@ -61,31 +70,89 @@
 								</div>
 							</div>
 
-							{%endfor%}
+						{%endfor%}
 							<!-- TODO automatically go to the next question on submit... or just change the form so there's just one submit button at the end -->
 							<button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
-							        type="submit" onclick="">Submit
+							        type="submit">Submit
 							</button>
 						</div>
-					</div>
+					
+					{% elif question.category=='True-False'%}
+						{%for answer in question.answers%}
+						<div class="answerContainer reset">
+							<div class="answerChoice">
+								<div class="btn-group-toggle" data-toggle="buttons">
+									
+									{%if find_selected_answer(question.category, answer.response, answer.id, student.id) %}
+									<label class="btn btn-primary "
+									       id="question-{{answer.index+1}}"
+									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}', student= '{{student.id}}'  )">
+										<input class="response" name="studentResponse" type="checkbox"
+										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
+									</label>
+									{%else%}
+									<label class="btn btn-secondary "
+									       id="question-{{answer.index+1}}"
+									       onclick="setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}', student= '{{student.id}}'  )">
+										<input class="response" name="studentResponse" type="checkbox"
+										       value="{{ answer.content }}">{{ get_alphabet_index(loop.index) }}
+									</label>
+									{%endif%}
+
+									
+								</div>
+								<div class="answerBox">
+									<div class="answerBox-answer">
+										{{ answer.content }}
+									</div>
+								</div>
+							</div>
+
+						{%endfor%}
+							<!-- TODO automatically go to the next question on submit... or just change the form so there's just one submit button at the end -->
+							<button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
+							        type="submit">Submit
+							</button>
+						</div>
 					{% elif question.category=='Short Answer' %}
-					<!-- put text box here -->
+					
+					<div class="answerContainer reset">
+						{%for answer in question.answers%}
+						<div class="answerContainer reset">
+							{{question.category}}
+							<div class="textareabox">
+								<textarea id='textareabox-{{student.id}}' onblur = "setTextArea( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, quiz_id = {{quiz.id}},student= '{{student.id}}'  )">{{find_selected_answer(question.category, answer.response, answer.id, student.id)}}</textarea>
+							</div>
+
+							<button class="btn Taking-a-Quiz-Submit" style="background-color:rgb(137, 160, 209);"
+									type="submit">Submit
+							</button>
+						</div>
+						{%endfor%}
+
+					
+						
+						
+					</div>
+					
 					{% else %}
 					<!-- put Ace IDE here -->
 					{% endif %}
+					</div>
 				</div>
 			</form>
 			{% endfor %}
 			{% for page_num in questions.iter_pages() %}
-			{% if page_num %}
-			{% if questions.page == page_num %} <!-- current page -->
-			<a class="btn btn-info mb-4 pagination-buttons"
-			   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num) }}">{{ page_num }}</a>
-			{% else %}
-			<a class="btn btn-outline-info mb-4 pagination-buttons"
-			   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num) }}">{{ page_num }}</a>
-			{% endif %}
-			{% endif %}
+				{% if page_num  and questions.page == page_num%}
+				
+					<a class="btn btn-info mb-4 pagination-buttons"
+					href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num,student=student.id) }}">{{ page_num }}</a>
+				
+				{% else %}
+					<a class="btn btn-outline-info mb-4 pagination-buttons"
+					href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num, student=student.id) }}">{{ page_num }}</a>
+				
+				{% endif %}
 			{% endfor %}
 			<!-- prevent things from floating after this section -->
 			<div style=" clear: both;"></div>

@@ -146,7 +146,7 @@ class Quiz(db.Model):
                                 collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
     active = db.Column(db.Integer, unique=False, nullable=True, default=None)
-
+    responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
@@ -203,10 +203,11 @@ class Answer(db.Model):
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     index = db.Column(db.Integer)
-    clicked = db.Column(db.Boolean, nullable=False, default=False)
+    
+    response = db.relationship("Response", backref='answer', cascade='all, delete')
 
     def __repr__(self):
-        return f"Answer('id:{self.id}' ,'content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}', clicked: {self.clicked}')"
+        return f"Answer('id:{self.id}' ,'content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}')"
 
 
 # id = db.Column(db.Integer, primary_key=True) responses = db.relationship('Response', backref='student', lazy=True,
@@ -237,9 +238,10 @@ class Response(db.Model):
     value = db.Column(db.Text, nullable=False)
     question_num = db.Column(db.Integer, nullable=False)
     correct = db.Column(db.Boolean, nullable=False)
-
+    answer_reference = db.Column(db.Integer, db.ForeignKey('answer.id'))
+    
     def __repr__(self):
-        return f"Response('{self.classroom_host_id}', '{self.quiz_reference}', '{self.question_num}', '{self.value}', '{self.correct}')"
+        return f"Response('{self.classroom_host_id}','{self.student_id}', '{self.quiz_reference}', '{self.question_num}', '{self.value}', '{self.correct}')"
 
 
 class Student(db.Model):
@@ -254,5 +256,5 @@ class Student(db.Model):
             a list of responses the student has made to quiz questions (see Response below).
     """
 
-    id = db.Column(db.Text, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     responses = db.relationship('Response', back_populates='student', cascade='delete, all')

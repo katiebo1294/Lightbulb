@@ -5,7 +5,7 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-
+from bettercrative.helpers import find_selected_answer, get_alphabet_index, append_form
 
 from bettercrative.config import Config
 # Application factory
@@ -13,23 +13,7 @@ from bettercrative.config import Config
 from bettercrative.errors.routes import bad_request, unauthorized, forbidden,  not_found
 
 
-def get_alphabet_index(index):
-    alpha = list("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-    s = ""
-    quotient = index
-    while quotient > 26:
-        remainder = int(quotient % 26)
-        # Takes care of edge case when rightmost letter is Z
-        if remainder == 0:
-            quotient -= 26
-        s += alpha[remainder - 1]
-        quotient = int(quotient / 26)
-    s += alpha[quotient - 1]
-    return s[::-1]
 
-
-def append_form(form):
-    form.answer_form.append_entry()
 
 
 def create_app(config_class=Config):
@@ -66,7 +50,7 @@ def create_app(config_class=Config):
 
     app.jinja_env.globals.update(get_alphabet_index=get_alphabet_index)
     app.jinja_env.globals.update(append_form=append_form)
-    
+    app.jinja_env.globals.update(find_selected_answer = find_selected_answer)
     return app
 
 

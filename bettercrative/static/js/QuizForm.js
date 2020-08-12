@@ -146,6 +146,7 @@ function setQType(url,question_id, qtype) {
 
 function change_active_question(url,question_id,quiz_id) {
     event.preventDefault();
+    
     $.ajax({
         type: "GET",
         data: {'question_id': question_id,
@@ -156,25 +157,27 @@ function change_active_question(url,question_id,quiz_id) {
             console.log(response.statusText);
         },
         success: function() {
+            
             refresh("#questionView");
         }
     });
 };
 
-function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value){
-    event.preventDefault();
-    console.log('were in');
+function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value,student_id){
+    
+
     $.ajax({
         type: "GET",
         data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
-        'page_num': page_num, 'quiz_id':quiz_id, 'value':value},
+        'page_num': page_num, 'quiz_id':quiz_id, 'value':value,'student_id':student_id},
         url: url,
         error: function(response) {
             alert(response.statusText);
             console.log(response.statusText);
         },
         success: function() {
-            refresh("#questionView");
+            refresh("#response-"+quiz_id);
+            
         }
     });
 }
@@ -257,9 +260,7 @@ function checked(span){
 
         var true_checkbox = document.getElementById(true_checkbox_id);
         true_checkbox.checked = false;
-        
-        
-    
+
          
     }
 
@@ -356,4 +357,29 @@ function createQuizPopup() {
     modalText.innerHTML = "Create Quiz";
     modal.style.display = "block";
     modalForm.style.display = "block";
+}
+
+function responseTF(question_id){
+    var t = document.getElementById('question-'+question_id+'-true')
+    var f = document.getElementById('question-'+question_id+'-false');
+    console.log(t);
+    console.log(f);
+}
+
+function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
+
+    var textarea = document.getElementById('textareabox-'+student_id);
+    $.ajax({
+        type: "GET",
+        data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
+        'page_num': page_num, 'quiz_id':quiz_id, 'value':textarea.value,'student_id':student_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+            
+        }
+    });
 }
