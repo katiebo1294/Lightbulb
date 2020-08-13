@@ -438,6 +438,7 @@ function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
 
 // makes question buttons draggable and calls shift_question
 $("#questions-menu").sortable({
+    axis: "x",
     start: function(event, ui) {
         console.log("begin sort");
         ui.item.startPos = ui.item.index();
