@@ -144,13 +144,13 @@
 			{% endfor %}
 			{% for page_num in questions.iter_pages() %}
 				{% if page_num  and questions.page == page_num%}
-				
 					<a class="btn btn-info mb-4 pagination-buttons"
-					href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num,student=student.id) }}">{{ page_num }}</a>
+					href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num,student=student.id, teacher = teacher) }}">{{ page_num }}</a>
+				
 				
 				{% else %}
 					<a class="btn btn-outline-info mb-4 pagination-buttons"
-					href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num, student=student.id) }}">{{ page_num }}</a>
+					href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num, student=student.id, teacher=teacher) }}">{{ page_num }}</a>
 				
 				{% endif %}
 			{% endfor %}

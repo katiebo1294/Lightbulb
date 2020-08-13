@@ -208,24 +208,32 @@ def take_quiz(classroom_id):
     
     args = request.args
     
-    
-    if 'student' not in args:
-        raise Exception(' "student" key not found')
-
-    else:
-        current_student = Student.query.filter_by(id=int(args['student'])).first()
-        
-        
     # Things to Render: classroom, quiz, Paginate the questions , student
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
+
+    if 'teacher' in args:
+        teacher = args['teacher']
+    else:
+        teacher = False
+    
+    if 'student' not in args:
+        current_student = Student()
+        db.session.add(current_student)
+        db.session.commit()
+        return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id,student=current_student.id, teacher=True))
+
+    else:
+        current_student = Student.query.filter_by(id=int(args['student'])).first()
+        
+        
     
     
-    db.session.commit()
-    return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions, student=current_student )
+        
+    return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions, student=current_student, teacher=teacher)
 
 
 # query database for all responses from this specific classroom, send lists of right and wrong answers to front
