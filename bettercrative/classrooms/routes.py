@@ -239,15 +239,25 @@ def take_quiz(classroom_id):
 @login_required
 def teacher_take_quiz():
     
-    print("-------------------------------------------------------------------")
-    print("TEACHER SUBMISSION HERE")
+    
     args = request.args
     student = Student.query.filter_by(id = args['student_id']).first()
     db.session.delete(student)
     db.session.commit()
-    print("-------------------------------------------------------------------")
     
     return redirect(url_for('main.home'))
+
+@classrooms.route("/classroom/process_take_quiz", methods = ['GET', 'POST'])
+def process_take_quiz():
+    args = request.args
+    
+    
+    if args['teacher'] == 'True':
+        return redirect(url_for('classrooms.teacher_take_quiz', student_id = args['student_id']))
+        
+    else:
+        return redirect(url_for('main.home'))
+
 
 # query database for all responses from this specific classroom, send lists of right and wrong answers to front
 @login_required
