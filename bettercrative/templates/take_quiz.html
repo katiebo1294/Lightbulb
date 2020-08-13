@@ -28,7 +28,8 @@
 			<!--Need to rework so that 1 is = to <int: id> I got error before-->
 			
 		{{student.id}}
-		{%if teacher%}
+		{{teacher}}
+		{%if teacher == True%}
 			<form action="{{url_for('classrooms.teacher_take_quiz', student_id = student.id)}}" method="POST">
 		{%else%}
 			<form action="{{url_for('main.home')}}" method="POST">
