@@ -1,7 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Amatic+SC&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Indie+Flower&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200&display=swap');
-
 html {
   background-attachment: fixed;
   background-color: #EDEAE5;
@@ -11,6 +7,7 @@ html {
   min-height:100vh;
 }
 
+/**Scale text**/
 html {
   font-size: 16px!important;
 }
@@ -24,10 +21,7 @@ html {
     font-size: 22px!important;
   }
 }
-
-.img{
-  max-width: 100%;
-}
+/**End scale text**/
 
 .btn-outline-secondary, .btn-outline-info {
   font-weight: bold;
@@ -54,10 +48,6 @@ html {
   padding: 0;
 }
 
-section {
-  opacity: 100%;
-}
-
 body:after{ 
   content: ' ';
   display: block;
@@ -69,7 +59,7 @@ body:after{
   height: 100%;
 }
 
-/* modal pop-ups */
+/**modal pop-ups**/
 .modalPopUp {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -96,10 +86,10 @@ body:after{
   width: 40%;
   float:left;
 }
+/**End modal pop-ups**/
 
 
-/* start nav*/
-
+/**start navbar**/
 nav, footer {
   background-color: #09818b;
 }
@@ -138,10 +128,6 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
   display: block;
 }
 
-.page-footer {
-  display:block;
-}
-
 .navbar-nav {
   height: 100%;
 }
@@ -170,7 +156,7 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
   background-color: black;
 }
 
-/* Styles the navbar headers for small screens with hamburger collapse menu */
+/**Styles the navbar headers for small screens with hamburger collapse menu**/
 .navbar-collapse.show .nav-link, .navbar-collapse.collapsing .nav-link {
   color: white;
 }
@@ -178,8 +164,9 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
 .navbar-collapse.show .nav-link:hover, .navbar-collapse.collapsing .nav-link:hover {
   color: #00e676;
 }
+/**End collapse nav style**/
 
-/* Styles the navbar headers for large screens with no collapse */
+/**Styles the navbar headers for large screens with no collapse**/
 .nav-link {
   color: black;
   line-height: 4vw;
@@ -190,8 +177,9 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
   color: white;
   text-decoration: none;
 }
+/**End full nav style**/
 
-/* hamburger icon */
+/**hamburger icon**/
 .navTrigger{
   cursor: pointer;
   width: 30px;
@@ -262,180 +250,9 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
   -webkit-animation: inBtm 0.8s forwards;
   animation: inBtm 0.8s forwards;
 }
-/* end hamburger icon */
+/**end hamburger icon**/
 
-/*.nav {
-  z-index: 3;
-  width: 100%;
-  height: 65px;
-  position: fixed;
-  line-height: 65px;
-  text-align: center;
-}
-
-.navcontainer {
-  padding:1vw;
-  -webkit-transition: all 150ms linear;
-  -moz-transition: all 150ms linear;
-  -ms-transition: all 150ms linear;
-  -o-transition: all 150ms linear;
-  transition: all 150ms linear;
-}
-
-.nav div.logo{
-  float: left;
-  width: auto;
-  height: 1vw;
-  margin-left: 3vw;
-}
-
-.nav div.logo a{
-  text-decoration: none;
-  color: black;
-  font-size: 2.5rem;
-  , monospace;
-}
-.nav div.logo a:hover{
-  *//* setting to green for now *//*
-  color: #00E676;
-}
-.nav div.listofcontents{
-  height:65px;
-  float:right;
-  font-size:1.5vw;
-  overflow: hidden;
-  
-}
-.nav div.logged_in{
-  height: 65px;
-  float: right;
-  font-size: 80%;
-  display:flex;
-}
-.nav div.listofcontents a{
-  text-decoration: none;
-  color: black;
-  , monospace;
-}
-
-.nav div.listofcontents ul{
-  width: 100%;
-  height: 65px;
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  font-size: 1.2vw;
-  
-  
-}
-
-.nav div.listofcontents li{
-  width: auto;
-  height: 65px;
-  padding: 0;
-  padding-right:3rem;
-  
-}
-
-.nav div.listofcontents a:hover{
-  color: #00E676;
-}
-.nav{
-  padding-top: 20px;
-  padding-bottom: 20px;
-  -webkit-transform: all 0.4s ease;
-  transition: all 0.4s ease;
-}
-.navTrigger{
-  display:none;
-}*/
-
-
-/* end of nav*/
-
-/* Bootstrap media queries */
-/*Extra small devices (portrait phones, less than 576px)
-No media query for `xs` since this is the default in Bootstrap*/
-
-/* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
-}
-
-/*Medium devices (tablets, 768px and up)*/
-@media (min-width: 768px) {
-}
-
-/*Large devices (desktops, 992px and up)*/
-@media (min-width: 992px) {
-}
-
-/*Extra large devices (large desktops, 1200px and up)*/
-@media (min-width: 1200px) {
-  .options-header {
-    text-align: center;
-  }
-}
-
-/* media query */
-@media screen and (max-width: 414px){
-  /*.nav div.logo a{
-    text-decoration: none;
-    color: black;
-    font-size: 2rem;
-  }*/
-}
-@media screen and (min-width: 900px) and (max-width: 1080px){
-}
-@media screen and (max-width:990px){
- /* .navTrigger{
-    display:block;
-  }
-
-  .nav div.listofcontents a{
-    text-decoration: none;
-    color:white;
-    , monospace;
-    
-  }
-  .nav div.logo{
-    margin-left: 15px;
-  }
-  .nav div.listofcontents{
-    width: 100%;
-    height: 0;
-  }
-  .nav div.show_list{
-    height: auto;
-    display: inline-flex ;
-}
-  .nav div.listofcontents ul{
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color:#111;
-    background-position: center top;
-  }
-  .nav div.listofcontents ul li{
-    width: 100%;
-    text-align: center;
-  }
-  .nav div.listofcontents ul li a{
-    width: 100%;
-    font-size: 50%;
-    padding: 20px;
-  }
-  */
-}
-/* Collapse */
-/* end media query */
-
-/* animation */
-
-
+/**hamburger animation**/
 @-webkit-keyframes inM {
   50% {
       -webkit-transform: rotate(0deg);
@@ -444,7 +261,6 @@ No media query for `xs` since this is the default in Bootstrap*/
       -webkit-transform: rotate(45deg);
   }
 }
-
 @keyframes inM {
   50% {
       transform: rotate(0deg);
@@ -462,7 +278,6 @@ No media query for `xs` since this is the default in Bootstrap*/
       -webkit-transform: rotate(45deg);
   }
 }
-
 @keyframes outM {
   50% {
       transform: rotate(0deg);
@@ -483,7 +298,6 @@ No media query for `xs` since this is the default in Bootstrap*/
       -webkit-transform: translateY(9px) rotate(135deg);
   }
 }
-
 @keyframes inT {
   0% {
       transform: translateY(0px) rotate(0deg);
@@ -507,7 +321,6 @@ No media query for `xs` since this is the default in Bootstrap*/
       -webkit-transform: translateY(9px) rotate(135deg);
   }
 }
-
 @keyframes outT {
   0% {
       transform: translateY(0px) rotate(0deg);
@@ -531,7 +344,6 @@ No media query for `xs` since this is the default in Bootstrap*/
       -webkit-transform: translateY(-9px) rotate(135deg);
   }
 }
-
 @keyframes inBtm {
   0% {
       transform: translateY(0px) rotate(0deg);
@@ -555,7 +367,6 @@ No media query for `xs` since this is the default in Bootstrap*/
       -webkit-transform: translateY(-9px) rotate(135deg);
   }
 }
-
 @keyframes outBtm {
   0% {
       transform: translateY(0px) rotate(0deg);
@@ -567,203 +378,42 @@ No media query for `xs` since this is the default in Bootstrap*/
       transform: translateY(-9px) rotate(135deg);
   }
 }
+/**end hamburger animation**/
+/**end navbar**/
 
-.affix {
-  padding: 0;
-  background-color:black;
+/* Bootstrap media queries */
+/* Extra small devices (portrait phones, less than 576px)
+No media query for `xs` since this is the default in Bootstrap */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
 }
 
-.affix .container .logo a{
-  color: white;
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
 }
 
-.affix .container .logo a:hover{
-  color: #00E676;
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
 }
 
-.affix .container .navlinks a{
-  color: white;
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .options-header {
+    text-align: center;
+  }
 }
 
-.affix .container .navlinks a:hover{
-  color: #00E676;
-}
-
-.nav .affix .navTrigger span{
-  color: white;
-}
-
-.affix .container .logo a:hover{
-  color: #00E676;
-}
-
-.affix .container .navlinks a{
-  color: white;
-}
-
-.affix .container .navlinks a:hover{
-  color: #00E676;
-}
-
-.nav .affix .navTrigger span{
-  color: white;
-}
-
-/* end of animation */
-
-.nav-section{
-  
-  width: 100%;
-  height:100px;
-}
-
-/* About-Section */
-
-.home-section{
-  width: 100%;
-  padding-top: 3%;
-  padding-bottom: 10%;
-  min-height: 50vw;
-  /* background-color: blue; */
-}
+/**Homepage login links**/
 .col-md-6 img{
   margin-left: 10%;
   margin-top: 8%;
   box-shadow:  black 5px 5px 45px;
   max-width: 80%;
 }
+/**end homepage login links**/
 
-/* end about-section */
-
-/* Login-Section */
-.login-section{
-  width: 100%;
-  padding-top: 40px;
-   /* background-color: green;  */
-  height: 1000px;
-  background-image: url("images/login-section-bg.png");
-  
-
-  
-}
-.login-section-container p{
-  text-align: center;
-  font-family: 'Amatic SC', cursive;
-}
-
-/* end login-section */
-.home-section-container h1{
-  text-align: center;
-  font-family: 'Amatic SC';
-}
-.home-section-container p{
-  text-align: center;
-  font-family: 'Indie Flower';
-}
-/* end about section */
-/* form boxes */
-
-input#name{
-  width:30vw;
-  border-radius:25px;
-  border-color:black;
-  padding:.375rem .75rem;
-}
-
-legend.border-bottom.mb-4{
-}
-
-#Create-Button{
-  ;
-  color : white;
-}
-a#Cancel-Button{
-  text-decoration: none;
-  color: white;
-}
-
-a#Cancel-Button:hover{
-  color: pink;
-  box-shadow: 0 0 10px rgb(248, 133, 133), 0 0 40px rgb(248, 133, 133), 0 0 10px rgb(248, 133, 133);
-  border-radius: 5px;
-}
-
-input#submit.btn.btn-lg.btn-outline-info{
-  font-weight: bold;
-}
-
-/* form boxes end*/
-
-div.content-section{
-  ;
-  color: white;
-  
-}
-.room_id{
-  position: right;
-  background-color: white;
-  right: 51.5%;
-  height: 40%;
-  width: 30%;
-  bottom: 31%;
-  border-radius: 10px;
-  box-shadow: 1px 2px 2px black;
-}
-
-/**Header**/
-@media(max-width:1300px){
-  .teachers-button{
-    width: 50%;
-    padding-left: 13%;
-  }
-  .teachers-button img{
-    width: 80%;
-    display: inline-flex;
-    margin-left: 20%;
-    margin-top: 8%;
-    box-shadow:black 5px 5px 45px;
-  }
-}
-
-a#dropdownMenuLink.navbar-brand.dropdown-toggle{
-}
-@media(max-width: 320px){
-  .nav div.logo a{
-
-  }
-}
-
-@media (min-width: 768px) {
-  header.masthead .intro-text {
-    padding-top: 10%;
-    padding-bottom: 200px;
-  }
-}
-
-
-/**Create Classroom**/
-.headerbg{
-  background-color:rgb(155, 155, 155);
-  border-radius: 10px;
-  box-shadow: 1px 2px 2px black;
-}
-
-.createclassroom{
-  background: transparent;
-  padding:5%;
-  background-image:none;
-}
-.service-heading {
-  margin: 15px 0;
-  text-transform: none;
-}
-
-.classroomlistings {
-  position: relative;
-  background-color: transparent;
-  height:500px;
-}
-
+/**form boxes**/
 .form-container {
     position: relative;
     margin: auto;
@@ -771,15 +421,18 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
     padding: 1%;
     border-radius:15px;
     width: 50%;
+    font-family: 'Open Sans', Verdana, sans-serif;
 }
 
+.content-section {
+    color: white;
+}
 
-.qtype-choice {
-    margin: 3px;
+/* Short answer overrides the height of the input box */
+.form-height{
+  height:20vh;
 }
-.qtype-container {
-    margin: auto;
-}
+/**end form boxes**/
 
 /**Account**/
 #account-info-container {
@@ -791,40 +444,12 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
 }
 
 #account-edit-button {
-
-  float: none;
+  width: 100%;
+  text-align: center;
 }
+/**End account**/
 
-.account-img {
-  height: 125px;
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
-}
-
-.account-heading {
-  font-size: 2.5rem;
-}
-
-.dropdown-wrapper {
-  display: none;
-  position: absolute;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-  width:200%;
-  top:-5%;
-  left: 100%;
-}
-
-.dropdown-content {
-  border: 3px solid #cabfaa;
-  background-color: #e2dcd1;
-  position: absolute;
-  padding: 10%;
-  margin:auto;
-  left: 10%;
-}
-
+/**dropdown for quizzes page**/
 .dropdown {
   float:left;
 }
@@ -838,14 +463,16 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   background-color: #e2dcd1;
 }
 
-.dropdown:hover .dropdown-wrapper {
+.dropdown:hover {
   display:block;
 }
 
 .dropbtn {
   padding:5.6px;
 }
+/**end dropdown for quizzes page**/
 
+/**info for LaTeX on quiz page**/
 .info-bar {
   height:5%;
   background-color:transparent;
@@ -857,7 +484,9 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   float:right;
   background-color:transparent;
 }
+/**end LaTeX info**/
 
+/**quizzes and classrooms pages**/
 .itemName {
   width: 100%;                   /* IE6 needs any width */
   overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
@@ -871,29 +500,16 @@ a#dropdownMenuLink.navbar-brand.dropdown-toggle{
   overflow-x: auto;              /* "overflow" value must be different from  visible"*/ 
 }
 
-.classroomcolumn {
-  min-height:30vw;
-}
-
-.quizcolumn {
-  height: 100%;
-  min-height:35%;
-}
-
 #quiz-container {
   position: relative;
 }
 
-.table-header, .sort-buttons {
+.table-header {
   font-weight: bold;
 }
 
 .options-header {
   text-align: right;
-}
-
-div.dropdown.show a.dropdown-item{
-  color: black;
 }
 
 .dropdown-item {
@@ -904,54 +520,10 @@ div.dropdown.show a.dropdown-item{
   background-color: #cec9c1;
 }
 
-div.show a:hover{
-  color: #00E676;
-}
-
-.edit_class a, .edit_quiz a{
-  color: darkgreen !important;
-  font-weight: bolder;
-  text-decoration: none;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-.account-page-icons{
+.account-page-icons {
   padding: 0.4em;
 }
-
-.account-page-icons:hover {
-  color: black;
-}
-
-.delete_class a, .delete_quiz a{
-  color: darkred !important;
-  font-weight: bolder;
-  text-decoration: none;
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
-
-.delete_quiz{
-  margin-top:.1vw;
-}
-
-div.enter_quiz a{
-  color: white;
-  text-decoration: none;
-}
-
-
-div.enter_quiz a:hover{
-  color: #00E676;
-}
-
-div.delete_quiz a{
-  color:white;
-  text-decoration:none;
-}
+/** end quizzes and classrooms pages**/
 
 .titlebar {
   padding:.75%;
@@ -966,14 +538,6 @@ div.delete_quiz a{
 
 h4 {
   float: left;
-}
-
-.editTitle, .edit-classroom-title {
-  float: left;
-}
-
-button.editTitle:focus {
-  border-radius: 25px;
 }
 
 .classroomname {
@@ -997,33 +561,6 @@ button.editTitle:focus {
   border: none;
 }
 
-.quiz_element:hover{
-  background-color: #7a9cb6;
-}
-
-.classroom_element:hover{
-  background-color: #747da8;
-}
-
-.classroom-table-rows:hover{
-  background-color: rgb(177 225 208);
-  border: 2px solid rgb(177 225 208);
-}
-
-.quizcolumn, .quizcolumn a, .classroomcolumn a {
-  text-decoration: none;
-  ;
-  color: black;
-}
-
-#placeholder {
-  visibility: hidden;
-}
-
-.table-quiztitle {
-  vertical-align: middle;
-}
-
 .sideClick {
   float: right;
   margin:auto;
@@ -1032,10 +569,16 @@ button.editTitle:focus {
   background: none;
 }
 
-.sideClick:hover, .sideClick:focus, .sort-buttons:hover, .sort-buttons:focus, .quiz-icon:hover, .quiz-icon:focus, .editTitle:hover, .editTitle:focus, .classroom-options > button:hover, .classroom-options > button:focus {
+.general-btn {
+  border: none;
+  background: none;
+}
+
+.general-btn:hover, .general-btn:focus {
   background-color: #cfccc6;
 }
 
+/**take quiz page**/
 #question-title {
   background: grey;
   border: solid dimgrey;
@@ -1046,24 +589,9 @@ button.editTitle:focus {
 .button-choices {
   font-weight: bold;
 }
+/**end take quiz page**/
 
-a.Take-Active-Quiz.btn{
-  float:right;
-}
-
-a.Take-Active-Quiz.btn:hover{
-  color: rgb(2, 132, 69);
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-a.View-Results.btn{
-}
-
-a.View-Results.btn:hover{
-  color: rgb(2, 132, 69);
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
+/**results page**/
 #classroom-results {
   margin: auto;
   margin-top: 2%;
@@ -1079,32 +607,7 @@ a.View-Results.btn:hover{
   text-align: center;
   margin-top: 15%;
 }
-
-button.Show-Student-Response.btn{
-}
-
-button.Show-Student-Response.btn:hover{
-  color: rgb(2, 132, 69);
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-@media screen and (max-width:710px){
-  div.row.classroom_element{
-    ;
-  }
-  div.delete_class{
-    margin-left:0px;
-  }
-  div.edit_class{
-    margin-left:0px;
-  }
-}
-
-.quizIcon {
-  float:center;
-  width:8%;
-  text-align:center;
-}
+/**end results page**/
 
 .quiz-icon-col {
   margin:auto;
@@ -1116,6 +619,10 @@ button.Show-Student-Response.btn:hover{
 }
 
 /* Quiz Section (quiz.html)*/
+.activeQuestion{
+  background-color:#A2A2A2;
+}
+
 .question-content {
   float: left;
 }
@@ -1147,6 +654,7 @@ button.add-answer:hover, button.add-question:hover {
   color: green!important;
 }
 
+/* this selects all elements with an id that starts with "question-edit-" */
 [id^='qbtn-']:hover {
   background-color: #A2A2A2;
 }
@@ -1159,7 +667,6 @@ button.add-answer:hover, button.add-question:hover {
   outline: 5px auto -webkit-focus-ring-color;
 }
 
-/* this selects all elements with an id that starts with "question-edit-" */
 [id^="question-edit-"] {
   background-color: #ced4da;
   padding: 1rem;
@@ -1180,6 +687,26 @@ button.add-answer:hover, button.add-question:hover {
   margin-right: 1vw;
 }
 
+/**Horizontal scroll menu for Questions**/
+div.scrollmenu {
+  /* background-color: #333;  */
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu a {
+  display: inline-block;
+  color: black;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  background-color: #777;
+}
+/**end scroll**/
+
 .mc-choice > p {
   margin: auto 0 auto 0;
 }
@@ -1198,30 +725,6 @@ button.add-answer:hover, button.add-question:hover {
 .noshow{
   display:none;
 }
-#editing-container{
-  position: relative;
-  width:85%;
-  margin:auto;
-  cursor: default;
-  ;
-  margin-top:5vw;
-}
-
-/* Short answer */
-.SAquestionbox {
-  width:60%;
-  min-height:10vw;
-}
-
-.SAanswerbox {
-  width:100%;
-  min-height:15vw;
-}
-
-.contentInput {
-  width:60%;
-  min-height:5vw;
-}
 
 .answerchoiceSA {
   width:100%;
@@ -1236,27 +739,9 @@ button.add-answer:hover, button.add-question:hover {
   border-radius:25px;
   transition: color .5s
               ease-in-out, background-color .5s;
-}
-
-div.headerSection::before{
-  content: "";
-  display: table;
-}
-div.headerSection::after{
-  content: "";
-  display: table;
-  clear: both;
-}
-h1#quizname{
-  margin:0;
-  text-align:center;
-}
-
-
-div.editSign{
-  width:50%;
-  margin:0;
-  float:left;
+  height: calc(1.5em + 1rem + 2px)!important;
+  float: left;
+  background-color: #CFCCC6;
 }
 
 /* The actual WTForms checkbox, which we want to hide */
@@ -1287,45 +772,7 @@ div.editSign{
   color: green!important;
 }
 
-div.SaveExitBtn.btn{
-  float:right;
-}
-div.SaveExitBtn.btn a{
-  color:black;
-  text-decoration:none;
-}
-div.SaveExitBtn.btn a:hover{
-  color: rgb(2, 132, 69);
-}
-div.SaveExitBtn.btn:hover{
-  
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-div.QuizSaveExitBtn.btn{
-  float:right;
-}
-div.QuizSaveExitBtn.btn a{
-  color:black;
-  text-decoration:none;
-}
-div.QuizSaveExitBtn.btn a:hover{
-  color: rgb(2, 132, 69);
-}
-div.QuizSaveExitBtn.btn:hover{
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-
-div#quiz-title, div.classroom-title{
-  margin: 1em 0em;
-  display: inline-block;
-}
-
-.classroom-title{
-  height: calc(1.5em + 1rem + 2px)!important;
-}
-
+/**classroom page**/
 .classroom-options {
   width: 90%;
   margin: auto;
@@ -1340,6 +787,7 @@ div#quiz-title, div.classroom-title{
   float: right;
 }
 
+
 #ActiveRoomsHeader {
 margin-top: 1%;
 }
@@ -1348,58 +796,13 @@ margin-top: 1%;
   width: 80%;
   margin: auto;
 }
-
-/*Short answer overrides the height of the input box*/
-.form-height{
-  height:20vh;
-}
-.activeQuestion{
-  background-color:#A2A2A2;
-}
-
-div.question-container{
-  padding: 1em;
-  position: relative;
-  
-  background-color: rgb(187, 238, 220);
-  border-top: 3px solid rgb(250, 146, 61);
-  padding-right: 4.6em;
-  min-height:15em;
-
-  margin-top: 3%;
-}
-
-div.question-number::before{
-  content:"";
-  display: table;
-}
-div.question-number:after{
-  content:"";
-  clear:both;
-  display:table;
-}
-div.question-number{
-  margin-bottom:3%;
-}
-
-a#Question-Edit, a#Answer-Edit{
-  float:right;
-  text-decoration: none;
-  color:black;
-}
-
-a#Question-Edit:hover, a#Answer-Edit:hover{
-  background-color:#cfccc6;
-}
+/**end classroom page**/
 
 a:not([href]){
   color:black;
 }
 
-button.btn.Remove-Button{
-}
-
-
+/**take quiz page**/
 div.reset::after{
   content: "";
   display: table;
@@ -1412,15 +815,6 @@ div.answerChoice{
   position: relative;
   float: left;
   width: 100%;
-}
-
-span.choice{
-  float: left;
-  width: 5%;
-  padding:.53em 0;
-  background:rgb(113,255,187);
-  border: 1px solid rgb(30,155,95);
-  text-align: center;
 }
 
 div.answerBox{
@@ -1451,42 +845,6 @@ div.answerBox{
   padding-bottom: 0.5rem;
 }
 
-.quiz-back-btn a {
-  color: white;
-}
-
-.quiz-back-btn a:hover {
-  text-decoration: none;
-  color: white;
-}
-
-.btn.btn-lg.set-active{
-}
-.btn.btn-lg.remove-active{
-}
-
-.quiz-options {
-}
-
-.quiz-options:hover {
-  color: rgb(2, 132, 69);
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-a.Add-A-Quiz{
-  float:right;
-  
-}
-
-a.Add-A-Quiz:hover{
-  color: rgb(2, 132, 69);
-  box-shadow: 0 0 10px #00E676, 0 0 40px #00E676, 0 0 10px #00E676;
-}
-
-/*Taking a quiz section*/
-span.choices.disabled:hover{
-  cursor:default;
-}
 span.Taking-a-Quiz{
   margin-left:38vw;
 }
@@ -1499,8 +857,6 @@ button.btn.Taking-a-Quiz-Submit:hover{
   color: rgb(213, 219, 216);
 }
 
-
-
 div.options{
   margin-top:2vw;
 }
@@ -1508,86 +864,6 @@ div.options{
 .response{
   background:transparent;
   border:none;
-}
-
-label.btn.btn-secondary.active.button-choices {
-}
-
-label.btn.btn-secondary.button-choices.clicked {
-  background-color: rgb(51, 122, 183);
-}
-
-
-/* Horizontal scroll menu for Questions */
-div.scrollmenu {
-  /* background-color: #333;  */
-  overflow: auto;
-  white-space: nowrap;
-}
-
-div.scrollmenu a {
-  display: inline-block;
-  color: black;
-  text-align: center;
-  padding: 14px;
-  text-decoration: none;
-}
-
-div.scrollmenu a:hover {
-  background-color: #777;
-}
-
- /* Modified version of code from this site: https://css-tricks.com/draggable-elements-push-others-way/ */
-
-.all-items {
-  background: #E3E7ED;
-  counter-reset: items;
-  position: absolute;
-  overflow: auto;
-}
-
-.slide {
-  position: relative;
-  user-select: none;
-  z-index: 5;
-  &:before {
-    position: absolute;
-    bottom: 0;
-    right: 100%;
-    counter-increment: slides;
-    content: counter(slides);
-    padding-right: 0.35rem;
-    color: #999;
-    line-height: normal;
-  }
-}
-
-.ui-sortable-helper {
-  transition: none !important;
-  animation: pulse 0.4s alternate infinite;
-}
-
-.sortable-placeholder {
-  height: 60px;
-  width: 5px;
-  border-left: 2px solid #4999DA; 
-  margin: 0 0 0.75rem 0;
-  position: relative;
-  z-index: 6;
-}
-
-@keyframes pulse {
-  100% { transform: scale(1.1); } 
-}
-
-.cloned-slides {
-  .slide {
-    position: absolute;
-    z-index: 1;
-    &:before {
-      content: attr(data-pos);
-    }
-  }
 }
 
 .question-type-container {
@@ -1617,23 +893,7 @@ div.scrollmenu a:hover {
     color: white;
 }
 
-.answer-delete-button, .answer-edit-button {
-    float: right;
-    margin-right: 0.5vw;
-}
-
-.question-edit-header {
-    margin-bottom: 5px;
-}
-
 /* For displaying the quiz results */
 table, th, td {
     border: 1px solid black;
-}
-
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
 }

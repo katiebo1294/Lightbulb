@@ -24,17 +24,19 @@
 <!-- Displays user's account information -->
 <div id="account-info-container">
 	<div id="account-info" class="media">
-	{% if current_user.image_file != 'default.jpg' %}
-	<img class="rounded-circle account-img" src="{{ url_for('static', filename=current_user.image_file) }}" alt="{{ current_user.username }}'s profile picture">
-	{% else %}
-	<i class="fas fa-user-circle fa-9x" aria-hidden="true"><span class="sr-only">default profile picture</span></i>
-	{% endif %}
-	<div class="media-body">
-		<h4>{{ current_user.username }}</h4>
-		<p class="text-secondary">{{ current_user.email }}</p>
+		{% if current_user.image_file != 'default.jpg' %}
+		<img class="rounded-circle account-img" src="{{ url_for('static', filename=current_user.image_file) }}" alt="{{ current_user.username }}'s profile picture">
+		{% else %}
+		<i class="fas fa-user-circle fa-9x" aria-hidden="true"><span class="sr-only">default profile picture</span></i>
+		{% endif %}
+		<div class="media-body">
+			<h4>{{ current_user.username }}</h4>
+			<p class="text-secondary">{{ current_user.email }}</p>
+		</div>
 	</div>
-</div>
-	<button id="account-edit-button" class="btn sideClick" onclick="showAccountEditForm();"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Edit Account Information</button>
+	<div id="account-edit-button">
+	<button class="btn general-btn" onclick="showAccountEditForm();"><i class="fa fa-pencil-alt" aria-hidden="true"></i> Edit Account Information</button>
+	</div>
 </div>
 <!-- Acount edit form -->
 <div id="account-form" class="form-container" style="display: none;">

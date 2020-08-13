@@ -35,11 +35,11 @@
 </div>
 <div class="wrapper">
 	<!-- displays the user's classrooms and dropdowns for quizzes attached to them -->
-	<div id="classroomListing" class="classroomcolumn">
+	<div id="classroomListing">
 		<div class="titlebar">
 			<h4>Classrooms</h4>
 			<!-- option to create a new classroom -->
-			<button class="btn-sm sideClick"
+			<button class="btn-sm sideClick general-btn"
 			        onclick="javascript:createClassroomPopup()">
 				<i class="fas fa-plus" aria-hidden="true"></i> Create Classroom
 			</button>
@@ -47,12 +47,12 @@
 		<div id="account-tables" class="account-tables">
 			<div class="row table-element header-row">
 				<div class="col-3 text-center show table-header">
-					<button id="sort-by-name" class="btn sort-buttons">Name <i class="fas fa-arrow-up sort-ascending"
+					<button id="sort-by-name" class="btn general-btn">Name <i class="fas fa-arrow-up sort-ascending"
 					                                                           aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i>
 					</button>
 				</div>
 				<div class="col-6 text-center show table-header">
-					<button id="sort-by-date" class="btn sort-buttons">Date Created <i
+					<button id="sort-by-date" class="btn general-btn">Date Created <i
 							class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort classrooms by date (descending)</span></i>
 					</button>
 				</div>
@@ -66,7 +66,7 @@
 				<div class="table-element row">
 					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
 					<div class="dropdown room-name col-4">
-						<button class="btn itemName col quiz-icon" type="button" id="dropdownMenuLink"
+						<button class="btn itemName col general-btn" type="button" id="dropdownMenuLink"
 						        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							{{ classroom.name }} <i class="fas fa-caret-down" aria-hidden="true"></i>
 						</button>
@@ -99,10 +99,10 @@
 					<div class="quiz-icon-col col-4">
 					<span class="quiz-icon-buttons-container">
 						<button onclick="window.location.href='{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}';"
-						        type="button" class="btn btn-sm quiz-icon" aria-label="edit">
+						        type="button" class="btn btn-sm general-btn" aria-label="edit">
 							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
 						</button>
-						<button type="button" class="btn btn-sm quiz-icon"
+						<button type="button" class="btn btn-sm general-btn"
 						        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})"
 						        aria-label="delete">
 							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>

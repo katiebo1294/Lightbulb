@@ -4,7 +4,7 @@
 <div id="quiz-container">
 	<div class="titlebar">
 		<!-- Quiz Title -->
-		<button class="btn-sm classroom-title editTitle classroomname" id="quiz-{{quiz.id}}"
+		<button class="btn-sm editTitle general-btn classroomname" id="quiz-{{quiz.id}}"
 		        onclick="showEditQuizNameContainer({{ quiz.id }})" aria-label="edit quiz name">
 			{{quiz.name}}
 			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
@@ -12,15 +12,15 @@
                 </span>
 		</button>
 		<!-- Title edit form -->
-		<form class="edit-classroom-title" id="quiz-form-{{quiz.id}}" style="display: none;"
+		<form id="quiz-form-{{quiz.id}}" style="display: none;"
 		      action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
 			{{qzform.hidden_tag()}}
-			<fieldset class=" form-group edit-classroom-form">
+			<fieldset class="editTitle general-btn form-group edit-classroom-form">
 				<div class="form-group">
 					{% if qzform.name.errors %}
 					{{qzform.name(placeholder='Enter new name '
 					,id='quizname-content-'~quiz.id,value=quiz.name, maxlength='20', class='form-control
-					form-control-lg is-invalid classroom-title editTitle classroomname')}}
+					form-control-lg is-invalid editTitle editTitle classroomname')}}
 					<div class="invalid-feedback">
 						{% for error in qzform.name.errors %}
 							{{ error }}
@@ -29,7 +29,7 @@
 					{% else %}
 					{{qzform.name(placeholder='Enter new name '
 					,id='quizname-content-'~quiz.id,value=quiz.name, maxlength='20', class='form-control
-					form-control-lg classroom-title editTitle classroomname')}}
+					form-control-lg editTitle editTitle classroomname')}}
 					{% endif %}
 				</div>
 			</fieldset>
@@ -40,7 +40,7 @@
 			</div>
 		</form>
 		<!-- Save button -->
-		<button class="btn-sm sideClick"
+		<button class="btn-sm sideClick general-btn"
 		        onclick="window.location.href='{{ url_for('users.quizzes') }}';">
 			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
 		</button>

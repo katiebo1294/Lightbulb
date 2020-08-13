@@ -36,11 +36,11 @@
 </div>
 <div class="wrapper">
 	<!-- displays the user's quizzes -->
-	<div id="quizListing" class="quizcolumn">
+	<div id="quizListing">
 		<div class="titlebar">
 			<h4>Quizzes</h4>
 			<!-- option to create a new quiz -->
-			<button class="btn-sm sideClick" onclick="javascript:createQuizPopup()">
+			<button class="btn-sm sideClick general-btn" onclick="javascript:createQuizPopup()">
 				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
 			</button>
 		</div>
@@ -71,7 +71,7 @@
 						<div class="quiz-icon-buttons-container">
 							<!-- more options dropdown -->
 							<div class="dropdown">
-								<button id="more-options" class="btn dropbtn quiz-icon" type="button" data-toggle="dropdown" aria-haspopup="true" aria-label="more options">
+								<button id="more-options" class="btn dropbtn general-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-label="more options">
 									<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
 								</button>
 								<div class="dropdown-menu" aria-labelledby="more-options">
@@ -82,11 +82,11 @@
 							</div>
 							<!-- edit button -->
 						<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-								type="button" class="btn btn-sm quiz-icon" aria-label="edit">
+								type="button" class="btn btn-sm general-btn" aria-label="edit">
 							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
 						</button>
 							<!-- delete button -->
-							<button type="button" class="btn btn-sm quiz-icon"
+							<button type="button" class="btn btn-sm general-btn"
 									onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})" aria-label="delete">
 							<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
 							</button>
