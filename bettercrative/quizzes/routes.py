@@ -280,28 +280,13 @@ def shift_question():
     # # load new question data
     #
     # db.session.commit()
-    method = request.args.get('method', None)
     quiz_id = request.args.get('quiz_id', None)
     quiz = Quiz.query.get_or_404(quiz_id)
     startPos = int(request.args.get('startPos', None))
-    endPos = startPos
-    # if user pressed an arrow key
-    if method == 'keypress':
-        direction = request.args.get('direction', None)
-        # user pressed left arrow key
-        if direction == 'left':
-            if startPos > 0:
-                endPos = startPos - 1
-        # user pressed right arrow key
-        else:
-            if startPos < (len(quiz.questions) - 1):
-                endPos = startPos + 1
-    # if user clicked and dragged the button
-    else:
-        endPos = int(request.args.get('endPos', None))
+    endPos = int(request.args.get('endPos', None))
 
-    # move the question to the new index
     quiz.questions.insert(endPos, quiz.questions.pop(startPos))
+
     db.session.commit()
 
     return "Shifted question", 200

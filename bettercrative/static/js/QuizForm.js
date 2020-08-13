@@ -9,7 +9,7 @@ function addQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            document.location.reload();
+            window.location.reload();
         }
     });
 }
@@ -48,7 +48,7 @@ function removeQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            document.location.reload();
+            window.location.reload();
         }
     });
     document.getElementById("modalPopUp").style.display = "none";;
@@ -152,7 +152,7 @@ function setQType(url,question_id, qtype) {
             console.log(response.statusText);
         },
         success: function() {
-            document.location.reload();
+            window.location.reload();
         }
     });
     
@@ -172,7 +172,7 @@ function change_active_question(url,question_id,quiz_id) {
             console.log(response.statusText);
         },
         success: function() {
-            document.location.reload();
+            window.location.reload();
         }
     });
 };
@@ -436,7 +436,7 @@ function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
     });
 }
 
-// makes question buttons draggable and calls shift_question
+// makes question buttons sortable by dragging them with the mouse
 $("#questions-menu").sortable({
     axis: "x",
     start: function(event, ui) {
@@ -450,41 +450,64 @@ $("#questions-menu").sortable({
         console.log(quiz_id);
         $.ajax({
            type: "GET",
-           data: {'method': 'drag', 'startPos': ui.item.startPos, 'endPos': ui.item.endPos, 'quiz_id': quiz_id},
+           data: {'startPos': ui.item.startPos, 'endPos': ui.item.endPos, 'quiz_id': quiz_id},
            url: '/quiz/shift_question',
            error: function(response) {
             console.log(response.statusText);
            },
            success: function() {
-               document.location.reload();
+               saveFocus(document.getElementById('qbtn-' + (endPos + 1)));
+               window.location.reload();
            }
         });
     }
 });
 
+// makes question buttons sortable by using the arrow keys
 $("div[id^='qbtn-']").keyup(function(e) {
     if(e.keyCode == 37 || e.keyCode == 39) {
         var quiz_id = document.getElementsByClassName('editTitle')[0].id.slice(5);
+        var length = $('#questions-menu div').length;
         var startPos = this.id.slice(5) - 1;
+        var endPos = startPos;
         var method = "keypress";
         if(e.keyCode == 37) {
-            var direction = 'left';
-            console.log(direction + " pressed on button " + startPos);
+            if(startPos > 0) {
+                var direction = 'left';
+                endPos = startPos - 1;
+                console.log(direction + " pressed on button " + startPos);
+            }
         } else if(e.keyCode == 39) {
-            var direction = 'right';
-
-            console.log(direction + " pressed on button " + startPos);
+            if(startPos < length) {
+                var direction = 'right';
+                endPos = startPos + 1;
+                console.log(direction + " pressed on button " + startPos);
+            }
         }
         $.ajax({
            type: "GET",
-           data: {'method': method, 'direction': direction, 'startPos': startPos, 'quiz_id': quiz_id},
+           data: {'startPos': startPos, 'endPos': endPos, 'quiz_id': quiz_id},
            url: '/quiz/shift_question',
            error: function(response) {
                 console.log(response.statusText);
            },
            success: function() {
-                document.location.reload(true);
+                saveFocus(document.getElementById('qbtn-' + (endPos + 1)));
+                window.location.reload();
            }
         });
     }
+});
+
+function saveFocus(elem) {
+    console.log("before: ");
+    console.log(elem);
+    localStorage.setItem("focusedElementID", elem.id);
+}
+
+$(document).ready(function() {
+    var focusedElement = document.getElementById(localStorage.getItem("focusedElementID"));
+    console.log("after: ");
+    console.log(focusedElement);
+    focusedElement.focus();
 });
