@@ -456,7 +456,6 @@ $("#questions-menu").sortable({
             console.log(response.statusText);
            },
            success: function() {
-               saveFocus(document.getElementById('qbtn-' + (endPos + 1)));
                window.location.reload();
            }
         });
@@ -492,22 +491,12 @@ $("div[id^='qbtn-']").keyup(function(e) {
                 console.log(response.statusText);
            },
            success: function() {
-                saveFocus(document.getElementById('qbtn-' + (endPos + 1)));
                 window.location.reload();
            }
         });
+    // enter key
+    } else if(e.keyCode == 13) {
+        console.log(this);
+        this.click();
     }
-});
-
-function saveFocus(elem) {
-    console.log("before: ");
-    console.log(elem);
-    localStorage.setItem("focusedElementID", elem.id);
-}
-
-$(document).ready(function() {
-    var focusedElement = document.getElementById(localStorage.getItem("focusedElementID"));
-    console.log("after: ");
-    console.log(focusedElement);
-    focusedElement.focus();
 });

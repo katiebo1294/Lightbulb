@@ -1147,8 +1147,11 @@ button.add-answer:hover, button.add-question:hover {
   color: green!important;
 }
 
-[id^='qbtn-']:hover, [id^='qbtn-']:focus {
+[id^='qbtn-']:hover {
   background-color: #A2A2A2;
+}
+
+[id^='qbtn-']:hover, [id^='qbtn-']:focus {
   box-shadow: none;
 }
 
