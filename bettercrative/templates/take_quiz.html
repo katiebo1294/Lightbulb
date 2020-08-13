@@ -27,12 +27,18 @@
 		<div class="menu" style="margin-left:15vw; margin-top: ">
 			<!--Need to rework so that 1 is = to <int: id> I got error before-->
 			
-			{% for question in questions.items %}
+		{{student.id}}
+		{%if teacher%}
+			<form action="{{url_for('classrooms.teacher_take_quiz', student_id = student.id)}}" method="POST">
+		{%else%}
 			<form action="{{url_for('main.home')}}" method="POST">
+		{%endif%}
+			
+				{% for question in questions.items %}
                 <span id="question-title" class="btn" style="font-size:2.7vw; margin-top:3vw;">
 					{{ question.content }}</span>
 					
-					
+				
 				<div class="options">
 					<!-- Answer Section -->
 					{% if question.category=='Multiple Choice'%}
