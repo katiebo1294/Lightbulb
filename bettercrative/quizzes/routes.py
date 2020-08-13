@@ -281,13 +281,12 @@ def shift_question():
     #
     # db.session.commit()
     quiz_id = request.args.get('quiz_id', None)
+    quiz = Quiz.query.get_or_404(quiz_id)
     startPos = int(request.args.get('startPos', None))
     endPos = int(request.args.get('endPos', None))
 
-    quiz = Quiz.query.get_or_404(quiz_id)
-    print("quiz:", quiz)
-    print("questions:", quiz.questions)
     quiz.questions.insert(endPos, quiz.questions.pop(startPos))
+
     db.session.commit()
 
     return "Shifted question", 200

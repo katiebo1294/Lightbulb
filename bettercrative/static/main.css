@@ -925,8 +925,6 @@ div.show a:hover{
   color: black;
 }
 
-
-
 .delete_class a, .delete_quiz a{
   color: darkred !important;
   font-weight: bolder;
@@ -1131,24 +1129,34 @@ button.remove-answer {
   margin: auto;
 }
 
-button.add-answer, button.remove-answer {
+button.add-answer, button.remove-answer, button.add-question, button.remove-question {
   border: none;
   background: transparent;
   color: #6c757d;
+}
+
+button.add-answer, button.remove-answer {
   font-size: 2.25rem;
 }
 
-button.remove-answer:hover {
+button.remove-answer:hover, button.remove-question:hover {
   color: red!important;
 }
 
-button.add-answer:hover {
+button.add-answer:hover, button.add-question:hover {
   color: green!important;
 }
 
-[id^='qbtn-']:hover, [id^='qbtn-']:focus {
+[id^='qbtn-']:hover {
   background-color: #A2A2A2;
+}
+
+[id^='qbtn-']:hover, [id^='qbtn-']:focus {
   box-shadow: none;
+}
+
+[id^='qbtn-']:focus {
+  outline: 5px auto -webkit-focus-ring-color;
 }
 
 /* this selects all elements with an id that starts with "question-edit-" */

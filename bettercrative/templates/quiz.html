@@ -60,9 +60,8 @@
 				</button>
 				{% endif %}-->
 				ID: {{question.id}}
-				<button aria-label="remove question" class="btn btn-outline-danger Remove-Button"
+				<button aria-label="remove question" class="fa fa-times remove-question"
 				        onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
-					<i class="fa fa-times" aria-hidden="true"></i>
 				</button>
 				<!--{% if not loop.last %}
 				<button aria-label="shift question right" class="btn btn-outline-info shift-Button"
@@ -73,9 +72,8 @@
 			</div>
 			{% endfor %}
 
-			<button aria-label="add a question" class="btn btn-outline-success .item .slide"
+			<button aria-label="add a question" class="fa fa-plus add-question .item .slide"
 			        onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
-				<i class="fa fa-plus" aria-hidden="true"></i>
 			</button>
 		</div>
 
