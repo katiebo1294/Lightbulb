@@ -72,8 +72,9 @@ It returns I think a list of them that are variables rightAnswers and wrongAnswe
 <div style="height:40vh; width:40vw;">
 	<!-- Temporary area to display charts of student data -->
 	<canvas id="basicChart"></canvas>
-	<button class="Show-Student-Response btn"
+	<button class="general-btn btn"
 	        onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
+		<i class="fas fa-chart-bar" aria-hidden="true"></i>
 		Show student response {{ sumRight }}
 	</button>
 </div>
