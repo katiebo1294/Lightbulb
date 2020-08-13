@@ -51,9 +51,10 @@ class User(db.Model, UserMixin):
     quizzes = db.relationship('Quiz', backref='owner', cascade="all, delete, delete-orphan")
 
     def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config(['SECRET_KEY'], expires_sec))
+        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'id': self.id}).decode('utf-8')
 
+    @staticmethod
     def verify_reset_token(token):
         s = Serializer(current_app.config['SECRET_KEY'])
         try:

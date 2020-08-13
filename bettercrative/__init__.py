@@ -13,8 +13,6 @@ from bettercrative.config import Config
 from bettercrative.errors.routes import bad_request, unauthorized, forbidden,  not_found
 
 
-
-
 def remove_form(form):
     form.answer_form.pop()
 
