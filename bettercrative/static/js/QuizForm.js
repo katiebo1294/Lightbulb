@@ -9,7 +9,7 @@ function addQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            window.location.reload();
+            document.location.reload();
         }
     });
 }
@@ -48,7 +48,7 @@ function removeQuestion(url, q_id) {
             console.log(response.statusText);
         },
         success: function() {
-            window.location.reload();
+            document.location.reload();
         }
     });
     document.getElementById("modalPopUp").style.display = "none";;
@@ -152,7 +152,7 @@ function setQType(url,question_id, qtype) {
             console.log(response.statusText);
         },
         success: function() {
-            window.location.reload();
+            document.location.reload();
         }
     });
     
@@ -172,7 +172,7 @@ function change_active_question(url,question_id,quiz_id) {
             console.log(response.statusText);
         },
         success: function() {
-            window.location.reload();
+            document.location.reload();
         }
     });
 };
@@ -450,13 +450,40 @@ $("#questions-menu").sortable({
         console.log(quiz_id);
         $.ajax({
            type: "GET",
-           data: {'startPos': ui.item.startPos, 'endPos': ui.item.endPos, 'quiz_id': quiz_id},
+           data: {'method': 'drag', 'startPos': ui.item.startPos, 'endPos': ui.item.endPos, 'quiz_id': quiz_id},
            url: '/quiz/shift_question',
            error: function(response) {
             console.log(response.statusText);
            },
            success: function() {
-               window.location.reload();
+               document.location.reload();
+           }
+        });
+    }
+});
+
+$("div[id^='qbtn-']").keyup(function(e) {
+    if(e.keyCode == 37 || e.keyCode == 39) {
+        var quiz_id = document.getElementsByClassName('editTitle')[0].id.slice(5);
+        var startPos = this.id.slice(5) - 1;
+        var method = "keypress";
+        if(e.keyCode == 37) {
+            var direction = 'left';
+            console.log(direction + " pressed on button " + startPos);
+        } else if(e.keyCode == 39) {
+            var direction = 'right';
+
+            console.log(direction + " pressed on button " + startPos);
+        }
+        $.ajax({
+           type: "GET",
+           data: {'method': method, 'direction': direction, 'startPos': startPos, 'quiz_id': quiz_id},
+           url: '/quiz/shift_question',
+           error: function(response) {
+                console.log(response.statusText);
+           },
+           success: function() {
+                document.location.reload(true);
            }
         });
     }
