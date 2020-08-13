@@ -16,7 +16,7 @@ main = Blueprint('main', __name__)
 def home():
     """ Displays the "home" page. """
     if current_user.is_authenticated:
-        return render_template('user_home.html')
+        return render_template('user_home.html', classForm=ClassroomForm(), quizForm=QuizForm())
     else:
         return render_template('home.html')
 

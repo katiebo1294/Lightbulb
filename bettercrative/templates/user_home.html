@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
 <!-- Gradient credits: https://codepen.io/caseycallow/pen/yMNqPY -->
 <style>
 	#title-text {
@@ -10,8 +11,7 @@
 	-webkit-animation: hue 10s infinite linear;
 
 	width: 100vw;
-	position: absolute;
-	height: 50vh;
+	height: 10vh;
 	}
 
 	@-webkit-keyframes hue {
@@ -23,5 +23,81 @@
   }
 }
 </style>
-<h1 id="title-text" class="text-center">{{ current_user.username }}'s home page</h1>
+<!-- Modals for the buttons -->
+<div id="modalPopUpForm" class="modalPopUp" {% if classForm.name.errors %}
+     style="display:block;" {% else %} style="display:none;" {% endif %}>
+	<div class="modalContent">
+		<h1 id="modalTextForm">
+		</h1>
+		<!-- form for class pop up -->
+		<div id="modalClass" {% if classForm.name.errors %} style="display:block;" {% else %} style="display:none;"
+		     {% endif %}>
+			<form action="" method="POST">
+				{{ classForm.hidden_tag() }}
+				<!--adds ctrf form-->
+				<fieldset>
+					{% if classForm.name.errors %}
+					{{ classForm.name(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in classForm.name.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ classForm.name(class="form-control form-control-lg") }}
+					{% endif %}
+				</fieldset>
+				{{classForm.submitClass(class="btn btn-success")}}
+				<!-- confirm button -->
+				<button type="button" class="btn btn-secondary"
+				        onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">
+					Cancel
+				</button>
+			</form>
+		</div>
+		<!-- form for quiz pop up -->
+		<div id="modalQuiz" {% if quizForm.name.errors %} style="display:block;" {% else %} style="display:none;"
+		     {% endif %}>
+			<form action="" method="POST">
+				{{ quizForm.hidden_tag() }}
+				<!--adds ctrf form-->
+				<fieldset>
+					{% if quizForm.name.errors %}
+					{{ quizForm.name(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for error in quizForm.name.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ quizForm.name(class="form-control form-control-lg") }}
+					{% endif %}
+				</fieldset>
+				{{quizForm.submitQuiz(class="btn btn-success")}}
+				<!-- confirm button -->
+				<button type="button" class="btn btn-secondary"
+				        onclick="refresh('#modalPopUpForm');document.getElementById('modalPopUpForm').style.display='none'">
+					Cancel
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row text-center">
+		<h1 id="title-text">{{ current_user.username }}'s home page</h1>
+	</div>
+	<div class="row">
+		<button class="btn-sm sideClick" onclick="javascript:createQuizPopup()">
+				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
+			</button>
+	</div>
+	<div class="row">
+		<button class="btn-sm sideClick" onclick="javascript:createClassroomPopup()">
+				<i class="fas fa-plus" aria-hidden="true"></i> Create Classroom
+			</button>
+	</div>
+</div>
+
 {% endblock %}

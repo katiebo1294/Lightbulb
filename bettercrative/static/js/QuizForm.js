@@ -321,11 +321,6 @@ function checked(span){
 
          
     }
-
-    
-    
-
-    
 }
 
 /**
