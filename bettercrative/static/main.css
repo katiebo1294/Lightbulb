@@ -461,6 +461,7 @@ No media query for `xs` since this is the default in Bootstrap */
 .dropdown-menu.show {
   border: 3px solid #cabfaa;
   background-color: #e2dcd1;
+  overflow:auto;
 }
 
 .dropdown:hover {
@@ -489,15 +490,8 @@ No media query for `xs` since this is the default in Bootstrap */
 /**quizzes and classrooms pages**/
 .itemName {
   width: 100%;                   /* IE6 needs any width */
-  overflow: hidden;              /* "overflow" value must be different from  visible"*/ 
-  -o-text-overflow: ellipsis;    /* Opera < 11*/
-  text-overflow:    ellipsis;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
-}
-
-.itemName:hover {
   -o-text-overflow: initial;    /* Opera < 11*/
   text-overflow:    initial;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
-  overflow-x: auto;              /* "overflow" value must be different from  visible"*/ 
 }
 
 #quiz-container {
@@ -572,10 +566,6 @@ h4 {
 .general-btn {
   border: none;
   background: none;
-}
-
-.general-btn:hover, .general-btn:focus {
-  background-color: #cfccc6;
 }
 
 /**take quiz page**/
