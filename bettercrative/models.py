@@ -236,6 +236,7 @@ class Response(db.Model):
     student = db.relationship('Student', back_populates='responses')
     classroom_host_id = db.Column(db.Integer, db.ForeignKey('classroom.id'), nullable=False)
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id', ondelete='CASCADE'), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     value = db.Column(db.Text, nullable=False)
     question_num = db.Column(db.Integer, nullable=False)
     correct = db.Column(db.Boolean, nullable=False)

@@ -2,65 +2,59 @@
 
 {% block content %}
 
-<!--This is mostly like this so its easier for the frontend team to use these values and
-use chart.js to make it look pretty -->
-
-<!--The backend queries for all right answers and wrong answer
-It returns I think a list of them that are variables rightAnswers and wrongAnswers-->
-
-<!-- this is the original setup, changing from response oriented to student oriented -->
-<!-- <h3> Correct: </h3>
-{% for response in rightAnswers %}
-<h4> {{ response }} </h4>
-{% endfor %}
-<br> </br>
-<h3> Wrong: </h3>
-{% for response in wrongAnswers %}
-<h4> {{ response }} </h4>
-
-{% endfor %}
-<br></br>
-<h4>Number of Correct Answers: {{ sumRight }}</h4>
-<h2></h2>
-<h4>Number of Wrong Answers: {{ sumWrong }}</h4> -->
-
 <!-- Create a basic table template -->
 
 <div class="container" style="margin:auto;">
 	<h1 id="results-title">Quiz Results</h1>
-	<table id="classroom-results">
-		<tr>
-			<th>Name</th>
-			{% for question in quiz.questions %}
-			<th>{{ question.index + 1 }}</th>
-			{% endfor %}
-		</tr>
-
-		{% for student,response in students.items() %}
-		<tr>
-			<td> Anonymous</td>
-			{% for student_answer in response %}
-			<td style="background-color: {% if student_answer.correct %}green{% else %}red{% endif %};" class="student-answer">{{ student_answer.value }}</td>
-			{% endfor %}
-		</tr>
-
-
-		{% endfor %}
-
-		<!-- Correct Answers -->
-		<tr>
-			<td> Correct Answers</td>
-			{%for response in responses %}
-
-			<td id="correct-answer-{{ loop.index0 }}">{% for answer in quiz.questions[response.question_num -
-				1].answers if answer.correct %}
-				{{ answer.content }}{% if not loop.last %}, {% endif %}
+	{% for quiz in classroom.added_quizzes %}
+		<!-- Graphs for quiz -->
+		<table id="classroom-results">
+			<thead>
+				<tr>
+					<th>Name</th>
+					{% for question in quiz.questions %}
+					<th>{{ question.index + 1 }}</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Student Answers -->
+				{% for student,response in students.items() %}
+				<tr>
+					<td> {{student.id}} </td>
+					{% for question in quiz.questions %}
+					<td>
+						{% for student_answer in response %}
+							{% if question.id == student_answer.question_id %}
+								<span style="background-color: {% if student_answer.correct %}green{% else %}red{% endif %};" class="student-answer">
+									{{ student_answer.value }}
+								</span>
+							{% endif %}
+						{% endfor %}
+					</td>
+					{% endfor %}
+				</tr>
 				{% endfor %}
-			</td>
-			{%endfor%}
-		</tr>
 
-	</table>
+				<!-- Answer Key -->
+				<tr>
+					<td> Correct Answers</td>
+					{%for question in quiz.questions %}
+						<td id="correct-answer-{{ loop.index0 }}">
+							<!-- loop through answers within each question to find the correct one -->
+							{% for answer in question.answers %}
+								{% if answer.correct%}
+									{{ answer.content }}
+								{% endif %}
+							{% endfor%}
+						</td>
+					{%endfor%}
+				</tr>
+			<tbody>
+
+		</table>
+		<!-- end of graphs -->
+	{% endfor %}
 </div>
 
 <button class="btn btn-lg btn-primary quiz-back-btn"><a onclick="goBack();">

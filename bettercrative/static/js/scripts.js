@@ -7,6 +7,15 @@ window.onload = function() {
             ]
         });
     }
+    else if(document.URL.indexOf("classroom_results"))
+    {
+        $('#classroom-results').DataTable( {
+            "columnDefs": [
+                // This is temporarily disabled while I figure out how we should organize the columns as the number of columns will vary depending on number of questions/responses
+                // {"orderable": false, "targets": 3}
+            ]
+        });
+    }
 }
 
 $('.navTrigger').click(function () {

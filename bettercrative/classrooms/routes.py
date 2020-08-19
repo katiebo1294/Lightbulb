@@ -267,32 +267,17 @@ def view_results(classroom_id):
 
         Parameters: 
                 classroom_id (int): the ID of the classroom to retrieve answers from
+                quiz_id (int): the ID of the quiz to retrieve answers from
     """
-    print("WRONG ANSWERS-------------")
-    sum_wrong = 0
-    wrong_answers = Response.query.filter_by(classroom_host_id=classroom_id, correct=False).all()
-    for y in wrong_answers:
-        sum_wrong += 1
-        print(y)
-
-    print(sum_wrong)
-    print("RIGHT ANSWERS ----------------")
-    sum_right = 0
-    correct_responses = Response.query.filter_by(classroom_host_id=classroom_id, correct=True).all()
-    for z in correct_responses:
-        sum_right += 1
-        print(z)
     
     responses = Response.query.filter_by(classroom_host_id=classroom_id).all()
     
     classroom = Classroom.query.filter_by(id=classroom_id).first()
-    quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
     students = {response.student_id: responses for response in responses}
 
     
 
-    return render_template('classroom_results.html', title='results of quiz', rightAnswers=correct_responses,
-                           wrongAnswers=wrong_answers, sumRight=sum_right, sumWrong=sum_wrong, classroomid=classroom_id, responses=responses, quiz=quiz, students=students)
+    return render_template('classroom_results.html', title='results of quiz', classroom=classroom, responses=responses, students=students)
 
 
 #Answers of each student 
@@ -315,6 +300,7 @@ def received_answer():
         classroom_host_id = args['classroom_id'],
         student_id = current_student.id,
         quiz_reference = args['quiz_id'],
+        question_id = current_question.id,
         question_num = args['page_num'],
         value = args['value'],
         correct = current_answer.correct,
