@@ -1,6 +1,6 @@
 from flask import (render_template, url_for, flash,
                    redirect, Blueprint,session,
-                   request, make_response)
+                   request, make_response, jsonify)
 from flask_login import current_user, login_required
 from sqlalchemy import exists, and_
 
@@ -300,7 +300,7 @@ def received_answer():
         classroom_host_id = args['classroom_id'],
         student_id = current_student.id,
         quiz_reference = args['quiz_id'],
-        question_id = current_question.id,
+        question_id = current_answer.question_id,
         question_num = args['page_num'],
         value = args['value'],
         correct = current_answer.correct,
@@ -355,6 +355,37 @@ def delete_classroom():
     db.session.flush()
     flash(u'Classroom Removed!', 'success')
     return "deleted classroom", 200
+
+@classrooms.route("/calculate_chart_data", methods=['GET'])
+def calculate_chart_data():
+    """ Calculates chart data and labels, then sends a GET request
+        classroom_id: classroom that the students responses are being taken from
+    """
+
+    quiz_id = request.args.get('quiz_id', None)
+    class_id = request.args.get('class_id', None)
+
+    # get all students that answeres this quiz within this classroom
+
+    responses = Student.responses.query.filter_by(quiz_reference=quiz_id).filter_by(classroom_host_id=class_id)
+
+    chart_labels = []
+    chart_data = []
+    data = [chart_labels, chart_data]
+    numCorrect = 0
+    # for each student, calculate their score (for now every question is worth one point)
+    for response in responses:
+        chart_labels.append("student")
+        for student_answer in response:
+            if response.correct:
+                numCorrect = numCorrect + 1
+        chart_data.append(numCorrect)
+        numCorrect = 0
+
+    # send GET request with data
+    return jsonify(data)
+    
+    return "sent GET request with updated chart info", 200
 
 
 

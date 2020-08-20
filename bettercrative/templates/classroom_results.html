@@ -4,7 +4,7 @@
 
 <!-- Create a basic table template -->
 
-<div class="container" style="margin:auto;">
+<div id="results_display" class="container" style="margin:auto;">
 	<h1 id="results-title">Quiz Results</h1>
 	{% for quiz in classroom.added_quizzes %}
 		<!-- Graphs for quiz -->
@@ -53,29 +53,39 @@
 			<tbody>
 
 		</table>
+
+		<!-- Chart.js area -->
+		<div style="height:40vh; width:40vw;">
+			<!-- Temporary area to display charts of student data -->
+			<canvas id="basicChart"></canvas>
+			<!-- Current idea: use ajax to call python to access database and retrieve the arrays for javascript, then use that info for charts.js -->
+			<!-- <button class="general-btn btn"
+					onclick="javascript:create_chart()">
+				<i class="fas fa-chart-bar" aria-hidden="true"></i>
+				Show student response
+			</button> -->
+			<button class="general-btn btn" onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
+				<i class="fas fa-chart-bar" aria-hidden="true"></i>
+				Show student response
+			</button>
+		</div>
+
 		<!-- end of graphs -->
 	{% endfor %}
+
 </div>
 
 <button class="btn btn-lg btn-primary quiz-back-btn"><a onclick="goBack();">
 	<i class="fas fa-angle-double-left"></i> Go Back</a></button>
 
-<!-- Chart.js area -->
-
-
-<div style="height:40vh; width:40vw;">
-	<!-- Temporary area to display charts of student data -->
-	<canvas id="basicChart"></canvas>
-	<button class="general-btn btn"
-	        onclick="create_chart(numTrue='{{ sumRight }}' , numFalse='{{ sumWrong }}');">
-		<i class="fas fa-chart-bar" aria-hidden="true"></i>
-		Show student response {{ sumRight }}
-	</button>
-</div>
-
-<script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
 <script crossorigin="anonymous"
-        integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
-        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+		integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
+		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
+	
+<!-- have charts.js load -->
+<script type="text/javascript" language="JavaScript">
+	create_chart();
+</script>
 
 {% endblock  %}
