@@ -245,41 +245,7 @@ def remove_answer():
 @quizzes.route("/quiz/shift_question")
 @login_required
 def shift_question():
-    # """ shift a question to a given location.
-    #     Parameters:
-    #             question_id (int): the ID of the question to be removed.
-    #             direction (String): direction to shift
-    # """
-    # question_id = request.args.get('question_id', None)
-    # direction = request.args.get('direction', None)
-    # print("Shifting Question " + direction)
-    #
-    # if direction is None:
-    #     return "No direction given!", 400
-    # if question_id is None:
-    #     return "No question id!", 400
-    #
-    # question = Question.query.filter_by(id=question_id).first()
-    # if question is None:
-    #     return "Question not found!", 404
-    #
-    # quiz = Quiz.query.filter_by(id=question.quiz_id).first()
-    # if quiz is None:
-    #     return "No quiz found under that quiz id", 500
-    #
-    # # target is the question that we want to swap in a direction
-    # targetIdx = quiz.questions.index(question)
-    #
-    # if direction == "left":
-    #     destinationIdx = targetIdx - 1
-    # else:
-    #     destinationIdx = targetIdx + 1
-    #
-    # quiz.questions.insert(destinationIdx, quiz.questions.pop(targetIdx))
-    #
-    # # load new question data
-    #
-    # db.session.commit()
+    
     quiz_id = request.args.get('quiz_id', None)
     quiz = Quiz.query.get_or_404(quiz_id)
     startPos = int(request.args.get('startPos', None))
@@ -295,6 +261,7 @@ def shift_question():
 @quizzes.route("/quiz/set_question_type", methods=['GET', 'POST'])
 @login_required
 def set_question_type():
+    
     question_id = request.args.get('question_id', None)
     qtype = request.args.get('qtype', None)
     
