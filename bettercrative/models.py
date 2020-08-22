@@ -150,7 +150,20 @@ class Quiz(db.Model):
     responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
     students = db.relationship("Student", backref = 'quiz', cascade = 'delete, all')
 
-    
+    """
+        Description:
+            Class method for getting the ID's of all students in that particular Quiz instance
+        Parameter:
+            quiz
+                the current quiz instance that contains the students we want to look at
+
+        Return:
+            list of student id's from Quiz.students
+    """
+    def student_list(self):
+        student_id_list = [student.id for student in self.students]
+        return student_id_list
+        
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
