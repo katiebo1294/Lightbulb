@@ -229,9 +229,8 @@
 									{{ get_alphabet_index( loop.index ) }}
 								</span>
 								<!-- Our custom checkbox for answer correctness -->
-								<div class="form-group correctness-container col-1"
-								     onclick="checkCorrect(index={{ loop.index0 }});">
-									{% if answer.correct %}
+								<div class="form-group correctness-container col-1">
+									<!-- {% if answer.correct %}
 									<i tabindex="0" style="color: #6c757d;" id="checkbox-{{ loop.index0 }}"
 									   class="fas fa-check-circle">
 										<span class="sr-only">mark as incorrect</span>
@@ -242,8 +241,13 @@
 									   class="far fa-check-circle">
 										<span class="sr-only">mark as correct</span>
 									</i>
-									{{ aform.correct(value='n', class="actual-checkbox") }}
-									{% endif %}
+									{{ aform.correct(value='n', class="actual-checkbox") }} -->
+									<!-- {% endif %} -->
+									<i tabindex="0" style="color: #6c757d;" id="checkbox-{{answer.id}}" onclick="setMC(this,{{answer.index}})"
+									   class="fas fa-check-circle">
+										
+									</i>
+									{{aform.correct(id='answer_form-'~answer.id~'-correct', class='noshow')}}
 								</div>
 								<!-- Actual answer content, with current value as a placeholder -->
 								<div class="answer-content col-9">
@@ -324,17 +328,10 @@
 									value=answer.content) }}
 									{% endif %}
 								</div>
-								<!-- Remove this answer -->
-								<button aria-label="remove answer"
-								        class="fas fa-times remove-answer col-2"
-								        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }}, index={{ outer_loop.index }}); remove_form(form);">
-								</button>
+								
 							</div>
 							{% endfor %}
-							<!-- Add an answer -->
-							<button aria-label="add answer" class="fa fa-plus add-answer"
-							        onclick="addAnswer('{{ url_for('quizzes.add_answer') }}', q_id={{ question.id }}, index={{ loop.index }})">
-							</button>
+							
 							{% endif %}
 						</fieldset>
 					</form>

@@ -36,7 +36,7 @@ def enter_classroom():
             print("-------------------------------------------------------------------")
             print("ADDING STUDENT")
             print("-------------------------------------------------------------------")
-            student = Student()
+            student = Student(quiz_reference = classroom.active_quiz)
             db.session.add(student)
             db.session.commit()
             return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id,student=student.id))
@@ -215,6 +215,7 @@ def take_quiz(classroom_id):
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
 
+    
     if 'teacher' in args:
         teacher = args['teacher']
     else:

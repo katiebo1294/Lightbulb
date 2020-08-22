@@ -217,50 +217,27 @@ function  cancelTF(answer_id){
     question_content.classList.replace('noshow', 'show');
 }
 
-function setTF(number, index, span) {
-    console.log(span);
-    var choice = span.innerHTML;
-    console.log(choice);
-    // find the form checkbox
-    console.log("looking for " + "aform-" + choice.toLowerCase() + "-" + index);
-    var checkbox = document.getElementById("aform-" + choice.toLowerCase() + "-" + index);
-    console.log("checkbox: ");
-    console.log(checkbox);
-    // figure out which button it is and color it accordingly
-    if(choice == 'True') {
-        var other = document.getElementById("aform-false-" + (index+1));
-        var otherBtn = document.getElementById("btn-false-" + (index+1));
-         $(span).toggleClass('btn-success btn-outline-success');
-         $(otherBtn).toggleClass('btn-danger btn-outline-danger');
-    } else {
-        var other = document.getElementById("aform-true-" + (index-1));
-        var otherBtn = document.getElementById("btn-true-" + (index-1));
-        $(span).toggleClass('btn-danger btn-outline-danger');
-        $(otherBtn).toggleClass('btn-success btn-outline-success');
+function setMC(i){
+    console.log(i.classList);
+    console.log(i.style.color);
+    if(i.style.color === 'rgb(108, 117, 125)'){
+        i.style.color = 'green';
     }
-    console.log("other: ");
-    console.log(other);
-    // toggle the checkbox
-    if(checkbox.checked) {
-            console.log("was checked");
-            checkbox.removeAttribute("checked");
-            checkbox.value = 'n';
-            other.setAttribute("checked", "checked");
-            other.value = 'y';
-        } else {
-            console.log("was unchecked");
-            checkbox.setAttribute("checked", "checked");
-            checkbox.value = 'y';
-            other.removeAttribute("checked");
-            other.value = 'n';
-        }
-        console.log("checkbox: ");
-    console.log(checkbox);
-    console.log("other: ");
-    console.log(other);
-    refresh("#question-edit-" + number);
-}
+    else{
+        i.style.color = '#6c757d';
+    }
 
+    
+    var id = i.id.slice(9);
+    var checkbox = document.getElementById('answer_form-' + id + '-correct');
+    if(checkbox.checked){
+        checkbox.checked = false;
+    }
+    else{
+        checkbox.checked = true;
+    }
+    
+}
 
 /**
  * Description:

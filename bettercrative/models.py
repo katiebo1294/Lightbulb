@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from typing import List
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -63,6 +63,8 @@ class User(db.Model, UserMixin):
             return None
         return User.query.get(id)
 
+    
+
     def __repr__(self):
         return f"User('{self.username}', '{self.email}', '{self.image_file}')"
 
@@ -97,6 +99,26 @@ class Classroom(db.Model):
 
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.added_quizzes}', '{self.active_quiz}')"
+    """
+    Description:
+        method for getting the ID's of all objects in that particular Object instance in the database.
+    Parameter:
+        object
+            can be Classroom.added_quizzes, Student.responses, etc.
+
+            e.g:
+            to get all response ids from a list of repsonses from a quiz -> Classroom.get_id_list(Quiz.responses)
+            to get all students ids from a list of students from a quiz -> Classroom.get_id_list(Quiz.students)
+    Return:
+        list of ids
+    """
+
+    @staticmethod
+    def get_id_list(object:List):
+        id_list = [item.id for item in object]
+        print(id_list)
+        return id_list
+
 
     """ A helper table to link the Quiz and Classroom models above in a many-to-many relationship.
 
@@ -148,6 +170,10 @@ class Quiz(db.Model):
                                 cascade="all, delete, delete-orphan")
     active = db.Column(db.Integer, unique=False, nullable=True, default=None)
     responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
+    students = db.relationship("Student", backref = 'quiz', cascade = 'delete, all')
+
+    
+
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
@@ -260,3 +286,4 @@ class Student(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     responses = db.relationship('Response', back_populates='student', cascade='delete, all')
+    quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable = False)
