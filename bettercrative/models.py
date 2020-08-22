@@ -148,6 +148,9 @@ class Quiz(db.Model):
                                 cascade="all, delete, delete-orphan")
     active = db.Column(db.Integer, unique=False, nullable=True, default=None)
     responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
+    students = db.relationship("Student", backref = 'quiz', cascade = 'delete, all')
+
+    
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
@@ -260,3 +263,4 @@ class Student(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     responses = db.relationship('Response', back_populates='student', cascade='delete, all')
+    quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable = False)
