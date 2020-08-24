@@ -172,7 +172,7 @@ function change_active_question(url,question_id,quiz_id) {
             console.log(response.statusText);
         },
         success: function() {
-            window.location.reload();
+            refresh("#quiz-container");
         }
     });
 };
