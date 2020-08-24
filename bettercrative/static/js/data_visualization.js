@@ -62,8 +62,10 @@ function init() {
 //refreshes the chart, later to be changed to auto update either after every
 //submit or every 10 sec or 1 min
 //Parameters: chart_labels: list of elements for labels
-async function create_chart(url, quiz_id, class_id) {
+function create_chart(url, quiz_id, class_id) {
   // use python to calculate the data
+  console.log("creating chart...");
+  wait_and_create_chart();
   $.ajax({
     type: "GET",
     data: { 'quiz_id': quiz_id,
@@ -73,52 +75,56 @@ async function create_chart(url, quiz_id, class_id) {
       alert(response.statusText);
       console.log(response.statusText);
     },
-    success: async function () {
-      try {
-        await get_chart_from_python();
-        data = {
-          labels: chart_labels,
-          datasets: [{
-            label: "Student Scores",
-            fill: true,
-            lineTension: 0.1,
-            backgroundColor: "rgba(0,255,0,0.4)",
-            borderColor: "green", // The main line color
-            borderCapStyle: 'square',
-            pointBorderColor: "white",
-            pointBackgroundColor: "green",
-            pointBorderWidth: 1,
-            pointHoverRadius: 8,
-            pointHoverBackgroundColor: "yellow",
-            pointHoverBorderColor: "green",
-            pointHoverBorderWidth: 2,
-            pointRadius: 4,
-            pointHitRadius: 10,
-            data: chart_data,
-            spanGaps: true,
-          }]
-        };
-        console.log('Attempting to create a chart');
-        init();
-        console.log('success');
-      } catch (error) {
-        console.log('failed to create chart');
-        return null;
-      }
+    success: function () {
+      console.log("sent info");
     }
   });
-
-
 };
 
+async function wait_and_create_chart() {
+  console.log("waiting for json");
+  try {
+    await get_chart_from_python();
+    data = {
+      labels: chart_labels,
+      datasets: [{
+        label: "Student Scores",
+        fill: true,
+        lineTension: 0.1,
+        backgroundColor: "rgba(0,255,0,0.4)",
+        borderColor: "green", // The main line color
+        borderCapStyle: 'square',
+        pointBorderColor: "white",
+        pointBackgroundColor: "green",
+        pointBorderWidth: 1,
+        pointHoverRadius: 8,
+        pointHoverBackgroundColor: "yellow",
+        pointHoverBorderColor: "green",
+        pointHoverBorderWidth: 2,
+        pointRadius: 4,
+        pointHitRadius: 10,
+        data: chart_data,
+        spanGaps: true,
+      }]
+    };
+    console.log('Attempting to create a chart');
+    init();
+    console.log('success');
+  } catch (error) {
+    console.log('failed to create chart');
+    return null;
+  }
+}
+
 // recieves data from a GET request given by python, it returns a tuple of labels[0] and data[1]
-function get_chart_from_python() {
-  fetch('/calculate_chart_data')
+async function get_chart_from_python() {
+  console.log("waiting to recieve chart data");
+  await fetch('/calculate_chart_data')
     .then(function(response) {
-      return response.data();
-    }).then(function (data) {
+      return response.json();
+    }).then(function (json) {
       console.log('GET response recieved, data incoming');
-      chart_labels = data[0]
-      chart_data = data[1]
+      chart_labels = json[0];
+      chart_data = json[1];
     });
 }

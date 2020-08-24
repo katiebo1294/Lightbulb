@@ -368,26 +368,37 @@ def calculate_chart_data():
 
     # get all students that answeres this quiz within this classroom
 
-    responses =  Response.query.filter_by(quiz_reference=quiz_id).filter_by(classroom_host_id=class_id).all()
-    students = {response.student_id: responses for response in responses}
+    quiz = Quiz.query.filter_by(id=quiz_id).first()
+    classroom = Classroom.query.filter_by(id=class_id).first()
+
+    if classroom is None:
+        return ('No Classroom Found'), 404
+
+    if quiz is None:
+        return "No Quiz Found", 404
+
+
+    student_ids = classroom.get_id_list(quiz.students)
 
     chart_labels = []
     chart_data = []
     data = [chart_labels, chart_data]
     numCorrect = 0
     # for each student, calculate their score (for now every question is worth one point)
-    for student in students:
+    for studentid in student_ids:
         chart_labels.append("student")
+        student = Student.query.filter_by(id=studentid).first()
         for response in student.responses:
             if response.correct:
                 numCorrect = numCorrect + 1
         chart_data.append(numCorrect)
+        print(numCorrect)
         numCorrect = 0
 
+    print(jsonify(data))
+
     # send GET request with data
-    return jsonify(data)
-    
-    return "sent GET request with updated chart info", 200
+    return jsonify(data), 200
     
 
 
