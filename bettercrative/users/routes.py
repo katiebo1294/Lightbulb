@@ -5,6 +5,7 @@ from bettercrative import db, bcrypt
 from bettercrative.models import User, Quiz, Classroom, Question
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
+from bettercrative.quizzes.routes import quizzes, quiz
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
 from bettercrative.quizzes.forms import QuizForm
 from bettercrative.users.util import save_picture, send_reset_email
@@ -58,6 +59,7 @@ def logout():
 def quizzes():
     """ Display the current user's created quizzes. """
     quizForm = QuizForm()
+
     if quizForm.submitQuiz.data and quizForm.validate_on_submit():
         quiz = Quiz(
             name=quizForm.name.data,
@@ -72,7 +74,7 @@ def quizzes():
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
         quiz.active = first_question.id
         print(quiz.active)
-        return redirect(url_for('users.quizzes'))
+        return redirect(url_for('quizzes.quiz', quiz_id = quiz.id))
     return render_template('quizzes.html', title="Quizzes", quizForm=quizForm)
 
 
