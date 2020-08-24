@@ -365,6 +365,7 @@ def calculate_chart_data():
 
     quiz_id = request.args.get('quiz_id', None)
     class_id = request.args.get('class_id', None)
+    print(class_id)
 
     # get all students that answeres this quiz within this classroom
 
@@ -396,10 +397,10 @@ def calculate_chart_data():
         numCorrect = 0
 
     print(jsonify(data))
+    return jsonify(data), 200
 
     # send GET request with data
-    return jsonify(data), 200
-    
+    return "calculated", 200
 
 
 

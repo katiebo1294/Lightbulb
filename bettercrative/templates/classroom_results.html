@@ -7,85 +7,88 @@
 <div id="results_display" class="container" style="margin:auto;">
 	<h1 id="results-title">Quiz Results</h1>
 	{% for quiz in classroom.added_quizzes %}
-		<!-- Graphs for quiz -->
-		<table id="classroom-results">
-			<thead>
-				<tr>
-					<th>Name</th>
-					{% for question in quiz.questions %}
-					<th>{{ question.index + 1 }}</th>
-					{% endfor %}
-				</tr>
-			</thead>
-			<tbody>
-				<!-- Student Answers -->
-				{% for student,response in students.items() %}
-				<tr>
-					<td> Anonymous</td>
-					{% for question in quiz.questions %}
-					<td>
-						{% for student_answer in response %}
-							{% if question.id == student_answer.question_id %}
-								<span style="background-color: {% if student_answer.correct %}green{% else %}red{% endif %};" class="student-answer">
-									{{ student_answer.value }}
-								</span>
-							{% endif %}
-						{% endfor %}
-					</td>
-					{% endfor %}
-				</tr>
+	<!-- Graphs for quiz -->
+	<table id="classroom-results">
+		<thead>
+			<tr>
+				<th>Name</th>
+				{% for question in quiz.questions %}
+				<th>{{ question.index + 1 }}</th>
 				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			<!-- Student Answers -->
+			{% for student,response in students.items() %}
+			<tr>
+				<td> Anonymous</td>
+				{% for question in quiz.questions %}
+				<td>
+					{% for student_answer in response %}
+					{% if question.id == student_answer.question_id %}
+					<span style="background-color: {% if student_answer.correct %}green{% else %}red{% endif %};"
+						class="student-answer">
+						{{ student_answer.value }}
+					</span>
+					{% endif %}
+					{% endfor %}
+				</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
 
-				<!-- Answer Key -->
-				<tr>
-					<td> Correct Answers</td>
-					{%for question in quiz.questions %}
-						<td id="correct-answer-{{ loop.index0 }}">
-							<!-- loop through answers within each question to find the correct one -->
-							{% for answer in question.answers %}
-								{% if answer.correct%}
-									{{ answer.content }}
-								{% endif %}
-							{% endfor%}
-						</td>
-					{%endfor%}
-				</tr>
-			<tbody>
+			<!-- Answer Key -->
+			<tr>
+				<td> Correct Answers</td>
+				{%for question in quiz.questions %}
+				<td id="correct-answer-{{ loop.index0 }}">
+					<!-- loop through answers within each question to find the correct one -->
+					{% for answer in question.answers %}
+					{% if answer.correct%}
+					{{ answer.content }}
+					{% endif %}
+					{% endfor%}
+				</td>
+				{%endfor%}
+			</tr>
+		<tbody>
 
-		</table>
+	</table>
 
-		<!-- Chart.js area -->
-		<div style="height:40vh; width:40vw;">
-			<!-- Temporary area to display charts of student data -->
-			<canvas id="basicChart"></canvas>
-			<!-- Current idea: use ajax to call python to access database and retrieve the arrays for javascript, then use that info for charts.js -->
-			<!-- <button class="general-btn btn"
+	<!-- Chart.js area -->
+	<div style="height:40vh; width:40vw;">
+		<!-- Temporary area to display charts of student data -->
+		<canvas id="basicChart"></canvas>
+		<!-- Current idea: use ajax to call python to access database and retrieve the arrays for javascript, then use that info for charts.js -->
+		<!-- <button class="general-btn btn"
 					onclick="javascript:create_chart()">
 				<i class="fas fa-chart-bar" aria-hidden="true"></i>
 				Show student response
 			</button> -->
-			<button class="general-btn btn" onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
-				<i class="fas fa-chart-bar" aria-hidden="true"></i>
-				Show student response
-			</button>
-		</div>
+		<button class="general-btn btn"
+			onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
+			<i class="fas fa-chart-bar" aria-hidden="true"></i>
+			Show student response
+		</button>
+		<!-- have charts.js load -->
 
-		<!-- end of graphs -->
+		<script type="text/javascript" language="JavaScript">
+			create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }});
+		</script>
+
+	</div>
+
+	<!-- end of graphs -->
 	{% endfor %}
 
 </div>
 
 <button class="btn btn-lg btn-primary quiz-back-btn"><a onclick="goBack();">
-	<i class="fas fa-angle-double-left"></i> Go Back</a></button>
+		<i class="fas fa-angle-double-left"></i> Go Back</a></button>
 
-<script crossorigin="anonymous"
-		integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
-		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+<script crossorigin="anonymous" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
+	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
-	
-<!-- have charts.js load -->
-<script type="text/javascript" language="JavaScript">
-	create_chart();
-</script>
+
 
 {% endblock  %}
