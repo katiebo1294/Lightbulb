@@ -387,7 +387,7 @@ def calculate_chart_data():
     numCorrect = 0
     # for each student, calculate their score (for now every question is worth one point)
     for studentid in student_ids:
-        chart_labels.append("student")
+        chart_labels.append("Student#"+str(studentid))
         student = Student.query.filter_by(id=studentid).first()
         for response in student.responses:
             if response.correct:

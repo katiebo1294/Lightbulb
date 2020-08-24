@@ -55,31 +55,20 @@
 
 	</table>
 
-	<!-- Chart.js area -->
-	<div style="height:40vh; width:40vw;">
-		<!-- Temporary area to display charts of student data -->
-		<canvas id="basicChart"></canvas>
-		<!-- Current idea: use ajax to call python to access database and retrieve the arrays for javascript, then use that info for charts.js -->
-		<!-- <button class="general-btn btn"
-					onclick="javascript:create_chart()">
-				<i class="fas fa-chart-bar" aria-hidden="true"></i>
-				Show student response
-			</button> -->
-		<button class="general-btn btn"
-			onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
-			<i class="fas fa-chart-bar" aria-hidden="true"></i>
-			Show student response
-		</button>
-		<!-- have charts.js load -->
+	<button class="general-btn btn"
+		onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
+		<i class="fas fa-chart-bar" aria-hidden="true"></i>
+		Show student response
+	</button>
+</div>
 
-		<script type="text/javascript" language="JavaScript">
-			create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }});
-		</script>
+<!-- end of graphs -->
+{% endfor %}
 
-	</div>
-
-	<!-- end of graphs -->
-	{% endfor %}
+<!-- Chart.js area -->
+<div style="height:40vh; width:40vw;">
+	<!-- Temporary area to display charts of student data -->
+	<canvas id="basicChart"></canvas>
 
 </div>
 

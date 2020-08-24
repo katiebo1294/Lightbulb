@@ -7,30 +7,6 @@ var myBasicChart;
 var chart_labels = [];
 var chart_data = [];
 
-//temp data
-var tempdata = {
-  labels: ["student1", "student2", "student3", "student4", "student5", "student6", "student7", "student8", "student9", "student10", "student11", "student12"],
-  datasets: [{
-    label: "Student Scores",
-    fill: true,
-    lineTension: 0.1,
-    backgroundColor: "rgba(0,255,0,0.4)",
-    borderColor: "green", // The main line color
-    borderCapStyle: 'square',
-    pointBorderColor: "white",
-    pointBackgroundColor: "green",
-    pointBorderWidth: 1,
-    pointHoverRadius: 8,
-    pointHoverBackgroundColor: "yellow",
-    pointHoverBorderColor: "green",
-    pointHoverBorderWidth: 2,
-    pointRadius: 4,
-    pointHitRadius: 10,
-    data: [10, 13, 17, 12, 30, 47, 60, 120, 230, 300, 310, 400],
-    spanGaps: true,
-  }]
-};
-
 //options for chart
 var options = {
   scales: {
@@ -49,7 +25,7 @@ var options = {
 };
 
 //initiates myBasicChart with its type, data and options
-function init() {
+function init(data) {
   myBasicChart = new Chart(ctx, {
     type: chartType,
     data: data,
@@ -81,21 +57,14 @@ async function create_chart(url, quiz_id, class_id) {
       console.log("waiting for json");
       try {
         console.log("waiting to recieve chart data");
-        //await: waits for data to be recieved from python
-        // await fetch('/calculate_chart_data')
-        //   .then(response.json())
-        //   .then(function (data) {
-        //     console.log('GET response recieved, data incoming');
-        //     chart_labels = data[0];
-        //     chart_data = data[1];
-        //   });
         console.log('GET response recieved, data incoming');
+        //sets the labels and data to the data recieved from the GET request
         chart_labels = data[0];
         chart_data = data[1];
         console.log(chart_labels);
         console.log(chart_data);
 
-        data = {
+        var data = {
           labels: chart_labels,
           datasets: [{
             label: "Student Scores",
@@ -118,7 +87,7 @@ async function create_chart(url, quiz_id, class_id) {
           }]
         };
         console.log('Attempting to create a chart');
-        init();
+        init(data);
         console.log('success');
       } catch (error) {
         console.log('failed to create chart');
