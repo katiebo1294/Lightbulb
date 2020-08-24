@@ -12,25 +12,57 @@ var options = {
   scales: {
     yAxes: [{
       ticks: {
-        beginAtZero: true
+        beginAtZero: true,
+        suggestedMax: 100
       }
     }]
   },
   title: {
     fontSize: 18,
     display: true,
-    text: 'Demo',
+    text: 'Student Responses',
     position: 'bottom'
   }
 };
 
+init(undefined);
+
 //initiates myBasicChart with its type, data and options
 function init(data) {
-  myBasicChart = new Chart(ctx, {
-    type: chartType,
-    data: data,
-    options: options
-  });
+  if (data == undefined) {
+    myBasicChart = new Chart(ctx, {
+      type: chartType,
+      data: {
+        labels: [""],
+        datasets: [{
+          label: "No Chart Selected",
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              suggestedMax: 100
+            }
+          }]
+        },
+        title: {
+          fontSize: 18,
+          display: true,
+          text: '',
+          position: 'bottom'
+        }
+      }
+    });
+  }
+  else {
+    myBasicChart = new Chart(ctx, {
+      type: chartType,
+      data: data,
+      options: options
+    });
+  }
 };
 
 //charts.js create_chart has been moved to in html due to the use of jinja2
@@ -38,7 +70,7 @@ function init(data) {
 //refreshes the chart, later to be changed to auto update either after every
 //submit or every 10 sec or 1 min
 //Parameters: chart_labels: list of elements for labels
-async function create_chart(url, quiz_id, class_id) {
+function create_chart(url, quiz_id, class_id) {
   // use python to calculate the data
   console.log("creating chart..." + class_id + quiz_id + " ");
   $.ajax({
