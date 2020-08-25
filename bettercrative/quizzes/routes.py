@@ -101,7 +101,7 @@ def add_question():
     if quiz is None:
         return "Quiz not found!", 404
 
-    question = Question(quiz_id=quiz_id)
+    question = Question(quiz_id=quiz_id, content="Fill Question Content Here")
 
     if question is None:
         return "Question creation fail - If you see this something is very wrong", 500
@@ -272,7 +272,7 @@ def set_question_type():
     
     if current_question.category == 'Multiple Choice':
         for i in range(4):
-            current_question.answers.append(Answer())
+            current_question.answers.append(Answer(content="Type in Answer Here"))
     elif current_question.category == 'True-False':
         true = Answer(question_id=question_id, content='True', index=0)
         false = Answer(question_id=question_id, content='False', index=1)

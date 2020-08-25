@@ -18,7 +18,7 @@ class QuestionForm(FlaskForm):
 
 
 class QuizForm(FlaskForm):
-    name = BetterStringField('Name', validators=[Optional()])
+    name = BetterStringField('Name', validators=[InputRequired()])
     submitQuiz = SubmitField('Create Quiz')
 
 
