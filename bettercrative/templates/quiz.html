@@ -267,7 +267,7 @@
 								<!-- Remove this answer -->
 								<button aria-label="remove answer"
 								        class="fas fa-times remove-answer col-1"
-								        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }}, index={{ outer_loop.index }}); remove_form(form);">
+								        onclick="removeAnswer('{{ url_for('quizzes.remove_answer') }}', a_id={{ answer.id }}, index={{ outer_loop.index }});">
 								</button>
 							</div>
 							{% endfor %}

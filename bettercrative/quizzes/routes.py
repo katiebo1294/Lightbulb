@@ -189,7 +189,7 @@ def remove_question():
 
     # setting active question
     current_active_question = quiz.active
-    if current_active_question == question.id:
+    if current_active_question == question.id and quiz.questions:
         current_active_question = quiz.questions[-1].id
 
     print(f'removed')

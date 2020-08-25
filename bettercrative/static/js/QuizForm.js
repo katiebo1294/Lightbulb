@@ -15,6 +15,7 @@ function addQuestion(url, q_id) {
 }
 
 function addAnswer(url, q_id, index) {
+    event.preventDefault();
     $.ajax({
         type: "GET",
         data: {'question_id': q_id},
@@ -24,6 +25,7 @@ function addAnswer(url, q_id, index) {
             console.log(response.statusText);
         },
         success: function() {
+            
             refresh("#question-edit-" + index);
         }
     });
@@ -55,6 +57,7 @@ function removeQuestion(url, q_id) {
 }
 
 function removeAnswer(url, a_id, index) {
+    event.preventDefault();
      $.ajax({
         type: "GET",
         data: {'answer_id': a_id},
