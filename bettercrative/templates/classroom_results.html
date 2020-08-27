@@ -19,24 +19,29 @@
 		</thead>
 		<tbody>
 			<!-- Student Answers -->
-			{% for student,response in students.items() %}
+			
+			{%for student in students%}
 			<tr>
-				<td> Anonymous</td>
-				{% for question in quiz.questions %}
-				<td>
-					{% for student_answer in response %}
-					{% if question.id == student_answer.question_id %}
-					<span style="background-color: {% if student_answer.correct %}green{% else %}red{% endif %};"
-						class="student-answer">
-						{{ student_answer.value }}
-					</span>
-					{% endif %}
-					{% endfor %}
-				</td>
-				{% endfor %}
-			</tr>
-			{% endfor %}
+				<td>{{student.id}}</td>
+				{%if student.responses%}
+					{%for response in student.responses%}
+						{%if response and response.correct%}
+							<td class='text-success'>{{response.value}}</td>
+						{%elif response%}
+							<td class='text-danger'>{{response.value}}</td>
+						{%else%}
+						<td class='text-info'>No response given</td>
+						{%endif%}
+					{%endfor%}
+				{%else%}
+					{%for question in quiz.questions%}
+						<td class='text-info'> No response given</td>
+					{%endfor%}
+				{%endif%}
+				
 
+			</tr>
+			{%endfor%}
 			<!-- Answer Key -->
 			<tr>
 				<td> Correct Answers</td>

@@ -274,7 +274,8 @@ def view_results(classroom_id):
     responses = Response.query.filter_by(classroom_host_id=classroom_id).all()
     
     classroom = Classroom.query.filter_by(id=classroom_id).first()
-    students = {response.student_id: responses for response in responses}
+    quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
+    students = quiz.students
 
     
 
