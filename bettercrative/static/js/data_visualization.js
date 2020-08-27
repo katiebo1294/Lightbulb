@@ -60,7 +60,22 @@ function init(data) {
     myBasicChart = new Chart(ctx, {
       type: chartType,
       data: data,
-      options: options
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true,
+              max: y_min
+            }
+          }]
+        },
+        title: {
+          fontSize: 18,
+          display: true,
+          text: 'Student Responses',
+          position: 'bottom'
+        }
+      }
     });
   }
 };
@@ -93,8 +108,10 @@ function create_chart(url, quiz_id, class_id) {
         //sets the labels and data to the data recieved from the GET request
         chart_labels = data[0];
         chart_data = data[1];
-        console.log(chart_labels);
-        console.log(chart_data);
+        y_min = data[2];
+        console.log("labels:" + chart_labels);
+        console.log("data: " + chart_data);
+        console.log("min y axis: " + y_min);
 
         var data = {
           labels: chart_labels,
@@ -116,13 +133,15 @@ function create_chart(url, quiz_id, class_id) {
             pointHitRadius: 10,
             data: chart_data,
             spanGaps: true,
-          }]
+          }],
+          y_min: y_min
         };
         console.log('Attempting to create a chart');
         init(data);
         console.log('success');
       } catch (error) {
         console.log('failed to create chart');
+        console.log(error);
         return null;
       }
 

@@ -388,7 +388,8 @@ def calculate_chart_data():
 
     chart_labels = []
     chart_data = []
-    data = [chart_labels, chart_data]
+    num_questions = len(quiz.questions)
+    data = [chart_labels, chart_data, num_questions]
     numCorrect = 0
     # for each student, calculate their score (for now every question is worth one point)
     for studentid in student_ids:
@@ -409,4 +410,3 @@ def calculate_chart_data():
 
 
 
-    
