@@ -222,10 +222,10 @@ def take_quiz(classroom_id):
         teacher = False
     
     if 'student' not in args:
-        current_student = Student()
+        current_student = Student(quiz_reference = quiz_id)
         db.session.add(current_student)
         db.session.commit()
-        return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id,student=current_student.id, teacher=True))
+        return redirect(url_for('classrooms.take_quiz', quiz=quiz ,classroom_id=classroom.id,student=current_student.id, teacher=True))
 
     else:
         current_student = Student.query.filter_by(id=int(args['student'])).first()
