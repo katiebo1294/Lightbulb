@@ -271,15 +271,19 @@ def view_results(classroom_id):
                 quiz_id (int): the ID of the quiz to retrieve answers from
     """
     
-    responses = Response.query.filter_by(classroom_host_id=classroom_id).all()
+    
     
     classroom = Classroom.query.filter_by(id=classroom_id).first()
     quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
     students = quiz.students
-
+    
+    
     
 
-    return render_template('classroom_results.html', title='results of quiz', classroom=classroom, responses=responses, students=students)
+
+            
+
+    return render_template('classroom_results.html', title='results of quiz', quiz=quiz, classroom=classroom, students=students)
 
 
 #Answers of each student 

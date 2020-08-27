@@ -6,7 +6,7 @@
 
 <div id="results_display" class="container" style="margin:auto;">
 	<h1 id="results-title">Quiz Results</h1>
-	{% for quiz in classroom.added_quizzes %}
+	
 	<!-- Graphs for quiz -->
 	<table id="classroom-results">
 		<thead>
@@ -21,37 +21,43 @@
 			<!-- Student Answers -->
 			
 			{%for student in students%}
-			<tr>
-				<td>{{student.id}}</td>
-				{%if student.responses%}
-					{%for response in student.responses%}
-						{%if response and response.correct%}
-							<td class='text-success'>{{response.value}}</td>
-						{%elif response%}
-							<td class='text-danger'>{{response.value}}</td>
-						{%else%}
-						<td class='text-info'>No response given</td>
-						{%endif%}
-					{%endfor%}
-				{%else%}
+				<tr>
+					<td>Anonymous</td>
 					{%for question in quiz.questions%}
-						<td class='text-info'> No response given</td>
+					
+					<td>
+						
+						{%if student.responses%}
+							{%for response in question.responses%}
+									
+								{%if response.student_id == student.id and response.correct%}
+									<span class='text-success'>{{response.value}}</span>
+								{%elif response.student_id == student.id%}
+									<span class='text-danger'>{{response.value}}</span>
+								
+								{%endif%}
+							{%endfor%}
+							
+						{%else%}
+							<span class='text-info'> No Answer given by student</span>
+						{%endif%}
+					</td>
 					{%endfor%}
-				{%endif%}
+					
+				</tr>
 				
-
-			</tr>
 			{%endfor%}
 			<!-- Answer Key -->
 			<tr>
-				<td> Correct Answers</td>
+				<td class='bg-dark text-light'> Correct Answers</td>
 				{%for question in quiz.questions %}
-				<td id="correct-answer-{{ loop.index0 }}">
+				<td id="correct-answer-{{ loop.index0 }}" class='bg-dark text-light'>
 					<!-- loop through answers within each question to find the correct one -->
 					{% for answer in question.answers %}
 					{% if answer.correct%}
 					{{ answer.content }}
 					{% endif %}
+					
 					{% endfor%}
 				</td>
 				{%endfor%}
@@ -67,7 +73,7 @@
 </div>
 
 <!-- end of graphs -->
-{% endfor %}
+
 
 <!-- Chart.js area -->
 <div style="height:40vh; width:40vw;">

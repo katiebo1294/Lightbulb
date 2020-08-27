@@ -205,7 +205,9 @@ class Question(db.Model):
     index = db.Column(db.Integer)
     answers = db.relationship('Answer', backref='question', collection_class=ordering_list('index'),
                               cascade="all, delete, delete-orphan", order_by="Answer.index")
+    responses = db.relationship('Response', backref='question', cascade='delete, all')
 
+    
     def __repr__(self):
         return f"Question('{self.name}', '{self.content}', '{self.category}', '{self.quiz_id}', '{self.index}')"
 
@@ -233,6 +235,16 @@ class Answer(db.Model):
     
     response = db.relationship("Response", backref='answer', cascade='all, delete')
 
+    """
+        Description:
+            gives the question referenced by the answer
+        Parameters:
+            
+        Return:
+            returns a Question object
+    """
+    def question(self):
+        return Question.query.filter_by(id=self.question_id).first()
     def __repr__(self):
         return f"Answer('id:{self.id}' ,'content: {self.content}', 'correct: {self.correct}', 'question_id: {self.question_id}', 'index: {self.index}', 'index: {self.index}')"
 
@@ -287,3 +299,4 @@ class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     responses = db.relationship('Response', back_populates='student', cascade='delete, all')
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable = False)
+    question_reference = db.Column(db.Integer, db.ForeignKey('question.id'), nullable = True)
