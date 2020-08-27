@@ -568,6 +568,10 @@ h4 {
   background: none;
 }
 
+.general-btn:hover, .general-btn:focus {
+  background-color: #cfccc6;
+}
+
 /**take quiz page**/
 #question-title {
   background: grey;
