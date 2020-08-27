@@ -10,11 +10,7 @@ function set_active(url, quiz_id, classroom_id) {
             console.log(response.statusText);
         },
         success: function() {
-            console.log("success");
-            // refreshes just that row of the table
-            refresh('#quiz-' + quiz_id);
-            // refreshes the two buttons at the bottom of the screen
-            refresh(".classroom-options");
+            refresh('.page-wrap');
         }
     });
 }
@@ -30,9 +26,7 @@ function remove_active(url, classroom_id) {
             console.log(response.statusText);
         },
         success: function() {
-            console.log("success");
-            refresh("#quizzes-"+classroom_id);
-            refresh(".classroom-options");
+            refresh('.page-wrap');
         }
     });
 }
