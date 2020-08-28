@@ -102,6 +102,7 @@ function create_chart(url, quiz_id, class_id) {
     success: function (data) {
       console.log("sent info");
       console.log("waiting for json");
+      refresh('#classroom-results')
       try {
         console.log("waiting to recieve chart data");
         console.log('GET response recieved, data incoming');

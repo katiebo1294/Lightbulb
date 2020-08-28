@@ -3,7 +3,7 @@ from flask import (render_template, url_for, flash,
                    request, make_response, jsonify)
 from flask_login import current_user, login_required
 from sqlalchemy import exists, and_
-
+from collections import defaultdict
 from bettercrative import db
 from bettercrative.classrooms.response_handling import *
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
@@ -277,13 +277,19 @@ def view_results(classroom_id):
     quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
     students = quiz.students
     
+    responses = defaultdict(list)
+
+    for student in students:
+        for response in student.responses:
+            responses[(student.id, response.question_num)].append(response)
     
     
+        
 
 
             
 
-    return render_template('classroom_results.html', title='results of quiz', quiz=quiz, classroom=classroom, students=students)
+    return render_template('classroom_results.html', title='results of quiz',responses=responses, quiz=quiz, classroom=classroom, students=students)
 
 
 #Answers of each student 

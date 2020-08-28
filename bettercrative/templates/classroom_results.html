@@ -27,17 +27,14 @@
 					
 					<td>
 						
-						{%if student.responses%}
-							{%for response in question.responses%}
-									
-								{%if response.student_id == student.id and response.correct%}
-									<span class='text-success'>{{response.value}}</span>
-								{%elif response.student_id == student.id%}
-									<span class='text-danger'>{{response.value}}</span>
-								
+						{%if responses[student.id, question.index+1]%}
+							{% for response in responses[student.id,question.index + 1] %}
+								{%if response.correct %}
+									<span class='text-success'> {{response.value}}</span>
+								{%else%}
+									<span class='text-danger'> {{response.value}}</span>
 								{%endif%}
 							{%endfor%}
-							
 						{%else%}
 							<span class='text-info'> No Answer given by student</span>
 						{%endif%}
