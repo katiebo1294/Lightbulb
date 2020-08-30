@@ -140,18 +140,20 @@ function create_chart(url, quiz_id, class_id, chart_type) {
         };
         
         // If its a doughnut, set each color to something different
-        if(chartType = 'doughnut')
+        if(chart_type == 'doughnut')
         {
           var i;
-          var color_counter = 0;
           var doughnut_array = [];
-          var color_array = ["rgba(0,255,0,0.4)","rgba(255,0,0,0.4)","rgba(0,0,0,255.4)"];
+          var color;
           for(i=0;i<=chart_labels.length;i++)
           {
-            doughnut_array.push(color_array[color_counter]);
-            color_counter++;
-            if(color_counter>2)
-            {color_counter = 0;}
+            color = Math.floor((Math.abs(Math.sin(i) * 16777215)) % 16777215);
+            color = color.toString(16);
+            // pad any colors shorter than 6 characters with leading 0s
+            while(color.length < 6) {
+                color = '0' + color;
+            }
+            doughnut_array.push("#"+color);
           }
           data = {
             labels: chart_labels,
