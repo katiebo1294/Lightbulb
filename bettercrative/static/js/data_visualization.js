@@ -2,7 +2,6 @@
 var canvas = document.getElementById("basicChart");
 //type of chart
 var ctx = canvas.getContext('2d');
-var chartType = 'bar';
 var myBasicChart;
 var chart_labels = [];
 var chart_data = [];
@@ -25,10 +24,10 @@ var options = {
   }
 };
 
-init(undefined);
+init(undefined, 'bar');
 
 //initiates myBasicChart with its type, data and options
-function init(data) {
+function init(data, chartType) {
   if (data == undefined) {
     myBasicChart = new Chart(ctx, {
       type: chartType,
@@ -85,14 +84,16 @@ function init(data) {
 //refreshes the chart, later to be changed to auto update either after every
 //submit or every 10 sec or 1 min
 //Parameters: chart_labels: list of elements for labels
-function create_chart(url, quiz_id, class_id) {
+function create_chart(url, quiz_id, class_id, chart_type) {
   // use python to calculate the data
+  myBasicChart.destroy();
   console.log("creating chart..." + class_id + quiz_id + " ");
   $.ajax({
     type: "GET",
     data: {
       'quiz_id': quiz_id,
-      'class_id': class_id
+      'class_id': class_id,
+      'chart_type': chart_type
     },
     url: url,
     error: function (response) {
@@ -137,8 +138,47 @@ function create_chart(url, quiz_id, class_id) {
           }],
           y_min: y_min
         };
+        
+        // If its a doughnut, set each color to something different
+        if(chartType = 'doughnut')
+        {
+          var i;
+          var color_counter = 0;
+          var doughnut_array = [];
+          var color_array = ["rgba(0,255,0,0.4)","rgba(255,0,0,0.4)","rgba(0,0,0,255.4)"];
+          for(i=0;i<=chart_labels.length;i++)
+          {
+            doughnut_array.push(color_array[color_counter]);
+            color_counter++;
+            if(color_counter>2)
+            {color_counter = 0;}
+          }
+          data = {
+            labels: chart_labels,
+            datasets: [{
+              label: "Student Scores",
+              fill: true,
+              lineTension: 0.1,
+              backgroundColor: doughnut_array,
+              borderCapStyle: 'square',
+              pointBorderColor: "white",
+              pointBackgroundColor: "green",
+              pointBorderWidth: 1,
+              pointHoverRadius: 8,
+              pointHoverBackgroundColor: "yellow",
+              pointHoverBorderColor: "green",
+              pointHoverBorderWidth: 2,
+              pointRadius: 4,
+              pointHitRadius: 10,
+              data: chart_data,
+              spanGaps: true,
+            }],
+            y_min: y_min
+          };
+        }
+
         console.log('Attempting to create a chart');
-        init(data);
+        init(data, chart_type);
         console.log('success');
       } catch (error) {
         console.log('failed to create chart');
