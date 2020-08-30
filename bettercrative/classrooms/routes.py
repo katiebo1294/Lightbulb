@@ -421,13 +421,7 @@ def calculate_chart_data():
             print(numCorrect)
             numCorrect = 0
 
-
-
-    print(jsonify(data))
     return jsonify(data), 200
-
-    # send GET request with data
-    return "calculated", 200
 
 @classrooms.route("/calculate_question_chart_data", methods=['GET'])
 def calculate_question_chart_data():
@@ -471,15 +465,6 @@ def calculate_question_chart_data():
         for response in student.responses:
             if(response.question_id == int(question_id)):
                 answer = Answer.query.filter_by(id=response.answer_reference).first()
-                print(answer.index)
-                print(answer.content)
                 chart_data[answer.index] += 1
-
-
-
-    print(jsonify(data))
     return jsonify(data), 200
-
-    # send GET request with data
-    return "calculated", 200
 
