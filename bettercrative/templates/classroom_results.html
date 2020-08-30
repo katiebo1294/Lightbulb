@@ -13,7 +13,11 @@
 			<tr>
 				<th>Name</th>
 				{% for question in quiz.questions %}
-				<th>{{ question.index + 1 }}</th>
+				<th>
+					<button onclick="javascript:create_question_chart('{{url_for('classrooms.calculate_question_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, {{ question.id }}, {{ question.index + 1 }})">
+						{{ question.index + 1 }}
+					</button>
+				</th>
 				{% endfor %}
 			</tr>
 		</thead>
@@ -84,6 +88,12 @@
 <div style="height:40vh; width:40vw;">
 	<!-- Temporary area to display charts of student data -->
 	<canvas id="basicChart"></canvas>
+
+</div>
+<!-- Area for question data -->
+<div style="height:40vh; width:40vw;">
+	<!-- Temporary area to display charts of student data -->
+	<canvas id="question_data"></canvas>
 
 </div>
 
