@@ -129,15 +129,10 @@
 {% if classroom.active_quiz %}
 	<button id="take-active-quiz" class="btn general-btn"
 	   onclick="window.location.href='{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}';">Take Active Quiz <i class="fas fa-door-open"></i></button>
-{% endif %}
-
-
-
-<!--I put this in each specific classroom. Only viewable if your login(teacher) and owner-->
-<!--TODO make this invisible if there aren't any responses yet -->
 	<button id="view-results" class="btn general-btn"
 	   onclick="window.location.href='{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}';"><i class="fas fa-chart-bar" aria-hidden="true"></i> View Results</button>
 	<div style="clear: both;"></div>
+	{% endif %}
 </div>
 {% endif %}
 {% endblock %}
