@@ -63,6 +63,48 @@ def classroom(classroom_id):
         return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz, student = student)
 
 
+def is_complete(quiz):
+    """
+    Checks a quiz for completeness. A quiz is complete if:
+    - there is at least one question (one is added by default on quiz creation)
+    - every question has a category
+    - every question has content
+    - for multiple choice, every answer has content and at least one of them is marked correct
+    :param quiz: the quiz to check
+    :return: true if quiz is complete
+    """
+
+    complete = True
+    # the quiz must have at least one question
+    if quiz.questions is None:
+        complete = False
+    else:
+        for question in quiz.questions:
+            # all questions must have content and a category
+            if question.category is None or question.content is None:
+                complete = False
+                break
+            if question.category == 'Multiple Choice':
+                has_correct_answer = False
+                for answer in question.answers:
+                    # all answers must have content
+                    if answer.content is None:
+                        complete = False
+                        break
+                    if answer.correct:
+                        has_correct_answer = True
+                # at least one answer must be correct
+                if not has_correct_answer:
+                    complete = False
+                    break
+            if question.category == 'True-False':
+                # true/false questions must be either true or false
+                if not question.answers[0].correct and not question.answers[1].correct:
+                    complete = False
+                    break
+    return complete
+
+
 @classrooms.route("/classroom/<int:classroom_id>/add_quiz", methods=['GET', 'POST'])
 @login_required
 def add_quiz(classroom_id):
@@ -106,9 +148,9 @@ def add_quiz(classroom_id):
 
 # TODO: currently there is a bug where if you click on the nav bar the change gets reset, however, routing to the
 #  page separately or refreshing the page does not break the active-ness
-@classrooms.route("/classroom/set_active", methods=['GET', 'POST'])
+@classrooms.route("/classroom/<int:classroom_id>/<int:quiz_id>/set_active", methods=['GET', 'POST'])
 @login_required
-def set_active():
+def set_active(classroom_id, quiz_id):
     """
     Sets the given quiz as active in the classroom it's in.
     
@@ -117,60 +159,33 @@ def set_active():
             classroom_id (int): the ID of the classroom to make it active in
     """
 
-    quiz_id = request.args.get('quiz_id', None)
-    classroom_id = request.args.get('classroom_id', None)
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz = Quiz.query.get_or_404(quiz_id)
 
-    # TODO flash messages don't show up and I'm not sure if it works properly for question types other than multiple choice, so I'm commenting it out for now
-    # # Check if quiz is finished first
-    # is_finished = True
-    # for question in quiz.questions:
-    #     # questions must all have content
-    #     if question.content == 'None':
-    #         is_finished = False
-    #         break
-    #     # questions must all have at least one answer
-    #     if not question.answers:
-    #         is_finished = False
-    #         break
-    #     # each answer must have content and at least one must be marked correct
-    #     has_correct_answer = False
-    #     for answer in question.answers:
-    #         if answer.content == 'None':
-    #             is_finished = False
-    #             break
-    #         if answer.correct:
-    #             has_correct_answer = True
-    #     if not has_correct_answer:
-    #         is_finished = False
-    #         break
-    # if not is_finished:
-    #     print("quiz isn't finished")
-    #     flash(u'Cannot set this quiz as active - please make sure all questions have sufficient content and at least one correct answer!', 'error')
-    # else:
-    classroom.active_quiz = quiz_id
-    db.session.commit()
-    flash(u'\"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
+    if is_complete(quiz):
+        classroom.active_quiz = quiz_id
+        db.session.commit()
+        flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
+    else:
+        print("got here")
+        flash(u'Quiz \"' + quiz.name + '\" is incomplete. Please check all questions have content and sufficient answers.', 'danger')
 
     form = ClassroomForm()
     return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
 
 
-@classrooms.route("/classroom/remove_active", methods=['GET', 'POST'])
+@classrooms.route("/classroom/<int:classroom_id>/remove_active", methods=['GET', 'POST'])
 @login_required
-def remove_active():
+def remove_active(classroom_id):
     """ Sets the given quiz to inactive in the current classroom.
     
         Parameters: 
                 classroom_id (int): the ID of the classroom to inactive the quiz in
     """
-    class_id = request.args.get('classroom_id', None)
-
-    if class_id is None:
+    if classroom_id is None:
         raise Exception('No \'classroom_id\' supplied!')
 
-    classroom = Classroom.query.get(class_id)
+    classroom = Classroom.query.get(classroom_id)
     if classroom is None:
         return "No Classroom Found", 404
     classroom.active_quiz = None

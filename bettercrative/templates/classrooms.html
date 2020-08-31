@@ -79,12 +79,12 @@
 							{% for quiz in classroom.added_quizzes %}
 							{% if classroom.active_quiz == quiz.id %}
 							<button class="dropdown-item" type="button"
-								onclick="remove_active('{{ url_for('classrooms.remove_active') }}', classroom_id={{ classroom.id }}); ">
+								onclick="window.location.href='{{ url_for('classrooms.remove_active', classroom_id=classroom.id) }}'; ">
 								*ACTIVE* Quiz: {{ quiz.name }}
 							</button>
 							{% else %}
 							<button class="dropdown-item" type="button"
-								onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id={{ quiz.id }}, classroom_id={{ classroom.id }}); ">
+								onclick="window.location.href='{{ url_for('classrooms.set_active', classroom_id=classroom.id, quiz_id=quiz.id) }}'; ">
 								Quiz: {{ quiz.name }}
 							</button>
 							{% endif %}

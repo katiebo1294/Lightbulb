@@ -95,7 +95,7 @@
 				<div class="col-4 quiz-icon-col">
 
 					<button id="set-active-{{classroom.id}}" class="btn general-btn"
-					   onclick="set_active('{{ url_for('classrooms.set_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+					   onclick="window.location.href='{{ url_for('classrooms.set_active', quiz_id=quiz.id, classroom_id=classroom.id) }}';">
 						Set Active
 					</button>
 					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
@@ -112,7 +112,7 @@
 				{% else %}
 				<div class="col-4 quiz-icon-col">
 					<button id="remove-active-{{classroom.id}}" class="btn general-btn"
-					   onclick="set_active('{{ url_for('classrooms.remove_active') }}', quiz_id='{{quiz.id}}', classroom_id='{{classroom.id}}')">
+					   onclick="window.location.href='{{ url_for('classrooms.remove_active', quiz_id=quiz.id, classroom_id=classroom.id) }}';">
 						Unset Active
 					</button>
 				</div>
