@@ -494,6 +494,10 @@ No media query for `xs` since this is the default in Bootstrap */
   text-overflow:    initial;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
 }
 
+.account-tables th, .account-tables td {
+  text-align: center;
+}
+
 #quiz-container {
   position: relative;
 }
@@ -538,10 +542,6 @@ h4 {
   font-size: 2vw;
 }
 
-.quiz-icon-buttons-container {
-  float: right;
-}
-
 /* table itself */
 .account-tables {
   width: 100%;
@@ -551,8 +551,11 @@ h4 {
 
 /* individual table elements */
 .account-tables * td {
-  width: 33%;
   border: none;
+}
+
+td.dropdown {
+  float: none;
 }
 
 .sideClick {

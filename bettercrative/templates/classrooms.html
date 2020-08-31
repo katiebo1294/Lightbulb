@@ -53,7 +53,7 @@
 						Date Created
 					</th>
 					<th>
-						Date last accessed
+						Date Modified
 					</th>
 					<th>
 						Options
@@ -92,13 +92,13 @@
 						</div>
 					</td>
 
-					<td class="date-created">
-						{{classroom.date_created.strftime("%m/%d/%y") }}
+					<td class="text-center">
+						{{ classroom.date_created.strftime("%m/%d/%y") }}
 					</td>
 
-					<!-- date last checked -->
+					<!-- date last edited -->
 					<td class="text-center">
-						last date viewed
+						{{ classroom.date_modified.strftime("%m/%d/%y") }}
 					</td>
 
 					<!-- can enter a class to view details, or delete it -->
