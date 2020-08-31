@@ -44,7 +44,7 @@
 				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
 			</button>
 		</div>
-		<table id="account-tables" class="account-tables">
+		<table id="account-tables" class="display nowrap dt-responsive" style="width: 100%;">
 			<thead>
 			<tr>
 				<th>Name</th>
@@ -56,7 +56,7 @@
 			<tbody>
 				{% for quiz in current_user.quizzes %}
 				<tr>
-					<td class="itemName">
+					<td>
 						{{ quiz.name }}
 					</td>
 					<td class="text-center">{{ quiz.date_created.strftime("%m/%d/%y")
@@ -70,7 +70,7 @@
 					<td>
 						<div class="quiz-icon-buttons-container">
 							<!-- more options dropdown -->
-							<div style="float: none; display: inline-block;" class="dropdown">
+							<div style="float: none; display: inline-block; vertical-align: middle;" class="dropdown">
 								<button id="more-options" class="btn dropbtn general-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-label="more options">
 									<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
 								</button>

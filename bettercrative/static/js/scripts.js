@@ -1,9 +1,11 @@
-window.onload = function() {    
+window.onload = function() {
     if(document.URL.indexOf("quizzes") || document.URL.indexOf("classrooms"))
     {
         $('#account-tables').DataTable( {
             "columnDefs": [
-                {"orderable": false, "targets": 3}
+                {"orderable": false, "targets": 3},
+                { responsivePriority: 10001, targets: 2 },
+                { responsivePriority: 10002, targets: 1 }
             ]
         });
     }
