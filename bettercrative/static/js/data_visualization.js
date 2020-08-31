@@ -71,14 +71,14 @@ function init(data, title_text, chartType) {
 };
 
 //initiates questionDataChart with its type, data and options
-function init_question(data, title_text) {
+function init_question(data, title_text, chartType) {
   if (data == undefined) {
     questionDataChart = new Chart(question_ctx, {
-      type: 'pie',
+      type: chartType,
       data: {
         labels: [""],
         datasets: [{
-          label: "No Question Selected",
+          label: "Click a question number in the table above to see details",
         }]
       },
       options: {
@@ -101,7 +101,7 @@ function init_question(data, title_text) {
   }
   else {
     questionDataChart = new Chart(question_ctx, {
-      type: 'pie',
+      type: chartType,
       data: data,
       options: {
         scales: {
@@ -310,7 +310,7 @@ function create_question_chart(url, quiz_id, class_id, question_id, q_num) {
         };
 
         console.log('Attempting to create a chart');
-        init_question(data, title_text);
+        init_question(data, title_text, 'pie');
         console.log('success');
       } catch (error) {
         console.log('failed to create chart');

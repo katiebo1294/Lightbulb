@@ -13,9 +13,9 @@
 			<th>Name</th>
 			{% for question in quiz.questions %}
 			<th>
-				<button onclick="javascript:create_question_chart('{{url_for('classrooms.calculate_question_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, {{ question.id }}, {{ question.index + 1 }})">
-						{{ question.index + 1 }}
-					</button>
+				<button class="btn btn-sm general-btn" onclick="javascript:create_question_chart('{{url_for('classrooms.calculate_question_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, {{ question.id }}, {{ question.index + 1 }})">
+					{{ question.index + 1 }}
+				</button>
 			</th>
 			{% endfor %}
 		</tr>
@@ -27,9 +27,9 @@
 			{% for question in quiz.questions %}
 			<td id="response-data-{{ question.id }}-{{ student.id }}">
 				{%if responses[student.id, question.index+1]%}
-					{% for response in responses[student.id,question.index + 1] %}
-						{%if response.correct %}
-						<span class="text-success">
+				{% for response in responses[student.id,question.index + 1] %}
+				{%if response.correct %}
+				<span class="text-success">
 							<!-- if it's a true/false question, print out T or F instead of the letter -->
 							{% if question.category == 'True-False' %}
 								{% if response.value == 'A' %}
@@ -41,8 +41,8 @@
 								{{ response.value }}
 							{% endif %}
 						</span>
-						{% else %}
-						<span class="text-danger">
+				{% else %}
+				<span class="text-danger">
 							<!-- if it's a true/false question, print out T or F instead of the letter -->
 							{% if question.category == 'True-False' %}
 								{% if response.value == 'A' %}
@@ -54,10 +54,10 @@
 								{{ response.value }}
 							{% endif %}
 						</span>
-						{%endif%}
-					{%endfor%}
+				{%endif%}
+				{%endfor%}
 				{%else%}
-					<span class="text-info"> No answer</span>
+				<span class="text-info"> No answer</span>
 				{%endif%}
 			</td>
 			{%endfor%}
@@ -73,37 +73,43 @@
 			{% endfor %}
 		</tr>
 	</table>
-	<div class="graphtype">
-		<!-- Bar graph shows each student and their total score -->
-		<button class="general-btn btn" onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'bar')">
-			Bar Graph
-			<i class="fas fa-sync" aria-hidden="true"></i>
-		</button>
-		<!-- Pie chart/doughnut chart shows each question and how many students got those questions right (i) Use this to determine which questions students tended to get wrong -->
-		<button class="general-btn btn" onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'doughnut')">
-			Doughnut Chart
-			<i class="fas fa-sync" aria-hidden="true"></i>
-		</button>
-	</div>
 </div>
 
 <!-- end of graphs -->
 
 
 <!-- Chart.js area -->
-<div style="height:40vh; width:40vw;">
-	<!-- Temporary area to display charts of student data -->
-	<canvas id="basicChart"></canvas>
-
+<div class="container">
+	<div class="row" style="margin-top: 5%;">
+		<div class="col-6">
+			<!-- Bar graph shows each student and their total score -->
+			<button style="float: left;" class="general-btn btn btn-sm"
+			        onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'bar')">
+				Bar Graph
+				<i class="fas fa-sync" aria-hidden="true"></i>
+			</button>
+			<!-- Pie chart/doughnut chart shows each question and how many students got those questions right (i) Use this to determine which questions students tended to get wrong -->
+			<button style="float: right;" class="general-btn btn btn-sm"
+			        onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'doughnut')">
+				Doughnut Chart
+				<i class="fas fa-sync" aria-hidden="true"></i>
+			</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-6" style="height:40vh; width:40vw;">
+			<!-- Temporary area to display charts of student data -->
+			<canvas id="basicChart"></canvas>
+		</div>
+		<!-- Area for question data -->
+		<div class="col-6" style="height:40vh; width:40vw;">
+			<!-- Temporary area to display charts of student data -->
+			<canvas id="question_data"></canvas>
+		</div>
+	</div>
 </div>
-<!-- Area for question data -->
-<div style="height:40vh; width:40vw;">
-	<!-- Temporary area to display charts of student data -->
-	<canvas id="question_data"></canvas>
 
-</div>
-
-<button class="btn btn-lg btn-primary quiz-back-btn"><a onclick="goBack();">
+<button class="btn btn-lg general-btn"><a onclick="goBack();">
 	<i class="fas fa-angle-double-left"></i> Go Back</a></button>
 
 <script crossorigin="anonymous" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
