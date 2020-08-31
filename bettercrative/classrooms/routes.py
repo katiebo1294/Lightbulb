@@ -376,7 +376,8 @@ def calculate_chart_data():
 
     quiz_id = request.args.get('quiz_id', None)
     class_id = request.args.get('class_id', None)
-    print(class_id)
+    chart_type = request.args.get('chart_type', None)
+    print(chart_type)
 
     # get all students that answeres this quiz within this classroom
 
@@ -396,23 +397,74 @@ def calculate_chart_data():
     chart_data = []
     num_questions = len(quiz.questions)
     data = [chart_labels, chart_data, num_questions]
-    numCorrect = 0
-    # for each student, calculate their score (for now every question is worth one point)
-    for studentid in student_ids:
-        chart_labels.append("Student#"+str(studentid))
-        student = Student.query.filter_by(id=studentid).first()
-        for response in student.responses:
-            if response.correct:
-                numCorrect = numCorrect + 1
-        chart_data.append(numCorrect)
-        print(numCorrect)
+    if(chart_type=='doughnut'):
+        # each label is a question
+        for question in quiz.questions:
+            chart_labels.append(question.name)
+            chart_data.append(0)
+        # count the number correct for each question
+        for studentid in student_ids:
+            student = Student.query.filter_by(id=studentid).first()
+            for response in student.responses:
+                if response.correct:
+                    chart_data[response.question_num-1] += 1
+    else:
         numCorrect = 0
+        # for each student, calculate their score (for now every question is worth one point)
+        for studentid in student_ids:
+            chart_labels.append("Student#"+str(studentid))
+            student = Student.query.filter_by(id=studentid).first()
+            for response in student.responses:
+                if response.correct:
+                    numCorrect = numCorrect + 1
+            chart_data.append(numCorrect)
+            print(numCorrect)
+            numCorrect = 0
 
-    print(jsonify(data))
     return jsonify(data), 200
 
-    # send GET request with data
-    return "calculated", 200
+@classrooms.route("/calculate_question_chart_data", methods=['GET'])
+def calculate_question_chart_data():
+    """ Calculates chart data and labels, then sends a GET request
+        classroom_id: classroom that the students responses are being taken from
+    """
 
+    quiz_id = request.args.get('quiz_id', None)
+    class_id = request.args.get('class_id', None)
+    question_id = request.args.get('question_id', None)
 
+    # get all students that answeres this quiz within this classroom
+
+    quiz = Quiz.query.filter_by(id=quiz_id).first()
+    classroom = Classroom.query.filter_by(id=class_id).first()
+    question = Question.query.filter_by(id=question_id).first()
+
+    if classroom is None:
+        return 'No Classroom Found', 404
+
+    if quiz is None:
+        return "No Quiz Found", 404
+
+    if question is None:
+        return "No Question Found", 404
+
+    student_ids = classroom.get_id_list(quiz.students)
+
+    chart_labels = []
+    chart_data = []
+    num_questions = len(quiz.questions)
+    data = [chart_labels, chart_data, num_questions]
+    
+    # each label is a question
+    for answer in question.answers:
+        chart_labels.append(answer.content)
+        chart_data.append(0)
+    # count the number correct for each question
+    for studentid in student_ids:
+        student = Student.query.filter_by(id=studentid).first()
+        for response in student.responses:
+            if(response.question_id == int(question_id)):
+                answer = Answer.query.filter_by(id=response.answer_reference).first()
+                chart_data[answer.index] += 1
+    return jsonify(data), 200
 

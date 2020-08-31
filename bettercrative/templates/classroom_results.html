@@ -12,7 +12,11 @@
 		<tr>
 			<th>Name</th>
 			{% for question in quiz.questions %}
-			<th>{{ question.index + 1 }}</th>
+			<th>
+				<button onclick="javascript:create_question_chart('{{url_for('classrooms.calculate_question_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, {{ question.id }}, {{ question.index + 1 }})">
+						{{ question.index + 1 }}
+					</button>
+			</th>
 			{% endfor %}
 		</tr>
 		<!-- Student Answers -->
@@ -37,7 +41,7 @@
 								{{ response.value }}
 							{% endif %}
 						</span>
-						{%else%}
+						{% else %}
 						<span class="text-danger">
 							<!-- if it's a true/false question, print out T or F instead of the letter -->
 							{% if question.category == 'True-False' %}
@@ -69,11 +73,18 @@
 			{% endfor %}
 		</tr>
 	</table>
-
-	<button class="general-btn btn"
-	        onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
-		Refresh Student Responses <i class="fas fa-sync" aria-hidden="true"></i>
-	</button>
+	<div class="graphtype">
+		<!-- Bar graph shows each student and their total score -->
+		<button class="general-btn btn" onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'bar')">
+			Bar Graph
+			<i class="fas fa-sync" aria-hidden="true"></i>
+		</button>
+		<!-- Pie chart/doughnut chart shows each question and how many students got those questions right (i) Use this to determine which questions students tended to get wrong -->
+		<button class="general-btn btn" onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'doughnut')">
+			Doughnut Chart
+			<i class="fas fa-sync" aria-hidden="true"></i>
+		</button>
+	</div>
 </div>
 
 <!-- end of graphs -->
@@ -83,6 +94,12 @@
 <div style="height:40vh; width:40vw;">
 	<!-- Temporary area to display charts of student data -->
 	<canvas id="basicChart"></canvas>
+
+</div>
+<!-- Area for question data -->
+<div style="height:40vh; width:40vw;">
+	<!-- Temporary area to display charts of student data -->
+	<canvas id="question_data"></canvas>
 
 </div>
 
