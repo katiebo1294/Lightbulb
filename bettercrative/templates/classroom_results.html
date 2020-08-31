@@ -6,65 +6,72 @@
 
 <div id="results_display" class="container" style="margin:auto;">
 	<h1 id="results-title">Quiz Results</h1>
-	
+
 	<!-- Graphs for quiz -->
 	<table id="classroom-results">
-		<thead>
-			<tr>
-				<th>Name</th>
-				{% for question in quiz.questions %}
-				<th>{{ question.index + 1 }}</th>
-				{% endfor %}
-			</tr>
-		</thead>
-		<tbody>
-			<!-- Student Answers -->
-			
-			{%for student in students%}
-				<tr>
-					<td>Anonymous</td>
-					{%for question in quiz.questions%}
-					
-					<td>
-						
-						{%if responses[student.id, question.index+1]%}
-							{% for response in responses[student.id,question.index + 1] %}
-								{%if response.correct %}
-									<span class='text-success'> {{response.value}}</span>
-								{%else%}
-									<span class='text-danger'> {{response.value}}</span>
-								{%endif%}
-							{%endfor%}
-						{%else%}
-							<span class='text-info'> No Answer given by student</span>
-						{%endif%}
-					</td>
-					{%endfor%}
-					
-				</tr>
-				
-			{%endfor%}
-			<!-- Answer Key -->
-			<tr>
-				<td class='bg-dark text-light'> Correct Answers</td>
-				{%for question in quiz.questions %}
-				<td id="correct-answer-{{ loop.index0 }}" class='bg-dark text-light'>
-					<!-- loop through answers within each question to find the correct one -->
-					{% for answer in question.answers %}
-					{% if answer.correct%}
-					{{ answer.content }}
-					{% endif %}
-					
-					{% endfor%}
-				</td>
-				{%endfor%}
-			</tr>
-		<tbody>
+		<tr>
+			<th>Name</th>
+			{% for question in quiz.questions %}
+			<th>{{ question.index + 1 }}</th>
+			{% endfor %}
+		</tr>
+		<!-- Student Answers -->
 
+		{% for student in students %}
+		<tr>
+			<td>Anonymous</td>
+			{% for question in quiz.questions %}
+			<td id="response-data-{{ question.id }}-{{ student.id }}">
+				{%if responses[student.id, question.index+1]%}
+					{% for response in responses[student.id,question.index + 1] %}
+						{%if response.correct %}
+						<span class="text-success">
+							<!-- if it's a true/false question, print out T or F instead of the letter -->
+							{% if question.category == 'True-False' %}
+								{% if response.value == 'A' %}
+									T
+								{% else %}
+									F
+								{% endif %}
+							{% else %}
+								{{ response.value }}
+							{% endif %}
+						</span>
+						{%else%}
+						<span class="text-danger">
+							<!-- if it's a true/false question, print out T or F instead of the letter -->
+							{% if question.category == 'True-False' %}
+								{% if response.value == 'A' %}
+									T
+								{% else %}
+									F
+								{% endif %}
+							{% else %}
+								{{ response.value }}
+							{% endif %}
+						</span>
+						{%endif%}
+					{%endfor%}
+				{%else%}
+					<span class="text-info"> No answer</span>
+				{%endif%}
+			</td>
+			{%endfor%}
+		</tr>
+		{%endfor%}
+		<tr>
+
+			<td>Class Total</td>
+			{% for question in quiz.questions %}
+			<td id="class-total-{{ question.id }}">
+
+			</td>
+			{% endfor %}
+		</tr>
 	</table>
 
 	<button class="general-btn btn"
-		onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
+	        onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }})">
 		Refresh Student Responses <i class="fas fa-sync" aria-hidden="true"></i>
 	</button>
 </div>
@@ -80,10 +87,10 @@
 </div>
 
 <button class="btn btn-lg btn-primary quiz-back-btn"><a onclick="goBack();">
-		<i class="fas fa-angle-double-left"></i> Go Back</a></button>
+	<i class="fas fa-angle-double-left"></i> Go Back</a></button>
 
 <script crossorigin="anonymous" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
-	src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 <script src="{{ url_for('static', filename='js/data_visualization.js') }}"></script>
 
 

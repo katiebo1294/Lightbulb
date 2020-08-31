@@ -589,6 +589,14 @@ h4 {
 #classroom-results {
   margin: auto;
   margin-top: 2%;
+  text-align: center;
+}
+
+#classroom-results td {
+  max-width: 7em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .student-answer {

@@ -150,3 +150,19 @@ function create_chart(url, quiz_id, class_id) {
     }
   });
 };
+
+// for the table's class total
+$("[id^='class-total-']").each(function() {
+    var q_id = this.id.slice(12);
+    console.log("calculating class total for question " + q_id);
+
+    var tableRows = $("td[id^='response-data-" + q_id + "-'] > span:not(.text-info)");
+    var total_answered = tableRows.length;
+    console.log("total answered = " + total_answered);
+    var correctRows = $("td[id^='response-data-" + q_id + "-'] > span.text-success");
+    var total_correct = correctRows.length;
+    console.log("total correct = " + total_correct);
+    var class_total = Math.round(total_correct/total_answered * 100);
+    console.log("correctness ratio = " + total_correct + "/" + total_answered + "(" + class_total + "%)");
+    this.innerHTML = class_total + "%";
+});
