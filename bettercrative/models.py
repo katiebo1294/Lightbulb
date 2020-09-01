@@ -90,7 +90,8 @@ class Classroom(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), unique=True, nullable=False)
-    date_created = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    date_modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
     added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', back_populates='classroom_hosts', cascade='none')
@@ -162,6 +163,7 @@ class Quiz(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
+    date_modified = db.Column(db.DateTime, nullable=False, default=datetime.now(), onupdate=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', back_populates='added_quizzes',
                                       cascade='none')

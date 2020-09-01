@@ -494,6 +494,17 @@ No media query for `xs` since this is the default in Bootstrap */
   text-overflow:    initial;    /* IE, Safari (WebKit), Opera >= 11, FF > 6 */
 }
 
+#account-tables {
+  table-layout: fixed;
+}
+
+#account-tables * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  border: none;
+}
+
 #quiz-container {
   position: relative;
 }
@@ -534,25 +545,8 @@ h4 {
   float: left;
 }
 
-.classroomname {
-  font-size: 2vw;
-}
-
-.quiz-icon-buttons-container {
-  float: right;
-}
-
-/* table itself */
-.account-tables {
-  width: 100%;
-  table-layout: fixed;
-  border: none;
-}
-
-/* individual table elements */
-.account-tables * td {
-  width: 33%;
-  border: none;
+td.dropdown {
+  float: none;
 }
 
 .sideClick {
