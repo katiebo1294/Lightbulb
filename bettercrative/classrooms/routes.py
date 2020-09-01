@@ -174,8 +174,7 @@ def set_active(classroom_id, quiz_id):
         print("got here")
         flash(u'Quiz \"' + quiz.name + '\" is incomplete. Please check all questions have content and sufficient answers.', 'danger')
 
-    form = ClassroomForm()
-    return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
+    return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
 
 
 @classrooms.route("/classroom/<int:classroom_id>/remove_active", methods=['GET', 'POST'])
@@ -233,7 +232,6 @@ def take_quiz(classroom_id):
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
     questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
-
     
     if 'teacher' in args:
         teacher = args['teacher']
@@ -241,25 +239,19 @@ def take_quiz(classroom_id):
         teacher = False
     
     if 'student' not in args:
-        current_student = Student(quiz_reference = quiz_id)
+        current_student = Student(quiz_reference=quiz_id)
         db.session.add(current_student)
         db.session.commit()
-        return redirect(url_for('classrooms.take_quiz', quiz=quiz ,classroom_id=classroom.id,student=current_student.id, teacher=True))
+        return redirect(url_for('classrooms.take_quiz', quiz=quiz, classroom_id=classroom.id, student=current_student.id, teacher=True))
 
     else:
         current_student = Student.query.filter_by(id=int(args['student'])).first()
-        
-        
-    
-    
-        
     return render_template('take_quiz.html', classroom=classroom, quiz=quiz, questions=questions, student=current_student, teacher=teacher)
+
 
 @classrooms.route("/classroom/teacher_take_quiz", methods=['GET', 'POST'])
 @login_required
 def teacher_take_quiz():
-    
-    
     args = request.args
     student = Student.query.filter_by(id = args['student_id']).first()
     db.session.delete(student)
@@ -267,14 +259,12 @@ def teacher_take_quiz():
     
     return redirect(url_for('main.home'))
 
+
 @classrooms.route("/classroom/process_take_quiz", methods = ['GET', 'POST'])
 def process_take_quiz():
     args = request.args
-    
-    
     if args['teacher'] == 'True':
-        return redirect(url_for('classrooms.teacher_take_quiz', student_id = args['student_id']))
-        
+        return redirect(url_for('classrooms.teacher_take_quiz', student_id=args['student_id']))
     else:
         return redirect(url_for('main.home'))
 
@@ -289,9 +279,7 @@ def view_results(classroom_id):
                 classroom_id (int): the ID of the classroom to retrieve answers from
                 quiz_id (int): the ID of the quiz to retrieve answers from
     """
-    
-    
-    
+
     classroom = Classroom.query.filter_by(id=classroom_id).first()
     quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
     students = quiz.students
@@ -301,13 +289,6 @@ def view_results(classroom_id):
     for student in students:
         for response in student.responses:
             responses[(student.id, response.question_num)].append(response)
-    
-    
-        
-
-
-            
-
     return render_template('classroom_results.html', title='results of quiz',responses=responses, quiz=quiz, classroom=classroom, students=students)
 
 
@@ -347,8 +328,10 @@ def received_answer():
         regular_responses(current_student,current_answer,response)
     elif current_question.category == 'True-False':
         tf_responses(current_student,current_answer, response, current_question)
-    else:
+    elif current_question.category == 'Short Answer':
         sa_response(current_student,current_answer,response, current_question)
+    else:
+        coding_response(current_student, current_answer, response, current_question)
     
     #update database
     db.session.commit()

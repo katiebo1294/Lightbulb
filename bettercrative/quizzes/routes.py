@@ -279,8 +279,11 @@ def set_question_type():
         db.session.add(true)
         db.session.add(false)
     elif current_question.category == 'Short Answer':
-        short_answer = Answer(question_id=question_id, index = 0, correct=True)
+        short_answer = Answer(question_id=question_id, index=0, correct=True)
         db.session.add(short_answer)
+    else:
+        ide = Answer(question_id=question_id, index=0, correct=True)
+        db.session.add(ide)
         
         
 

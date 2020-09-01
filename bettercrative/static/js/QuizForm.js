@@ -392,6 +392,24 @@ function createQuizPopup() {
     modalForm.style.display = "block";
 }
 
+function responseIDE(url,answer_id,classroom_id, page_num,quiz_id,student_id) {
+    var editor = ace.edit("editor");
+    var code = editor.getValue();
+    console.log(code);
+    $.ajax({
+        type: "GET",
+        data: {'answer_id': answer_id, 'classroom_id': classroom_id,
+        'page_num': page_num, 'quiz_id':quiz_id, 'value': code,'student_id': student_id},
+        url: url,
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+        }
+    });
+}
+
 function responseMC(answer_id){
     var btn =document.getElementById('question-'+answer_id);
     if(btn.classList.contains('active')){

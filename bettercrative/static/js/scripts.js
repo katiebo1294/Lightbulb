@@ -1,4 +1,4 @@
-window.onload = function() {
+$(document).ready(function() {
     if(document.URL.indexOf("quizzes") || document.URL.indexOf("classrooms"))
     {
         $('#account-tables').DataTable( {
@@ -18,6 +18,12 @@ window.onload = function() {
             ]
         });
     }
+});
+
+function getEditorContent() {
+    var editor = ace.edit("editor");
+    var code = editor.getValue();
+    console.log(code);
 }
 
 $('.navTrigger').click(function () {
@@ -34,7 +40,7 @@ $(window).scroll(function () {
     }
 });
 
-// this colors the current page's link in the navbar green
+// this colors the current page's link in the navbar white
 currentLinks = document.querySelectorAll('a[href="'+ document.URL.substr(document.URL.lastIndexOf("/")) +'"].nav-link');
     currentLinks.forEach(function(link) {
         link.className += ' current-page';
@@ -101,3 +107,16 @@ function reverse_icon(element) {
     //refresh page
     refresh("#quizListings");
 }
+
+$('#editor-controls > button').click(function() {
+    var theme;
+    if(this.textContent === "Dark Theme") {
+        theme = "vibrant_ink";
+        this.textContent = "Light Theme";
+    } else {
+        theme = "iplastic";
+        this.textContent = "Dark Theme";
+    }
+    editor.setTheme("ace/theme/" + theme);
+    $(this).toggleClass("btn-secondary btn-dark");
+});

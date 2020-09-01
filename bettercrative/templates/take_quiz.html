@@ -1,110 +1,126 @@
+
 {% extends "layout.html" %}
 {% block content %}
 
-<div class='container'>
-	
+<div class="container">
+
 	{% for question in questions.items %}
-		<div class='row ml-1'>
-			<h5> {{question.name}}) {{question.content}}</h5>
-		</div>
+	<div class="row ml-1">
+		<h5> {{question.name}}) {{question.content}}</h5>
+	</div>
 
-		<div class='bg-light shadow'>
-			<div class='mt-2 pt-4'>
+	<div class="bg-light shadow">
+		<div class="mt-2 pt-4">
 			{%if question.category == 'Multiple Choice'%}
-				{%for answer in question.answers%}
-					<div class='row ml-1'>
-						
-						<div class='col-1 pl-0 mr-3 ml-3'>
-							{% if find_selected_answer(question.category,answer.response, answer.id,student.id)%}
-							<p class='btn btn-outline-info active' id='question-{{answer.id}}'
-							onclick="responseMC({{answer.id}});setAnswer( '{{ url_for('classrooms.received_answer')}}' ,
+			{%for answer in question.answers%}
+			<div class="row ml-1">
+
+				<div class="col-1 pl-0 mr-3 ml-3">
+					{% if find_selected_answer(question.category,answer.response, answer.id,student.id)%}
+					<p class="btn btn-outline-info active" id="question-{{answer.id}}"
+					   onclick="responseMC({{answer.id}});setAnswer( '{{ url_for('classrooms.received_answer')}}' ,
 							 answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, 
-							 quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">{{get_alphabet_index(answer.index+1)}}</p>
+							 quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">
+						{{get_alphabet_index(answer.index+1)}}</p>
 
-							{%else%}
+					{%else%}
 
-							<p class='btn btn-outline-info' id='question-{{answer.id}}'
-							onclick="responseMC({{answer.id}});setAnswer( '{{ url_for('classrooms.received_answer')}}' ,
+					<p class="btn btn-outline-info" id="question-{{answer.id}}"
+					   onclick="responseMC({{answer.id}});setAnswer( '{{ url_for('classrooms.received_answer')}}' ,
 							 answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, page_num = {{question.index + 1}}, 
-							 quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">{{get_alphabet_index(answer.index+1)}}</p>
-							{%endif%}
-						</div>
+							 quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}',student='{{student.id}}' )">
+						{{get_alphabet_index(answer.index+1)}}</p>
+					{%endif%}
+				</div>
 
-						
-						<div class='col border rounded mb-3 mr-6'>
-							<p class=' mt-1 mb-0 '>{{answer.content}}</p>
-						</div>
-						
-					</div>
-				{%endfor%}
+				<div class="col border rounded mb-3 mr-6">
+					<p class=" mt-1 mb-0 ">{{answer.content}}</p>
+				</div>
+
+			</div>
+			{%endfor%}
 			{%elif question.category == 'True-False'%}
-				<div class='row ml-1'>
-					<div class=' mx-auto'>
-						
-					
+			<div class="row ml-1">
+				<div class=" mx-auto">
 					{%for answer in question.answers%}
-						{%if answer.content == 'True'%}
-							<span class='btn btn-outline-success' id="question-{{question.id}}-true"
-							onclick="responseTF({{question.id}},1);setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, 
+					{%if answer.content == 'True'%}
+					<span class="btn btn-outline-success" id="question-{{question.id}}-true"
+					      onclick="responseTF({{question.id}},1);setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}},
 							page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}', student= '{{student.id}}'  )"> True</span>
-						{%else%}
-							<span class='btn btn-outline-danger' id="question-{{question.id}}-false"
-							onclick="responseTF({{question.id}},0);setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}}, 
+					{%else%}
+					<span class="btn btn-outline-danger" id="question-{{question.id}}-false"
+					      onclick="responseTF({{question.id}},0);setAnswer( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , classroom_id = {{classroom.id}},
 							page_num = {{question.index + 1}}, quiz_id = {{quiz.id}}, value ='{{ get_alphabet_index(answer.index+1) }}', student= '{{student.id}}'  )"> False</span>
-						{%endif%}
+					{%endif%}
 					{%endfor%}
-					</div>
+				</div>
 
-				</div>
-				<div class='row mt-5'>
-					
-				</div>
+			</div>
+			<div class="row mt-5">
+
+			</div>
 			{%elif question.category == 'Short Answer'%}
-				<div class='form-row ml-1'>
-					{%for answer in question.answers%}
-					<div class='col-sm-11 mr-3 pr-3 pl-5 pt-3'>
-						<textarea class="form-control" rows='7' id='textareabox-{{student.id}}'
-						onblur = "setTextArea( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , 
+			<div class="form-row ml-1">
+				{%for answer in question.answers%}
+				<div class="col-sm-11 mr-3 pr-3 pl-5 pt-3">
+						<textarea class="form-control" rows="7" id="textareabox-{{student.id}}"
+						          onblur="setTextArea( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} ,
 						classroom_id = {{classroom.id}},  page_num = {{question.index + 1}}, quiz_id = {{quiz.id}},
 						student= '{{student.id}}'  )">
 						{{find_selected_answer(question.category, answer.response, answer.id, student.id)}}
 						</textarea>
-					</div>
-					{%endfor%}
-
 				</div>
-				<div class='row mt-5'></div>
-			{%else%}
-					<h1> coding</h1>
-			{%endif%}
+				{%endfor%}
+
 			</div>
+			<div class="row mt-5"></div>
+			{%else%}
+			<div class="row">
+				{% for answer in question.answers %}
+				<div class="col-9">
+				<div id="editor" style="min-height: 30vh;">
+				</div>
+				<textarea class="col-md-6" name="editor-content" id="editor-content" rows="5" cols="70" disabled="disabled"></textarea>
+				</div>
+				<div id="editor-controls" class="col-3">
+					<button class="btn btn-lg btn-dark" style="margin: 0% 10%;">Dark Theme</button>
+					<button onclick="responseIDE( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} ,
+						classroom_id = {{classroom.id}},  page_num = {{question.index + 1}}, quiz_id = {{quiz.id}},
+						student= '{{student.id}}'  )" class="btn btn btn-info" style="margin: 5% 10%;">Save Changes</button>
+				</div>
+				{% endfor %}
+			</div>
+
+			{%endif%}
 		</div>
-			
+	</div>
+
 	{%endfor%}
 
 	<!-- pagination -->
-	<div class='row mt-2'>
-		<div class='col'>
-		{% for page_num in questions.iter_pages() %}
-					{% if page_num  and questions.page == page_num%}
-						<a class="btn btn-info mb-4 pagination-buttons"
-						href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num,student=student.id, teacher = teacher) }}">{{ page_num }}</a>
-					
-					
-					{% else %}
-						<a class="btn btn-outline-info mb-4 pagination-buttons"
-						href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num, student=student.id, teacher=teacher) }}">{{ page_num }}</a>
-					
-					{% endif %}
-		{% endfor %}
+	<div class="row mt-2">
+		<div class="col">
+			{% for page_num in questions.iter_pages() %}
+			{% if page_num and questions.page == page_num%}
+			<a class="btn btn-info mb-4 pagination-buttons"
+			   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num,student=student.id, teacher = teacher) }}">{{
+				page_num }}</a>
+
+
+			{% else %}
+			<a class="btn btn-outline-info mb-4 pagination-buttons"
+			   href="{{ url_for('classrooms.take_quiz', classroom_id=classroom.id, page=page_num, student=student.id, teacher=teacher) }}">{{
+				page_num }}</a>
+
+			{% endif %}
+			{% endfor %}
 		</div>
 	</div>
 
 	<!-- Submit Button -->
 	{%if questions.has_next == False%}
-		<a class='btn btn-outline-info' href="{{url_for('classrooms.process_take_quiz', teacher = teacher, student_id = student.id)}}"> Submit </a>
+	<a class="btn btn-outline-info"
+	   href="{{url_for('classrooms.process_take_quiz', teacher = teacher, student_id = student.id)}}"> Submit </a>
 	{%endif%}
 </div>
-
-
 {% endblock %}
