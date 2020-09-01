@@ -54,13 +54,17 @@ def classroom(classroom_id):
             classroom_id (int): the ID of the classroom to display
     """
     classroom = Classroom.query.get_or_404(classroom_id)
+
     if current_user.is_authenticated:
         form = ClassroomForm()
-        return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
+        # this is so the "view results" button only shows up if there's something to view
+        has_responses = classroom.active_quiz is not None and len(Response.query.filter_by(quiz_reference=classroom.active_quiz).all()) > 0
+        return render_template('classroom.html', title=classroom.name, classroom=classroom, form=form, has_responses=has_responses)
     else:
         quiz = classroom.active_quiz
-        student=Student()
-        return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz, student = student)
+        student = Student()
+
+        return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz, student=student)
 
 
 def is_complete(quiz):

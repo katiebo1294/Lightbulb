@@ -123,16 +123,17 @@
 	</div>
 </div>
 
-
 {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
 <div class="classroom-options">
 {% if classroom.active_quiz %}
 	<button id="take-active-quiz" class="btn general-btn"
 	   onclick="window.location.href='{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}';">Take Active Quiz <i class="fas fa-door-open"></i></button>
+	{% if has_responses %}
 	<button id="view-results" class="btn general-btn"
 	   onclick="window.location.href='{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}';"><i class="fas fa-chart-bar" aria-hidden="true"></i> View Results</button>
-	<div style="clear: both;"></div>
 	{% endif %}
+	<div style="clear: both;"></div>
+{% endif %}
 </div>
 {% endif %}
 {% endblock %}
