@@ -182,6 +182,7 @@ function change_active_question(url,question_id,quiz_id) {
 
 function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value,student_id){
     
+    
 
     $.ajax({
         type: "GET",
@@ -391,11 +392,29 @@ function createQuizPopup() {
     modalForm.style.display = "block";
 }
 
-function responseTF(question_id){
+function responseMC(answer_id){
+    var btn =document.getElementById('question-'+answer_id);
+    if(btn.classList.contains('active')){
+        btn.classList.remove('active');
+    }
+    else{
+        btn.classList.add('active')
+    }
+}
+
+function responseTF(question_id, status){
+   
     var t = document.getElementById('question-'+question_id+'-true')
     var f = document.getElementById('question-'+question_id+'-false');
     console.log(t);
-    console.log(f);
+    if(status === 1){
+        f.classList.remove('active');
+        t.classList.add('active');
+    }
+    else{
+        t.classList.remove('active');
+        f.classList.add('active');
+    }
 }
 
 function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){

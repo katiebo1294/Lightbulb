@@ -580,6 +580,9 @@ h4 {
   color: ghostwhite;
 }
 
+.mr-6{
+  margin-right: 3.5rem !important;
+}
 .button-choices {
   font-weight: bold;
 }
@@ -820,19 +823,6 @@ div.answerChoice{
   width: 100%;
 }
 
-div.answerBox{
-  width: 85%;
-  float: left;
-  margin-left: 1%;
-  padding-top: 0.75vw;
-  padding-bottom: 0.75vw;
-  padding-right: 1vw;
-  padding-left: 0.5vw;
-  font-weight: bold;
-  background: darkseagreen;
-  border: solid forestgreen;
-  border-radius: .25rem;
-}
 
 .pagination-buttons {
   font-weight: bolder;
@@ -900,3 +890,4 @@ div.options{
 table, th, td {
     border: 1px solid black;
 }
+
