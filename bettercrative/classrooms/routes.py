@@ -6,7 +6,7 @@ from sqlalchemy import exists, and_
 from collections import defaultdict
 from bettercrative import db
 from bettercrative.classrooms.response_handling import *
-from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm
+from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm, StudentForm
 from bettercrative.models import Classroom, Quiz, Response, Question, assoc, Answer, Student
 
 classrooms = Blueprint('classrooms', __name__)
@@ -39,11 +39,32 @@ def enter_classroom():
             student = Student(quiz_reference = classroom.active_quiz)
             db.session.add(student)
             db.session.commit()
-            return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id,student=student.id))
+            if classroom.username_required:       
+                return redirect(url_for('classrooms.student_name', classroom_id = classroom.id, student=student.id))
+            else:   
+                return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id,student=student.id))
         else:
             flash(u'A classroom does not exist with that name. Please try again.', 'danger')
     return render_template('enter_classroom.html', title='get in chief', form=form)
 
+@classrooms.route('/classroom/student_name', methods=['GET','POST'])
+def student_name():
+    args = request.args
+
+    if 'classroom_id' not in args and 'student' not in args:
+        raise('classroom_id key and student key not found')
+
+    form = StudentForm()
+  
+    
+    if form.validate_on_submit:
+        student = Student.query.filter_by(id=int(args['student'])).first()
+        student.name = form.name.data
+        print(student)
+        print(student.id)
+        db.session.commit()
+        return redirect(url_for('classrooms.take_quiz', classroom_id= args['classroom_id'], student= student.id))
+    return render_template('student_name.html', form = form, classroom_id = args['classroom_id'], student= args['student'])
 
 @classrooms.route("/classroom/<int:classroom_id>", methods=['GET', 'POST'])
 def classroom(classroom_id):
@@ -55,7 +76,6 @@ def classroom(classroom_id):
     """
     classroom = Classroom.query.get_or_404(classroom_id)
     
-
     if current_user.is_authenticated:
         form = ClassroomForm()
         # this is so the "view results" button only shows up if there's something to view
@@ -166,9 +186,11 @@ def set_active(classroom_id, quiz_id):
 
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz = Quiz.query.get_or_404(quiz_id)
-    
+    username_required = bool(request.args['status'])
     if is_complete(quiz):
         classroom.active_quiz = quiz_id
+        if username_required:
+            classroom.username_required = True
         db.session.commit()
         flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
     else:
