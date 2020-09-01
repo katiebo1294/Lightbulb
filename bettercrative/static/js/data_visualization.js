@@ -339,7 +339,8 @@ $("[id^='class-total-']").each(function() {
     var class_total = Math.round(total_correct/total_answered * 100);
     console.log("correctness ratio = " + total_correct + "/" + total_answered + "(" + class_total + "%)");
 
-    if(!(class_total.isNan())) {
+    // if no answers have been graded, class total will show NaN; this prevents that from happening
+    if(!isNaN(class_total)) {
         this.innerHTML = class_total + "%";
     }
 });
