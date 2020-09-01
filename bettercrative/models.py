@@ -97,6 +97,7 @@ class Classroom(db.Model):
     added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', back_populates='classroom_hosts', cascade='none')
     # active quiz ID is stored here, or None if no active quiz
     active_quiz = db.Column(db.Integer, nullable=True, default=None)
+    username_required= db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.added_quizzes}', '{self.active_quiz}')"

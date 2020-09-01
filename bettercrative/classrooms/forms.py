@@ -27,3 +27,7 @@ class EnterClassroomForm(FlaskForm):
 class AddQuizForm(FlaskForm):
     quiz = SelectField('Choose a Quiz', coerce=int, validators=[InputRequired('Please select a quiz.')])
     submit = SubmitField('Add Quiz')
+
+class StudentForm(FlaskForm):
+    name= StringField(validators=['Fill in Name below', InputRequired(), Length(min=3, max=20)])
+    submit = SubmitField('Submit')
