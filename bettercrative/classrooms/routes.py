@@ -54,6 +54,7 @@ def classroom(classroom_id):
             classroom_id (int): the ID of the classroom to display
     """
     classroom = Classroom.query.get_or_404(classroom_id)
+    
 
     if current_user.is_authenticated:
         form = ClassroomForm()
@@ -165,7 +166,7 @@ def set_active(classroom_id, quiz_id):
 
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz = Quiz.query.get_or_404(quiz_id)
-
+    
     if is_complete(quiz):
         classroom.active_quiz = quiz_id
         db.session.commit()
@@ -174,8 +175,8 @@ def set_active(classroom_id, quiz_id):
         print("got here")
         flash(u'Quiz \"' + quiz.name + '\" is incomplete. Please check all questions have content and sufficient answers.', 'danger')
 
-    form = ClassroomForm()
-    return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
+    
+    return redirect(url_for('classrooms.classroom', classroom_id = classroom.id, quiz_id = quiz.id))
 
 
 @classrooms.route("/classroom/<int:classroom_id>/remove_active", methods=['GET', 'POST'])

@@ -80,9 +80,14 @@
 				</div>
 				<div class="btn col-3 show table-header options-header">Options</div>
 			</div>
+			
 			{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
 			<!-- JavaScript option to set the current quiz in the list to active -->
+			
 			<div id="quiz-{{ quiz.id }}" class="row table-element">
+			
+				{%include 'set_active_modal.html'%}
+			
 				<div class="col-4">{{ quiz.name }}
 					{% if quiz.id == classroom.active_quiz %}
 					(active)
@@ -95,9 +100,10 @@
 				<div class="col-4 quiz-icon-col">
 
 					<button id="set-active-{{classroom.id}}" class="btn general-btn"
-					   onclick="window.location.href='{{ url_for('classrooms.set_active', quiz_id=quiz.id, classroom_id=classroom.id) }}';">
+					   data-toggle='modal' data-target='#set_active_modal-{{quiz.id}}'>
 						Set Active
 					</button>
+					
 					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
 						        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">
 							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
@@ -112,12 +118,14 @@
 				{% else %}
 				<div class="col-4 quiz-icon-col">
 					<button id="remove-active-{{classroom.id}}" class="btn general-btn"
-					   onclick="window.location.href='{{ url_for('classrooms.remove_active', quiz_id=quiz.id, classroom_id=classroom.id) }}';">
+				onclick="remove_active({{classroom.id}})">
 						Unset Active
 					</button>
 				</div>
 				{% endif %}
+			
 			</div>
+			
 			{%endfor%}
 		</div>
 	</div>
