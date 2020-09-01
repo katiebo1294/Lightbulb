@@ -56,9 +56,24 @@
 					</div>
 
 				</div>
-				<div class='row mt-5'></div>
+				<div class='row mt-5'>
+					
+				</div>
 			{%elif question.category == 'Short Answer'%}
-					<h1>sa</h1>
+				<div class='form-row ml-1'>
+					{%for answer in question.answers%}
+					<div class='col-sm-11 mr-3 pr-3 pl-5 pt-3'>
+						<textarea class="form-control" rows='7' id='textareabox-{{student.id}}'
+						onblur = "setTextArea( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} , 
+						classroom_id = {{classroom.id}},  page_num = {{question.index + 1}}, quiz_id = {{quiz.id}},
+						student= '{{student.id}}'  )">
+						{{find_selected_answer(question.category, answer.response, answer.id, student.id)}}
+						</textarea>
+					</div>
+					{%endfor%}
+
+				</div>
+				<div class='row mt-5'></div>
 			{%else%}
 					<h1> coding</h1>
 			{%endif%}
