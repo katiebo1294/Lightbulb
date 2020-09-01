@@ -84,6 +84,11 @@
 		{% endfor %}
 		</div>
 	</div>
+
+	<!-- Submit Button -->
+	{%if questions.has_next == False%}
+		<a class='btn btn-outline-info' href="{{url_for('classrooms.process_take_quiz', teacher = teacher, student_id = student.id)}}"> Submit </a>
+	{%endif%}
 </div>
 
 
