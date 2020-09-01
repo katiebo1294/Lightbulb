@@ -302,3 +302,4 @@ class Student(db.Model):
     responses = db.relationship('Response', back_populates='student', cascade='delete, all')
     quiz_reference = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable = False)
     question_reference = db.Column(db.Integer, db.ForeignKey('question.id'), nullable = True)
+    name = db.Column(db.String, nullable = True)

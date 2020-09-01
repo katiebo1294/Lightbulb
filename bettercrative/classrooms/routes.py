@@ -195,7 +195,7 @@ def remove_active(classroom_id):
     classroom.active_quiz = None
     db.session.commit()
 
-    return "set Empty", 200
+    return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
 
 
 @classrooms.route("/classroom/remove_quiz/<int:classroom_id>/<int:quiz_id>", methods=['GET', 'POST'])
