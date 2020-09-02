@@ -120,3 +120,27 @@ $('#editor-controls > button').click(function() {
     editor.setTheme("ace/theme/" + theme);
     $(this).toggleClass("btn-secondary btn-dark");
 });
+
+function refresh(section)
+{
+    console.log("Beginning Refresh")
+    // $(section).load(document.URL + section);
+    $.ajax({
+        type: "GET",
+        url: document.URL,
+        contentType: "text",
+        success: function(data) {
+            var result = $('<div />').append(data).find(section).html();
+            if(typeof $(section)[0] !== 'undefined')
+            {
+                $(section)[0].innerHTML = result;
+            }
+            if(document.URL.indexOf("quizzes"))
+            {
+                $('#account-tables').DataTable();
+            }
+            MathJax.typeset();
+            console.log("Refreshed");
+        }
+    })
+};

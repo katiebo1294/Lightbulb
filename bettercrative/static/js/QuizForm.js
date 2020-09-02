@@ -79,48 +79,6 @@ function addQuestionContent(q_id){
 
 function addAnswerContent(q_id, a_id){
     document.getElementById("answer-form-" + q_id + "-" + a_id).style.display = "block";
-};/*
-
-function shiftQuestion(url, q_id, direction) {
-
-    $.ajax({
-        type: "GET",
-        data: {'question_id': q_id,
-                'direction': direction},
-        url: url,
-        error: function(response) {
-            alert(response.statusText);
-            console.log(response.statusText);
-        },
-        success: function() {
-            refresh("#questionView");
-        }
-    });
-};*/
-
-function refresh(section)
-{
-    console.log("Beginning Refresh")
-    // $(section).load(document.URL + section);
-    $.ajax({
-        type: "GET",
-        url: document.URL,
-        contentType: "text",
-        success: function(data) {
-            var result = $('<div />').append(data).find(section).html();
-            if(typeof $(section)[0] !== 'undefined')
-            {
-                $(section)[0].innerHTML = result;
-            }
-            if(document.URL.indexOf("quizzes"))
-            {
-                $('#account-tables').DataTable();
-            }
-            MathJax.typeset();
-            console.log("Refreshed");
-        }
-    })
-    // console.log("Refreshed");
 };
 
 function showEditQuestionContainer(index) {
@@ -162,6 +120,7 @@ function setQType(url,question_id, qtype) {
 };
 
 function change_active_question(url,question_id,quiz_id) {
+    console.log("switching to question " + question_id);
     $(this).focus();
     event.preventDefault();
     
@@ -517,37 +476,4 @@ $("div[id^='qbtn-']").keyup(function(e) {
         this.click();
     }
 });
-
-function set_active(classroom_id, quiz_id, status){
-    
-    $.ajax({
-        type:'GET',
-        data:{'classroom_id': classroom_id, 'quiz_id': quiz_id, 'status': status},
-        url: '/classroom/'+classroom_id+'/'+quiz_id+'/set_active',
-        error: function(response){
-            console.log(response.statusText);
-        },
-        success: function(){
-            
-            refresh('.account-tables');
-
-        }
-    })
-}
-
-function remove_active(classroom_id){
-    $.ajax({
-        type:'GET',
-        data:{'classroom_id': classroom_id},
-        url: '/classroom/'+classroom_id+'/remove_active',
-        error: function(response){
-            console.log(response.statusText);
-        },
-        success: function(){
-            
-            refresh('.account-tables');
-
-        }
-    })
-}
 

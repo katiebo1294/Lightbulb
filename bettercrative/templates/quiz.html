@@ -23,7 +23,7 @@
 					form-control-lg is-invalid editTitle editTitle classroomname')}}
 					<div class="invalid-feedback">
 						{% for error in qzform.name.errors %}
-							{{ error }}
+						{{ error }}
 						{% endfor %}
 					</div>
 					{% else %}
@@ -50,25 +50,14 @@
 		<!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
 		<div id="questions-menu" class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
 			{% for question in quiz.questions %}
-			<div tabindex="0" role="button" class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
+			<div tabindex="0" role="button"
+			     class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
 			     id="qbtn-{{ loop.index }}"
 			     onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
-				<!--{% if not loop.first %}
-				<button aria-label="shift question left" class="btn btn-outline-info shift-Button"
-				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='left')">
-					<i class="fa fa-arrow-left" aria-hidden="true"></i>
-				</button>
-				{% endif %}-->
 				ID: {{question.id}}
 				<button aria-label="remove question" class="fa fa-times remove-question"
 				        onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
 				</button>
-				<!--{% if not loop.last %}
-				<button aria-label="shift question right" class="btn btn-outline-info shift-Button"
-				        onclick="shiftQuestion('{{ url_for('quizzes.shift_question') }}', q_id={{ question.id }}, direction='right')">
-					<i class="fa fa-arrow-right" aria-hidden="true"></i>
-				</button>
-				{% endif %}-->
 			</div>
 			{% endfor %}
 
@@ -83,7 +72,7 @@
 
 		<div id="questions">
 			{% for question in quiz.questions %}
-			<div id="question-{{ loop.index }}" {% if quiz.active !=question.id %} style="display: none;" {% endif %}>
+			<div id="question-{{ loop.index }}" {% if quiz.active != question.id %} style="display: none;" {% endif %}>
 				{% if question.category %}
 				<!-- Question display (no edit) -->
 				<div id="question-display-{{ loop.index }}">
@@ -128,33 +117,37 @@
 					<!-- True or False -->
 					{% elif question.category == 'True-False' %}
 					<div class="true-false">
-						
+
 						{%for answer in question.answers%}
 						{%if loop.first and answer.correct == loop.nextitem.correct%}
-						<span id = '{{question.id}}-true-display' class="choices btn btn-outline-success btn-success btn-lg disabled">
+						<span id="{{question.id}}-true-display"
+						      class="choices btn btn-outline-success btn-success btn-lg disabled">
 							True
 						</span>
-						<span id = '{{question.id}}-false-display' class="choices btn btn-outline-danger btn-danger btn-lg disabled">
+						<span id="{{question.id}}-false-display"
+						      class="choices btn btn-outline-danger btn-danger btn-lg disabled">
 							False
 						</span>
 						{%break%}
 						{%elif answer.content == 'True' and answer.correct %}
-						<span id = '{{question.id}}-true-display' class="choices btn btn-success btn-lg disabled">
+						<span id="{{question.id}}-true-display" class="choices btn btn-success btn-lg disabled">
 							True
 						</span>
-						<span id = '{{question.id}}-false-display' class="choices btn btn-outline-danger btn-danger btn-lg disabled">
+						<span id="{{question.id}}-false-display"
+						      class="choices btn btn-outline-danger btn-danger btn-lg disabled">
 							False
 						</span>
 						{%elif answer.content == 'False' and answer.correct %}
-						<span id = '{{question.id}}-true-display' class="choices btn btn-outline-success btn-success btn-lg disabled">
+						<span id="{{question.id}}-true-display"
+						      class="choices btn btn-outline-success btn-success btn-lg disabled">
 							True
 						</span>
-						<span id = '{{question.id}}-false-display' class="choices btn btn-danger btn-lg disabled">
+						<span id="{{question.id}}-false-display" class="choices btn btn-danger btn-lg disabled">
 							False
 						</span>
 						{%endif%}
-			
-					{%endfor%}
+
+						{%endfor%}
 					</div>
 					<!-- Short Answer -->
 					{% elif question.category == 'Short Answer' %}
@@ -187,7 +180,7 @@
 					<form action="{{ url_for('quizzes.edit_question', question_id=question.id) }}" method="POST">
 						{{ form.hidden_tag() }}
 						{{ form.question_form.hidden_tag() }}
-						
+
 						<fieldset class="form-group">
 							<div class="form-group" style="float:right;">
 								{{ form.submit(class="btn btn-sm btn-success") }}
@@ -216,7 +209,7 @@
 								{% endif %}
 								{% endif %}
 							</div>
-						
+
 							<!-- Multiple Choice -->
 							{% if question.category == 'Multiple Choice' %}
 							{% set outer_loop = loop %}
@@ -244,9 +237,10 @@
 									</i>
 									{{ aform.correct(value='n', class="actual-checkbox") }} -->
 									<!-- {% endif %} -->
-									<i tabindex="0" style="color: #6c757d;" id="checkbox-{{answer.id}}" onclick="setMC(this,{{answer.index}})"
+									<i tabindex="0" style="color: #6c757d;" id="checkbox-{{answer.id}}"
+									   onclick="setMC(this,{{answer.index}})"
 									   class="fas fa-check-circle">
-										
+
 									</i>
 									{{aform.correct(id='answer_form-'~answer.id~'-correct', class='noshow')}}
 								</div>
@@ -280,35 +274,35 @@
 							</button>
 							<!-- True or False -->
 							{% elif question.category == 'True-False' %}
-								{%set answer_form = form.answer_form.append_entry()%}
-								{{answer_form.hidden_tag()}}
-								{%for answer in question.answers%}
-									{%if answer.content == "True"%}
-										{{answer_form.content(class='noshow',value='True')}}
-										{{answer_form.correct(class='noshow', value='1',id='answer_form-true-' ~ question.id)}}
-										{%if answer.correct%}
-											<span class="btn btn-lg btn-outline-success active" id='btn-true-{{question.id}}'
-											onclick='checked(this)' title='True'>True
-											</span>	
-										{%else%}
-											<span class="btn btn-lg btn-outline-success" id='btn-true-{{question.id}}'
-											onclick='checked(this)' title='True'>True
-											</span>	
-										{%endif%}
-									{%else%}
-										{{answer_form.content(class='noshow',value='False')}}
-										{{answer_form.correct(class='noshow', value='0',id='answer_form-false-' ~ question.id)}}
-										{%if answer.correct%}
-											<span class="btn btn-lg btn-outline-danger active"  id='btn-false-{{question.id}}'
-											onclick='checked(this)' title = 'False'>False
-											</span>       
-										{%else%}                     
-											<span class="btn btn-lg btn-outline-danger"  id='btn-false-{{question.id}}'
-											onclick='checked(this)' title = 'False'>False
+							{%set answer_form = form.answer_form.append_entry()%}
+							{{answer_form.hidden_tag()}}
+							{%for answer in question.answers%}
+							{%if answer.content == "True"%}
+							{{answer_form.content(class='noshow',value='True')}}
+							{{answer_form.correct(class='noshow', value='1',id='answer_form-true-' ~ question.id)}}
+							{%if answer.correct%}
+							<span class="btn btn-lg btn-outline-success active" id="btn-true-{{question.id}}"
+							      onclick="checked(this)" title="True">True
 											</span>
-										{%endif%}
-									{%endif%}
-								{%endfor%}
+							{%else%}
+							<span class="btn btn-lg btn-outline-success" id="btn-true-{{question.id}}"
+							      onclick="checked(this)" title="True">True
+											</span>
+							{%endif%}
+							{%else%}
+							{{answer_form.content(class='noshow',value='False')}}
+							{{answer_form.correct(class='noshow', value='0',id='answer_form-false-' ~ question.id)}}
+							{%if answer.correct%}
+							<span class="btn btn-lg btn-outline-danger active" id="btn-false-{{question.id}}"
+							      onclick="checked(this)" title="False">False
+											</span>
+							{%else%}
+							<span class="btn btn-lg btn-outline-danger" id="btn-false-{{question.id}}"
+							      onclick="checked(this)" title="False">False
+											</span>
+							{%endif%}
+							{%endif%}
+							{%endfor%}
 							<!-- Short Answer -->
 							{% elif question.category == 'Short Answer' %}
 							{% set outer_loop = loop %}
@@ -328,10 +322,10 @@
 									{{aform(class='form-control form-control-lg')}}
 									{% endif %}
 								</div>
-								
+
 							</div>
 							{% endfor %}
-							
+
 							{% endif %}
 						</fieldset>
 					</form>
@@ -366,5 +360,20 @@
 	</div>
 </div>
 <script src="{{ url_for('static', filename='js/horizontalscroll.js') }}"></script>
-{% endblock %}
+<script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
+<script charset="utf-8" src="{{ url_for('static', filename='js/src-min/ace.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+        var textarea = $('#editor-content');
 
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/iplastic");
+        editor.session.setMode("ace/mode/javascript");
+
+        editor.getSession().on('change', function () {
+            textarea.val(editor.getSession().getValue());
+        });
+
+        textarea.val(editor.getSession().getValue());
+
+</script>
+{% endblock %}
