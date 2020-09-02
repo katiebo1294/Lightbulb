@@ -108,7 +108,7 @@ function reverse_icon(element) {
     refresh("#quizListings");
 }
 
-$('#editor-controls > button').click(function() {
+$('#theme-toggle').click(function() {
     var theme;
     if(this.textContent === "Dark Theme") {
         theme = "vibrant_ink";
