@@ -73,7 +73,7 @@ function removeAnswer(url, a_id, index) {
 }
 
 function addQuestionContent(q_id){
-    
+
     document.getElementById("question-form-" + q_id).style.display = "block";
 };
 
@@ -116,14 +116,14 @@ function setQType(url,question_id, qtype) {
             window.location.reload();
         }
     });
-    
+
 };
 
 function change_active_question(url,question_id,quiz_id) {
     console.log("switching to question " + question_id);
     $(this).focus();
     event.preventDefault();
-    
+
     $.ajax({
         type: "GET",
         data: {'question_id': question_id,
@@ -140,12 +140,12 @@ function change_active_question(url,question_id,quiz_id) {
 };
 
 function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value,student_id){
-    
-    
+
+
 
     $.ajax({
         type: "GET",
-        data: {'answer_id': answer_id, 'classroom_id': classroom_id, 
+        data: {'answer_id': answer_id, 'classroom_id': classroom_id,
         'page_num': page_num, 'quiz_id':quiz_id, 'value':value,'student_id':student_id},
         url: url,
         error: function(response) {
@@ -154,7 +154,7 @@ function setAnswer(url,answer_id,classroom_id, page_num,quiz_id,value,student_id
         },
         success: function() {
             refresh("#response-"+quiz_id);
-            
+
         }
     });
 }
@@ -167,7 +167,7 @@ function showTrueFalse(answer_id){
     answer_choices.classList.replace('show', 'noshow');
     form_content.classList.replace('noshow', 'show');
     question_content.classList.replace('show', 'noshow');
-    
+
 }
 
 function  cancelTF(answer_id){
@@ -190,7 +190,7 @@ function setMC(i){
         i.style.color = '#6c757d';
     }
 
-    
+
     var id = i.id.slice(9);
     var checkbox = document.getElementById('answer_form-' + id + '-correct');
     if(checkbox.checked){
@@ -199,7 +199,7 @@ function setMC(i){
     else{
         checkbox.checked = true;
     }
-    
+
 }
 
 /**
@@ -209,7 +209,7 @@ function setMC(i){
  * Param:
         span:
             either span the given is the true span or the false span tag from the dom
- * Return: 
+ * Return:
         n/a
  */
 function checked(span){
@@ -219,14 +219,14 @@ function checked(span){
     else{
         var id = span.id.slice(10);
     }
-    
+
     var true_checkbox_id = 'answer_form-true-' + id;
     var false_checkbox_id = 'answer_form-false-' + id;
-    
+
     //Display Processing variables
     var true_display = document.getElementById(id+'-true-display');
     var false_display = document.getElementById(id+'-false-display');
-    
+
     /*Processing the data for the backend section */
     if(span.title === 'True'){
         console.log(span.id.slice(0,9) + id);
@@ -246,45 +246,21 @@ function checked(span){
 
     }
     else{
-        
+
         var true_button = document.getElementById('btn-true-' + id);
         if(true_button.classList.contains('active')){
             true_button.classList.remove('active');
         }
         span.classList.add('active');
-        
+
         var false_checkbox = document.getElementById(false_checkbox_id);
         false_checkbox.checked = true;
 
         var true_checkbox = document.getElementById(true_checkbox_id);
         true_checkbox.checked = false;
 
-         
+
     }
-}
-
-/**
- * Description:
-    shows the classroom edit form
- * Param:
-    classroom_id:
-        id of that classroom
- * Return: 
-    n/a
- */
-function showEditClassroom(classroom_id){
-    //Getting the classroom we want to edit
-    var classroom = document.getElementById('classroom-' + classroom_id);
-    var form = document.getElementById('classroom-form-'+ classroom_id);
-    classroom.style.display='none';
-    form.style.display = 'block';
-}
-
-function cancelEditClassroom(classroom_id){
-    var classroom = document.getElementById('classroom-' + classroom_id);
-    var form = document.getElementById('classroom-form-'+ classroom_id);
-    classroom.style.display='inline-block';
-    form.style.display = 'none';
 }
 
 function showShortAnswer(question_id){
