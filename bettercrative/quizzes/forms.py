@@ -3,22 +3,19 @@ from wtforms import StringField, SubmitField, BooleanField, FormField, FieldList
 from wtforms.validators import InputRequired, Optional
 from wtforms.widgets import TextArea
 
-class BetterStringField(StringField):
-    widget = TextArea()
-
 class AnswerForm(FlaskForm):
-    content = BetterStringField('Answer', validators=[Optional()])
+    content = TextAreaField('Answer', validators=[Optional()])
     correct = BooleanField('Correct')
     submit = SubmitField('Save')
 
 
 class QuestionForm(FlaskForm):
-    content = BetterStringField('Question', validators=[Optional()])
+    content = TextAreaField('Question', validators=[Optional()])
     submit = SubmitField('Save')
 
 
 class QuizForm(FlaskForm):
-    name = BetterStringField('Name', validators=[InputRequired()])
+    name = TextAreaField('Name', validators=[InputRequired()])
     submitQuiz = SubmitField('Create Quiz')
 
 

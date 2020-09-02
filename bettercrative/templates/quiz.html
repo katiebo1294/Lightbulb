@@ -198,8 +198,8 @@
 							<div class="form-group">
 								{{ question.name }})
 								{% if form.question_form.content.errors %}
-								{{ form.question_form.content(class='form-control form-control-lg is-invalid',
-								placeholder=question.content, value=question.content) }}
+								{% set f = form.question_form.content.process_data(question.content) %}
+								{{ form.question_form.content(class='form-control form-control-lg is-invalid') }}
 								<div class="invalid-feedback">
 									{% for error in form.question_form.content.errors %}
 									<span>{{ error }}</span>
@@ -207,6 +207,7 @@
 								</div>
 								{% else %}
 								{% if question.content %}
+								{% set f = form.question_form.content.process_data(question.content) %}
 								{{ form.question_form.content(class='form-control form-control-lg',
 								placeholder=question.content, value=question.content) }}
 								{% else %}
@@ -314,18 +315,17 @@
 							{% for answer in question.answers %}
 							<div class="row" style="margin-bottom: 1vh;">
 								{% set aform = saform.answer_form %}
+								{% set f = aform.process_data(answer.content) %}
 								<div class="answer-content col-10">
 									{% if aform.errors %}
-									{{ aform(class='form-control form-control-lg is-invalid',
-									placeholder=answer.content, value=answer.content) }}
+									{{aform(class='form-control form-control-lg is-invalid')}}
 									<div class="invalid-feedback">
 										{% for error in aform.errors %}
 										<span>{{ error }}</span>
 										{% endfor %}
 									</div>
 									{% else %}
-									{{ aform(class='form-control form-control-lg', placeholder=answer.content,
-									value=answer.content) }}
+									{{aform(class='form-control form-control-lg')}}
 									{% endif %}
 								</div>
 								

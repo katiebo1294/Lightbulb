@@ -1,13 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import InputRequired, Length, ValidationError
-from bettercrative.quizzes.forms import BetterStringField
 from bettercrative.models import Classroom
 
 
 # Teacher can create an empty classroom with a unique name
 class ClassroomForm(FlaskForm):
-    name = BetterStringField('Title', validators=[InputRequired(), Length(max=20, message='Must be shorter than 20 characters')])
+    name = TextAreaField('Title', validators=[InputRequired(), Length(max=20, message='Must be shorter than 20 characters')])
 
     def validate_name(self, name):
         name = Classroom.query.filter_by(name=name.data).first()
