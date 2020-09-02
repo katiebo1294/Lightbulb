@@ -1,7 +1,7 @@
 // remove Classroom
 function removeClassroomPopup(url, c_id) {
     modal = document.getElementById("modalPopUp");
-    modalText = document.getElementById("modalText")
+    modalText = document.getElementById("modalText");
     modalButton = document.getElementById("modalButton");
     modalText.innerHTML = "Are you sure that you want to delete this classroom??";
     modalButton.onclick = function() {removeClassroom(url,c_id)};
