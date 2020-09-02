@@ -124,6 +124,7 @@
 	   href="{{url_for('classrooms.process_take_quiz', teacher = teacher, student_id = student.id)}}"> Submit </a>
 	{%endif%}
 </div>
+<script src="{{ url_for('static', filename='js/QuizForm.js') }}" type="text/javascript"></script>
 <script charset="utf-8" src="{{ url_for('static', filename='js/src-min/ace.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
     var textarea = $('#editor-content');
