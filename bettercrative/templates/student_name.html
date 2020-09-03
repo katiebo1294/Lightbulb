@@ -14,7 +14,7 @@
 					{% if form.name.errors %}
 					{{ form.name(class="form-control form-control-lg is-invalid") }}
 					<div class="invalid-feedback">
-						{% for errors in form.name.errors %}
+						{% for error in form.name.errors %}
 						<span>{{ error }}</span>
 						{% endfor %}
 					</div>

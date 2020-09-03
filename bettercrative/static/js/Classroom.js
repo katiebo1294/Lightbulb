@@ -1,3 +1,4 @@
+
 // remove Classroom
 function removeClassroomPopup(url, c_id) {
     modal = document.getElementById("modalPopUp");
@@ -33,3 +34,37 @@ function createClassroomPopup() {
     modal.style.display = "block";
     modalForm.style.display = "block";
 }
+
+function unset_and_edit(quiz_id){
+    var quiz = document.getElementById('default-'+quiz_id);
+    quiz.classList.add('noshow');
+    quiz = document.getElementById('unset-and-edit-'+quiz_id);
+    quiz.classList.remove('noshow');
+    quiz.classList.add('show');
+}
+
+function unset_and_edit_confirm(quiz_id){
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        data: {'quiz_id': quiz_id},
+        url: '/classroom/unset_and_edit',
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+           
+            
+            window.location.replace('/quiz/'+quiz_id);
+               
+            
+        }
+    });
+}
+
+
+$('#quiz_active_modal').on('hidden.bs.modal', function (e) {
+    location.reload();
+    
+})

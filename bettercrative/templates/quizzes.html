@@ -39,6 +39,7 @@
 	<div id="quizListing">
 		<div class="titlebar">
 			<h4>Quizzes</h4>
+			
 			<!-- option to create a new quiz -->
 			<button class="btn-sm sideClick general-btn" onclick="javascript:createQuizPopup()">
 				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
@@ -81,10 +82,65 @@
 								</div>
 							</div>
 							<!-- edit button -->
+							
+							{%if quiz.quiz_activated() %}
+							<button type="button" class="border border-info shadow-sm btn-sm btn-outline-info" data-container="body" data-toggle="modal" data-target='#quiz_active_modal'>
+								Active
+							</button>
+
+							<div class="modal fade" id="quiz_active_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+								  <div class="modal-content">
+									<div class="modal-header">
+									  <h5 class="modal-title" id="exampleModalLabel">Quiz is set to Active</h5>
+									  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									  </button>
+									</div>
+
+									<div id='default-{{quiz.id}}'>
+										<div class="modal-body">
+										Quizzes are not editable when activated.
+										</div>
+									
+										<div class="modal-footer">
+											<button type="button" class="btn border border-primary btn-outline-primary" onclick='unset_and_edit({{quiz.id}});'>Unset and Edit</button>
+											<button type="button" class="btn border border-dark btn-outline-dark" data-dismiss="modal">Unset</button>
+											<button type="button" class="btn border border-info btn-outline-info" data-dismiss="modal">Close</button>
+										
+										</div>
+									</div>
+									<div id='unset-and-edit-{{quiz.id}}' class='noshow' aria-hidden="true">
+										<div class='modal-body'>
+											<div class='row'>
+												<h3 class='mx-auto text-danger'>Warning:</h3>
+											</div>
+											<div class='row'>
+												<div class='col-12'>
+													<h7 class='text-info '> deactivating quiz on ALL classrooms</h7>
+												</div>
+												
+
+											</div>
+										</div>
+										<div class="modal-footer" id="confirmation-footer" >
+											<button type="button" class="btn border border-success btn-outline-success" data-dismiss="modal" onclick='unset_and_edit_confirm({{quiz.id}})'>Confirm</button>
+											<button type="button" class="btn border border-danger btn-outline-danger" data-dismiss="modal" >Cancel</button>
+										  
+										</div>
+									</div>
+									
+									
+								  </div>
+								</div>
+							</div>
+
+							{%else%}
 							<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
 									type="button" class="btn btn-sm general-btn" aria-label="edit">
 								<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
 							</button>
+							{%endif%}
 							<!-- delete button -->
 							<button type="button" class="btn btn-sm general-btn"
 									onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})" aria-label="delete">
@@ -100,5 +156,5 @@
 </div>
 
 <script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
-
+<script src="{{ url_for('static', filename='js/quizForm.js')}}"></script>
 {% endblock %}

@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import exists, and_
 from collections import defaultdict
 from bettercrative import db
+from bettercrative.quizzes.routes import quizzes, quiz
 from bettercrative.classrooms.response_handling import *
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm, StudentForm
 from bettercrative.models import Classroom, Quiz, Response, Question, assoc, Answer, Student
@@ -39,7 +40,10 @@ def enter_classroom():
             student = Student(quiz_reference = classroom.active_quiz)
             db.session.add(student)
             db.session.commit()
-            if classroom.username_required:       
+            if classroom.username_required:    
+                print("-------------------------------------------------------------------")
+                print("STUDENTS NEED TO PUT A USERNAME HERE")
+                print("-------------------------------------------------------------------")   
                 return redirect(url_for('classrooms.student_name', classroom_id = classroom.id, student=student.id))
             else:   
                 return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id,student=student.id))
@@ -57,7 +61,8 @@ def student_name():
     form = StudentForm()
   
     
-    if form.validate_on_submit:
+    if form.validate_on_submit():
+        
         student = Student.query.filter_by(id=int(args['student'])).first()
         student.name = form.name.data
         print(student)
@@ -199,7 +204,17 @@ def set_active(classroom_id, quiz_id):
 
     return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
 
-
+@classrooms.route('/classroom/unset_and_edit', methods=['POST'])
+@login_required
+def unset_and_edit():
+    form = request.form
+    if 'quiz_id' not in form:
+        raise('quiz_id key is not found')
+    
+    quiz = Quiz.query.filter_by(id=int(form['quiz_id'])).first()
+    quiz.unset_and_edit()
+    return redirect( url_for('quizzes.quiz', quiz_id=quiz.id))
+        
 @classrooms.route("/classroom/<int:classroom_id>/remove_active", methods=['GET', 'POST'])
 @login_required
 def remove_active(classroom_id):

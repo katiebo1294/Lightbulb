@@ -28,5 +28,5 @@ class AddQuizForm(FlaskForm):
     submit = SubmitField('Add Quiz')
 
 class StudentForm(FlaskForm):
-    name= StringField(validators=['Fill in Name below', InputRequired(), Length(min=3, max=20)])
+    name= StringField('Fill in Name Below',validators=[ InputRequired(), Length(min=3, max=20)])
     submit = SubmitField('Submit')

@@ -96,7 +96,7 @@ class Classroom(db.Model):
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
     added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', back_populates='classroom_hosts', cascade='none')
     # active quiz ID is stored here, or None if no active quiz
-    active_quiz = db.Column(db.Integer, nullable=True, default=None)
+    active_quiz = db.Column(db.Integer, db.ForeignKey('quiz.id'),nullable=True, default=None)
     username_required= db.Column(db.Boolean, default=False)
 
     def __repr__(self):
@@ -121,7 +121,7 @@ class Classroom(db.Model):
         print(id_list)
         return id_list
 
-
+    
     """ A helper table to link the Quiz and Classroom models above in a many-to-many relationship.
 
         ...
@@ -168,15 +168,45 @@ class Quiz(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     classroom_hosts = db.relationship('Classroom', secondary='cl_qz_link', back_populates='added_quizzes',
                                       cascade='none')
+    activated_classrooms= db.relationship('Classroom', backref='quiz', cascade='delete, all')
     questions = db.relationship('Question', backref='quiz', order_by="Question.index",
                                 collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
     active = db.Column(db.Integer, unique=False, nullable=True, default=None)
     responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
     students = db.relationship("Student", backref = 'quiz', cascade = 'delete, all')
-
     
-
+    """
+        Description:
+            this function checks if a certain quiz is activated in one of the classrooms
+        Parameters:
+            self - Quiz instance
+        Return:
+            True - Quiz is active in a classroom
+            False - Quiz not active anywhere
+    """
+    def quiz_activated(self):
+        print("-------------------------------------------------------------------")
+        print("CLASSROOM HOSTS LINE HERE")
+        print(self.activated_classrooms)
+        print("-------------------------------------------------------------------")
+        if self.activated_classrooms:
+            return True
+        else:
+            return False
+    
+    """
+        Description:
+            this function will unset the given quiz instance on all classrooms it is active on.
+        Parameters:
+            self - Quiz instance
+        Return:
+            N/A
+    """
+    def unset_and_edit(self):
+        for classroom in self.classroom_hosts:
+            classroom.active_quiz = None
+        db.session.commit()
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 
