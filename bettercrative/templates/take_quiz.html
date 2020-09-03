@@ -83,7 +83,7 @@
 					          disabled="disabled"></textarea>
 				</div>
 				<div id="editor-controls" class="col-3">
-					<button class="btn btn-lg btn-dark" style="margin: 0% 10%;">Dark Theme</button>
+					<button id="theme-toggle" class="btn btn-lg btn-dark" style="margin: 0% 10%;">Dark Theme</button>
 					<button onclick="responseIDE( '{{ url_for('classrooms.received_answer')}}' , answer_id = {{answer.id}} ,
 						classroom_id = {{classroom.id}},  page_num = {{question.index + 1}}, quiz_id = {{quiz.id}},
 						student= '{{student.id}}'  )" class="btn btn btn-info" style="margin: 5% 10%;">Save Changes

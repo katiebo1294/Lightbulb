@@ -7,7 +7,7 @@ from collections import defaultdict
 from bettercrative import db
 from bettercrative.quizzes.routes import quizzes, quiz
 from bettercrative.classrooms.response_handling import *
-from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm, StudentForm
+from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm, StudentForm, SetActiveForm
 from bettercrative.models import Classroom, Quiz, Response, Question, assoc, Answer, Student
 
 classrooms = Blueprint('classrooms', __name__)
@@ -80,12 +80,13 @@ def classroom(classroom_id):
             classroom_id (int): the ID of the classroom to display
     """
     classroom = Classroom.query.get_or_404(classroom_id)
+    activeform = SetActiveForm()
     
     if current_user.is_authenticated:
         form = ClassroomForm()
         # this is so the "view results" button only shows up if there's something to view
         has_responses = classroom.active_quiz is not None and len(Response.query.filter_by(quiz_reference=classroom.active_quiz).all()) > 0
-        return render_template('classroom.html', title=classroom.name, classroom=classroom, form=form, has_responses=has_responses)
+        return render_template('classroom.html', title=classroom.name, classroom=classroom, form=form, has_responses=has_responses, activeform=activeform)
     else:
         quiz = classroom.active_quiz
         student = Student()
@@ -191,18 +192,22 @@ def set_active(classroom_id, quiz_id):
 
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz = Quiz.query.get_or_404(quiz_id)
-    username_required = bool(request.args['status'])
+    activeform = SetActiveForm()
     if is_complete(quiz):
-        classroom.active_quiz = quiz_id
-        if username_required:
-            classroom.username_required = True
-        db.session.commit()
-        flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
+        print("is complete")
+        print(request.args)
+        print(activeform.errors)
+        if activeform.validate_on_submit:
+            print("validated")
+            classroom.username_required = activeform.require_usernames.data
+            classroom.active_quiz = quiz_id
+            db.session.commit()
+            flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
     else:
         print("got here")
         flash(u'Quiz \"' + quiz.name + '\" is incomplete. Please check all questions have content and sufficient answers.', 'danger')
 
-    return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
+    return redirect(url_for('classrooms.classroom', classroom_id=classroom.id, activeform=activeform))
 
 @classrooms.route('/classroom/unset_and_edit', methods=['POST'])
 @login_required

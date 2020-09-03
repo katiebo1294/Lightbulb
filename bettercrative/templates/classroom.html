@@ -3,26 +3,25 @@
 {% block content %}
 
 <div id="classroom-container">
-	{% if current_user.is_authenticated %}
 	<div class="titlebar">
 		<!-- Classroom Title -->
 		<button class="btn-sm editTitle general-btn classroomname" id="classroom-{{classroom.id}}"
-		        onclick="showEditClassroom({{classroom.id}})" aria-label="edit classroom name">
-			{{ classroom.name }}
-			<span style="margin:.5vw; float:right; opacity:0.5; font-size:2vw;">
-						<i class="fas fa-pencil-alt" aria-hidden="true"></i>
-					</span>
+		        onclick="showEditClassroom({{ classroom.id }})" aria-label="edit classroom name">
+			{{classroom.name}}
+			<span style="float:right; opacity:0.5; font-size:2vw;">
+                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                </span>
 		</button>
 		<!-- Title edit form -->
-		<form class="editTitle general-btn" id="classroom-form-{{classroom.id}}" style="display: none;"
+		<form id="classroom-form-{{classroom.id}}" style="display: none;"
 		      action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
 			{{form.hidden_tag()}}
-			<fieldset class=" form-group edit-classroom-form">
+			<fieldset class="editTitle general-btn form-group edit-classroom-form">
 				<div class="form-group">
 					{% if form.name.errors %}
 					{{form.name(placeholder='Enter new name '
 					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
-					form-control-lg is-invalid editTitle general-btn classroomname')}}
+					form-control-lg is-invalid editTitle editTitle classroomname')}}
 					<div class="invalid-feedback">
 						{% for error in form.name.errors %}
 						{{ error }}
@@ -31,7 +30,7 @@
 					{% else %}
 					{{form.name(placeholder='Enter new name '
 					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
-					form-control-lg editTitle general-btn classroomname')}}
+					form-control-lg editTitle editTitle classroomname')}}
 					{% endif %}
 				</div>
 			</fieldset>
@@ -42,16 +41,11 @@
 			</div>
 		</form>
 		<!-- Save button -->
-		<button class="btn-sm sideClick general-btn"
-		        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
+		<button class="btn-sm save-and-exit sideClick general-btn"
+		        onclick="goBack();">
 			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
 		</button>
 	</div>
-	{% endif %}
-
-	<!-- prevent things from floating after this section -->
-	<div style=" clear: both;"></div>
-	<!-- prevent things from floating after this section -->
 
 	<!-- List of added quizzes -->
 	<div class="quizlist" id="quizzes-{{classroom.id}}">
@@ -67,10 +61,10 @@
 		<!-- actual quiz data/options -->
 		<div class="account-tables">
 			<div class="row table-element header-row">
-				<!-- TODO when one of these buttons is clicked, sort the list. -->
 				<div class="col-3 text-center show">
-					<button id="sort-by-name" class="btn general-btn table-header">Name <i class="fas fa-arrow-up sort-ascending"
-					                                                           aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i>
+					<button id="sort-by-name" class="btn general-btn table-header">Name <i
+							class="fas fa-arrow-up sort-ascending"
+							aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i>
 					</button>
 				</div>
 				<div class="col-6 text-center show">
@@ -80,14 +74,14 @@
 				</div>
 				<div class="btn col-3 show table-header options-header">Options</div>
 			</div>
-			
+
 			{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
 			<!-- JavaScript option to set the current quiz in the list to active -->
-			
+
 			<div id="quiz-{{ quiz.id }}" class="row table-element">
-			
+
 				{%include 'set_active_modal.html'%}
-			
+
 				<div class="col-4">{{ quiz.name }}
 					{% if quiz.id == classroom.active_quiz %}
 					(active)
@@ -100,32 +94,32 @@
 				<div class="col-4 quiz-icon-col">
 
 					<button id="set-active-{{classroom.id}}" class="btn general-btn"
-					   data-toggle='modal' data-target='#set_active_modal-{{quiz.id}}'>
+					        data-toggle="modal" data-target="#set_active_modal-{{quiz.id}}">
 						Set Active
 					</button>
-					
+
 					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-						        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">
-							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
+					        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">
+						<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
 					</button>
 					<button type="button" class="btn btn-sm general-btn"
-						        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})"
-						        aria-label="delete quiz">
-							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+					        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})"
+					        aria-label="delete quiz">
+						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
 					</button>
 				</div>
 
 				{% else %}
-				<div class="col-4 quiz-icon-col">
+				<div class="col-4 quiz-icon-col unset-active-btn">
 					<button id="remove-active-{{classroom.id}}" class="btn general-btn"
-				onclick="remove_active({{classroom.id}})">
+					        onclick="remove_active({{classroom.id}})">
 						Unset Active
 					</button>
 				</div>
 				{% endif %}
-			
+
 			</div>
-			
+
 			{%endfor%}
 		</div>
 	</div>
@@ -133,16 +127,20 @@
 
 {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
 <div class="classroom-options">
-{% if classroom.active_quiz %}
+	{% if classroom.active_quiz %}
 	<button id="take-active-quiz" class="btn general-btn"
-	   onclick="window.location.href='{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}';">Take Active Quiz <i class="fas fa-door-open"></i></button>
+	        onclick="window.location.href='{{ url_for('classrooms.take_quiz', classroom_id=classroom.id) }}';">Take
+		Active Quiz <i class="fas fa-door-open"></i></button>
 	{% if has_responses %}
 	<button id="view-results" class="btn general-btn"
-	   onclick="window.location.href='{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}';"><i class="fas fa-chart-bar" aria-hidden="true"></i> View Results</button>
+	        onclick="window.location.href='{{ url_for('classrooms.view_results', classroom_id=classroom.id) }}';"><i
+			class="fas fa-chart-bar" aria-hidden="true"></i> View Results
+	</button>
 	{% endif %}
 	<div style="clear: both;"></div>
-{% endif %}
+	{% endif %}
 </div>
 {% endif %}
 <script src="{{url_for('static', filename='js/set_active.js')}}" type="text/javascript"></script>
+<script src="{{url_for('static', filename='js/Classroom.js')}}" type="text/javascript"></script>
 {% endblock %}

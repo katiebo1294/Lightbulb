@@ -532,13 +532,16 @@ No media query for `xs` since this is the default in Bootstrap */
 
 .titlebar {
   padding:.75%;
-  min-height: 4vw;
+  min-height: 11vh;
   color:black;
   text-align:center;
-  overflow:auto;
   cursor: default;
   border-bottom:1px solid black;
   text-align:left;
+}
+
+.save-and-exit {
+  margin-top: 2vh!important;
 }
 
 h4 {
@@ -741,6 +744,7 @@ div.scrollmenu a:hover {
               ease-in-out, background-color .5s;
   height: calc(1.5em + 1rem + 2px)!important;
   float: left;
+  overflow: hidden;
   background-color: #CFCCC6;
 }
 
