@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, TextAreaField, BooleanField
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.validators import InputRequired, Length, ValidationError, Optional
 from bettercrative.models import Classroom
 
 
@@ -29,12 +29,12 @@ class AddQuizForm(FlaskForm):
 
 
 class StudentForm(FlaskForm):
-    name = StringField(validators=['Fill in Name below', InputRequired(), Length(min=3, max=20)])
+    name = StringField('Fill in Name here',validators=[InputRequired(), Length(min=3, max=20)])
     submit = SubmitField('Submit')
 
 
 class SetActiveForm(FlaskForm):
-    require_usernames = BooleanField('Require student usernames?')
-    generate_qr = BooleanField('Generate QR code for student sign-in?')
+    require_usernames = BooleanField('Require student usernames?', validators=[Optional()])
+    generate_qr = BooleanField('Generate QR code for student sign-in?', validators=[Optional()])
     submit = SubmitField('Set Active')
     # TODO other options we want to have for active quizzes

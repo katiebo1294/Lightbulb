@@ -63,6 +63,7 @@
 			<tbody id="classrooms-data">
 				<span style="display: none;">{{ request.args }} {{sort_on}} {{sort_direction}}</span>
 				{% for classroom in current_user.classrooms%}
+				
 				<tr class="table-element">
 					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
 					<td class="dropdown room-name">
@@ -121,6 +122,7 @@
 			</tbody>
 		</table>
 	</div>
+	
 </div>
 
 <script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>

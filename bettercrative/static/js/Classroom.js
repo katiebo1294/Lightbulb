@@ -6,7 +6,7 @@ function removeClassroomPopup(url, c_id) {
     modalButton = document.getElementById("modalButton");
     modalText.innerHTML = "Are you sure that you want to delete this classroom??";
     modalButton.onclick = function() {removeClassroom(url,c_id)};
-    modal.style.style.display = "block";
+    modal.style.display = "block";
 }
 
 function removeClassroom(url, c_id) {
@@ -31,18 +31,69 @@ function createClassroomPopup() {
     modalForm = document.getElementById("modalClass");
     modalText = document.getElementById("modalTextForm")
     modalText.innerHTML = "Create Classroom";
-    modal.style.style.display = "block";
+    modal.style.display = "block";
     modalForm.style.display = "block";
 }
+function show_unset(quiz_id){
+    var quiz = document.getElementById('default-'+quiz_id);
+    quiz.classList.add('noshow');
+    quiz = document.getElementById('unset-'+quiz_id);
+    quiz.classList.remove('noshow');
+    quiz.classList.add('show');
+    
+    //listener for modal close
+    $('#document').ready(function(){
+        $('#quiz_active_modal').on('hidden.bs.modal', function(){
+            console.log('refreshing the modal content')
+            const modal_content = document.getElementById('unset-'+quiz_id);
+            modal_content.classList.remove('show');
+            modal_content.classList.add('noshow');
+            const default_modal = document.getElementById('default-'+quiz_id);
+            default_modal.classList.remove('noshow');
+            default_modal.classList.add('show');
+        });
+    })
+}
 
-function unset_and_edit(quiz_id){
+function show_unset_and_edit(quiz_id){
     var quiz = document.getElementById('default-'+quiz_id);
     quiz.classList.add('noshow');
     quiz = document.getElementById('unset-and-edit-'+quiz_id);
     quiz.classList.remove('noshow');
     quiz.classList.add('show');
+    
+    //listener for modal close
+    $('#document').ready(function(){
+        $('#quiz_active_modal').on('hidden.bs.modal', function(){
+            console.log('refreshing the modal content')
+            const modal_content = document.getElementById('unset-and-edit-'+quiz_id);
+            modal_content.classList.remove('show');
+            modal_content.classList.add('noshow');
+            const default_modal = document.getElementById('default-'+quiz_id);
+            default_modal.classList.remove('noshow');
+            default_modal.classList.add('show');
+        });
+    })
 }
-
+function unset_confirm(quiz_id, classroom_id){
+    event.preventDefault();
+    $.ajax({
+        type: "POST",
+        data: {'quiz_id': quiz_id, 'classroom_id': classroom_id},
+        url: '/classroom/unset',
+        error: function(response) {
+            alert(response.statusText);
+            console.log(response.statusText);
+        },
+        success: function() {
+           
+            
+            location.reload();
+               
+            
+        }
+    });
+}
 function unset_and_edit_confirm(quiz_id){
     event.preventDefault();
     $.ajax({
@@ -64,10 +115,7 @@ function unset_and_edit_confirm(quiz_id){
 }
 
 
-$('#quiz_active_modal').on('hidden.bs.modal', function (e) {
-    location.reload();
-    
-})
+
 /**
  * Description:
     shows the classroom edit form

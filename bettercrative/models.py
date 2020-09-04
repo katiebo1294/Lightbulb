@@ -98,7 +98,7 @@ class Classroom(db.Model):
     # active quiz ID is stored here, or None if no active quiz
     active_quiz = db.Column(db.Integer, db.ForeignKey('quiz.id'),nullable=True, default=None)
     username_required= db.Column(db.Boolean, default=False)
-
+    generate_qr = db.Column(db.Boolean, default=False)
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.added_quizzes}', '{self.active_quiz}')"
     """
@@ -186,10 +186,6 @@ class Quiz(db.Model):
             False - Quiz not active anywhere
     """
     def quiz_activated(self):
-        print("-------------------------------------------------------------------")
-        print("CLASSROOM HOSTS LINE HERE")
-        print(self.activated_classrooms)
-        print("-------------------------------------------------------------------")
         if self.activated_classrooms:
             return True
         else:
@@ -203,7 +199,7 @@ class Quiz(db.Model):
         Return:
             N/A
     """
-    def unset_and_edit(self):
+    def unset(self):
         for classroom in self.classroom_hosts:
             classroom.active_quiz = None
         db.session.commit()

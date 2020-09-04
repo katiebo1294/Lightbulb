@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import exists, and_
 from collections import defaultdict
 from bettercrative import db
+from bettercrative.users.routes import users, quizzes
 from bettercrative.quizzes.routes import quizzes, quiz
 from bettercrative.classrooms.response_handling import *
 from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, AddQuizForm, StudentForm, SetActiveForm
@@ -65,8 +66,6 @@ def student_name():
         
         student = Student.query.filter_by(id=int(args['student'])).first()
         student.name = form.name.data
-        print(student)
-        print(student.id)
         db.session.commit()
         return redirect(url_for('classrooms.take_quiz', classroom_id= args['classroom_id'], student= student.id))
     return render_template('student_name.html', form = form, classroom_id = args['classroom_id'], student= args['student'])
@@ -189,20 +188,19 @@ def set_active(classroom_id, quiz_id):
             quiz_id (int): the ID of the quiz to set active
             classroom_id (int): the ID of the classroom to make it active in
     """
-
+    
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz = Quiz.query.get_or_404(quiz_id)
+    
     activeform = SetActiveForm()
-    if is_complete(quiz):
-        print("is complete")
-        print(request.args)
-        print(activeform.errors)
-        if activeform.validate_on_submit:
-            print("validated")
-            classroom.username_required = activeform.require_usernames.data
-            classroom.active_quiz = quiz_id
-            db.session.commit()
-            flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
+    
+    if is_complete(quiz) and activeform.validate_on_submit():
+        
+        classroom.username_required = activeform.require_usernames.data
+        classroom.generate_qr = activeform.generate_qr.data
+        classroom.active_quiz = quiz_id
+        db.session.commit()
+        flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
     else:
         print("got here")
         flash(u'Quiz \"' + quiz.name + '\" is incomplete. Please check all questions have content and sufficient answers.', 'danger')
@@ -217,9 +215,21 @@ def unset_and_edit():
         raise('quiz_id key is not found')
     
     quiz = Quiz.query.filter_by(id=int(form['quiz_id'])).first()
-    quiz.unset_and_edit()
+    quiz.unset()
     return redirect( url_for('quizzes.quiz', quiz_id=quiz.id))
-        
+
+@classrooms.route('/classroom/unset', methods = ['POST'])
+@login_required
+def unset():
+   
+    form = request.form
+    if 'quiz_id' not in form and 'classroom_id' not in form:
+        raise('quiz_id key is not found')
+    
+    quiz = Quiz.query.filter_by(id = int(form['quiz_id'])).first()
+    quiz.unset()
+
+    return redirect( url_for('users.quizzes'))
 @classrooms.route("/classroom/<int:classroom_id>/remove_active", methods=['GET', 'POST'])
 @login_required
 def remove_active(classroom_id):
@@ -390,12 +400,13 @@ def edit_classroom_name(classroom_id):
     print(args)
     classroom = Classroom.query.filter_by(id=classroom_id).first()
     form = ClassroomForm()
+    activeform = SetActiveForm()
     if form.validate_on_submit:
         classroom.name = args['name']
         db.session.commit()
    
     
-    return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form)
+    return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form, activeform = activeform)
 
 @classrooms.route("/account/delete_classroom")
 @login_required

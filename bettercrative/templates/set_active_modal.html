@@ -5,10 +5,12 @@
 				<h4><i class="far fa-lightbulb"></i> Quiz Options</h4>
 				<button id="set-active-dismiss" type="button" aria-label="Close" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
 			</div>
-			<form id="set-active-form" onsubmit="set_active(classroom_id={{classroom.id}}, quiz_id={{quiz.id}});" role="form" action="{{ url_for('classrooms.set_active', classroom_id=classroom.id, quiz_id=quiz.id) }}">
+			<form id="set-active-form" action="{{ url_for('classrooms.set_active', classroom_id=classroom.id, quiz_id=quiz.id) }}" method='POST'>
 				{{ activeform.hidden_tag() }}
+				
 				<div class="modal-body">
 					<div class="checkbox">
+						
 						{{ activeform.require_usernames.label() }}
 						{% if activeform.require_usernames.errors %}
 						{{ activeform.require_usernames(class="is-invalid") }}
@@ -43,19 +45,3 @@
 	</div>
 </div>
 
-<div id="qr_code_modal-{{ quiz.id }}" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Sign in to classroom "{{ classroom.name }}"</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </button>
-      </div>
-      <div class="modal-body text-center" style="padding: 10%">
-        <img src="{{ qrcode(url_for('classrooms.take_quiz', classroom_id=classroom.id)) }}" height="150"
-					     width="150" alt="Scan this QR code to sign into classroom {{ classroom.name }}">
-      </div>
-    </div>
-  </div>
-</div>
