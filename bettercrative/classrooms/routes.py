@@ -334,15 +334,19 @@ def view_results(classroom_id):
     """
 
     classroom = Classroom.query.filter_by(id=classroom_id).first()
-    quiz = Quiz.query.filter_by(id=classroom.active_quiz).first()
-    students = quiz.students
-    
-    responses = defaultdict(list)
 
-    for student in students:
-        for response in student.responses:
-            responses[(student.id, response.question_num)].append(response)
-    return render_template('classroom_results.html', title='results of quiz',responses=responses, quiz=quiz, classroom=classroom, students=students)
+    totalResponses = {}
+    responses = defaultdict(list)
+    
+    # For every quiz, store that quizzes info 
+    for quiz in classroom.added_quizzes:
+        for student in quiz.students:
+            for response in student.responses:
+                responses[(student.id, response.question.id)].append(response)
+            totalResponses[quiz.id] = responses
+
+
+    return render_template('classroom_results.html', title='results of quiz',totalResponses=totalResponses, classroom=classroom)
 
 
 #Answers of each student 
