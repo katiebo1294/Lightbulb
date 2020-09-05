@@ -29,7 +29,7 @@
 				{% for question in quiz.questions %}
 				<td id="response-data-{{ question.id }}-{{ student.id }}">
 					{% if responses[student.id, question.id] %}
-						{% for response in responses[student.id,question.id] %}
+						{% for response in responses[student.id,question.id]|sort(attribute="value") %}
 							{% if question.category == 'Short Answer' %}
 							<!-- TODO add option to manually mark this response as correct -->
 							<span class="text-muted">{{ response.value }}</span>
