@@ -9,13 +9,41 @@ var question_canvas = document.getElementById("question_data");
 //type of chart
 var results_ctx = canvas.getContext('2d');
 var question_ctx = question_canvas.getContext('2d');
+
 var questionDataChart;
 var myBasicChart;
 var chart_labels = [];
 var chart_data = [];
+var myLineExtend = Chart.controllers.line.prototype.draw;
 
-init(undefined, undefined, 'bar');
+Chart.pluginService.register({
+  beforeDraw: function(chart) {
+    // checks if the current chart is the question one
+    if(chart.config.options.isquestion_ctx)
+    {
+      var width = chart.chart.width,
+          height = chart.chart.height,
+          question_ctx = chart.chart.ctx;
+
+      question_ctx.restore();
+      var fontSize = (height / 150).toFixed(2);
+      question_ctx.font = fontSize + "em sans-serif";
+      question_ctx.textBaseline = "middle";
+
+      // change this variable to modify what is stated in the text area
+      var text = "No Question Selected",
+          textX = Math.round((width - question_ctx.measureText(text).width) / 2),
+          textY = height / 2;
+
+        question_ctx.fillText(text, textX, textY);
+        question_ctx.save();
+      
+    }
+  }
+});
+
 init_question(undefined, undefined, 'pie');
+init(undefined, undefined, 'bar');
 
 //initiates myBasicChart with its type, data and options
 function init(data, title_text, chartType) {
@@ -29,6 +57,7 @@ function init(data, title_text, chartType) {
         }]
       },
       options: {
+        isquestion_ctx: false,
         scales: {
           yAxes: [{
             ticks: {
@@ -46,16 +75,37 @@ function init(data, title_text, chartType) {
       }
     });
   }
+  else if (chartType == 'doughnut') {
+    myBasicChart = new Chart(results_ctx, {
+      type: chartType,
+      data: data,
+      options: {
+        isquestion_ctx: false,
+        scales: {
+          xAxes: [{
+            display:false
+          }]
+        },
+        title: {
+          fontSize: 18,
+          display: true,
+          text: title_text,
+          position: 'bottom'
+        }
+      }
+    });
+  }
   else {
     myBasicChart = new Chart(results_ctx, {
       type: chartType,
       data: data,
       options: {
+        isquestion_ctx: false,
         scales: {
           yAxes: [{
             ticks: {
               beginAtZero: true,
-              max: y_min
+              suggestedMax: y_min
             }
           }]
         },
@@ -78,25 +128,23 @@ function init_question(data, title_text, chartType) {
       data: {
         labels: [""],
         datasets: [{
-          label: "Click a question number in the table above to see details",
-        }]
+          label: "No Chart Selected",
+        }],
       },
       options: {
+        isquestion_ctx: true,
         scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              suggestedMax: 100
-            }
+          xAxes: [{
+            display:false
           }]
         },
         title: {
           fontSize: 18,
           display: true,
-          text: '',
+          text: 'Select a Question',
           position: 'bottom'
-        }
-      }
+        },
+      },
     });
   }
   else {
@@ -104,12 +152,10 @@ function init_question(data, title_text, chartType) {
       type: chartType,
       data: data,
       options: {
+        isquestion_ctx: false,
         scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true,
-              max: y_min
-            }
+          xAxes: [{
+            display:false
           }]
         },
         title: {
