@@ -99,6 +99,8 @@ class Classroom(db.Model):
     active_quiz = db.Column(db.Integer, db.ForeignKey('quiz.id'),nullable=True, default=None)
     username_required= db.Column(db.Boolean, default=False)
     generate_qr = db.Column(db.Boolean, default=False)
+    # the active quiz for the results page
+    active_result = db.Column(db.Integer, nullable=True)
     def __repr__(self):
         return f"Classroom('{self.name}', '{self.date_created}', '{self.user_id}', '{self.added_quizzes}', '{self.active_quiz}')"
     """

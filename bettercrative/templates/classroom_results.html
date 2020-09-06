@@ -2,118 +2,125 @@
 
 {% block content %}
 
-{%for quiz in classroom.added_quizzes%}
-	{% set responses = totalResponses[quiz.id] %}
-	<!-- Create a basic table template -->
+<div id="results_display" class="container" style="margin:auto;">
+	<div class="dropdown">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="class_result_selector" data-toggle="dropdown">
+			Select a quiz
+		</button>
+		<div class="dropdown-menu">
+			{% for quiz in classroom.added_quizzes %}
+				<button class="dropdown-item" onclick="javascript:change_active_result('{{ url_for('classrooms.change_active_result') }}',{{quiz.id}},{{classroom.id}})">{{quiz.name}}</button>
+			{% endfor %}
+		</div>
+	</div>
+	<h1 id="results-title">Quiz Results</h1>
+	{%for quiz in classroom.added_quizzes%}
+		{% set responses = totalResponses[quiz.id] %}
+		<!-- Create a basic table template -->
+			<!-- Graphs for quiz -->
+			<div id="results_{{quiz.id}}" {% if quiz.id != classroom.active_result %} style="display:none;" {% endif %}>
+				<table id="classroom-results">
+					<tr>
+						<th>Name</th>
+						{% for question in quiz.questions %}
+						<th>
+							<button class="btn btn-sm general-btn" onclick="javascript:create_question_chart('{{url_for('classrooms.calculate_question_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, {{ question.id }}, {{ question.index + 1 }})">
+								{{ question.index + 1 }}
+							</button>
+						</th>
+						{% endfor %}
+					</tr>
+					<!-- Student Answers -->
 
-	<div id="results_display" class="container" style="margin:auto;">
-		<h1 id="results-title">Quiz Results</h1>
-
-		<!-- Graphs for quiz -->
-		<table id="classroom-results">
-			<tr>
-				<th>Name</th>
-				{% for question in quiz.questions %}
-				<th>
-					<button class="btn btn-sm general-btn" onclick="javascript:create_question_chart('{{url_for('classrooms.calculate_question_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, {{ question.id }}, {{ question.index + 1 }})">
-						{{ question.index + 1 }}
-					</button>
-				</th>
-				{% endfor %}
-			</tr>
-			<!-- Student Answers -->
-
-			{% for student in quiz.students %}
-			<tr>
-				<td>{{student.id}}</td>
-				{% for question in quiz.questions %}
-				<td id="response-data-{{ question.id }}-{{ student.id }}">
-					{% if responses[student.id, question.id] %}
-						{% for response in responses[student.id,question.id]|sort(attribute="value") %}
-							{% if question.category == 'Short Answer' %}
-							<!-- TODO add option to manually mark this response as correct -->
-							<span class="text-muted">{{ response.value }}</span>
-							{% elif response.correct %}
-							<span class="text-success">
-										<!-- if it's a true/false question, print out T or F instead of the letter -->
-										{% if question.category == 'True-False' %}
-											{% if response.value == 'A' %}
-												T
-											{% else %}
-												F
-											{% endif %}
-										{% else %}
-											{{ response.value }}
-										{% endif %}
-									</span>
-							{% else %}
-							<span class="text-danger">
-										<!-- if it's a true/false question, print out T or F instead of the letter -->
-										{% if question.category == 'True-False' %}
-											{% if response.value == 'A' %}
-												T
-											{% else %}
-												F
-											{% endif %}
-										{% else %}
-											{{ response.value }}
-										{% endif %}
-									</span>
+					{% for student in quiz.students %}
+					<tr>
+						<td>{{student.id}}</td>
+						{% for question in quiz.questions %}
+						<td id="response-data-{{ question.id }}-{{ student.id }}">
+							{% if responses[student.id, question.id] %}
+								{% for response in responses[student.id,question.id]|sort(attribute="value") %}
+									{% if question.category == 'Short Answer' %}
+									<!-- TODO add option to manually mark this response as correct -->
+									<span class="text-muted">{{ response.value }}</span>
+									{% elif response.correct %}
+									<span class="text-success">
+												<!-- if it's a true/false question, print out T or F instead of the letter -->
+												{% if question.category == 'True-False' %}
+													{% if response.value == 'A' %}
+														T
+													{% else %}
+														F
+													{% endif %}
+												{% else %}
+													{{ response.value }}
+												{% endif %}
+											</span>
+									{% else %}
+									<span class="text-danger">
+												<!-- if it's a true/false question, print out T or F instead of the letter -->
+												{% if question.category == 'True-False' %}
+													{% if response.value == 'A' %}
+														T
+													{% else %}
+														F
+													{% endif %}
+												{% else %}
+													{{ response.value }}
+												{% endif %}
+											</span>
+									{%endif%}
+								{%endfor%}
+							{%else%}
+							<span class="text-info"> No answer</span>
 							{%endif%}
+						</td>
 						{%endfor%}
-					{%else%}
-					<span class="text-info"> No answer</span>
-					{%endif%}
-				</td>
-				{%endfor%}
-			</tr>
-			{%endfor%}
-			<tr>
+					</tr>
+					{%endfor%}
+					<tr>
 
-				<td>Class Total</td>
-				{% for question in quiz.questions %}
-				<td id="class-total-{{ question.id }}">
+						<td>Class Total</td>
+						{% for question in quiz.questions %}
+						<td id="class-total-{{ question.id }}">
 
-				</td>
-				{% endfor %}
-			</tr>
-		</table>
-	</div>
-
-	<!-- end of graphs -->
-
-
-	<!-- Chart.js area -->
-	<div class="container">
-		<div class="row" style="margin-top: 5%;">
-			<div class="col-6">
-				<!-- Bar graph shows each student and their total score -->
-				<button style="float: left;" class="general-btn btn btn-sm"
-						onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'bar')">
-					Bar Graph
-					<i class="fas fa-sync" aria-hidden="true"></i>
-				</button>
-				<!-- Pie chart/doughnut chart shows each question and how many students got those questions right (i) Use this to determine which questions students tended to get wrong -->
-				<button style="float: right;" class="general-btn btn btn-sm"
-						onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'doughnut')">
-					Doughnut Chart
-					<i class="fas fa-sync" aria-hidden="true"></i>
-				</button>
+						</td>
+						{% endfor %}
+					</tr>
+				</table>
+			<!-- end of graphs -->
+			<div class="row" style="margin-top: 5%;">
+				<div class="col-6">
+					<!-- Bar graph shows each student and their total score -->
+					<button style="float: left;" class="general-btn btn btn-sm"
+							onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'bar')">
+						Bar Graph
+						<i class="fas fa-sync" aria-hidden="true"></i>
+					</button>
+					<!-- Pie chart/doughnut chart shows each question and how many students got those questions right (i) Use this to determine which questions students tended to get wrong -->
+					<button style="float: right;" class="general-btn btn btn-sm"
+							onclick="create_chart('{{url_for('classrooms.calculate_chart_data')}}', {{ quiz.id }}, {{ classroom.id }}, 'doughnut')">
+						Doughnut Chart
+						<i class="fas fa-sync" aria-hidden="true"></i>
+					</button>
+				</div>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-6" style="height:40vh; width:40vw;">
-				<!-- Temporary area to display charts of student data -->
-				<canvas id="basicChart" style="background-color: rgba(196, 196, 196,0.4);"></canvas>
-			</div>
-			<!-- Area for question data -->
-			<div class="col-6" style="height:40vh; width:40vw;">
-				<!-- Temporary area to display charts of student data -->
-				<canvas id="question_data" style="background-color: rgba(196, 196, 196,0.4);"></canvas>
-			</div>
+	{%endfor%}
+</div>
+<!-- Chart.js area -->
+<div class="container">
+	<div class="row">
+		<div class="col-6" style="height:40vh; width:40vw;">
+			<!-- Temporary area to display charts of student data -->
+			<canvas id="basicChart" style="background-color: rgba(196, 196, 196,0.4);"></canvas>
+		</div>
+		<!-- Area for question data -->
+		<div class="col-6" style="height:40vh; width:40vw;">
+			<!-- Temporary area to display charts of student data -->
+			<canvas id="question_data" style="background-color: rgba(196, 196, 196,0.4);"></canvas>
 		</div>
 	</div>
-{%endfor%}
+</div>
 
 <button class="btn btn-lg general-btn"><a onclick="goBack();">
 	<i class="fas fa-angle-double-left"></i> Go Back</button>

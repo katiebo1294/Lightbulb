@@ -528,3 +528,17 @@ def calculate_question_chart_data():
                 chart_data[answer.index] += 1
     return jsonify(data), 200
 
+# changes active quiz for result page
+@classrooms.route("/change_active_result", methods=['GET', 'POST'])
+def change_active_result():
+    """
+        q_id: quiz id
+        c_id: classroom id
+    """
+    c_id = request.args.get("c_id", None)
+    q_id = request.args.get("q_id", None)
+    
+    classroom = Classroom.query.filter_by(id=c_id).first()
+    classroom.active_result = q_id
+    db.session.commit()
+    return "succsessful change of active result quiz",200

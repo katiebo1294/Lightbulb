@@ -390,3 +390,24 @@ $("[id^='class-total-']").each(function() {
         this.innerHTML = class_total + "%";
     }
 });
+
+// changes the active quiz displayed in result
+function change_active_result(url,q_id,c_id)
+{
+  $.ajax({
+    type: "GET",
+    data: {
+      'q_id': q_id,
+      'c_id': c_id
+    },
+    url: url,
+    error: function (response) {
+      alert(response.statusText);
+      console.log(response.statusText);
+    },
+    success: function () {
+      console.log("changed active result quiz");
+      refresh("#results_display")
+    }
+  });
+}
