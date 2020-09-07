@@ -889,3 +889,20 @@ table, th, td {
     border: 1px solid black;
 }
 
+/* user homepage */
+.homepage-table-title {
+    margin-top: 10%;
+}
+
+.homepage-table {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.homepage-table * {
+    border: none;
+    padding: 5px;
+    width: 50%;
+}
+/* end user homepage */
+

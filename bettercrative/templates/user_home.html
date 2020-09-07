@@ -86,7 +86,7 @@
 
 <div class="container">
 	<div class="row text-center">
-		<h1 id="title-text">{{ current_user.username }}'s home page</h1>
+		<h3 id="title-text">{{ current_user.username }}'s home page</h3>
 	</div>
 	<div class="row">
 		<button class="btn-sm general-btn sideClick" onclick="javascript:createQuizPopup()">
@@ -97,6 +97,28 @@
 		<button class="btn-sm general-btn sideClick" onclick="javascript:createClassroomPopup()">
 				<i class="fas fa-plus" aria-hidden="true"></i> Create Classroom
 			</button>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+				<h5 class="homepage-table-title text-center">Recent Classrooms</h5>
+				<table class="homepage-table">
+					<tr><th>Name</th><th>Last Edited</th></tr>
+					{% for classroom in current_user.classrooms|sort(attribute="date_modified") %}
+					<tr><td><a href="{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}">{{ classroom.name }}</a></td><td>{{ classroom.date_modified.strftime("%m/%d/%y %-I:%M %p") }}</td></tr>
+					{% endfor %}
+				</table>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+				<h5 class="homepage-table-title text-center">New Quizzes</h5>
+				<table class="homepage-table">
+					<tr><th>Name</th><th>Created</th></tr>
+					{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
+					<tr><td><a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td><td>{{ quiz.date_created.strftime("%m/%d/%y %-I:%M %p") }}</td></tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
 	</div>
 </div>
 
