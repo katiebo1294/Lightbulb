@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <script src="{{ url_for('static', filename='js/Classroom.js') }}"></script>
+
 <!-- Gradient credits: https://codepen.io/caseycallow/pen/yMNqPY -->
 <style>
 	#title-text {
@@ -105,7 +106,7 @@
 				<table class="homepage-table">
 					<tr><th>Name</th><th>Last Edited</th></tr>
 					{% for classroom in current_user.classrooms|sort(attribute="date_modified") %}
-					<tr><td><a href="{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}">{{ classroom.name }}</a></td><td>{{ classroom.date_modified.strftime("%m/%d/%y %-I:%M %p") }}</td></tr>
+					<tr><td><a class='text-wrap border border-info btn btn-outline-info' href="{{ url_for('classrooms.classroom', classroom_id=classroom.id) }}">{{ classroom.name }}</a></td><td>{{ classroom.date_modified.strftime("%m/%d/%y %-I:%M %p") }}</td></tr>
 					{% endfor %}
 				</table>
 			</div>
@@ -114,12 +115,27 @@
 				<table class="homepage-table">
 					<tr><th>Name</th><th>Created</th></tr>
 					{% for quiz in current_user.quizzes|sort(attribute="date_created") %}
-					<tr><td><a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td><td>{{ quiz.date_created.strftime("%m/%d/%y %-I:%M %p") }}</td></tr>
+					
+						{%if quiz.quiz_activated()%}
+							{%include 'editing_quiz_warning_modal.html'%}
+
+							<tr><td>
+								
+									<button type="button" class="btn-text border border-danger  btn btn-outline-danger" data-container="body" data-toggle="modal" data-target='#quiz_active_modal'>
+										{{quiz.name}}
+									</button>
+									
+								
+							</td><td>{{ quiz.date_created.strftime("%m/%d/%y %-I:%M %p") }}</td></tr>
+						{%else%}
+							<tr><td><a class='border border-info btn btn-outline-info' href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td><td>{{ quiz.date_created.strftime("%m/%d/%y %-I:%M %p") }}</td></tr>
+						{%endif%}
 					{% endfor %}
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 {% endblock %}
