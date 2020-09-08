@@ -191,7 +191,6 @@
 							<div class="form-group">
 								{{ question.name }})
 								{% if form.question_form.content.errors %}
-								{% set f = form.question_form.content.process_data(question.content) %}
 								{{ form.question_form.content(class='form-control form-control-lg is-invalid') }}
 								<div class="invalid-feedback">
 									{% for error in form.question_form.content.errors %}
@@ -200,7 +199,6 @@
 								</div>
 								{% else %}
 								{% if question.content %}
-								{% set f = form.question_form.content.process_data(question.content) %}
 								{{ form.question_form.content(class='form-control form-control-lg',
 								placeholder=question.content, value=question.content) }}
 								{% else %}
