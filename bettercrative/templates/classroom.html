@@ -42,7 +42,7 @@
 		</form>
 		<!-- Save button -->
 		<button class="btn-sm save-and-exit sideClick general-btn"
-		        onclick="goBack();">
+		        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
 			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
 		</button>
 	</div>
@@ -82,7 +82,6 @@
 			{%endif%}
 			<div id="quiz-{{ quiz.id }}" class="row table-element">
 				
-				{%include 'set_active_modal.html'%}
 
 				<div class="col-4">{{ quiz.name }}
 					{% if quiz.id == classroom.active_quiz %}
@@ -99,6 +98,8 @@
 					        data-toggle="modal" data-target="#set_active_modal-{{quiz.id}}">
 						Set Active
 					</button>
+
+					{%include 'set_active_modal.html'%}
 
 					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
 					        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">

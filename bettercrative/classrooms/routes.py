@@ -108,11 +108,13 @@ def is_complete(quiz):
     # the quiz must have at least one question
     if quiz.questions is None:
         complete = False
+        print("no questions")
     else:
         for question in quiz.questions:
             # all questions must have content and a category
             if question.category is None or question.content is None:
                 complete = False
+                print("question % 2d either has no category or has no content" % question.index)
                 break
             if question.category == 'Multiple Choice':
                 has_correct_answer = False
@@ -120,17 +122,20 @@ def is_complete(quiz):
                     # all answers must have content
                     if answer.content is None:
                         complete = False
+                        print("answer %2d to question %2d has no content" % (answer.index, question.index))
                         break
                     if answer.correct:
                         has_correct_answer = True
                 # at least one answer must be correct
                 if not has_correct_answer:
                     complete = False
+                    print("question %2d has no correct answers" % question.index)
                     break
             if question.category == 'True-False':
                 # true/false questions must be either true or false
                 if not question.answers[0].correct and not question.answers[1].correct:
                     complete = False
+                    print("question %2d has not been marked true or false" % question.index)
                     break
     return complete
 

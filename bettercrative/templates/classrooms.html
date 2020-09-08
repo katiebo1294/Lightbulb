@@ -66,30 +66,30 @@
 				
 				<tr class="table-element">
 					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
-					<td class="dropdown room-name">
-						<div class="btn itemName general-btn" type="button" id="dropdownMenuLink"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								{{ classroom.name }}
-								<i class="fas fa-caret-down" aria-hidden="true"></i>
-					</div>
-						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-							<button class="dropdown-item" type="button"
-								onclick="window.location.href='{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}';">
-								Add a Quiz
+					<td>
+						<div class="dropdown">
+							<button class="btn itemName general-btn dropdown-toggle" type="button" id="dropdownMenuLink"
+								data-toggle="dropdown" data-boundary="window" aria-haspopup="true" aria-expanded="false">
+									{{ classroom.name }}
 							</button>
-							{% for quiz in classroom.added_quizzes %}
-							{% if classroom.active_quiz == quiz.id %}
-							<button class="dropdown-item" type="button"
-								onclick="window.location.href='{{ url_for('classrooms.remove_active', classroom_id=classroom.id) }}'; ">
-								*ACTIVE* Quiz: {{ quiz.name }}
-							</button>
-							{% else %}
-							<button class="dropdown-item" type="button"
-								onclick="window.location.href='{{ url_for('classrooms.set_active', classroom_id=classroom.id, quiz_id=quiz.id) }}'; ">
-								Quiz: {{ quiz.name }}
-							</button>
-							{% endif %}
-							{% endfor %}
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+								<button class="dropdown-item" type="button"
+									onclick="window.location.href='{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}';">
+									Add a Quiz
+								</button>
+								{% for quiz in classroom.added_quizzes %}
+								{% if classroom.active_quiz == quiz.id %}
+								<button class="dropdown-item" type="button"
+									onclick="window.location.href='{{ url_for('classrooms.remove_active', classroom_id=classroom.id) }}'; ">
+									*ACTIVE* Quiz: {{ quiz.name }}
+								</button>
+								{% else %}
+								<button class="dropdown-item" type="button" data-toggle="modal" data-target="#set_active_modal-{{quiz.id}}">
+									Quiz: {{ quiz.name }}
+								</button>
+								{% endif %}
+								{% endfor %}
+							</div>
 						</div>
 					</td>
 

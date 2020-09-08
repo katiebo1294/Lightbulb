@@ -6,7 +6,7 @@ from bettercrative.models import User, Quiz, Classroom, Question
 from bettercrative.users.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
                                        RequestResetForm, ResetPasswordForm)
 from bettercrative.quizzes.routes import quizzes, quiz
-from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm
+from bettercrative.classrooms.forms import ClassroomForm, EnterClassroomForm, SetActiveForm
 from bettercrative.quizzes.forms import QuizForm
 from bettercrative.users.util import save_picture, send_reset_email
 
@@ -83,6 +83,7 @@ def quizzes():
 def classrooms():
     """ Display the current user's created classrooms. """
     classForm = ClassroomForm()
+    activeform = SetActiveForm()
 
     if classForm.submitClass.data and classForm.validate_on_submit():
         classroom = Classroom(name=classForm.name.data, owner=current_user)
@@ -90,7 +91,7 @@ def classrooms():
         db.session.commit()
         flash(u'New classroom \"' + classroom.name + '\" created!', 'success')
         return redirect(url_for('users.classrooms'))
-    return render_template('classrooms.html', title="Classrooms", classForm=classForm)
+    return render_template('classrooms.html', title="Classrooms", classForm=classForm, activeform=activeform)
 
 
 @users.route("/account", methods=['GET', 'POST'])
