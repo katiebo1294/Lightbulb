@@ -289,7 +289,7 @@ def take_quiz(classroom_id):
     quiz_id = classroom.active_quiz
     quiz = Quiz.query.get_or_404(quiz_id)
     page = request.args.get('page', 1, type=int)
-    questions = Question.query.filter_by(quiz=quiz).paginate(page=page, per_page=1)
+    questions = Question.query.filter_by(quiz=quiz).order_by('index').paginate(page=page, per_page=1)
     
     if 'teacher' in args:
         teacher = args['teacher']
