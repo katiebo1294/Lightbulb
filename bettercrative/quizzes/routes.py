@@ -409,7 +409,33 @@ def delete_quiz():
     return "Quiz removed", 200
 
 
+@quizzes.route('/quiz/set_ide', methods = ['GET','POST'])
+@login_required
+def set_question_ide():
+    args = request.args
+    
+    if 'question_id' not in args and 'answer_id' not in args:
+        raise KeyError('key not found in the request')
+    elif 'question_id' in args:
+        question = Question.query.filter_by(id=int(args['question_id'])).first()
+        
+        if question.ide_activated:
+            question.ide_activated = False
+        else:
+            question.ide_activated = True
 
+        
+    else:
+        answer = Answer.query.filter_by(id=int(args['answer_id'])).first()
+
+        if answer.ide_activated:
+            answer.ide_activated = False
+        else:
+            answer.ide_activated = True
+        
+    db.session.commit()
+
+    return "ide activated", 200
 """
 -------------------------------------------------------------------
 DEBUGGING FUNCTIONS SECTION [REMOVE LATER]

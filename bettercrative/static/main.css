@@ -622,6 +622,18 @@ td.dropdown {
 }
 
 /* Quiz Section (quiz.html)*/
+.ide-active{
+  color: green;
+}
+.ide-button{
+  color: #6c757d;
+  font-size:1.4em;
+}
+
+.ide-button:hover{
+  color: green;
+}
+
 .activeQuestion{
   background-color:#A2A2A2;
 }
@@ -905,4 +917,20 @@ table, th, td {
     width: 50%;
 }
 /* end user homepage */
+
+/* Ace JS */
+.editor-container{
+    height:50vh;
+    margin-left:15em;
+    margin-top:2em;
+    margin-bottom:2em;
+    
+}
+div[id|=editor]{
+    position:relative;
+    width: 80%;
+    height: 80%;
+    
+}
+
 

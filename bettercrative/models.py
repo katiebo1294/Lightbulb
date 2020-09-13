@@ -237,7 +237,7 @@ class Question(db.Model):
     answers = db.relationship('Answer', backref='question', collection_class=ordering_list('index'),
                               cascade="all, delete, delete-orphan", order_by="Answer.index")
     responses = db.relationship('Response', backref='question', cascade='delete, all')
-
+    ide_activated = db.Column(db.Boolean, nullable=False, default = False)
     
     def __repr__(self):
         return f"Question('{self.name}', '{self.content}', '{self.category}', '{self.quiz_id}', '{self.index}')"
@@ -265,7 +265,7 @@ class Answer(db.Model):
     index = db.Column(db.Integer)
     
     response = db.relationship("Response", backref='answer', cascade='all, delete')
-
+    ide_activated = db.Column(db.Boolean, default=False, nullable = False)
     """
         Description:
             gives the question referenced by the answer
