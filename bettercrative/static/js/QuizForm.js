@@ -485,8 +485,12 @@ function ide_display(question_id){
     //------------------------------------------------------
     // DEBUGGING LINE
     var id = document.getElementById('editor-'+question_id);
-    
-    
+    var id_display = document.getElementById('display-'+ question_id);
+
+    console.log('id');
+    console.log(id);
+    console.log('id_display');
+    console.log(id_display);
     //------------------------------------------------------
     
     if(id !== null){
@@ -494,11 +498,23 @@ function ide_display(question_id){
         console.log('Creating Ace Session on id: '+ question_id);
         var editor = ace.edit("editor-"+question_id);
         
+        
         editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
+        editor.session.setMode("ace/mode/python");
         editor.getSession().setUseWorker(false);
         editor.setShowPrintMargin(false);
+        
+        
+        
     }
+    if(id_display !== null){
+        var display = ace.edit("display-"+question_id);
+        display.setTheme("ace/theme/monokai");
+        display.session.setMode("ace/mode/python");
+        display.getSession().setUseWorker(false);
+        display.setShowPrintMargin(false);
+    }
+
 }
 
 

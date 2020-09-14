@@ -50,11 +50,7 @@
 		<!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
 		<div id="questions-menu" class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
 			{% for question in quiz.questions %}
-			<!-- <script>
-				var editor = ace.edit("editor-"+question_id);
-				editor.setTheme("ace/theme/monokai");
-				editor.session.setMode("ace/mode/javascript");
-			</script> -->
+			
 			<div tabindex="0" role="button"
 			     class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
 			     id="qbtn-{{ loop.index }}"
@@ -90,8 +86,15 @@
 						<div id="question-content-display-{{ question.id }}">
 							<!-- Displays the question content -->
 							{%if question.ide_activated%}
+							<script>
+								$(document).ready(function(){
+									ide_display("{{question.id}}");
+								})
+							</script>
+								<div class="display-container show" >
+									<div id='display-{{question.id}}'></div>
+								</div>
 							
-								<h1> SHOW THE IDE HERE</h1>
 								
 							{%else%}
 							<h5 class="question-content">
@@ -221,11 +224,11 @@
 									
 									{%if question.ide_activated %}
 									
+									
+									
 									<div class="editor-container show" >
 										<div id='editor-{{question.id}}'></div>
 									</div>
-									
-									
 									
 									{%endif%}
 									

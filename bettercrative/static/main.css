@@ -926,11 +926,24 @@ table, th, td {
     margin-bottom:2em;
     
 }
+.display-container{
+  height:50vh;
+  margin-left:15em;
+  margin-top:2em;
+  margin-bottom:2em;
+  
+}
 div[id|=editor]{
     position:relative;
     width: 80%;
     height: 80%;
     
+}
+div[id|=display]{
+  position:relative;
+  width: 80%;
+  height: 80%;
+  
 }
 
 
