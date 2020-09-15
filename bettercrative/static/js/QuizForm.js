@@ -482,42 +482,48 @@ if(e.keyCode == 37 || e.keyCode == 39) {
 });
 
 function ide_display(question_id){
+    
     //------------------------------------------------------
     // DEBUGGING LINE
     var id = document.getElementById('editor-'+question_id);
     var id_display = document.getElementById('display-'+ question_id);
-
-    console.log('id');
     console.log(id);
-    console.log('id_display');
     console.log(id_display);
+    var answer_id = document.getElementById('ide-editor-'+question_id);
+    console.log(answer_id);
     //------------------------------------------------------
     
     if(id !== null){
         // Edit Form
-        console.log('Creating Ace Session on id: '+ question_id);
-        var editor = ace.edit("editor-"+question_id);
+        create_session('editor-'+question_id);
         
+    }
+    
+    if(id_display !== null){
+        create_session('display-'+question_id);
         
+    }
+
+    if(answer_id !== null){
+        console.log('creating the session');
+        var editor = ace.edit(answer.id);
         editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/python");
         editor.getSession().setUseWorker(false);
         editor.setShowPrintMargin(false);
-        
-        
-        
     }
-    if(id_display !== null){
-        var display = ace.edit("display-"+question_id);
-        display.setTheme("ace/theme/monokai");
-        display.session.setMode("ace/mode/python");
-        display.getSession().setUseWorker(false);
-        display.setShowPrintMargin(false);
-    }
-
+    
 }
 
-
+function create_session(id){
+    var editor = ace.edit(id);
+        
+        
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/python");
+    editor.getSession().setUseWorker(false);
+    editor.setShowPrintMargin(false);
+}
 /**
  * Description:
     set's obj instance in db as ide activated
@@ -538,11 +544,7 @@ function set_question_ide(question_id){
         },
         success: function() {
             
-            
             refresh_and_set_session('#form-group-'+question_id, question_id);
-            
-            
-            
              
         }
         
@@ -552,15 +554,18 @@ function set_question_ide(question_id){
 
  function set_answer_ide(answer_id){
     
-    const btn = document.getElementById('ide-'+answer_id);
+    const btn = document.getElementById('ide-btn-'+answer_id);
 
     console.log(btn);
     if(btn.classList.contains('ide-active')){
         btn.classList.remove('ide-active');
+        btn.classList.add('ide-button')
     }
     else{
         btn.classList.add('ide-active');
+        btn.classList.remove('ide-button');
     }
+
     $.ajax({
         type: "GET",
         data: {'answer_id':answer_id},
@@ -569,7 +574,7 @@ function set_question_ide(question_id){
                 console.log(response.statusText);
         },
         success: function() {
-            create_editor();
+            refresh_and_set_session('#row-'+answer_id);
         }
     });
 }

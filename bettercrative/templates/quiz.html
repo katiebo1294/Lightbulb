@@ -222,7 +222,7 @@
 								</div>
 								{% else %}
 									
-									{%if question.ide_activated %}
+									{%if question.ide_activated and question.content %}
 									
 									
 									
@@ -230,10 +230,10 @@
 										<div id='editor-{{question.id}}'></div>
 									</div>
 									
-									{%endif%}
 									
 									
-									{% if question.content %}
+									
+									{% elif question.content %}
 										
 										{{ form.question_form.content(class='form-control form-control-lg',
 										placeholder=question.content, value=question.content) }}
@@ -252,20 +252,35 @@
 							<span hidden aria-hidden="true">{{ append_form(form) }}</span>
 							{% set aform = form.answer_form[ loop.index0 ] %}
 							{{ aform.hidden_tag() }}
-							<div class="row mc-choice">
+							<div class="row mc-choice" id='row-{{answer.id}}'>
 								
 								<!-- Button to show answer letter -->
 								<span class="answer-button col-1">
 									{{ get_alphabet_index( loop.index ) }}
 								</span>
 								
-								<div type='button' class='ide-button my-5' id='ide-btn-{{answer.id}}' onclick=set_answer_ide({{answer.id}})>
+								{%if answer.ide_activated%}
+								<script>
+									$(document).ready(function(){
+										ide_display("{{answer.id}}");
+									})
+								</script>
+								<div type='button' class= 'ide-active my-5' id='ide-btn-{{answer.id}}' onclick=set_answer_ide({{answer.id}})>
 									<i tabindex="0" id="ide-{{answer.id}}"
 									   
 									   class="fas fa-lg fa-sticky-note">
 
 									</i>
 								</div>
+								{%else%}
+								<div type='button' class= 'ide-button my-5' id='ide-btn-{{answer.id}}' onclick=set_answer_ide({{answer.id}})>
+									<i tabindex="0" id="ide-{{answer.id}}"
+									   
+									   class="fas fa-lg fa-sticky-note">
+
+									</i>
+								</div>
+								{%endif%}
 
 
 								
@@ -289,9 +304,20 @@
 											<span>{{ error }}</span>
 											{% endfor %}
 										</div>
+									
 									{% else %}
-										{{ aform.content(class='form-control form-control-lg', placeholder=answer.content,
-										value=answer.content) }}
+										{%if answer.ide_activated%}
+											<div class='container'>
+												<div id='ide-editor-{{answer.id}}'>
+													
+												</div>
+											</div>
+											{{ aform.content(class='noshow form-control form-control-lg', placeholder=answer.content,
+											value=answer.content) }}
+										{%else%}
+											{{ aform.content(class='form-control form-control-lg', placeholder=answer.content,
+											value=answer.content) }}
+										{%endif%}
 									{% endif %}
 								</div>
 								<!-- Remove this answer -->

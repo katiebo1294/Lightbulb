@@ -624,6 +624,7 @@ td.dropdown {
 /* Quiz Section (quiz.html)*/
 .ide-active{
   color: green;
+  font-size:1.4em;
 }
 .ide-button{
   color: #6c757d;
