@@ -347,7 +347,12 @@ def edit_question(question_id):
                 return redirect(url_for('quizzes.quiz', quiz_id = quiz.id))
             return render_template('quiz.html', quiz=quiz, form=form, qzform=qzform)
         else:
+            
             form = QuestionFormOverall()
+            print("-------------------------------------------------------------------")
+            print("QUESTIONFORMOVERALL LINE HERE")
+            print(form.errors)
+            print("-------------------------------------------------------------------")
             if form.validate_on_submit():
                 if form.question_form.content.data:
                     question.content = form.question_form.content.data

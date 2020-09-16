@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, FormField, FieldList, TextAreaField, RadioField
+from wtforms import StringField, SubmitField, BooleanField, FormField, FieldList, TextAreaField, RadioField, Form
 from wtforms.validators import InputRequired, Optional
 from wtforms.widgets import TextArea
 
-class AnswerForm(FlaskForm):
+class AnswerForm(Form):
     content = TextAreaField('Answer', validators=[Optional()])
     correct = BooleanField('Correct')
     submit = SubmitField('Save')
 
 
-class QuestionForm(FlaskForm):
+class QuestionForm(Form):
     content = TextAreaField('Question', validators=[Optional()])
     submit = SubmitField('Save')
 
@@ -19,7 +19,7 @@ class QuizForm(FlaskForm):
     submitQuiz = SubmitField('Create Quiz')
 
 
-class TFform(FlaskForm):
+class TFform(Form):
     content = StringField('Answer', validators=[Optional()])
     correct = BooleanField('Correct')
     submit = SubmitField('Save')

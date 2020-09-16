@@ -33,7 +33,6 @@ def create_app(config_class=Config):
     mail.init_app(app)
     qrcode.init_app(app)
     uuid.init_app(app)
-
     migrate.init_app(app, db)
 
     from bettercrative.users.routes import users

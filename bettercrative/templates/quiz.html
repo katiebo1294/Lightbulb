@@ -197,15 +197,17 @@
 				<div id="question-edit-{{ loop.index }}" style="display: none;">
 					
 					<form action="{{ url_for('quizzes.edit_question', question_id=question.id) }}" method="POST">
-						{{ form.hidden_tag() }}
-						{{ form.question_form.hidden_tag() }}
-
+						{{ form.csrf_token(id='csrf_token-'~question.id) }}
+						
+						
+						
+						
 						<fieldset class="form-group">
 							
 							<div class="form-group" style="float:right;">
 
 								<button class="btn btn-sm btn-info" type="button" onclick="set_question_ide({{question.id}})"> IDE</button>
-								{{ form.submit(class="btn btn-sm btn-success") }}
+								{{ form.submit(class="btn btn-sm btn-success", id='submit-'~question.id) }}
 								<input type="reset" name="Cancel" value="Cancel" class="btn btn-sm btn-secondary"
 								       onclick="resetEditQuestionContainer({{ loop.index }});">
 							</div>
@@ -222,20 +224,20 @@
 								</div>
 								{% else %}
 									
-									{%if question.ide_activated and question.content %}
+									{%if question.ide_activated %}
 									
 									
 									
-									<div class="editor-container show" >
-										<div id='editor-{{question.id}}'></div>
-									</div>
+										<div class="editor-container show" >
+											<div id='editor-{{question.id}}'></div>
+										</div>
 									
 									
 									
 									
 									{% elif question.content %}
 										
-										{{ form.question_form.content(class='form-control form-control-lg',
+										{{ form.question_form.content(id='question-form-content'~question.id,class='form-control form-control-lg',
 										placeholder=question.content, value=question.content) }}
 										
 									{% else %}
@@ -251,7 +253,7 @@
 							{% for answer in question.answers %}
 							<span hidden aria-hidden="true">{{ append_form(form) }}</span>
 							{% set aform = form.answer_form[ loop.index0 ] %}
-							{{ aform.hidden_tag() }}
+							
 							<div class="row mc-choice" id='row-{{answer.id}}'>
 								
 								<!-- Button to show answer letter -->
@@ -315,7 +317,7 @@
 											{{ aform.content(class='noshow form-control form-control-lg', placeholder=answer.content,
 											value=answer.content) }}
 										{%else%}
-											{{ aform.content(class='form-control form-control-lg', placeholder=answer.content,
+											{{ aform.content(id='answer-form-'~answer.id,class='form-control form-control-lg', placeholder=answer.content,
 											value=answer.content) }}
 										{%endif%}
 									{% endif %}
@@ -336,7 +338,7 @@
 							<!-- True or False -->
 							{% elif question.category == 'True-False' %}
 							{%set answer_form = form.answer_form.append_entry()%}
-							{{answer_form.hidden_tag()}}
+							
 							{%for answer in question.answers%}
 							{%if answer.content == "True"%}
 							{{answer_form.content(class='noshow',value='True')}}
@@ -390,6 +392,7 @@
 							{% endif %}
 						</fieldset>
 					</form>
+					
 				</div>
 				{% else %}
 				<!-- four buttons to choose question type -->
