@@ -947,4 +947,9 @@ div[id|=display]{
   
 }
 
+div[id|=ide-editor]{
+  position:relative;
+  width:50vw;
+  height:50vh;
+}
 

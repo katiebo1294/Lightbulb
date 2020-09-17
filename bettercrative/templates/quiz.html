@@ -263,6 +263,7 @@
 								
 								{%if answer.ide_activated%}
 								<script>
+									console.log('gets here in line 266 hwidhc means ide is activated');
 									$(document).ready(function(){
 										ide_display("{{answer.id}}");
 									})
@@ -309,7 +310,8 @@
 									
 									{% else %}
 										{%if answer.ide_activated%}
-											<div class='container'>
+										
+											<div class='answer-editor-container'>
 												<div id='ide-editor-{{answer.id}}'>
 													
 												</div>

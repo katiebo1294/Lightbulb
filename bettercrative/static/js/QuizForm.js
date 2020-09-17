@@ -18,6 +18,7 @@ function refresh_and_set_session(section,question_id)
             }
             MathJax.typeset();
             console.log("Refreshed");
+            console.log("set_session");
             ide_display(question_id);
             
         }
@@ -487,10 +488,9 @@ function ide_display(question_id){
     // DEBUGGING LINE
     var id = document.getElementById('editor-'+question_id);
     var id_display = document.getElementById('display-'+ question_id);
-    console.log(id);
-    console.log(id_display);
+    
     var answer_id = document.getElementById('ide-editor-'+question_id);
-    console.log(answer_id);
+    
     //------------------------------------------------------
     
     if(id !== null){
@@ -505,17 +505,13 @@ function ide_display(question_id){
     }
 
     if(answer_id !== null){
-        console.log('creating the session');
-        var editor = ace.edit(answer.id);
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/python");
-        editor.getSession().setUseWorker(false);
-        editor.setShowPrintMargin(false);
+        create_session('ide-editor-'+question_id);
     }
     
 }
 
 function create_session(id){
+    console.log('ace.edit('+id+')');
     var editor = ace.edit(id);
         
         
@@ -523,6 +519,7 @@ function create_session(id){
     editor.session.setMode("ace/mode/python");
     editor.getSession().setUseWorker(false);
     editor.setShowPrintMargin(false);
+    
 }
 /**
  * Description:
@@ -556,7 +553,7 @@ function set_question_ide(question_id){
     
     const btn = document.getElementById('ide-btn-'+answer_id);
 
-    console.log(btn);
+    
     if(btn.classList.contains('ide-active')){
         btn.classList.remove('ide-active');
         btn.classList.add('ide-button')
@@ -574,7 +571,9 @@ function set_question_ide(question_id){
                 console.log(response.statusText);
         },
         success: function() {
-            refresh_and_set_session('#row-'+answer_id);
+            refresh_and_set_session('#row-'+answer_id, answer_id);
+            
+
         }
     });
 }
