@@ -462,6 +462,7 @@ No media query for `xs` since this is the default in Bootstrap */
   border: 3px solid #cabfaa;
   background-color: #e2dcd1;
   overflow:auto;
+  min-width:8rem;
 }
 
 .dropdown:hover {

@@ -3,8 +3,9 @@
 {% block content %}
 
 <div id="results_display" class="container" style="margin:auto;">
+	
 	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="class_result_selector" data-toggle="dropdown">
+		<button class="btn btn-outline-info dropdown-toggle" type="button" id="class_result_selector" data-toggle="dropdown">
 			Select a quiz
 		</button>
 		<div class="dropdown-menu">
@@ -34,14 +35,26 @@
 
 					{% for student in quiz.students %}
 					<tr>
-						<td>{{student.id}}</td>
+						{%if student.name %}
+							<td>{{student.name}}</td>
+						{%else%}
+						<td>Anonymous</td>
+						{%endif%}
 						{% for question in quiz.questions %}
 						<td id="response-data-{{ question.id }}-{{ student.id }}">
 							{% if responses[student.id, question.id] %}
 								{% for response in responses[student.id,question.id]|sort(attribute="value") %}
 									{% if question.category == 'Short Answer' %}
 									<!-- TODO add option to manually mark this response as correct -->
-									<span class="text-muted">{{ response.value }}</span>
+										{%if response.correct == None%}
+										<button class='btn btn-info' onclick='teacher_set_response("{{response.id}}","{{question.id}}", "{{response.student_id}} ")'>{{ response.value }}</button>
+
+										{%elif response.correct%}
+										<button class='btn btn-success' onclick='teacher_set_response("{{response.id}}","{{question.id}}", "{{response.student_id}} ")'>{{ response.value }}</button>
+										{%else%}
+										<button class='btn btn-danger' onclick='teacher_set_response("{{response.id}}", "{{question.id}}", "{{response.student_id}}")'>{{ response.value }}</button>	
+										{%endif%}
+
 									{% elif response.correct %}
 									<span class="text-success">
 												<!-- if it's a true/false question, print out T or F instead of the letter -->

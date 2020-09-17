@@ -51,16 +51,11 @@ def tf_responses(current_student,current_answer, response, current_question):
 
 
 def sa_response(current_student, current_answer, response, current_question):
-        print("-------------------------------------------------------------------")
-        print("DEBUGGING LINE HERE")
-        print(response)
-        print(response.correct)
-        print(current_answer)
-        print("-------------------------------------------------------------------")
+        
         if response.value == current_answer.content.lower():
             response.correct = True
         else:
-            response.correct = False
+            response.correct = None
             
         response_in_the_db = Response.query.filter_by(student_id = current_student.id,answer_reference =response.answer_reference , question_num =response.question_num).first()
 

@@ -308,7 +308,7 @@ class Response(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
     value = db.Column(db.Text, nullable=False)
     question_num = db.Column(db.Integer, nullable=False)
-    correct = db.Column(db.Boolean, nullable=False)
+    correct = db.Column(db.Boolean, nullable=True, default = None)
     answer_reference = db.Column(db.Integer, db.ForeignKey('answer.id'))
     
     def __repr__(self):

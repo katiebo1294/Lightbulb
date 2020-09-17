@@ -411,3 +411,32 @@ function change_active_result(url,q_id,c_id)
     }
   });
 }
+
+/**
+ * Description:
+       allows instructor to set the answer of the student to correct/incorrect
+ * Param:
+        response_id
+            response id of the student
+
+ * Return: 
+    n/a
+ */
+
+function teacher_set_response(response_id, question_id, student_id){
+   
+    
+  $.ajax({
+      type: "GET",
+      data: {'response_id': response_id},
+      url: '/classroom/correct_answer',
+      error: function(response) {
+          alert(response.statusText);
+          console.log(response.statusText);
+      },
+      success: function() {
+          
+          refresh('#response-data-'+question_id+'-'+student_id);
+      }
+  });
+}

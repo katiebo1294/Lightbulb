@@ -272,7 +272,20 @@ def remove_quiz(classroom_id, quiz_id):
     flash(u'Quiz Removed!', 'success')
     return redirect(url_for('classrooms.classroom', classroom_id=classroom_id))
 
-
+@classrooms.route("/classroom/correct_answer", methods=['GET', 'POST'])
+def correct_answer():
+    args = request.args
+    if 'response_id' not in args:
+        raise KeyError('response_id key not found')
+    
+    response = Response.query.filter_by(id=int(args['response_id'])).first()
+    if response.correct:
+        response.correct = False
+    else:
+        response.correct = True
+    
+    db.session.commit()
+    return "graded by teacher", 200
 @classrooms.route("/classroom/<int:classroom_id>/take", methods=['GET', 'POST'])
 def take_quiz(classroom_id):
     """ Student takes the given quiz.
