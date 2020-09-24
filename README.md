@@ -1,6 +1,6 @@
-**CSCI-497: Bettercrative - Socrative but better**
+**CSCI-497: Lightbulb**
 
-Bettercrative : Classroom review tool
+Lightbulb : Classroom review tool
 
 **Using the project**
 
