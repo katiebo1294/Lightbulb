@@ -119,6 +119,7 @@
 					<div class="true-false">
 
 						{%for answer in question.answers%}
+						
 						{%if loop.first and answer.correct == loop.nextitem.correct%}
 						<span id="{{question.id}}-true-display"
 						      class="choices btn btn-outline-success btn-success btn-lg disabled">
@@ -278,6 +279,7 @@
 							{%if answer.content == "True"%}
 							{{answer_form.content(class='noshow',value='True')}}
 							{{answer_form.correct(class='noshow', value='1',id='answer_form-true-' ~ question.id)}}
+							{{answer.correct}}
 							{%if answer.correct%}
 							<span class="btn btn-lg btn-outline-success active" id="btn-true-{{question.id}}"
 							      onclick="checked(this)" title="True">True
@@ -287,6 +289,7 @@
 							      onclick="checked(this)" title="True">True
 											</span>
 							{%endif%}
+
 							{%else%}
 							{{answer_form.content(class='noshow',value='False')}}
 							{{answer_form.correct(class='noshow', value='0',id='answer_form-false-' ~ question.id)}}
