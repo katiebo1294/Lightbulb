@@ -92,7 +92,7 @@
 								})
 							</script>
 								<div class="display-container show" >
-									<div id='display-{{question.id}}'></div>
+									<div id='display-{{question.id}}'>{%if question.content%}{{question.content}}{%endif%}</div>
 								</div>
 							
 								
@@ -225,19 +225,21 @@
 								{% else %}
 									
 									{%if question.ide_activated %}
-									
-									
-									
+										<section class='noshow'>
+										{{ form.question_form.content(class='noshow',id='question-form-content-'~question.id,class='form-control form-control-lg',
+										placeholder=question.content, value=question.content) }}
+										</section>
+
 										<div class="editor-container show" >
-											<div id='editor-{{question.id}}'></div>
+											<div id='editor-{{question.id}}'> {%if question.content%}{{question.content}}{%endif%}</div>
 										</div>
 									
-									
+										
 									
 									
 									{% elif question.content %}
 										
-										{{ form.question_form.content(id='question-form-content'~question.id,class='form-control form-control-lg',
+										{{ form.question_form.content(id='question-form-content-'~question.id,class='form-control form-control-lg',
 										placeholder=question.content, value=question.content) }}
 										
 									{% else %}
@@ -263,7 +265,7 @@
 								
 								{%if answer.ide_activated%}
 								<script>
-									console.log('gets here in line 266 hwidhc means ide is activated');
+									
 									$(document).ready(function(){
 										ide_display("{{answer.id}}");
 									})
@@ -343,7 +345,7 @@
 							
 							{%for answer in question.answers%}
 							{%if answer.content == "True"%}
-							{{answer_form.content(class='noshow',value='True')}}
+							{{answer_form.content(class='noshow', id='answer_form-content-'~answer.id ,value='True')}}
 							{{answer_form.correct(class='noshow', value='1',id='answer_form-true-' ~ question.id)}}
 							{%if answer.correct%}
 								<span class="btn btn-lg btn-outline-success active" id="btn-true-{{question.id}}"

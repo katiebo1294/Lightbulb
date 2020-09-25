@@ -482,43 +482,54 @@ if(e.keyCode == 37 || e.keyCode == 39) {
 }
 });
 
-function ide_display(question_id){
+function ide_display(given_id){
     
     //------------------------------------------------------
     // DEBUGGING LINE
-    var id = document.getElementById('editor-'+question_id);
-    var id_display = document.getElementById('display-'+ question_id);
+    var id = document.getElementById('editor-'+given_id);
+    var id_display = document.getElementById('display-'+ given_id);
     
-    var answer_id = document.getElementById('ide-editor-'+question_id);
+    var answer_id = document.getElementById('ide-editor-'+given_id);
     
     //------------------------------------------------------
     
     if(id !== null){
         // Edit Form
-        create_session('editor-'+question_id);
+        const editor_session = create_session('editor-'+given_id);
         
+        editor_session.getSession().on('change', () => set_ide_input(editor_session.getSession().getValue(),given_id));
     }
     
     if(id_display !== null){
-        create_session('display-'+question_id);
+        const display_session = create_session('display-'+given_id);
+        display_session.setReadOnly(true);
         
     }
 
     if(answer_id !== null){
-        create_session('ide-editor-'+question_id);
+        create_session('ide-editor-'+given_id);
     }
+    
+}
+
+function set_ide_input(data,id){
+    const textarea =  document.getElementById('question-form-content-' + id);
+    textarea.value = data;
     
 }
 
 function create_session(id){
     console.log('ace.edit('+id+')');
-    var editor = ace.edit(id);
-        
-        
+    const editor = ace.edit(id);
+    
+    
     editor.setTheme("ace/theme/monokai");
     editor.session.setMode("ace/mode/python");
+    editor.focus();
     editor.getSession().setUseWorker(false);
     editor.setShowPrintMargin(false);
+
+    return editor;
     
 }
 /**
