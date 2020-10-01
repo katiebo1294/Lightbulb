@@ -85,7 +85,9 @@
 					<div class="question-header" style="padding-top: 1%;">
 						<div id="question-content-display-{{ question.id }}">
 							<!-- Displays the question content -->
+
 							{%if question.ide_activated%}
+							
 							<script>
 								$(document).ready(function(){
 									ide_display("{{question.id}}");
@@ -124,12 +126,14 @@
 					{% if question.category == 'Multiple Choice' %}
 					<div class="multiple-choice container-fluid">
 						{% for answer in question.answers %}
-						<div class="row mc-choice form-group">
-							<span class="answer-button{% if answer.correct %} bg-success{% endif %}">
-								{{ get_alphabet_index( loop.index ) }}
-							</span>
-							<p>{{ answer.content }}</p>
-						</div>
+							
+								<div class="row mc-choice form-group">
+									<span class="answer-button{% if answer.correct %} bg-success{% endif %}">
+										{{ get_alphabet_index( loop.index ) }}
+									</span>
+									<p>{{ answer.content }}</p>
+								</div>
+							
 						{% endfor %}
 					</div>
 					<!-- True or False -->
@@ -264,6 +268,7 @@
 								</span>
 								
 								{%if answer.ide_activated%}
+								
 								<script>
 									
 									$(document).ready(function(){
@@ -318,7 +323,7 @@
 													
 												</div>
 											</div>
-											{{ aform.content(class='noshow form-control form-control-lg', placeholder=answer.content,
+											{{ aform.content(id='answer-form-'~answer.id,class='show form-control form-control-lg', placeholder=answer.content,
 											value=answer.content) }}
 										{%else%}
 											{{ aform.content(id='answer-form-'~answer.id,class='form-control form-control-lg', placeholder=answer.content,

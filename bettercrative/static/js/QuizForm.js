@@ -488,38 +488,43 @@ function ide_display(given_id){
     // DEBUGGING LINE
     var id = document.getElementById('editor-'+given_id);
     var id_display = document.getElementById('display-'+ given_id);
-    
     var answer_id = document.getElementById('ide-editor-'+given_id);
     
     //------------------------------------------------------
-    
+   
     if(id !== null){
         // Edit Form
-        const editor_session = create_session('editor-'+given_id);
+        var editor_session = create_session('editor-'+given_id);
         
-        editor_session.getSession().on('change', () => set_ide_input(editor_session.getSession().getValue(),given_id));
+        editor_session.getSession().on('change', () => set_ide_input(editor_session.getSession().getValue(),'question-form-content-' +given_id));
     }
     
+    
+
     if(id_display !== null){
-        const display_session = create_session('display-'+given_id);
+        var display_session = create_session('display-'+given_id);
         display_session.setReadOnly(true);
         
     }
 
     if(answer_id !== null){
-        create_session('ide-editor-'+given_id);
+        var ide_session = create_session('ide-editor-'+given_id);
+
+        ide_session.getSession().on('change', () => set_ide_input(ide_session.getSession().getValue(), 'answer-form-'+given_id));
+        
     }
     
 }
 
 function set_ide_input(data,id){
-    const textarea =  document.getElementById('question-form-content-' + id);
+    console.log(id);
+    var textarea =  document.getElementById(id);
     textarea.value = data;
     
 }
 
 function create_session(id){
-    console.log('ace.edit('+id+')');
+    
     const editor = ace.edit(id);
     
     
