@@ -4,6 +4,7 @@ from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
+from authlib.integrations.flask_client import OAuth
 from flask_qrcode import QRcode
 from flask_sqlalchemy import SQLAlchemy
 from flask_uuid import FlaskUUID
@@ -33,6 +34,7 @@ def create_app(config_class=Config):
     mail.init_app(app)
     qrcode.init_app(app)
     uuid.init_app(app)
+    oauth.init_app(app)
 
     migrate.init_app(app, db)
 
@@ -68,3 +70,4 @@ login_manager.login_message_category = 'users.info'
 mail = Mail()
 qrcode = QRcode()
 uuid = FlaskUUID()
+oauth = OAuth()

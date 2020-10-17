@@ -47,6 +47,12 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
+@users.route("/authorize")
+def authorize():
+    # this is where we do oauth stuff
+    return redirect(url_for('main.home'))
+
+
 @users.route("/logout")
 def logout():
     """ Log out of the current (teacher) account. """

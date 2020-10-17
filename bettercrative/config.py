@@ -12,6 +12,8 @@ class Config(object):
     MAIL_USE_TLS = True
     MAIL_USERNAME = 'bettercrative@gmail.com'
     MAIL_PASSWORD = 'kK6yH2x*Lx!M'
+    # we need this because we're developing on localhost
+    AUTHLIB_INSECURE_TRANSPORT = True
 
 
 # For production server

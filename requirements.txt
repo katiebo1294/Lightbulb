@@ -2,6 +2,7 @@ alembic==1.4.1
 asgiref==3.2.3
 astroid==2.3.3
 attrs==19.3.0
+Authlib==0.15.1
 autoenv==1.0.0
 bcrypt==3.1.7
 betterpath==0.2.2
