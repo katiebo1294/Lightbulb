@@ -323,22 +323,31 @@ def edit_question(question_id):
             form = QuestionFormOverallTF()
             #form validation
             if form.validate_on_submit():
+                print("-------------------------------------------------------------------")
+                print("DEBUGGING LINE HERE")
+                print(request.form)
+                print("-------------------------------------------------------------------")
                 #getting the form
                 received_form = request.form
                 correct_answer = 0
+                get_previous_answer = True
                 #getting the correct answer and new question name
                 for key in received_form.keys():
                     if('answer_form' and 'correct' in key):
                         correct_answer = bool(int(received_form[key]))
+                        get_previous_answer = False
                         if received_form['question_form-content']:
                             new_content_name = received_form['question_form-content']
-                for answer in question.answers:
-                    if answer.content == str(correct_answer):
-                        answer.correct = True
-                        db.session.add(answer)
-                    else:
-                        answer.correct = False
-                        db.session.add(answer)
+                
+                if get_previous_answer != True:
+
+                    for answer in question.answers:
+                        if answer.content == str(correct_answer):
+                            answer.correct = True
+                            db.session.add(answer)
+                        else:
+                            answer.correct = False
+                            db.session.add(answer)
                 
                 question.content = new_content_name
                 db.session.add(question)

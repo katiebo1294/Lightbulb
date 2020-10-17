@@ -419,7 +419,6 @@ def received_answer():
 @classrooms.route("/classroom/<int:classroom_id>/edit_classroom_name", methods=['GET','POST'])
 def edit_classroom_name(classroom_id):
     args = request.args
-    print(args)
     classroom = Classroom.query.filter_by(id=classroom_id).first()
     form = ClassroomForm()
     activeform = SetActiveForm()
