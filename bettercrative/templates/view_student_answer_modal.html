@@ -1,0 +1,19 @@
+<div class="modal fade" id="view_student_answer_modal-{{ response.id }}" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>View Response</h4>
+				<button id="view-answer-dismiss" type="button" aria-label="Close" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+			</div>
+			<h6>Student ID: {{ student.id }}</h6>
+			<h6>Question: {{ question.id }}</h6>
+			<p class="short-answer-view">"{{ response.value|trim() }}"</p>
+			<div class="modal-footer">
+				<button onclick='teacher_set_response("{{response.id}}","reset","{{quiz.id}}")' class="btn btn-sm btn-outline-info">Reset Grade</button>
+				<button onclick='teacher_set_response("{{response.id}}","correct","{{quiz.id}}")' class="btn btn-sm btn-outline-success">Mark Correct</button>
+				<button onclick='teacher_set_response("{{response.id}}","incorrect","{{quiz.id}}")' class="btn btn-sm btn-outline-danger">Mark Incorrect</button>
+			</div>
+		</div>
+	</div>
+</div>
+

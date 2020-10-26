@@ -46,7 +46,6 @@
 			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
 		</button>
 	</div>
-
 	<!-- List of added quizzes -->
 	<div class="quizlist" id="quizzes-{{classroom.id}}">
 		<!-- Heading and add-quiz button -->
@@ -81,7 +80,6 @@
 				{%include 'qr_code_modal.html'%}
 			{%endif%}
 			<div id="quiz-{{ quiz.id }}" class="row table-element">
-				
 
 				<div class="col-4">{{ quiz.name }}
 					{% if quiz.id == classroom.active_quiz %}
@@ -93,13 +91,14 @@
 				</div>
 				{% if quiz.id != classroom.active_quiz %}
 				<div class="col-4 quiz-icon-col">
-
 					<button id="set-active-{{classroom.id}}" class="btn general-btn"
-					        data-toggle="modal" data-target="#set_active_modal-{{quiz.id}}">
+					        data-toggle="modal" {% if classroom.active_quiz %} data-target="#quiz_active_modal" {% else %} data-target="#set_active_modal-{{quiz.id}}" {% endif %}>
 						Set Active
 					</button>
 
 					{%include 'set_active_modal.html'%}
+					<!-- TODO when un-setting a diff quiz, this one doesn't get activated; also the modal doesn't tell you which quiz you're deactivating -->
+					{%include 'editing_quiz_warning_modal.html'%}
 
 					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
 					        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">

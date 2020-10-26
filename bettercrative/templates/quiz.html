@@ -213,7 +213,7 @@
 							{% if question.category == 'Multiple Choice' %}
 							{% set outer_loop = loop %}
 							{% for answer in question.answers %}
-							<span hidden aria-hidden="true">{{ append_form(:form) }}</span>
+							<span hidden aria-hidden="true">{{ append_form(form) }}</span>
 							{% set aform = form.answer_form[ loop.index0 ] %}
 							{{ aform.hidden_tag() }}
 							<div class="row mc-choice">

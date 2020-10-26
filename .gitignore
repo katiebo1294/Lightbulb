@@ -6,6 +6,7 @@ app.egg-info
 app/__pycache__/
 *.py[cod]
 *$py.class
+/.idea
 
 # C extensions
 *.so
@@ -53,7 +54,6 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
-.pytest_cache/
 
 # Translations
 *.mo
@@ -109,9 +109,6 @@ celerybeat.pid
 .env
 .venv
 env/
-__pycache__/
-.pytest_cache/
-tests/__pycache__/
 app.egg-info/
 app/_pycache__/*
 venv/

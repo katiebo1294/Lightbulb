@@ -46,15 +46,11 @@
 								{% for response in responses[student.id,question.id]|sort(attribute="value") %}
 									{% if question.category == 'Short Answer' %}
 									<!-- TODO add option to manually mark this response as correct -->
-										{%if response.correct == None%}
-										<button class='btn btn-info' onclick='teacher_set_response("{{response.id}}","{{question.id}}", "{{response.student_id}} ")'>{{ response.value }}</button>
-
-										{%elif response.correct%}
-										<button class='btn btn-success' onclick='teacher_set_response("{{response.id}}","{{question.id}}", "{{response.student_id}} ")'>{{ response.value }}</button>
-										{%else%}
-										<button class='btn btn-danger' onclick='teacher_set_response("{{response.id}}", "{{question.id}}", "{{response.student_id}}")'>{{ response.value }}</button>	
-										{%endif%}
-
+										<button class='btn btn-{% if response.correct == None %}info
+										{% elif response.correct %}success
+										{% else %}danger{% endif %}'
+										        data-toggle="modal" data-target="#view_student_answer_modal-{{ response.id }}">{{ response.value }}</button>
+							{% include 'view_student_answer_modal.html' %}
 									{% elif response.correct %}
 									<span class="text-success">
 												<!-- if it's a true/false question, print out T or F instead of the letter -->

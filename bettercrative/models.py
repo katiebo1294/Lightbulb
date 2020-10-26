@@ -230,6 +230,7 @@ class Question(db.Model):
     """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    # could be text content or an image file
     content = db.Column(db.Text, nullable=True)
     category = db.Column(db.Enum('Multiple Choice', 'True-False', 'Short Answer', 'IDE', name='question_types'))
     quiz_id = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=False)
@@ -259,6 +260,7 @@ class Answer(db.Model):
             the ID of the question this answer belongs to.
     """
     id = db.Column(db.Integer, primary_key=True)
+    # could be text content or an image file
     content = db.Column(db.Text, nullable=True)
     correct = db.Column(db.Boolean, nullable=False, default=False)
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)

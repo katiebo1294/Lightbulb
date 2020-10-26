@@ -500,7 +500,6 @@ No media query for `xs` since this is the default in Bootstrap */
 }
 
 #account-tables * {
-  overflow: auto;
   text-overflow: ellipsis;
   text-align: center;
   border: none;
@@ -611,6 +610,16 @@ td.dropdown {
   text-align: center;
   margin-top: 15%;
 }
+
+.short-answer-view {
+  margin: auto;
+  width: 90%;
+  background: lightgrey;
+  margin-bottom: 3%;
+  text-align: left;
+}
+
+
 /**end results page**/
 
 .quiz-icon-col {

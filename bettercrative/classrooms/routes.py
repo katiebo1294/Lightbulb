@@ -212,6 +212,7 @@ def set_active(classroom_id, quiz_id):
 
     return redirect(url_for('classrooms.classroom', classroom_id=classroom.id, activeform=activeform))
 
+
 @classrooms.route('/classroom/unset_and_edit', methods=['POST'])
 @login_required
 def unset_and_edit():
@@ -222,6 +223,7 @@ def unset_and_edit():
     quiz = Quiz.query.filter_by(id=int(form['quiz_id'])).first()
     quiz.unset()
     return redirect( url_for('quizzes.quiz', quiz_id=quiz.id))
+
 
 @classrooms.route('/classroom/unset', methods = ['POST'])
 @login_required
@@ -235,6 +237,8 @@ def unset():
     quiz.unset()
 
     return redirect( url_for('users.quizzes'))
+
+
 @classrooms.route("/classroom/<int:classroom_id>/remove_active", methods=['GET', 'POST'])
 @login_required
 def remove_active(classroom_id):
@@ -272,20 +276,30 @@ def remove_quiz(classroom_id, quiz_id):
     flash(u'Quiz Removed!', 'success')
     return redirect(url_for('classrooms.classroom', classroom_id=classroom_id))
 
+
 @classrooms.route("/classroom/correct_answer", methods=['GET', 'POST'])
 def correct_answer():
     args = request.args
+
     if 'response_id' not in args:
         raise KeyError('response_id key not found')
-    
+    if 'change_to' not in args:
+        raise ValueError('no grade supplied to change this answer to')
+
     response = Response.query.filter_by(id=int(args['response_id'])).first()
-    if response.correct:
+    change_to = args['change_to']
+
+    if change_to == "incorrect":
         response.correct = False
-    else:
+    elif change_to == "correct":
         response.correct = True
-    
+    elif change_to == "reset":
+        response.correct = None
+
     db.session.commit()
     return "graded by teacher", 200
+
+
 @classrooms.route("/classroom/<int:classroom_id>/take", methods=['GET', 'POST'])
 def take_quiz(classroom_id):
     """ Student takes the given quiz.
@@ -293,8 +307,7 @@ def take_quiz(classroom_id):
         Parameters:
                 classroom_id (int): the ID of the classroom the student is signed in to
     """
-    
-    
+
     args = request.args
     
     # Things to Render: classroom, quiz, Paginate the questions , student

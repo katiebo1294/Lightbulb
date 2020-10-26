@@ -57,7 +57,7 @@ def create_app(config_class=Config):
 
     app.jinja_env.globals.update(get_alphabet_index=get_alphabet_index)
     app.jinja_env.globals.update(append_form=append_form)
-    app.jinja_env.globals.update(find_selected_answer = find_selected_answer)
+    app.jinja_env.globals.update(find_selected_answer=find_selected_answer)
     return app
 
 

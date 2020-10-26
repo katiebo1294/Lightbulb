@@ -423,20 +423,20 @@ function change_active_result(url,q_id,c_id)
     n/a
  */
 
-function teacher_set_response(response_id, question_id, student_id){
-   
-    
+function teacher_set_response(response_id, change_to, quiz_id){
+
   $.ajax({
       type: "GET",
-      data: {'response_id': response_id},
+      data: {'response_id': response_id,
+             'change_to': change_to },
       url: '/classroom/correct_answer',
       error: function(response) {
           alert(response.statusText);
           console.log(response.statusText);
       },
       success: function() {
-          
-          refresh('#response-data-'+question_id+'-'+student_id);
+          $("#view_student_answer_modal-"+response_id).modal('hide');
+          refresh('#results_'+quiz_id);
       }
   });
 }
