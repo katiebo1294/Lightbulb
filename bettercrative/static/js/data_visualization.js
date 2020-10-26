@@ -370,15 +370,15 @@ function create_question_chart(url, quiz_id, class_id, question_id, q_num) {
 };
 
 // for the table's class total
-$("[id^='class-total-']").each(function() {
+$("[id^='class-total-']:visible").each(function() {
     var q_id = this.id.slice(12);
     console.log("calculating class total for question " + q_id);
 
-    var tableRows = $("td[id^='response-data-" + q_id + "-'] > span:not(.text-info)");
+    var tableRows = $("td[id^='response-data-" + q_id + "-'] > span:not(.text-info), td[id^='response-data-" + q_id + "-'] > button:not(.btn-info)");
     var total_answered = tableRows.length;
     console.log("total answered = " + total_answered);
 
-    var correctRows = $("td[id^='response-data-" + q_id + "-'] > span.text-success");
+    var correctRows = $("td[id^='response-data-" + q_id + "-'] > span.text-success, td[id^='response-data-" + q_id + "-'] > button.btn-success");
     var total_correct = correctRows.length;
     console.log("total correct = " + total_correct);
 
@@ -418,7 +418,8 @@ function change_active_result(url,q_id,c_id)
  * Param:
         response_id
             response id of the student
-
+        change_to
+            what to change the response's correctness to
  * Return: 
     n/a
  */
@@ -436,7 +437,8 @@ function teacher_set_response(response_id, change_to, quiz_id){
       },
       success: function() {
           $("#view_student_answer_modal-"+response_id).modal('hide');
-          refresh('#results_'+quiz_id);
+          // this is the only way I could get it to show the class totals after closing the modal
+          location.reload();
       }
   });
 }

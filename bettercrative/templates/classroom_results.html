@@ -86,12 +86,10 @@
 						{%endfor%}
 					</tr>
 					{%endfor%}
-					<tr>
-
+					<tr id="class-totals-{{ quiz.id }}">
 						<td>Class Total</td>
 						{% for question in quiz.questions %}
 						<td id="class-total-{{ question.id }}">
-
 						</td>
 						{% endfor %}
 					</tr>
