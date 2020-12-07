@@ -1,3 +1,8 @@
+@font-face {
+  font-family: lemonmilk;
+  src: url("fonts/LemonMilkMedium-mLZYV.otf") format("opentype");
+}
+
 html {
   background-attachment: fixed;
   background-color: #EDEAE5;
@@ -48,6 +53,10 @@ html {
   padding: 0;
 }
 
+body {
+  background: white;
+}
+
 body:after{ 
   content: ' ';
   display: block;
@@ -57,6 +66,32 @@ body:after{
   z-index: -1;
   width: 100%;
   height: 100%;
+}
+
+#landing-page-bg {
+  background-image: url("images/marvin-meyer-SYTO3xs06fU-unsplash.jpg");
+  background-size: inherit;
+  background-attachment: fixed;
+}
+
+.landing-page {
+  font-family: lemonmilk;
+  font-size: 8.5vh;
+}
+
+.landing-page.accent {
+  font-size: 10vh;
+  color: midnightblue;
+  margin: auto;
+  margin-bottom: 2vh;
+}
+
+#landing-page-text-bg {
+  background-color: rgba(255,255,255,0.75);
+  width: 70%;
+  margin: auto;
+  margin-top: 5vh;
+  padding: 1vh;
 }
 
 /**modal pop-ups**/
@@ -91,31 +126,37 @@ body:after{
 
 /**start navbar**/
 nav, footer {
-  background-color: #09818b;
+  background-color: midnightblue;
 }
 
 .nav-item {
-  color: black;
+  color: white;
+  margin: auto;
 }
 
 .navbar {
   padding: 0;
   align-items: stretch;
-  margin-bottom: 6%;
+  margin-bottom: 3%;
+  padding-right: 5vw;
+}
+
+footer {
+  margin-top: 3vh;
 }
 
 footer a, footer i {
-  color: black;
+  color: white;
 }
 
 nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer i:focus {
-  color: white;
+  color: yellow;
   text-decoration: none;
   cursor: pointer;
 }
 
 .current-page {
-  color: white!important;
+  color: yellow !important;
 }
 
 .page-wrap {
@@ -136,7 +177,7 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
   font-family: "Rowdies";
   margin-top: .5rem;
   margin-left: 1rem;
-  color: black;
+  color: white;
 }
 
 .navbar-toggler{
@@ -168,13 +209,16 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
 
 /**Styles the navbar headers for large screens with no collapse**/
 .nav-link {
-  color: black;
+  color: white;
   line-height: 4vw;
   height: 100%;
+  padding-right: 2rem;
+  font-size: larger;
+  font-weight: bold;
 }
 
 .nav-link:hover {
-  color: white;
+  color: yellow;
   text-decoration: none;
 }
 /**End full nav style**/
@@ -403,6 +447,24 @@ No media query for `xs` since this is the default in Bootstrap */
     text-align: center;
   }
 }
+/* first thing you see when you get to the homepage */
+#hook-section {
+    height: 85vh;
+    width: 100vw;+
+}
+
+#about-section {
+    border: 1px;
+    width: 100%;
+    min-height: 75vh;
+    background-color: midnightblue;
+    color: white;
+    padding: 2%;
+}
+
+.about-us-description {
+    margin-top: 3vh;
+}
 
 /**Homepage login links**/
 .col-md-6 img{
@@ -414,6 +476,17 @@ No media query for `xs` since this is the default in Bootstrap */
 /**end homepage login links**/
 
 /**form boxes**/
+.btn-outline-midnightblue {
+  color: midnightblue;
+  font-weight: bold;
+  border-color: midnightblue;
+}
+
+.btn-outline-midnightblue:hover {
+  color: white;
+  background-color: midnightblue;
+}
+
 .form-container {
     position: relative;
     margin: auto;
@@ -425,7 +498,7 @@ No media query for `xs` since this is the default in Bootstrap */
 }
 
 .content-section {
-    color: white;
+   color: white;
 }
 
 /* Short answer overrides the height of the input box */

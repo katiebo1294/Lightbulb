@@ -1,15 +1,48 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<div class="row container wrapper">
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 student">
-		<!-- Student login box -->
-		<a href="{{ url_for('classrooms.enter_classroom') }}"><img
-				src="{{url_for('static', filename='images/Student.png') }}" alt="student log-in"></a>
+<section id="hook-section" class="landing-section">
+	<div class="row container wrapper">
+		<!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 student">
+			&lt;!&ndash; Student login box &ndash;&gt;
+			<a href="{{ url_for('classrooms.enter_classroom') }}"><img
+					src="{{url_for('static', filename='images/Student.png') }}" alt="student log-in"></a>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 teacher">
+			&lt;!&ndash; Teacher login box &ndash;&gt;
+			<a href="{{ url_for('users.login') }}"><img src="{{url_for('static', filename='images/Teacher.png') }}" alt="teacher log-in"></a>
+		</div>-->
+
+		<div id="landing-page-text-bg" class="row center text-center">
+			<span class="landing-page">
+				Study<br>Learn<br>Feel<br>Do
+			</span>
+			<span class="landing-page accent">Better.<br>
+				<button class="btn btn-outline-midnightblue" onclick="window.location.href='#about-section';">Learn more</button>
+				<button class="btn btn-outline-midnightblue" onclick="window.location.href='{{ url_for('users.register') }}';">Get started</button>
+			</span>
+		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 teacher">
-		<!-- Teacher login box -->
-		<a href="{{ url_for('users.login') }}"><img src="{{url_for('static', filename='images/Teacher.png') }}" alt="teacher log-in"></a>
+</section>
+<section id="about-section" class="landing-section">
+	<h2 style="margin: auto; margin-bottom: 3vh; font-family: lemonmilk;">About Us</h2>
+
+	<div class="about-us-description">
+		<img style="float: left;" src="{{ url_for('static', filename='images/default-profile-pic.png') }}" width="250" height="250"/>
+		<div class="text-center" style="float: right; width: 15%; height: 250px;"><strong style="font-size: xxx-large;">Tim<br/>Poehlman</strong></div>
+		<div style="float: right; height: 250px; width: 70%;"><p style="margin-top: 1.5%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada ornare commodo. Praesent id pellentesque magna, et viverra nisl. Duis vel enim facilisis, vestibulum nulla eu, dictum urna. Mauris porttitor augue odio, eget luctus mauris volutpat at. Nam ut posuere arcu, ac vulputate arcu. Nulla vestibulum erat luctus massa tempor, non fermentum tellus suscipit. Suspendisse sed condimentum sem. Sed dapibus arcu purus. Sed condimentum tortor ut rutrum tempus. Curabitur vel metus sed turpis accumsan tincidunt.</p></div>
 	</div>
-</div>
+	<div style="clear: both;"></div>
+	<div class="about-us-description">
+		<div class="text-center" style="float: left; width: 15%; height: 250px;"><strong style="font-size: xxx-large;">Katie<br/>Borley</strong></div>
+		<div style="float: left; height: 250px; width: 70%;"><p style="margin-top: 1.5%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada ornare commodo. Praesent id pellentesque magna, et viverra nisl. Duis vel enim facilisis, vestibulum nulla eu, dictum urna. Mauris porttitor augue odio, eget luctus mauris volutpat at. Nam ut posuere arcu, ac vulputate arcu. Nulla vestibulum erat luctus massa tempor, non fermentum tellus suscipit. Suspendisse sed condimentum sem. Sed dapibus arcu purus. Sed condimentum tortor ut rutrum tempus. Curabitur vel metus sed turpis accumsan tincidunt.</p></div>
+		<img style="float: right;" src="{{ url_for('static', filename='images/default-profile-pic.png') }}" width="250" height="250"/>
+	</div>
+	<div style="clear: both;"></div>
+	<div class="about-us-description">
+		<img style="float: left;" src="{{ url_for('static', filename='images/default-profile-pic.png') }}" width="250" height="250"/>
+		<div class="text-center" style="float: right; width: 15%; height: 250px;"><strong style="font-size: xxx-large;">Adrian<br/>Gabales</strong></div>
+		<div style="float: right; height: 250px; width: 70%;"><p style="margin-top: 1.5%;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada ornare commodo. Praesent id pellentesque magna, et viverra nisl. Duis vel enim facilisis, vestibulum nulla eu, dictum urna. Mauris porttitor augue odio, eget luctus mauris volutpat at. Nam ut posuere arcu, ac vulputate arcu. Nulla vestibulum erat luctus massa tempor, non fermentum tellus suscipit. Suspendisse sed condimentum sem. Sed dapibus arcu purus. Sed condimentum tortor ut rutrum tempus. Curabitur vel metus sed turpis accumsan tincidunt.</p></div>
+	</div>
+	<div style="clear: both;"></div>
+</section>
 {% endblock %}

@@ -1,51 +1,52 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div class="form-container">
+<div class="row" style="width: 90%; margin: auto;">
+<div id="login-form" style="margin: auto;" class="col-5 form-container">
 	<div class="content-section">
 		<form action="" method="POST">
-			{{ form.hidden_tag() }} <!--adds ctrf form-->
+			{{ teacher_form.hidden_tag() }} <!--adds ctrf form-->
 			<fieldset class="form-group">
 				<!-- Email Form -->
-				<legend class="border-bottom mb-4">Log In</legend>
+				<legend class="border-bottom mb-4">Teacher</legend>
 				<div class="form-group">
-					{{ form.email.label(class="form=control-label") }}
+					{{ teacher_form.email.label(class="form=control-label") }}
 
-					{% if form.email.errors %}
-					{{ form.email(class="form-control form-control-lg is-invalid") }}
+					{% if teacher_form.email.errors %}
+					{{ teacher_form.email(class="form-control form-control-lg is-invalid") }}
 					<div class="invalid-feedback">
-						{% for error in form.email.errors %}
+						{% for error in teacher_form.email.errors %}
 						<span>{{ error }}</span>
 						{% endfor %}
 					</div>
 					{% else %}
-					{{ form.email(class="form-control form-control-lg") }}
+					{{ teacher_form.email(class="form-control form-control-lg") }}
 					{% endif %}
 				</div>
 				<!-- Password Form -->
 				<div class="form-group">
-					{{ form.password.label(class="form=control-label") }}
+					{{ teacher_form.password.label(class="form=control-label") }}
 
-					{% if form.password.errors %}
-					{{ form.password(class="form-control form-control-lg is-invalid") }}
+					{% if teacher_form.password.errors %}
+					{{ teacher_form.password(class="form-control form-control-lg is-invalid") }}
 					<div class="invalid-feedback">
-						{% for error in form.password.errors %}
+						{% for error in teacher_form.password.errors %}
 						<span>{{ error }}</span>
 						{% endfor %}
 					</div>
 					{% else %}
-					{{ form.password(class="form-control form-control-lg") }}
+					{{ teacher_form.password(class="form-control form-control-lg") }}
 					{% endif %}
 				</div>
 				<div class="form-check">
-					{{ form.remember(class="form-check-input")}}
-					{{ form.remember.label(class="form-check-label")}}
+					{{ teacher_form.remember(class="form-check-input")}}
+					{{ teacher_form.remember.label(class="form-check-label")}}
 				</div>
 			</fieldset>
 			<!-- Forgot Password -->
 			<div class="form-group">
-				{{ form.submit(class="btn btn-outline-info") }}
-				<input type="reset" class="btn btn-sm btn-outline-secondary" name="Cancel" value="Cancel"
+				{{ teacher_form.submit(class="btn btn-success") }}
+				<input type="reset" class="btn btn btn-danger" name="Cancel" value="Cancel"
 						       onclick="window.location.href='{{ url_for('main.home') }}';">
 				<small class="text-muted ml-2">
 					<a href="{{ url_for('users.reset_request') }}">Forgot Password?</a>
@@ -55,9 +56,42 @@
 	</div>
 	<!-- Sign Up -->
 	<div class="border-top pt-3">
-		<small class="text-muted">
+		<small style="color: white;">
 			Need An Account? <a class="ml-2" href="{{ url_for('users.register') }}"> Sign Up Now</a>
 		</small>
 	</div>
+</div>
+<div id="enter-classroom-form" style="margin: auto;" class="col-5 form-container">
+	<div class="content-section">
+		<form action="" method="POST">
+			{{ student_form.hidden_tag() }} <!--adds ctrf form-->
+
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Student</legend>
+				<div class="form-group">
+					<!-- student can input the name of an active classroom to sign in and take the active quiz -->
+					{{ student_form.room_id.label(class="form-control-label") }}
+					<!-- classroom id -->
+					{% if student_form.room_id.errors %}
+					{{ student_form.room_id(class="form-control form-control-lg is-invalid") }}
+					<div class="invalid-feedback">
+						{% for errors in student_form.room_id.errors %}
+						<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+					{% else %}
+					{{ student_form.room_id(class="form-control form-control-lg") }}
+					{% endif %}
+				</div>
+			</fieldset>
+			<div class="form-group">
+				{{ student_form.submit(class="btn btn-success") }}
+				<a href="{{ url_for('main.home') }}" class="btn btn-danger">
+					Cancel
+				</a>
+			</div>
+		</form>
+	</div>
+</div>
 </div>
 {% endblock  %}
