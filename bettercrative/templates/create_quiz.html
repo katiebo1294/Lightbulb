@@ -21,12 +21,10 @@
                 </div>
             </fieldset>
             <div class="form-group">
-                {{ form.submitQuiz(class="btn btn-lg btn-outline-info") }}
+                {{ form.submitQuiz(class="btn btn-success") }}
+				<input type="reset" class="btn btn btn-danger" name="Cancel" value="Cancel" onclick="window.location.href='{{ url_for('users.classrooms') }}';">
             </div>
         </form>
-        <a href="{{ url_for('users.account') }}" class="btn btn-outline-secondary">
-            Cancel
-        </a>
     </div>
 </div>
 {% endblock  %}

@@ -563,7 +563,6 @@ No media query for `xs` since this is the default in Bootstrap */
 }
 
 #account-tables * {
-  text-overflow: ellipsis;
   text-align: center;
   border: none;
 }
