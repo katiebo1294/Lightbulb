@@ -1,21 +1,5 @@
 $(document).ready(function() {
-    if(window.location.href.slice(-1)=='/' || window.location.href.slice(-5)=='/home' || window.location.href.slice(-19)=='/home#about-section') {
-
-        console.log("Setting homepage background");
-        console.log(document.body);
-        document.body.style.backgroundImage = "url(\"../static/images/marvin-meyer-SYTO3xs06fU-unsplash.jpg\")";
-	    document.body.style.backgroundSize = "inherit";
-	    document.body.style.backgroundAttachment = "fixed";
-	    $('nav').css("background-color", "transparent");
-	    $('.navbar-brand').css("color", "midnightblue");
-
-	    $('.navbar-brand').hover(function() {
-            $(this).css("color", "yellow");
-        }, function() {
-            $(this).css("color", "midnightblue");
-        });
-
-    } else if(document.URL.indexOf("quizzes") || document.URL.indexOf("classrooms"))
+    if(document.URL.indexOf("quizzes") || document.URL.indexOf("classrooms"))
     {
         $('#account-tables').DataTable( {
             "columnDefs": [

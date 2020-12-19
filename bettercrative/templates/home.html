@@ -1,5 +1,21 @@
+
 {% extends "layout.html" %}
 {% block content %}
+<script type="text/javascript">
+	console.log("Setting homepage background");
+    console.log(document.body);
+    document.body.style.backgroundImage = "url(\"../static/images/marvin-meyer-SYTO3xs06fU-unsplash.jpg\")";
+    document.body.style.backgroundSize = "inherit";
+    document.body.style.backgroundAttachment = "fixed";
+    $('nav').css("background-color", "transparent");
+    $('.navbar-brand').css("color", "midnightblue");
+
+    $('.navbar-brand').hover(function() {
+        $(this).css("color", "yellow");
+    }, function() {
+        $(this).css("color", "midnightblue");
+    });
+</script>
 <section id="hook-section" class="landing-section">
 	<div class="row container wrapper">
 		<!--<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 student">
