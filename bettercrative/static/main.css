@@ -12,6 +12,14 @@ html {
   min-height:100vh;
 }
 
+.ui-widget-header {
+  background: #2525a7 url("images/ui-bg_gloss-wave_45_2525a7_500x100.png") 50% 50% repeat-x;
+}
+
+#account-tables_length select, #account-tables_filter input {
+  background-color: white;
+}
+
 /**Scale text**/
 html {
   font-size: 16px!important;
@@ -140,13 +148,13 @@ footer a, footer i {
 }
 
 nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer i:focus {
-  color: yellow;
+  color: #f6a828;
   text-decoration: none;
   cursor: pointer;
 }
 
 .current-page {
-  color: yellow !important;
+  color: #f6a828 !important;
 }
 
 .page-wrap {
@@ -208,7 +216,7 @@ nav a:hover, nav a:focus, footer a:hover, footer a:focus, footer i:hover, footer
 }
 
 .nav-link:hover {
-  color: yellow;
+  color: #f6a828;
   text-decoration: none;
 }
 /**End full nav style**/
@@ -560,6 +568,7 @@ No media query for `xs` since this is the default in Bootstrap */
 
 #account-tables {
   table-layout: fixed;
+  border: none;
 }
 
 #account-tables * {
@@ -598,7 +607,6 @@ No media query for `xs` since this is the default in Bootstrap */
   color:black;
   text-align:center;
   cursor: default;
-  border-bottom:1px solid black;
   text-align:left;
 }
 
