@@ -16,7 +16,7 @@ html {
   background: #2525a7 url("images/ui-bg_gloss-wave_45_2525a7_500x100.png") 50% 50% repeat-x;
 }
 
-#account-tables_length select, #account-tables_filter input {
+#account-tables_length select, #account-tables_filter input, #quizzes-table_length select, #classrooms-table_length select {
   background-color: white;
 }
 
@@ -974,15 +974,8 @@ table, th, td {
     margin-top: 10%;
 }
 
-.homepage-table {
-    border: 1px solid black;
-    width: 100%;
-}
-
-.homepage-table * {
+.homepage-table, .homepage-table *, .ui-widget-header {
     border: none;
-    padding: 5px;
-    width: 50%;
 }
 /* end user homepage */
 

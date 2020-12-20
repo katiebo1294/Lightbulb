@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    if(document.URL.indexOf("quizzes") || document.URL.indexOf("classrooms"))
+    if(onPage("quizzes") || onPage("classrooms"))
     {
         $('#account-tables').DataTable( {
             "columnDefs": [
@@ -9,7 +9,7 @@ $(document).ready(function() {
             ]
         });
     }
-    else if(document.URL.indexOf("classroom_results"))
+    else if(onPage("classroom_results"))
     {
         $('#classroom-results').DataTable( {
             "columnDefs": [
@@ -18,7 +18,24 @@ $(document).ready(function() {
             ]
         });
     }
+    else if(onPage("home"))
+    {
+        $('#classrooms-table, #quizzes-table').DataTable({
+            searching: false,
+            info: false,
+            autoWidth: true,
+            lengthChange: true,
+            lengthMenu: [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ],
+            columnDefs: [{ type: 'date', 'targets': [1] }],
+            ordering: false,
+            tabIndex: -1
+        });
+    }
 });
+
+function onPage(page) {
+    return document.URL.indexOf(page) != -1;
+}
 
 function getEditorContent() {
     var editor = ace.edit("editor");
