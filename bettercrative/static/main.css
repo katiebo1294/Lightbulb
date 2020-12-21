@@ -567,7 +567,6 @@ No media query for `xs` since this is the default in Bootstrap */
 }
 
 #account-tables {
-  table-layout: fixed;
   border: none;
 }
 

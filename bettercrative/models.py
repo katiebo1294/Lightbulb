@@ -174,7 +174,7 @@ class Quiz(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(60), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.now())
     date_modified = db.Column(db.DateTime, nullable=False, default=datetime.now(), onupdate=datetime.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

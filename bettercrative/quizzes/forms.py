@@ -1,7 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, FormField, FieldList, TextAreaField, RadioField
-from wtforms.validators import InputRequired, Optional
+from wtforms.validators import InputRequired, Optional, Length
 from wtforms.widgets import TextArea
+
+from bettercrative.models import Quiz
+
 
 class AnswerForm(FlaskForm):
     content = TextAreaField('Answer', validators=[Optional()])
@@ -15,7 +18,7 @@ class QuestionForm(FlaskForm):
 
 
 class QuizForm(FlaskForm):
-    name = TextAreaField('Name', validators=[InputRequired()])
+    name = TextAreaField('Name', validators=[InputRequired(), Length(max=60, message='Must be shorter than 60 characters')])
     submitQuiz = SubmitField('Create Quiz')
 
 

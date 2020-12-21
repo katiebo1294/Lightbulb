@@ -65,17 +65,16 @@ def quiz(quiz_id):
 @quizzes.route("/quiz/edit-name/<int:quiz_id>", methods=['GET', 'POST'])
 @login_required
 def edit_quiz_name(quiz_id):
-    
+    args = request.args
     quiz = Quiz.query.get_or_404(quiz_id)
 
     qzform = QuizForm()
     form = QuestionFormOverall()
     saform = QuestionFormOverallSA()
-    print("got here")
-    if qzform.validate_on_submit():
-        print(qzform.data)
-        quiz.name = qzform.name.data
+    if qzform.validate_on_submit:
+        quiz.name = args['name']
         db.session.commit()
+
         return redirect(url_for('quizzes.quiz', quiz_id=quiz_id))
         
     return render_template('quiz.html', title=quiz.name, quiz=quiz, qzform=qzform, form=form, saform=saform)

@@ -26,7 +26,7 @@ $(document).ready(function() {
             retrieve: true
         });
     }
-    else if(onPage("home"))
+    else if(onPage("home") || location.pathname == '/')
     {
         console.log("Creating 'classrooms-table' and 'quizzes-table' table");
         var classroomsTable = $('#classrooms-table, #quizzes-table').DataTable({

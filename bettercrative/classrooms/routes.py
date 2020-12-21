@@ -433,15 +433,15 @@ def received_answer():
 @classrooms.route("/classroom/<int:classroom_id>/edit_classroom_name", methods=['GET','POST'])
 def edit_classroom_name(classroom_id):
     args = request.args
-    classroom = Classroom.query.filter_by(id=classroom_id).first()
+    classroom = Classroom.query.get_or_404(classroom_id)
+
     form = ClassroomForm()
-    activeform = SetActiveForm()
     if form.validate_on_submit:
         classroom.name = args['name']
         db.session.commit()
-   
-    
-    return render_template('classroom.html', title=classroom.name, classroom=classroom, form = form, activeform = activeform)
+
+    return redirect(url_for('classrooms.classroom', classroom_id=classroom_id))
+
 
 @classrooms.route("/account/delete_classroom")
 @login_required

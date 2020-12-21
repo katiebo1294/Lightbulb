@@ -3,7 +3,34 @@
 
 <div id="quiz-container">
 	<div class="titlebar" style="border-bottom:1px solid black;">
-		<!-- Quiz Title -->
+		<div id="quiz-title-display" style="width: max-content;" class="input-group">
+			<input type="text" class="form-control" placeholder="{{ quiz.name }}" disabled>
+			<div class="input-group-append">
+				<button onclick="javascript:toggleEditQuizTitle();" class="btn btn-info"><i class="fas fa-edit"></i></button>
+			</div>
+		</div>
+
+		<form style="display: none;" id="quiz-title-edit" action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
+			<div style="width: max-content;" class="input-group">
+				{{ qzform.hidden_tag() }}
+				{% if qzform.name.errors %}
+				<input id="name" class="form-control is-invalid" maxlength="60" name="name" required placeholder="{{ quiz.name }}" value="{{ quiz.name }}">
+				<div class="invalid-feedback">
+				{% for error in qzform.name.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+				</div>
+				{% else %}
+				<input id="name" class="form-control" maxlength="60" name="name" required placeholder="{{ quiz.name }}" value="{{ quiz.name }}">
+				{% endif %}
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-success"><i class="fas fa-save"></i></button>
+					<button type="reset" onclick="javascript:toggleEditQuizTitle();" class="btn btn-danger"><i class="fas fa-undo"></i></button>
+				</div>
+			</div>
+		</form>
+
+	<!--	 Quiz Title
 		<button class="btn-sm editTitle general-btn classroomname" id="quiz-{{quiz.id}}"
 		        onclick="showEditQuizNameContainer({{ quiz.id }})" aria-label="edit quiz name">
 			{{quiz.name}}
@@ -11,7 +38,7 @@
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                 </span>
 		</button>
-		<!-- Title edit form -->
+		&lt;!&ndash; Title edit form &ndash;&gt;
 		<form id="quiz-form-{{quiz.id}}" style="display: none;"
 		      action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
 			{{qzform.hidden_tag()}}
@@ -39,11 +66,11 @@
 				       onclick="resetEditQuizNameContainer({{quiz.id}})">
 			</div>
 		</form>
-		<!-- Save button -->
+		&lt;!&ndash; Save button &ndash;&gt;
 		<button class="btn-sm save-and-exit sideClick general-btn"
 		        onclick="window.location.href='{{ url_for('users.quizzes') }}';">
 			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
-		</button>
+		</button> -->
 	</div>
 
 	<div id="questionView">

@@ -72,6 +72,11 @@ function removeAnswer(url, a_id, index) {
     });
 }
 
+function toggleEditQuizTitle() {
+    $("#quiz-title-display").toggle();
+    $("#quiz-title-edit").toggle();
+}
+
 function addQuestionContent(q_id){
 
     document.getElementById("question-form-" + q_id).style.display = "block";
