@@ -42,7 +42,7 @@
 			
 			<!-- option to create a new quiz -->
 			<button class="btn-sm sideClick general-btn" onclick="javascript:createQuizPopup()">
-				<i class="fas fa-plus" aria-hidden="true"></i> Create Quiz
+				<i class="fas fa-plus" aria-hidden="true"aria-label="create new quiz"></i> Quiz
 			</button>
 		</div>
 		<table id="account-tables" class="display nowrap dt-responsive" style="width: 100%;">
@@ -51,53 +51,27 @@
 				<th>Name</th>
 				<th>Date Created</th>
 				<th>Date Modified</th>
+				<th>Status</th>
 				<th>Options</th>
 			</tr>
 			</thead>
 			<tbody>
 				{% for quiz in current_user.quizzes %}
 				<tr>
-					<td>
-						{{ quiz.name }}
-					</td>
-					<td class="text-center">{{ quiz.date_created.strftime("%m/%d/%y")
-						}}
-					</td>
+					<td><a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td>
+					<td class="text-center">{{ quiz.date_created.strftime("%m/%d/%y") }}</td>
 					<!-- date last checked -->
-					<td class="text-center">
-						{{ quiz.date_modified.strftime("%m/%d/%y") }}
-					</td>
+					<td class="text-center">{{ quiz.date_modified.strftime("%m/%d/%y") }}</td>
+					<td>{% if quiz.quiz_activated() %}Active <a href="{{ url_for('classrooms.classroom', classroom_id=quiz.active) }}">(see classroom)</a>{% endif %}</td>
 					<!-- user can enter a quiz to view details, or delete it -->
 					<td>
-						<div class="quiz-icon-buttons-container">
-							<!-- more options dropdown -->
-							<div style="float: none; display: inline-block; vertical-align: middle;" class="dropdown">
-								<button id="more-options" class="btn dropbtn general-btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="more options">
-									<i class="fas fa-ellipsis-h" aria-hidden="true" title="more options"></i>
-								</button>
-								<div class="dropdown-menu" aria-labelledby="more-options">
-									<button class="dropdown-item" type="button" aria-label="share"><i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i></button>
-									<button class="dropdown-item" type="button" aria-label="download"><i class="account-page-icons fas fa-download" aria-hidden="true"></i></button>
-									<button class="dropdown-item" type="button" aria-label="copy"><i class="account-page-icons fas fa-copy" aria-hidden="true"></i></button>
-								</div>
-							</div>
-							<!-- edit button -->
-							
-							{%if quiz.quiz_activated() %}
-							<button type="button" class="border border-info shadow-sm btn-sm btn-outline-info" data-container="body" data-toggle="modal" data-target='#quiz_active_modal'>
-								Active
-							</button>
-							<!-- editing active quiz warning modal -->
-							{%include 'editing_quiz_warning_modal.html'%}
+						<div class="text-right">
+							<button data-toggle="tooltip" data-placement="top" title="Share" class="btn general-btn" type="button" aria-label="share"><i class="account-page-icons fas fa-share-alt" aria-hidden="true"></i></button>
+							<button data-toggle="tooltip" data-placement="top" title="Download" class="btn general-btn" type="button" aria-label="download"><i class="account-page-icons fas fa-download" aria-hidden="true"></i></button>
+							<button data-toggle="tooltip" data-placement="top" title="Copy" class="btn general-btn" type="button" aria-label="copy"><i class="account-page-icons fas fa-copy" aria-hidden="true"></i></button>
 
-							{%else%}
-							<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-									type="button" class="btn btn-sm general-btn" aria-label="edit">
-								<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
-							</button>
-							{%endif%}
 							<!-- delete button -->
-							<button type="button" class="btn btn-sm general-btn"
+							<button data-toggle="tooltip" data-placement="top" title="Delete" type="button" class="btn general-btn"
 									onclick="removeQuizPopup('{{ url_for('quizzes.delete_quiz') }}', {{ quiz.id }})" aria-label="delete">
 							<i class="account-page-icons fas fa-trash" aria-hidden="true"></i>
 							</button>

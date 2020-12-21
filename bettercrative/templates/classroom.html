@@ -71,7 +71,7 @@
 			<h4 class="Active-Rooms">Added Quizzes</h4>
 			<button class="btn-sm sideClick general-btn"
 			        onclick="window.location.href='{{ url_for('classrooms.add_quiz', classroom_id=classroom.id) }}';"><i
-					class="fas fa-plus" aria-hidden="true"></i> Add a Quiz
+					class="fas fa-plus" aria-hidden="true" aria-label="add a quiz"></i> Quiz
 			</button>
 		</div>
 		<div style="clear: both;"></div>
@@ -94,11 +94,10 @@
 
 					<td class="col-4"><a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td>
 					<td class="col-4 text-center date-created" style="padding-left: 3%;">{{ quiz.date_created.strftime("%m/%d/%y") }}</td>
-					{% if quiz.id != classroom.active_quiz %}
 					<td class="col-4 quiz-icon-col">
-						<button id="set-active-{{classroom.id}}" class="btn general-btn"
-						        data-toggle="modal" {% if classroom.active_quiz %} data-target="#quiz_active_modal" {%
-						        else %} data-target="#set_active_modal-{{quiz.id}}" {% endif %}>
+						{% if classroom.active_quiz == None %}
+						<button id="set-active-{{classroom.id}}-{{quiz.id}}" class="btn general-btn"
+						        data-toggle="modal" data-target="#set_active_modal-{{quiz.id}}">
 							Set Active
 						</button>
 
@@ -106,24 +105,19 @@
 						<!-- TODO when un-setting a diff quiz, this one doesn't get activated; also the modal doesn't tell you which quiz you're deactivating -->
 						{%include 'editing_quiz_warning_modal.html'%}
 						<!-- TODO make this actually remove this quiz from the current classroom, instead of deleting the current classroom -->
-						<button type="button" class="btn btn-sm general-btn"
+						<button data-toggle="tooltip" data-placement="top" title="Unlink this quiz" type="button" class="btn general-btn"
 						        aria-label="unlink this quiz">
-							<i style="color: darkred;" class="account-page-icons fa fa-2x fa-times" aria-hidden="true"></i><br>
+							<i style="color: darkred;" class="account-page-icons fa fa-lg fa-times" aria-hidden="true"></i><br>
 						</button>
-					</td>
-					{% else %}
-					<td class="col-4 quiz-icon-col unset-active-btn">
-						{%if classroom.generate_qr%}
+						{% elif classroom.active_quiz == quiz.id %}
 						<button class="btn btn-sm btn-outline-info" data-toggle="modal"
 						        data-target="#qr_code_modal-{{quiz.id}}"> Show QR CODE
 						</button>
-						{%endif%}
-						<button id="remove-active-{{classroom.id}}" class="btn general-btn"
-						        onclick="remove_active({{classroom.id}})">
+						<button id="remove-active-{{classroom.id}}" class="btn general-btn">
 							Unset Active
 						</button>
+						{%endif%}
 					</td>
-					{% endif %}
 				</tr>
 				{%endfor%}</tbody>
 		</table>
@@ -146,6 +140,5 @@
 	{% endif %}
 </div>
 {% endif %}
-<script src="{{url_for('static', filename='js/set_active.js')}}" type="text/javascript"></script>
 <script src="{{url_for('static', filename='js/Classroom.js')}}" type="text/javascript"></script>
 {% endblock %}

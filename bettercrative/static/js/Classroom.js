@@ -145,3 +145,35 @@ function cancelEditClassroom(classroom_id){
     document.getElementById("classroom-" + classroom_id).style.display = "inline-block";
     document.getElementById("classroom-form-" + classroom_id).style.display = "none";
 }
+
+// for setting/unsetting quizzes active
+$("button[id^='set-active-']").click(function () {
+    var classroom_id = this.id.slice(14);
+    var quiz_id = this.id.slice(lastIndexOf('-'));
+    $.ajax({
+        type: 'GET',
+        data: { 'classroom_id': classroom_id },
+        url: '/classroom/' + classroom_id + '/set_active',
+        error: function(response) {
+            console.log(response.statusText);
+        },
+        success: function() {
+            window.location.reload();
+        }
+    });
+});
+
+$("button[id^='remove-active-']").click(function () {
+    var classroom_id = this.id.slice(14);
+    $.ajax({
+        type: 'GET',
+        data: { 'classroom_id': classroom_id },
+        url: '/classroom/' + classroom_id + '/remove_active',
+        error: function(response) {
+            console.log(response.statusText);
+        },
+        success: function() {
+            window.location.reload();
+        }
+    });
+});

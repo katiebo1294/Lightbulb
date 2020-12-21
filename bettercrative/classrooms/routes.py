@@ -204,13 +204,14 @@ def set_active(classroom_id, quiz_id):
         classroom.username_required = activeform.require_usernames.data
         classroom.generate_qr = activeform.generate_qr.data
         classroom.active_quiz = quiz_id
+        quiz.active = classroom.id
         db.session.commit()
         flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
     else:
         print("got here")
         flash(u'Quiz \"' + quiz.name + '\" is incomplete. Please check all questions have content and sufficient answers.', 'danger')
 
-    return redirect(url_for('classrooms.classroom', classroom_id=classroom.id, activeform=activeform))
+    return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
 
 
 @classrooms.route('/classroom/unset_and_edit', methods=['POST'])

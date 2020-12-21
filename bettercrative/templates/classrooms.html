@@ -40,30 +40,21 @@
 			<h4>Classrooms</h4>
 			<!-- option to create a new classroom -->
 			<button class="btn-sm sideClick general-btn" onclick="javascript:createClassroomPopup()">
-				<i class="fas fa-plus" aria-hidden="true"></i> Create Classroom
+				<i class="fas fa-plus" aria-hidden="true"aria-label="create new classroom"></i> Classroom
 			</button>
 		</div>
-		<table id="account-tables" class="display nowrap dt-responsive" style="width: 100%;">
+		<table id="account-tables" class="row-border hover nowrap stripe dt-responsive" style="width: 100%;">
 			<thead>
 				<tr>
-					<th>
-						Name
-					</th>
-					<th>
-						Date Created
-					</th>
-					<th>
-						Date Modified
-					</th>
-					<th>
-						Options
-					</th>
+					<th>Name</th>
+					<th>Date Created</th>
+					<th>Date Modified</th>
+					<th>Status</th>
+					<th>Options</th>
 				</tr>
 			</thead>
 			<tbody id="classrooms-data">
-				<span style="display: none;">{{ request.args }} {{sort_on}} {{sort_direction}}</span>
 				{% for classroom in current_user.classrooms%}
-				
 				<tr class="table-element">
 					<!-- dropdown for a classroom's added quizzes and which one if any is active -->
 					<td>
@@ -101,6 +92,8 @@
 					<td class="text-center">
 						{{ classroom.date_modified.strftime("%m/%d/%y") }}
 					</td>
+
+					<td>{% if classroom.active_quiz %}Has Active Quiz <a href="{{ url_for('quizzes.quiz', quiz_id=classroom.active_quiz) }}">(see quiz)</a>{% endif %}</td>
 
 					<!-- can enter a class to view details, or delete it -->
 					<td>

@@ -155,12 +155,22 @@ class Quiz(db.Model):
             the quiz's ID in the database.
         name: str
             the name of the quiz.
-        date_created: date
+        date_created: datetime
             the date the quiz was created.
+        date_modified: datetime
+            the date the quiz was last edited.
         user_id: int
             the ID of the user who created the quiz.
+        classroom_hosts: list(Classroom)
+            a list of the classrooms this quiz is in.
         questions: list(Question)
             a list of the questions that are in the quiz (see Question below.)
+        active: int
+            the ID of the classroom this quiz is currently active in. If it is not active, this value is None.
+        responses: list(Response)
+            a list of the responses to this quiz.
+        students: list(Student)
+            a list of the students that have taken this quiz.
     """
 
     id = db.Column(db.Integer, primary_key=True)

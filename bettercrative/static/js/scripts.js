@@ -1,26 +1,35 @@
 $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+
     if(onPage("quizzes") || onPage("classrooms"))
     {
-        $('#account-tables').DataTable( {
-            "columnDefs": [
-                {"orderable": false, "targets": 3},
+        console.log("Creating 'account-tables' table");
+        var accountTable = $('#account-tables').DataTable( {
+            columnDefs: [
+                { orderable: false, targets: [3, 4] },
                 { responsivePriority: 10001, targets: 2 },
                 { responsivePriority: 10002, targets: 1 }
-            ]
+            ],
+            lengthMenu: [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ],
+            tabIndex: -1,
+            retrieve: true
         });
     }
     else if(onPage("classroom_results"))
     {
-        $('#classroom-results').DataTable( {
+        console.log("Creating table");
+        var classResults = $('#classroom-results').DataTable( {
             "columnDefs": [
                 // This is temporarily disabled while I figure out how we should organize the columns as the number of columns will vary depending on number of questions/responses
                 // {"orderable": false, "targets": 3}
-            ]
+            ],
+            retrieve: true
         });
     }
     else if(onPage("home"))
     {
-        $('#classrooms-table, #quizzes-table').DataTable({
+        console.log("Creating 'classrooms-table' and 'quizzes-table' table");
+        var classroomsTable = $('#classrooms-table, #quizzes-table').DataTable({
             searching: false,
             info: false,
             autoWidth: true,
@@ -28,16 +37,18 @@ $(document).ready(function() {
             lengthMenu: [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ],
             columnDefs: [{ type: 'date', 'targets': [1] }],
             ordering: false,
-            tabIndex: -1
+            tabIndex: -1,
+            retrieve: true
         });
     } else if(onPage("classroom"))
     {
+        console.log("Creating 'added-quizzes-table' table");
         $("#added-quizzes-table").DataTable({
             columnDefs: [
                 { orderable: false, targets: 2 }
             ],
             autoWidth: true,
-            stateSave: true
+            retrieve: true
         });
     }
 });
