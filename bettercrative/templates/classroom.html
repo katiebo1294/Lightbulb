@@ -74,14 +74,8 @@
 				{%endif%}
 				<tr id="quiz-{{ quiz.id }}" class="table-element">
 
-					<td class="col-4">{{ quiz.name }}
-						{% if quiz.id == classroom.active_quiz %}
-						(active)
-						{% endif %}
-					</td>
-					<td class="col-4 text-center date-created" style="padding-left: 3%;">
-						{{ quiz.date_created.strftime("%m/%d/%y") }}
-					</td>
+					<td class="col-4"><a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td>
+					<td class="col-4 text-center date-created" style="padding-left: 3%;">{{ quiz.date_created.strftime("%m/%d/%y") }}</td>
 					{% if quiz.id != classroom.active_quiz %}
 					<td class="col-4 quiz-icon-col">
 						<button id="set-active-{{classroom.id}}" class="btn general-btn"
@@ -93,18 +87,12 @@
 						{%include 'set_active_modal.html'%}
 						<!-- TODO when un-setting a diff quiz, this one doesn't get activated; also the modal doesn't tell you which quiz you're deactivating -->
 						{%include 'editing_quiz_warning_modal.html'%}
-
-						<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-						        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">
-							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
-						</button>
+						<!-- TODO make this actually remove this quiz from the current classroom, instead of deleting the current classroom -->
 						<button type="button" class="btn btn-sm general-btn"
-						        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})"
-						        aria-label="delete quiz">
-							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+						        aria-label="unlink this quiz">
+							<i style="color: darkred;" class="account-page-icons fa fa-2x fa-times" aria-hidden="true"></i><br>
 						</button>
 					</td>
-
 					{% else %}
 					<td class="col-4 quiz-icon-col unset-active-btn">
 						{%if classroom.generate_qr%}

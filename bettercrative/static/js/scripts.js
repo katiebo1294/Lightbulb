@@ -36,7 +36,8 @@ $(document).ready(function() {
             columnDefs: [
                 { orderable: false, targets: 2 }
             ],
-            autoWidth: true
+            autoWidth: true,
+            stateSave: true
         });
     }
 });
