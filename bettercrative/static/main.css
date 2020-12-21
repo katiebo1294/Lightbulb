@@ -557,6 +557,10 @@ No media query for `xs` since this is the default in Bootstrap */
   float:right;
   background-color:transparent;
 }
+
+.info-icon:hover {
+  cursor: pointer;
+}
 /**end LaTeX info**/
 
 /**quizzes and classrooms pages**/
@@ -948,7 +952,6 @@ div.options{
 }
 
 .question-type-choice-box {
-    padding: 20px;
     border-radius: 10px;
     border: solid black;
     color: black;

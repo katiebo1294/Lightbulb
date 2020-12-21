@@ -395,7 +395,7 @@ function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
 }
 
 // makes question buttons sortable by dragging them with the mouse
-$("#questions-menu").sortable({
+$("div[id$='-questions-menu']").sortable({
     axis: "x",
     start: function(event, ui) {
         console.log("begin sort");
@@ -404,7 +404,7 @@ $("#questions-menu").sortable({
         console.log("end sort");
         ui.item.endPos = ui.item.index();
         console.log("moved from " + ui.item.startPos + " to " + ui.item.endPos);
-        var quiz_id = document.getElementsByClassName('editTitle')[0].id.slice(5);
+        var quiz_id = this.id.substring(0, this.id.indexOf('-'));
         console.log(quiz_id);
         $.ajax({
            type: "GET",

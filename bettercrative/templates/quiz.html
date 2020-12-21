@@ -75,7 +75,7 @@
 
 	<div id="questionView">
 		<!-- Sets the nav bar for the questions, add scrolling later.  format so it is all in one row -->
-		<div id="questions-menu" class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
+		<div id="{{quiz.id}}-questions-menu" class="scrollmenu .all-items .slides" style="margin-top: 1vh;">
 			{% for question in quiz.questions %}
 			<div tabindex="0" role="button"
 			     class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
@@ -119,9 +119,10 @@
 								</button>
 								<!-- LaTeX notice -->
 								<span class="info-bar">
-								<button class="info-icon" onclick="javascript:openLatexAlert()">
+								<a class="info-icon" role="button" tabindex="0" data-trigger="focus" data-toggle="popover"
+								   title="Did you know?" data-content="We have LaTeX integration!<br>Simply type anything in LaTeX into your question or answer, and we will convert it for you!">
 									<i class="fas fa-info-circle"></i>
-								</button>
+								</a>
 							</span>
 							</div>
 							<div style="clear:both;"></div>
@@ -353,7 +354,6 @@
 
 							</div>
 							{% endfor %}
-
 							{% endif %}
 						</fieldset>
 					</form>
@@ -387,6 +387,8 @@
 		</div>
 	</div>
 </div>
+<!-- this div is just here to stop the "ace can't find #editor" error in the console -->
+<div id="editor"></div>
 <script src="{{ url_for('static', filename='js/QuizForm.js') }}"></script>
 <script charset="utf-8" src="{{ url_for('static', filename='js/src-min/ace.js') }}" type="text/javascript"></script>
 <script type="text/javascript">

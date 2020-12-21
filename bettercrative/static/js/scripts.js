@@ -1,5 +1,10 @@
 $(document).ready(function() {
     $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover({
+        trigger: 'focus hover',
+        html: true,
+        placement: 'top'
+    });
 
     if(onPage("quizzes") || onPage("classrooms"))
     {
