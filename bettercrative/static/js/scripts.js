@@ -30,6 +30,14 @@ $(document).ready(function() {
             ordering: false,
             tabIndex: -1
         });
+    } else if(onPage("classroom"))
+    {
+        $("#added-quizzes-table").DataTable({
+            columnDefs: [
+                { orderable: false, targets: 2 }
+            ],
+            autoWidth: true
+        });
     }
 });
 

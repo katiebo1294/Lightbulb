@@ -16,8 +16,8 @@ html {
   background: #2525a7 url("images/ui-bg_gloss-wave_45_2525a7_500x100.png") 50% 50% repeat-x;
 }
 
-#account-tables_length select, #account-tables_filter input, #quizzes-table_length select, #classrooms-table_length select {
-  background-color: white;
+div[id$='_length'] select, div[id$='_filter'] input {
+  background-color: white !important;
 }
 
 /**Scale text**/
@@ -974,7 +974,7 @@ table, th, td {
     margin-top: 10%;
 }
 
-.homepage-table, .homepage-table *, .ui-widget-header {
+.homepage-table, .homepage-table *, .ui-widget-header, #added-quizzes-table, #added-quizzes-table * {
     border: none;
 }
 /* end user homepage */

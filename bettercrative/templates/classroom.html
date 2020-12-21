@@ -58,75 +58,69 @@
 		</div>
 		<div style="clear: both;"></div>
 		<!-- actual quiz data/options -->
-		<div class="account-tables">
-			<div class="row table-element header-row">
-				<div class="col-3 text-center show">
-					<button id="sort-by-name" class="btn general-btn table-header">Name <i
-							class="fas fa-arrow-up sort-ascending"
-							aria-hidden="true"><span class="sr-only">Sort classrooms by name (descending)</span></i>
-					</button>
-				</div>
-				<div class="col-6 text-center show">
-					<button id="sort-by-date" class="btn general-btn table-header">Date Created <i
-							class="fas fa-arrow-up sort-ascending" aria-hidden="true"><span class="sr-only">Sort classrooms by date (descending)</span></i>
-					</button>
-				</div>
-				<div class="btn col-3 show table-header options-header">Options</div>
-			</div>
-			
-			{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
-			<!-- JavaScript option to set the current quiz in the list to active -->
-			{%if classroom.generate_qr%}
+		<table id="added-quizzes-table" class="dt-responsive row-border stripe hover" style="width: 100%;">
+			<thead>
+				<tr>
+					<td class="text-center ">Name</td>
+					<td class="text-center">Date Created</td>
+					<td class="text-center">Options</td>
+				</tr>
+			</thead>
+			<tbody>
+				{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
+				<!-- JavaScript option to set the current quiz in the list to active -->
+				{%if classroom.generate_qr%}
 				{%include 'qr_code_modal.html'%}
-			{%endif%}
-			<div id="quiz-{{ quiz.id }}" class="row table-element">
+				{%endif%}
+				<tr id="quiz-{{ quiz.id }}" class="table-element">
 
-				<div class="col-4">{{ quiz.name }}
-					{% if quiz.id == classroom.active_quiz %}
-					(active)
+					<td class="col-4">{{ quiz.name }}
+						{% if quiz.id == classroom.active_quiz %}
+						(active)
+						{% endif %}
+					</td>
+					<td class="col-4 text-center date-created" style="padding-left: 3%;">
+						{{ quiz.date_created.strftime("%m/%d/%y") }}
+					</td>
+					{% if quiz.id != classroom.active_quiz %}
+					<td class="col-4 quiz-icon-col">
+						<button id="set-active-{{classroom.id}}" class="btn general-btn"
+						        data-toggle="modal" {% if classroom.active_quiz %} data-target="#quiz_active_modal" {%
+						        else %} data-target="#set_active_modal-{{quiz.id}}" {% endif %}>
+							Set Active
+						</button>
+
+						{%include 'set_active_modal.html'%}
+						<!-- TODO when un-setting a diff quiz, this one doesn't get activated; also the modal doesn't tell you which quiz you're deactivating -->
+						{%include 'editing_quiz_warning_modal.html'%}
+
+						<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
+						        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">
+							<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
+						</button>
+						<button type="button" class="btn btn-sm general-btn"
+						        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})"
+						        aria-label="delete quiz">
+							<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
+						</button>
+					</td>
+
+					{% else %}
+					<td class="col-4 quiz-icon-col unset-active-btn">
+						{%if classroom.generate_qr%}
+						<button class="btn btn-sm btn-outline-info" data-toggle="modal"
+						        data-target="#qr_code_modal-{{quiz.id}}"> Show QR CODE
+						</button>
+						{%endif%}
+						<button id="remove-active-{{classroom.id}}" class="btn general-btn"
+						        onclick="remove_active({{classroom.id}})">
+							Unset Active
+						</button>
+					</td>
 					{% endif %}
-				</div>
-				<div class="col-4 text-center date-created" style="padding-left: 3%;">
-					{{ quiz.date_created.strftime("%m/%d/%y") }}
-				</div>
-				{% if quiz.id != classroom.active_quiz %}
-				<div class="col-4 quiz-icon-col">
-					<button id="set-active-{{classroom.id}}" class="btn general-btn"
-					        data-toggle="modal" {% if classroom.active_quiz %} data-target="#quiz_active_modal" {% else %} data-target="#set_active_modal-{{quiz.id}}" {% endif %}>
-						Set Active
-					</button>
-
-					{%include 'set_active_modal.html'%}
-					<!-- TODO when un-setting a diff quiz, this one doesn't get activated; also the modal doesn't tell you which quiz you're deactivating -->
-					{%include 'editing_quiz_warning_modal.html'%}
-
-					<button onclick="window.location.href='{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}';"
-					        type="button" class="btn btn-sm general-btn" aria-label="edit quiz">
-						<i class="account-page-icons fas fa-pencil-alt" aria-hidden="true"></i>
-					</button>
-					<button type="button" class="btn btn-sm general-btn"
-					        onclick="removeClassroomPopup('{{ url_for('classrooms.delete_classroom') }}', {{ classroom.id }})"
-					        aria-label="delete quiz">
-						<i class="account-page-icons fa fa-trash" aria-hidden="true"></i>
-					</button>
-				</div>
-
-				{% else %}
-				<div class="col-4 quiz-icon-col unset-active-btn">
-					{%if classroom.generate_qr%}
-					<button class='btn btn-sm btn-outline-info' data-toggle="modal" data-target="#qr_code_modal-{{quiz.id}}"> Show QR CODE</button>
-					{%endif%}
-					<button id="remove-active-{{classroom.id}}" class="btn general-btn"
-					        onclick="remove_active({{classroom.id}})">
-						Unset Active
-					</button>
-				</div>
-				{% endif %}
-
-			</div>
-
-			{%endfor%}
-		</div>
+				</tr>
+				{%endfor%}</tbody>
+		</table>
 	</div>
 </div>
 
