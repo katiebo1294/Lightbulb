@@ -4,7 +4,25 @@
 
 <div id="classroom-container">
 	<div class="titlebar" style="border-bottom:1px solid black;">
-		<!-- Classroom Title -->
+		<div id="classroom-title-display" style="width: max-content;" class="input-group">
+			<input type="text" class="form-control" placeholder="{{ classroom.name }}" disabled>
+			<div class="input-group-append">
+				<button onclick="javascript:toggleEditClassroomTitle();" class="btn btn-info"><i class="fas fa-edit"></i></button>
+			</div>
+		</div>
+
+		<form style="display: none;" id="classroom-title-edit" action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
+			<div style="width: max-content;" class="input-group">
+				{{form.hidden_tag()}}
+				<input id="classroomname-content-3" class="form-control" maxlength="60" name="name" required placeholder="{{ classroom.name }}" value="{{ classroom.name }}">
+				<div class="input-group-append">
+					<button type="submit" class="btn btn-success"><i class="fas fa-save"></i></button>
+					<button type="reset" onclick="javascript:toggleEditClassroomTitle();" class="btn btn-danger"><i class="fas fa-undo"></i></button>
+				</div>
+			</div>
+		</form>
+<!--
+		&lt;!&ndash; Classroom Title &ndash;&gt;
 		<button class="btn-sm editTitle general-btn classroomname" id="classroom-{{classroom.id}}"
 		        onclick="showEditClassroom({{ classroom.id }})" aria-label="edit classroom name">
 			{{classroom.name}}
@@ -12,7 +30,7 @@
                     <i class="fas fa-pencil-alt" aria-hidden="true"></i>
                 </span>
 		</button>
-		<!-- Title edit form -->
+		&lt;!&ndash; Title edit form &ndash;&gt;
 		<form id="classroom-form-{{classroom.id}}" style="display: none;"
 		      action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
 			{{form.hidden_tag()}}
@@ -39,9 +57,9 @@
 				<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel"
 				       onclick="cancelEditClassroom({{classroom.id}})">
 			</div>
-		</form>
+		</form>-->
 		<!-- Save button -->
-		<button class="btn-sm save-and-exit sideClick general-btn"
+		<button class="btn-sm sideClick general-btn"
 		        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
 			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
 		</button>

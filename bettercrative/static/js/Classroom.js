@@ -114,6 +114,16 @@ function unset_and_edit_confirm(quiz_id){
     });
 }
 
+function toggleEditClassroomTitle() {
+    $("#classroom-title-display").toggle();
+    $("#classroom-title-edit").toggle();
+}
+
+function resizeInput() {
+    $(this).attr('size', $(this).val().length);
+}
+
+$("#classroomname-content-3").keydown(resizeInput).each(resizeInput);
 
 
 /**
