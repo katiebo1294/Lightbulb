@@ -166,11 +166,13 @@ class Quiz(db.Model):
         questions: list(Question)
             a list of the questions that are in the quiz (see Question below.)
         active: int
-            the ID of the classroom this quiz is currently active in. If it is not active, this value is None.
+            the ID of the currently active question.
         responses: list(Response)
             a list of the responses to this quiz.
         students: list(Student)
             a list of the students that have taken this quiz.
+        is_active: int
+            the ID of the classroom this quiz is active in; None otherwise.
     """
 
     id = db.Column(db.Integer, primary_key=True)
@@ -187,6 +189,7 @@ class Quiz(db.Model):
     active = db.Column(db.Integer, unique=False, nullable=True, default=None)
     responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
     students = db.relationship("Student", backref = 'quiz', cascade = 'delete, all')
+    is_active = db.Column(db.Integer, unique=False, nullable=True, default=None)
     
     """
         Description:

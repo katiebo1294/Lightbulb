@@ -7,7 +7,7 @@
 		<div id="classroom-title-display" style="width: max-content;" class="input-group">
 			<input type="text" class="form-control" placeholder="{{ classroom.name }}" disabled>
 			<div class="input-group-append">
-				<button onclick="javascript:toggleEditClassroomTitle();" class="btn btn-info"><i class="fas fa-edit"></i></button>
+				<button onclick="javascript:toggleEditClassroomTitle();" class="btn btn-outline-info"><i class="fas fa-edit"></i></button>
 			</div>
 		</div>
 
@@ -16,8 +16,8 @@
 				{{form.hidden_tag()}}
 				<input id="classroomname-content-3" class="form-control" maxlength="60" name="name" required placeholder="{{ classroom.name }}" value="{{ classroom.name }}">
 				<div class="input-group-append">
-					<button type="submit" class="btn btn-success"><i class="fas fa-save"></i></button>
-					<button type="reset" onclick="javascript:toggleEditClassroomTitle();" class="btn btn-danger"><i class="fas fa-undo"></i></button>
+					<button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i></button>
+					<button type="reset" onclick="javascript:toggleEditClassroomTitle();" class="btn btn-outline-danger"><i class="fas fa-times-circle"></i></button>
 				</div>
 			</div>
 		</form>

@@ -395,7 +395,7 @@ function setTextArea(url,answer_id,classroom_id, page_num,quiz_id,student_id){
 }
 
 // makes question buttons sortable by dragging them with the mouse
-$("div[id$='-questions-menu']").sortable({
+$("div[id$='-questions-menu']:not(.read-only)").sortable({
     axis: "x",
     start: function(event, ui) {
         console.log("begin sort");
@@ -421,7 +421,7 @@ $("div[id$='-questions-menu']").sortable({
 });
 
 // makes question buttons sortable by using the arrow keys
-$("div[id^='qbtn-']").keyup(function(e) {
+$("div[id^='qbtn-']:not(.read-only)").keyup(function(e) {
     if(e.keyCode == 37 || e.keyCode == 39) {
         var quiz_id = document.getElementsByClassName('editTitle')[0].id.slice(5);
         var length = $('#questions-menu div').length;

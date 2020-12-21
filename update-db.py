@@ -91,14 +91,14 @@ for i in range(1, 17):
     quiz = Quiz(name='Quiz ' + str(i), date_created=date_created, date_modified=date_modified)
     katie.quizzes.append(quiz)
 # add CS quiz to the CS classrooms and make it active in CSCI 497R
+katie.classrooms[0].added_quizzes.append(quiz_1)
 katie.classrooms[1].added_quizzes.append(quiz_1)
 katie.classrooms[2].added_quizzes.append(quiz_1)
-katie.classrooms[3].added_quizzes.append(quiz_1)
-katie.classrooms[1].active_quiz = quiz_1.id
+katie.classrooms[0].active_quiz = quiz_1.id
 # add math quiz to the math classrooms and make it active in MATH 225
+katie.classrooms[2].added_quizzes.append(quiz_2)
 katie.classrooms[3].added_quizzes.append(quiz_2)
-katie.classrooms[5].added_quizzes.append(quiz_2)
-katie.classrooms[3].active_quiz = quiz_2.id
+katie.classrooms[2].active_quiz = quiz_2.id
 db.session.commit()
 # Tim's test account
 tim_password = bcrypt.generate_password_hash('test').decode('utf-8')

@@ -204,7 +204,7 @@ def set_active(classroom_id, quiz_id):
         classroom.username_required = activeform.require_usernames.data
         classroom.generate_qr = activeform.generate_qr.data
         classroom.active_quiz = quiz_id
-        quiz.active = classroom.id
+        quiz.is_active = classroom.id
         db.session.commit()
         flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
     else:
@@ -255,6 +255,7 @@ def remove_active(classroom_id):
     if classroom is None:
         return "No Classroom Found", 404
     classroom.active_quiz = None
+    quiz.is_active = None
     db.session.commit()
 
     return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))

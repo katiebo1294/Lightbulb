@@ -5,9 +5,11 @@
 	<div class="titlebar" style="border-bottom:1px solid black;">
 		<div id="quiz-title-display" style="width: max-content;" class="input-group">
 			<input type="text" class="form-control" placeholder="{{ quiz.name }}" disabled>
+			{% if not quiz.is_active %}
 			<div class="input-group-append">
-				<button onclick="javascript:toggleEditQuizTitle();" class="btn btn-info"><i class="fas fa-edit"></i></button>
+				<button onclick="javascript:toggleEditQuizTitle();" class="btn btn-outline-info"><i class="fas fa-edit"></i></button>
 			</div>
+			{% endif %}
 		</div>
 
 		<form style="display: none;" id="quiz-title-edit" action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
@@ -24,53 +26,11 @@
 				<input id="name" class="form-control" maxlength="60" name="name" required placeholder="{{ quiz.name }}" value="{{ quiz.name }}">
 				{% endif %}
 				<div class="input-group-append">
-					<button type="submit" class="btn btn-success"><i class="fas fa-save"></i></button>
-					<button type="reset" onclick="javascript:toggleEditQuizTitle();" class="btn btn-danger"><i class="fas fa-undo"></i></button>
+					<button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i></button>
+					<button type="reset" onclick="javascript:toggleEditQuizTitle();" class="btn btn-outline-danger"><i class="fas fa-times-circle"></i></button>
 				</div>
 			</div>
 		</form>
-
-	<!--	 Quiz Title
-		<button class="btn-sm editTitle general-btn classroomname" id="quiz-{{quiz.id}}"
-		        onclick="showEditQuizNameContainer({{ quiz.id }})" aria-label="edit quiz name">
-			{{quiz.name}}
-			<span style="float:right; opacity:0.5; font-size:2vw;">
-                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                </span>
-		</button>
-		&lt;!&ndash; Title edit form &ndash;&gt;
-		<form id="quiz-form-{{quiz.id}}" style="display: none;"
-		      action="{{ url_for('quizzes.edit_quiz_name', quiz_id=quiz.id) }}">
-			{{qzform.hidden_tag()}}
-			<fieldset class="editTitle general-btn form-group edit-classroom-form">
-				<div class="form-group">
-					{% if qzform.name.errors %}
-					{{qzform.name(placeholder='Enter new name '
-					,id='quizname-content-'~quiz.id,value=quiz.name, maxlength='20', class='form-control
-					form-control-lg is-invalid editTitle editTitle classroomname')}}
-					<div class="invalid-feedback">
-						{% for error in qzform.name.errors %}
-						{{ error }}
-						{% endfor %}
-					</div>
-					{% else %}
-					{{qzform.name(placeholder='Enter new name '
-					,id='quizname-content-'~quiz.id,value=quiz.name, maxlength='20', class='form-control
-					form-control-lg editTitle editTitle classroomname')}}
-					{% endif %}
-				</div>
-			</fieldset>
-			<div class=form-group"> {{qzform.submitQuiz(class='btn btn-sm btn-outline-info',
-				type='submit',id='submit-quiz-'~quiz.id, value='Save')}}
-				<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel"
-				       onclick="resetEditQuizNameContainer({{quiz.id}})">
-			</div>
-		</form>
-		&lt;!&ndash; Save button &ndash;&gt;
-		<button class="btn-sm save-and-exit sideClick general-btn"
-		        onclick="window.location.href='{{ url_for('users.quizzes') }}';">
-			<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i> Save and Exit
-		</button> -->
 	</div>
 
 	<div id="questionView">
@@ -82,15 +42,18 @@
 			     id="qbtn-{{ loop.index }}"
 			     onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
 				ID: {{question.id}}
+				{% if not quiz.is_active %}
 				<button aria-label="remove question" class="fa fa-times remove-question"
 				        onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
 				</button>
+				{% endif %}
 			</div>
 			{% endfor %}
-
+			{% if not quiz.is_active %}
 			<button aria-label="add a question" class="fa fa-plus add-question .item .slide"
 			        onclick="addQuestion('{{ url_for('quizzes.add_question') }}', q_id={{ quiz.id }})">
 			</button>
+			{% endif %}
 		</div>
 
 		<!-- prevent things from floating after this section -->
@@ -110,6 +73,7 @@
 							<h5 class="question-content">
 								{{ question.name }}) {{ question.content }}
 							</h5>
+							{% if not quiz.is_active %}
 							<!-- Edit button -->
 							<div class="icon-container" style="float: right;">
 								<button style="margin-right: .5vw;" class="btn btn-outline-info"
@@ -125,6 +89,7 @@
 								</a>
 							</span>
 							</div>
+							{% endif %}
 							<div style="clear:both;"></div>
 						</div>
 					</div>

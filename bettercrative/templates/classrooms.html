@@ -93,7 +93,7 @@
 						{{ classroom.date_modified.strftime("%m/%d/%y") }}
 					</td>
 
-					<td>{% if classroom.active_quiz %}Has Active Quiz <a href="{{ url_for('quizzes.quiz', quiz_id=classroom.active_quiz) }}">(see quiz)</a>{% endif %}</td>
+					<td>{% if classroom.active_quiz %}Active <a href="{{ url_for('quizzes.quiz', quiz_id=classroom.active_quiz) }}">(see active quiz)</a>{% endif %}</td>
 
 					<!-- can enter a class to view details, or delete it -->
 					<td>
