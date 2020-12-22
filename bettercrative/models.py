@@ -96,8 +96,8 @@ class Classroom(db.Model):
     # Multiple quizzes can be attached to a classroom; only one active at a time; quizzes can be in multiple classrooms
     added_quizzes = db.relationship('Quiz', secondary='cl_qz_link', back_populates='classroom_hosts', cascade='none')
     # active quiz ID is stored here, or None if no active quiz
-    active_quiz = db.Column(db.Integer, db.ForeignKey('quiz.id'),nullable=True, default=None)
-    username_required= db.Column(db.Boolean, default=False)
+    active_quiz = db.Column(db.Integer, db.ForeignKey('quiz.id'), nullable=True, default=None)
+    username_required = db.Column(db.Boolean, default=False)
     generate_qr = db.Column(db.Boolean, default=False)
     # the active quiz for the results page
     active_result = db.Column(db.Integer, nullable=True)
