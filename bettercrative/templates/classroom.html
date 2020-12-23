@@ -4,7 +4,7 @@
 
 <div id="classroom-container">
 	<div class="titlebar" style="border-bottom:1px solid black;">
-		<div id="classroom-title-display" style="width: max-content;" class="input-group">
+		<div id="classroom-title-display" class="input-group float-left" style="width: max-content;">
 			<input type="text" class="form-control" placeholder="{{ classroom.name }}" disabled>
 			<div class="input-group-append">
 				<button onclick="javascript:toggleEditClassroomTitle();" class="btn btn-outline-info"><i class="fas fa-edit"></i></button>
@@ -21,43 +21,6 @@
 				</div>
 			</div>
 		</form>
-<!--
-		&lt;!&ndash; Classroom Title &ndash;&gt;
-		<button class="btn-sm editTitle general-btn classroomname" id="classroom-{{classroom.id}}"
-		        onclick="showEditClassroom({{ classroom.id }})" aria-label="edit classroom name">
-			{{classroom.name}}
-			<span style="float:right; opacity:0.5; font-size:2vw;">
-                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                </span>
-		</button>
-		&lt;!&ndash; Title edit form &ndash;&gt;
-		<form id="classroom-form-{{classroom.id}}" style="display: none;"
-		      action="{{ url_for('classrooms.edit_classroom_name', classroom_id=classroom.id) }}">
-			{{form.hidden_tag()}}
-			<fieldset class="editTitle general-btn form-group edit-classroom-form">
-				<div class="form-group">
-					{% if form.name.errors %}
-					{{form.name(placeholder='Enter new name '
-					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
-					form-control-lg is-invalid editTitle editTitle classroomname')}}
-					<div class="invalid-feedback">
-						{% for error in form.name.errors %}
-						{{ error }}
-						{% endfor %}
-					</div>
-					{% else %}
-					{{form.name(placeholder='Enter new name '
-					,id='classroomname-content-'~classroom.id,value=classroom.name, maxlength='20', class='form-control
-					form-control-lg editTitle editTitle classroomname')}}
-					{% endif %}
-				</div>
-			</fieldset>
-			<div class=form-group"> {{form.submitClass(class='btn btn-sm btn-outline-info',
-				type='submit',id='submit-classroom-'~classroom.id, value='Save')}}
-				<input type="reset" class="btn btn-sm btn-outline-danger" name="Cancel" value="Cancel"
-				       onclick="cancelEditClassroom({{classroom.id}})">
-			</div>
-		</form>-->
 		<!-- Save button -->
 		<button class="btn-sm sideClick general-btn"
 		        onclick="window.location.href='{{ url_for('users.classrooms') }}';">
@@ -76,10 +39,11 @@
 		</div>
 		<div style="clear: both;"></div>
 		<!-- actual quiz data/options -->
-		<table id="added-quizzes-table" class="dt-responsive row-border stripe hover" style="width: 100%;">
+		<table id="added-quizzes-table" class="dt-responsive row-border stripe hover nowrap" style="width: 100%;">
 			<thead>
 				<tr>
-					<td class="text-center ">Name</td>
+					<td class="text-center">Name</td>
+					<td class="text-center">Date Modified</td>
 					<td class="text-center">Date Created</td>
 					<td class="text-center">Options</td>
 				</tr>
@@ -93,6 +57,7 @@
 				<tr id="quiz-{{ quiz.id }}" class="table-element">
 
 					<td class="col-4"><a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td>
+					<td class="col-4 text-center date-created" style="padding-left: 3%;">{{ quiz.date_modified.strftime("%m/%d/%y") }}</td>
 					<td class="col-4 text-center date-created" style="padding-left: 3%;">{{ quiz.date_created.strftime("%m/%d/%y") }}</td>
 					<td class="col-4 quiz-icon-col">
 						{% if classroom.active_quiz == None %}

@@ -8,7 +8,6 @@ $(document).ready(function() {
 
     if(onPage("quizzes") || onPage("classrooms"))
     {
-        console.log("Creating 'account-tables' table");
         var accountTable = $('#account-tables').DataTable( {
             columnDefs: [
                 { orderable: false, targets: [3, 4] },
@@ -22,7 +21,6 @@ $(document).ready(function() {
     }
     else if(onPage("classroom_results"))
     {
-        console.log("Creating table");
         var classResults = $('#classroom-results').DataTable( {
             "columnDefs": [
                 // This is temporarily disabled while I figure out how we should organize the columns as the number of columns will vary depending on number of questions/responses
@@ -33,12 +31,10 @@ $(document).ready(function() {
     }
     else if(onPage("home") || location.pathname == '/')
     {
-        console.log("Creating 'classrooms-table' and 'quizzes-table' table");
         var classroomsTable = $('#classrooms-table, #quizzes-table').DataTable({
             searching: false,
             info: false,
             autoWidth: true,
-            lengthChange: true,
             lengthMenu: [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ],
             columnDefs: [{ type: 'date', 'targets': [1] }],
             ordering: false,
@@ -47,12 +43,16 @@ $(document).ready(function() {
         });
     } else if(onPage("classroom"))
     {
-        console.log("Creating 'added-quizzes-table' table");
+        var input = $("#classroom-title-display > input");
+        input.attr('size', input.attr('placeholder').length);
+
         $("#added-quizzes-table").DataTable({
             columnDefs: [
-                { orderable: false, targets: 2 }
+                { orderable: false, targets: 3 }
             ],
+            info: false,
             autoWidth: true,
+            lengthMenu: [ [5, 10, 25, 50, -1], [5, 10, 25, 50, "All"] ],
             retrieve: true
         });
     }
