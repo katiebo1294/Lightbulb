@@ -51,9 +51,6 @@
 			<tbody>
 				{% for quiz in classroom.added_quizzes|sort(attribute="name") %}
 				<!-- JavaScript option to set the current quiz in the list to active -->
-				{%if classroom.generate_qr%}
-				{%include 'qr_code_modal.html'%}
-				{%endif%}
 				<tr id="quiz-{{ quiz.id }}" class="table-element">
 
 					<td class="col-4"><a href="{{ url_for('quizzes.quiz', quiz_id=quiz.id) }}">{{ quiz.name }}</a></td>
@@ -75,9 +72,11 @@
 							<i style="color: darkred;" class="account-page-icons fa fa-lg fa-times" aria-hidden="true"></i><br>
 						</button>
 						{% elif classroom.active_quiz == quiz.id %}
+						{% if classroom.generate_qr %}
 						<button class="btn btn-sm btn-outline-info" data-toggle="modal"
 						        data-target="#qr_code_modal-{{quiz.id}}"> Show QR CODE
-						</button>
+						</button>{%include 'qr_code_modal.html'%}
+						{% endif %}
 						<button id="remove-active-{{classroom.id}}" class="btn general-btn">
 							Unset Active
 						</button>
@@ -88,6 +87,8 @@
 		</table>
 	</div>
 </div>
+
+
 
 {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
 <div class="classroom-options">
