@@ -74,8 +74,8 @@
 						{% elif classroom.active_quiz == quiz.id %}
 						{% if classroom.generate_qr %}
 						<button class="btn btn-sm btn-outline-info" data-toggle="modal"
-						        data-target="#qr_code_modal-{{quiz.id}}"> Show QR CODE
-						</button>{%include 'qr_code_modal.html'%}
+						        data-target="#qr_code_modal"> Show QR CODE
+						</button>
 						{% endif %}
 						<button id="remove-active-{{classroom.id}}" class="btn general-btn">
 							Unset Active
@@ -83,7 +83,8 @@
 						{%endif%}
 					</td>
 				</tr>
-				{%endfor%}</tbody>
+				{%endfor%}
+			</tbody>
 		</table>
 	</div>
 </div>
@@ -91,6 +92,9 @@
 
 
 {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
+
+{% include 'qr_code_modal.html' %}
+
 <div class="classroom-options">
 	{% if classroom.active_quiz %}
 	<button id="take-active-quiz" class="btn general-btn"
