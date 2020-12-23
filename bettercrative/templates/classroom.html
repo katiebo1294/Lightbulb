@@ -58,12 +58,10 @@
 					<td class="col-4 text-center date-created" style="padding-left: 3%;">{{ quiz.date_created.strftime("%m/%d/%y") }}</td>
 					<td class="col-4 quiz-icon-col">
 						{% if classroom.active_quiz == None %}
-						<button id="set-active-{{classroom.id}}-{{quiz.id}}" class="btn general-btn"
-						        data-toggle="modal" data-target="#set_active_modal-{{quiz.id}}">
+						<button id="set-active-btn" data-class="{{classroom.id}}" data-quiz="{{quiz.id}}" class="btn general-btn"
+						        data-toggle="modal" data-target="#set_active_modal">
 							Set Active
 						</button>
-
-						{%include 'set_active_modal.html'%}
 						<!-- TODO when un-setting a diff quiz, this one doesn't get activated; also the modal doesn't tell you which quiz you're deactivating -->
 						{%include 'editing_quiz_warning_modal.html'%}
 						<!-- TODO make this actually remove this quiz from the current classroom, instead of deleting the current classroom -->
@@ -77,7 +75,7 @@
 						        data-target="#qr_code_modal"> Show QR CODE
 						</button>
 						{% endif %}
-						<button id="remove-active-{{classroom.id}}" class="btn general-btn">
+						<button id="remove-active-btn" data-class="{{classroom.id}}" class="btn general-btn">
 							Unset Active
 						</button>
 						{%endif%}
@@ -89,7 +87,7 @@
 	</div>
 </div>
 
-
+{%include 'set_active_modal.html'%}
 
 {% if (current_user.is_authenticated) and (classroom.owner == current_user) %}
 

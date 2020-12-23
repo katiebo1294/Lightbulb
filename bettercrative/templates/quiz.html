@@ -62,7 +62,7 @@
 
 		<div id="questions">
 			{% for question in quiz.questions %}
-			<div id="question-{{ loop.index }}" {% if quiz.active != question.id %} style="display: none;" {% endif %}>
+			<div id="question-{{ loop.index }}" {% if quiz.current_question != question.id %} style="display: none;" {% endif %}>
 				{% if question.category %}
 				<!-- Question display (no edit) -->
 				<div id="question-display-{{ loop.index }}">

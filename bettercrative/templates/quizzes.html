@@ -62,7 +62,7 @@
 					<td class="text-center">{{ quiz.date_created.strftime("%m/%d/%y") }}</td>
 					<!-- date last checked -->
 					<td class="text-center">{{ quiz.date_modified.strftime("%m/%d/%y") }}</td>
-					<td>{% if quiz.quiz_activated() %}Active <a href="{{ url_for('classrooms.classroom', classroom_id=quiz.active) }}">(see classroom)</a>{% endif %}</td>
+					<td>{% if quiz.is_active %}Active <a href="{{ url_for('classrooms.classroom', classroom_id=quiz.is_active) }}">(see classroom)</a>{% endif %}</td>
 					<!-- user can enter a quiz to view details, or delete it -->
 					<td>
 						<div class="text-right">

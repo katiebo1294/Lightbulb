@@ -84,60 +84,13 @@ def classroom(classroom_id):
     if current_user.is_authenticated:
         form = ClassroomForm()
         # this is so the "view results" button only shows up if there's something to view
-        has_responses = classroom.active_quiz is not None and len(Response.query.filter_by(quiz_reference=classroom.active_quiz).all()) > 0
+        has_responses = bool(Response.query.filter_by(classroom_host_id=classroom_id).first())
         return render_template('classroom.html', title=classroom.name, classroom=classroom, form=form, has_responses=has_responses, activeform=activeform)
     else:
         quiz = classroom.active_quiz
         student = Student()
 
         return render_template('take_quiz.html', title='TakeQuiz', classroom=classroom, quiz=quiz, student=student)
-
-
-def is_complete(quiz):
-    """
-    Checks a quiz for completeness. A quiz is complete if:
-    - there is at least one question (one is added by default on quiz creation)
-    - every question has a category
-    - every question has content
-    - for multiple choice, every answer has content and at least one of them is marked correct
-    :param quiz: the quiz to check
-    :return: true if quiz is complete
-    """
-
-    complete = True
-    # the quiz must have at least one question
-    if quiz.questions is None:
-        complete = False
-        print("no questions")
-    else:
-        for question in quiz.questions:
-            # all questions must have content and a category
-            if question.category is None or question.content is None:
-                complete = False
-                print("question % 2d either has no category or has no content" % question.index)
-                break
-            if question.category == 'Multiple Choice':
-                has_correct_answer = False
-                for answer in question.answers:
-                    # all answers must have content
-                    if answer.content is None:
-                        complete = False
-                        print("answer %2d to question %2d has no content" % (answer.index, question.index))
-                        break
-                    if answer.correct:
-                        has_correct_answer = True
-                # at least one answer must be correct
-                if not has_correct_answer:
-                    complete = False
-                    print("question %2d has no correct answers" % question.index)
-                    break
-            if question.category == 'True-False':
-                # true/false questions must be either true or false
-                if not question.answers[0].correct and not question.answers[1].correct:
-                    complete = False
-                    print("question %2d has not been marked true or false" % question.index)
-                    break
-    return complete
 
 
 @classrooms.route("/classroom/<int:classroom_id>/add_quiz", methods=['GET', 'POST'])
@@ -193,13 +146,13 @@ def set_active(classroom_id, quiz_id):
             quiz_id (int): the ID of the quiz to set active
             classroom_id (int): the ID of the classroom to make it active in
     """
-    
+    print(request.form)
     classroom = Classroom.query.get_or_404(classroom_id)
     quiz = Quiz.query.get_or_404(quiz_id)
     
     activeform = SetActiveForm()
     
-    if is_complete(quiz) and activeform.validate_on_submit():
+    if activeform.validate_on_submit():
         
         classroom.username_required = activeform.require_usernames.data
         classroom.generate_qr = activeform.generate_qr.data
@@ -207,9 +160,6 @@ def set_active(classroom_id, quiz_id):
         quiz.is_active = classroom.id
         db.session.commit()
         flash(u'Quiz \"' + quiz.name + '\" is now active in \"' + classroom.name + '\"!', 'success')
-    else:
-        print("got here")
-        flash(u'Quiz \"' + quiz.name + '\" is incomplete. Please check all questions have content and sufficient answers.', 'danger')
 
     return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
 
@@ -251,12 +201,12 @@ def remove_active(classroom_id):
     if classroom_id is None:
         raise Exception('No \'classroom_id\' supplied!')
 
-    classroom = Classroom.query.get(classroom_id)
-    if classroom is None:
-        return "No Classroom Found", 404
-    classroom.active_quiz = None
+    classroom = Classroom.query.get_or_404(classroom_id)
+    quiz = Quiz.query.get_or_404(classroom.active_quiz)
     quiz.is_active = None
+    classroom.active_quiz = None
     db.session.commit()
+    flash(u'Quiz \"' + quiz.name + '\" unset as active in classroom \"' + classroom.name + '\"!', 'success')
 
     return redirect(url_for('classrooms.classroom', classroom_id=classroom.id))
 
@@ -276,6 +226,7 @@ def remove_quiz(classroom_id, quiz_id):
     classroom.added_quizzes.remove(quiz)
     db.session.commit()
     flash(u'Quiz Removed!', 'success')
+
     return redirect(url_for('classrooms.classroom', classroom_id=classroom_id))
 
 
@@ -366,7 +317,9 @@ def view_results(classroom_id):
                 quiz_id (int): the ID of the quiz to retrieve answers from
     """
 
-    classroom = Classroom.query.filter_by(id=classroom_id).first()
+    classroom = Classroom.query.get_or_404(classroom_id)
+    classroom_responses = Response.query.filter_by(classroom_host_id=classroom_id).all()
+    print(classroom_responses)
 
     totalResponses = {}
     responses = defaultdict(list)
@@ -378,11 +331,10 @@ def view_results(classroom_id):
                 responses[(student.id, response.question.id)].append(response)
             totalResponses[quiz.id] = responses
 
-
     return render_template('classroom_results.html', title='results of quiz',totalResponses=totalResponses, classroom=classroom)
 
 
-#Answers of each student 
+# Answers of each student
 @classrooms.route("/classroom/received_answer", methods=['GET', 'POST'])
 def received_answer():
 
@@ -570,7 +522,7 @@ def change_active_result():
     c_id = request.args.get("c_id", None)
     q_id = request.args.get("q_id", None)
     
-    classroom = Classroom.query.filter_by(id=c_id).first()
+    classroom = Classroom.query.get_or_404(c_id)
     classroom.active_result = q_id
     db.session.commit()
     return "succsessful change of active result quiz",200

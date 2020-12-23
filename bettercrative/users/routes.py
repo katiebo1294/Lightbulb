@@ -98,8 +98,8 @@ def quizzes():
 
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
-        quiz.active = first_question.id
-        print(quiz.active)
+        quiz.current_question = first_question.id
+        print(quiz.current_question)
         return redirect(url_for('quizzes.quiz', quiz_id = quiz.id))
     return render_template('quizzes.html', title="Quizzes", quizForm=quizForm)
 

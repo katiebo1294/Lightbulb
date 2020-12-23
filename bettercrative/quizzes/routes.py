@@ -33,8 +33,8 @@ def new_quiz(classroom_id):
 
         db.session.commit()
         flash(u'New quiz \"' + quiz.name + '\" created!', 'success')
-        quiz.active = first_question.id
-        print(quiz.active)
+        quiz.current_question = first_question.id
+        print(quiz.current_question)
         if classroom_id:
             classroom = Classroom.query.get(classroom_id)
             classroom.added_quizzes.append(quiz)
@@ -117,7 +117,7 @@ def add_question():
 
     db.session.commit()
 
-    quiz.active = question.id
+    quiz.current_question = question.id
 
     question.name += str(question.index + 1)
 
@@ -187,7 +187,7 @@ def remove_question():
         quiz.questions.remove(question)
 
     # setting active question
-    current_active_question = quiz.active
+    current_active_question = quiz.current_question
     if current_active_question == question.id and quiz.questions:
         current_active_question = quiz.questions[-1].id
 
@@ -200,7 +200,7 @@ def remove_question():
 
     db.session.commit()
 
-    quiz.active = current_active_question
+    quiz.current_question = current_active_question
 
     db.session.flush()
     db.session.commit()
@@ -388,7 +388,7 @@ def change_active_question():
     if quiz is None:
         return "No quiz found under that id", 500
 
-    quiz.active = question.id
+    quiz.current_question = question.id
 
     db.session.commit()
     return "active question changed", 200
@@ -417,6 +417,51 @@ def delete_quiz():
     return "Quiz removed", 200
 
 
+@quizzes.route("/quiz/is_complete", methods=['GET', 'POST'])
+def is_complete():
+    """
+       Checks a quiz for completeness. A quiz is complete if:
+       - there is at least one question (one is added by default on quiz creation)
+       - every question has a category
+       - every question has content
+       - for multiple choice, every answer has content and at least one of them is marked correct
+       :param quiz: the quiz to check
+       :return: true if quiz is complete
+    """
+    quiz_id = request.args.get('quiz_id', None)
+    if quiz_id:
+        quiz = Quiz.query.get_or_404(quiz_id)
+        # the quiz must have at least one question
+        if not quiz.questions:
+            print("no questions")
+            return "0"
+        else:
+            for question in quiz.questions:
+                # all questions must have content and a category
+                if question.category is None or question.content is None:
+                    print("question % 2d either has no category or has no content" % question.index)
+                    return "0"
+                if question.category == 'Multiple Choice':
+                    has_correct_answer = False
+                    for answer in question.answers:
+                        # all answers must have content
+                        if answer.content is None:
+                            print("answer %2d to question %2d has no content" % (answer.index, question.index))
+                            return "0"
+                        if answer.correct:
+                            has_correct_answer = True
+                    # at least one answer must be correct
+                    if not has_correct_answer:
+                        print("question %2d has no correct answers" % question.index)
+                        return "0"
+                if question.category == 'True-False':
+                    # true/false questions must be either true or false
+                    if not question.answers[0].correct and not question.answers[1].correct:
+                        print("question %2d has not been marked true or false" % question.index)
+                        return "0"
+        return "1"
+    else:
+        return "Error: no quiz ID supplied!"
 
 """
 -------------------------------------------------------------------

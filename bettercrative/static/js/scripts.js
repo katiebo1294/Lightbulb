@@ -19,13 +19,10 @@ $(document).ready(function() {
             retrieve: true
         });
     }
-    else if(onPage("classroom_results"))
+    else if(onPage("results"))
     {
+    console.log("on results page");
         var classResults = $('#classroom-results').DataTable( {
-            "columnDefs": [
-                // This is temporarily disabled while I figure out how we should organize the columns as the number of columns will vary depending on number of questions/responses
-                // {"orderable": false, "targets": 3}
-            ],
             retrieve: true
         });
     }

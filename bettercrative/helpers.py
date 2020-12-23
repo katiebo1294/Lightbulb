@@ -18,6 +18,7 @@ def get_alphabet_index(index):
 def append_form(form):
     form.answer_form.append_entry()
 
+
 def find_selected_answer(question_category, answer_response, answer_id, student_id):
     
     if question_category != 'Short Answer' and question_category != 'IDE':
@@ -32,4 +33,22 @@ def find_selected_answer(question_category, answer_response, answer_id, student_
                 return response.value
         return ""
 
-                
+
+def check_is_complete(quiz):
+    if quiz.questions:
+        for question in quiz.questions:
+            if not question.content:
+                return False
+            if question.type == 'Multiple Choice':
+                if not question.answers:
+                    return False
+                has_correct_answer = False
+                for answer in question.answers:
+                    if not answer.content:
+                        return False
+                    if answer.correct:
+                        has_correct_answer = True
+                if not has_correct_answer:
+                    return False
+    return True
+

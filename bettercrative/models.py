@@ -5,7 +5,7 @@ from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from sqlalchemy.ext.orderinglist import ordering_list
 
-from bettercrative import db, login_manager
+from bettercrative import db, helpers, login_manager
 
 
 @login_manager.user_loader
@@ -165,7 +165,7 @@ class Quiz(db.Model):
             a list of the classrooms this quiz is in.
         questions: list(Question)
             a list of the questions that are in the quiz (see Question below.)
-        active: int
+        current_question: int
             the ID of the currently active question.
         responses: list(Response)
             a list of the responses to this quiz.
@@ -186,11 +186,11 @@ class Quiz(db.Model):
     questions = db.relationship('Question', backref='quiz', order_by="Question.index",
                                 collection_class=ordering_list('index'),
                                 cascade="all, delete, delete-orphan")
-    active = db.Column(db.Integer, unique=False, nullable=True, default=None)
+    current_question = db.Column(db.Integer, unique=False, nullable=True, default=None)
     responses = db.relationship("Response", backref = 'quiz', cascade = 'delete, all')
     students = db.relationship("Student", backref = 'quiz', cascade = 'delete, all')
     is_active = db.Column(db.Integer, unique=False, nullable=True, default=None)
-    
+
     """
         Description:
             this function checks if a certain quiz is activated in one of the classrooms
@@ -218,6 +218,7 @@ class Quiz(db.Model):
         for classroom in self.classroom_hosts:
             classroom.active_quiz = None
         db.session.commit()
+
     def __repr__(self):
         return f"Quiz('{self.name}', '{self.date_created}', '{self.user_id}', '{self.classroom_hosts}')"
 

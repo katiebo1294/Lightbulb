@@ -408,6 +408,7 @@ function change_active_result(url,q_id,c_id)
     success: function () {
       console.log("changed active result quiz");
       refresh("#results_display")
+      var classroomResults = $('#classroom-results').DataTable();
     }
   });
 }

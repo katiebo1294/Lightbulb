@@ -73,8 +73,9 @@ function show_unset_and_edit(quiz_id){
             default_modal.classList.remove('noshow');
             default_modal.classList.add('show');
         });
-    })
+    });
 }
+
 function unset_confirm(quiz_id, classroom_id){
     event.preventDefault();
     $.ajax({
@@ -147,24 +148,35 @@ function cancelEditClassroom(classroom_id){
 }
 
 // for setting/unsetting quizzes active
-$("button[id^='set-active-']").click(function () {
-    var classroom_id = this.id.slice(14);
-    var quiz_id = this.id.slice(lastIndexOf('-'));
+$("button#set-active-btn").click(function() {
+    var classroom_id = $(this).data('class');
+    var quiz_id = $(this).data('quiz');
     $.ajax({
         type: 'GET',
-        data: { 'classroom_id': classroom_id },
-        url: '/classroom/' + classroom_id + '/set_active',
-        error: function(response) {
-            console.log(response.statusText);
+        data: { 'quiz_id': quiz_id },
+        dataType: 'text',
+        url: '/quiz/is_complete',
+        error: function(data) {
+            console.log(data);
         },
-        success: function() {
-            window.location.reload();
+        success: function(data) {
+        console.log(data);
+        $("#failure, #success").toggle();
+            if(data === '1') {
+                $("#set-active-form").attr('action', classroom_id + "/" + quiz_id + "/set_active");
+                $("#success").show();
+                $("#failure").hide();
+            } else {
+                 $("#failure").show();
+                 $("#success").hide();
+            }
+            $("#set_active_modal").show();
         }
     });
 });
 
-$("button[id^='remove-active-']").click(function () {
-    var classroom_id = this.id.slice(14);
+$("#remove-active-btn").click(function () {
+    var classroom_id = $(this).data('class')
     $.ajax({
         type: 'GET',
         data: { 'classroom_id': classroom_id },

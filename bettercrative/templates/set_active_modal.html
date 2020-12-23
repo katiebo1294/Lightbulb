@@ -1,46 +1,60 @@
-<div class="modal fade" id="set_active_modal-{{ quiz.id }}" role="dialog">
+<div class="modal" id="set_active_modal" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h4><i class="far fa-lightbulb"></i> Quiz Options</h4>
-				<button id="set-active-dismiss" type="button" aria-label="Close" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+			<div id="success">
+				<div class="modal-header">
+					<h4 class="modal-title"><i class="far fa-lightbulb"></i> Quiz Options</h4>
+					<button type="button" aria-label="Close" class="close" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></button>
+				</div>
+				<form id="set-active-form" method='POST'>
+					{{ activeform.hidden_tag() }}
+					<div class="modal-body">
+						<div class="checkbox">
+
+							{{ activeform.require_usernames.label() }}
+							{% if activeform.require_usernames.errors %}
+							{{ activeform.require_usernames(class="is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in activeform.require_usernames.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+							{% else %}
+							{{ activeform.require_usernames() }}
+							{% endif %}
+						</div>
+						<div class="checkbox">
+							{{ activeform.generate_qr.label() }}
+							{% if activeform.generate_qr.errors %}
+							{{ activeform.generate_qr(class="is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in activeform.generate_qr.errors %}
+								<span>{{ error }}</span>
+								{% endfor %}
+							</div>
+							{% else %}
+							{{ activeform.generate_qr() }}
+							{% endif %}
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="set-active-submit" class="btn btn-success" type="submit"><i class="fas fa-power-off"></i> Set Active</button>
+					</div>
+				</form>
 			</div>
-			<form id="set-active-form" action="{{ url_for('classrooms.set_active', classroom_id=classroom.id, quiz_id=quiz.id) }}" method='POST'>
-				{{ activeform.hidden_tag() }}
-				
+			<div id="failure">
+				<div class="modal-header">
+					<h4 class="modal-title">Could Not Activate Quiz <i class="fa fa-exclamation-triangle"></i></h4>
+				</div>
 				<div class="modal-body">
-					<div class="checkbox">
-						
-						{{ activeform.require_usernames.label() }}
-						{% if activeform.require_usernames.errors %}
-						{{ activeform.require_usernames(class="is-invalid") }}
-						<div class="invalid-feedback">
-							{% for error in activeform.require_usernames.errors %}
-							<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-						{% else %}
-						{{ activeform.require_usernames() }}
-						{% endif %}
-					</div>
-					<div class="checkbox">
-						{{ activeform.generate_qr.label() }}
-						{% if activeform.generate_qr.errors %}
-						{{ activeform.generate_qr(class="is-invalid") }}
-						<div class="invalid-feedback">
-							{% for error in activeform.generate_qr.errors %}
-							<span>{{ error }}</span>
-							{% endfor %}
-						</div>
-						{% else %}
-						{{ activeform.generate_qr() }}
-						{% endif %}
-					</div>
+					<strong>We're sorry, this quiz is incomplete and cannot be made active.</strong><br>Please make sure there is at least
+					one question that has content. If it is a multiple choice question, it must also have at least one
+					correct answer that also has content.
 				</div>
 				<div class="modal-footer">
-					<button id="set-active-submit" class="btn btn-success" type="submit"><i class="fas fa-power-off"></i> Set Active</button>
+					<button class="btn btn-secondary" data-dismiss="modal">OK</button>
 				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 </div>
