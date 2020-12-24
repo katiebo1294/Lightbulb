@@ -1,11 +1,13 @@
 import os
+import psycopg2
 
 basedir = os.path.abspath(os.path.dirname(__file__))  # creates a base directory for environment
 
 
 class Config(object):
     SECRET_KEY = 'a7fc44f15ab68e45d593cf6f03197c50'
-    SQLALCHEMY_DATABASE_URI = os.environ.get('POSTGRES_URI')
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    conn = psycopg2.connect(SQLALCHEMY_DATABASE_URI, sslmode='require')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
@@ -25,6 +27,11 @@ class ProductionConfig(Config):
 class StagingConfig(Config):
     DEVELOPMENT = True
     DEBUG = False
+
+
+class DevelopmentConfig(Config):
+    DEVELOPMENT = True
+    DEBUG = True
 
 
 # where we test things

@@ -77,6 +77,10 @@ body:after{
   font-size: 8.5vh;
 }
 
+#login-modal {
+  font-family: 'Open Sans', Verdana, sans-serif;
+}
+
 .landing-page.accent {
   font-size: 10vh;
   color: midnightblue;

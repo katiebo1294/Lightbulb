@@ -89,7 +89,7 @@
 							<a class="nav-link" href="{{ url_for('users.register') }}">Register</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="{{ url_for('users.login') }}">Login</a>
+							<a class="nav-link" href="#" data-toggle="modal" data-target="#login-modal">Login</a>
 						</li>
 						{% endif %}
 					</ul>
@@ -122,6 +122,23 @@
 				<button id="cancelButton" type="button" class="btn btn-secondary"
 				        onclick="document.getElementById('modalPopUp').style.display='none'">Cancel
 				</button>
+			</div>
+		</div>
+
+		<div id="login-modal" class="modal text-center" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Log In</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+					<div class="modal-body">
+						<a href="{{ url_for('users.login') }}" class="btn btn-lg btn-outline-danger">Teacher</a>
+						<a href="{{ url_for('classrooms.enter_classroom') }}" class="btn btn-lg btn-outline-primary">Student</a>
+					</div>
+				</div>
 			</div>
 		</div>
 

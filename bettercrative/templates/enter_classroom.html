@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="form-container">
+<div id="enter-classroom-form" style="margin: auto;" class="form-container">
 	<div class="content-section">
-		<form action="" method="POST">
+		<form action="{{ url_for('classrooms.enter_classroom') }}" method="POST">
 			{{ form.hidden_tag() }} <!--adds ctrf form-->
 
 			<fieldset class="form-group">
-				<legend class="border-bottom mb-4">Enter Classroom</legend>
+				<legend class="border-bottom mb-4">Student</legend>
 				<div class="form-group">
 					<!-- student can input the name of an active classroom to sign in and take the active quiz -->
 					{{ form.room_id.label(class="form-control-label") }}
@@ -24,8 +24,8 @@
 				</div>
 			</fieldset>
 			<div class="form-group">
-				{{ form.submit(class="btn btn-outline-info") }}
-				<a href="{{ url_for('main.home') }}" class="btn btn-outline-secondary">
+				{{ form.submit(class="btn btn-success") }}
+				<a href="{{ url_for('main.home') }}" class="btn btn-danger">
 					Cancel
 				</a>
 			</div>

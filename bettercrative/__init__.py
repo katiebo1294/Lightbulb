@@ -25,6 +25,7 @@ def create_app(config_class=Config):
     app.jinja_options['extensions'].append('jinja2.ext.loopcontrols')
     Bootstrap(app)
     app.config.from_object(config_class)
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
 
     app.app_context().push()

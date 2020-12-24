@@ -34,37 +34,17 @@ def login():
     """ Log in to an existing (teacher) account. """
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))
-    teacher_form = LoginForm()
-    student_form = EnterClassroomForm()
-    if teacher_form.validate_on_submit():
-        user = User.query.filter_by(email=teacher_form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password, teacher_form.password.data):
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             flash(u'You have been successfully logged in!', 'success')
-            login_user(user, remember=teacher_form.remember.data)
+            login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash(u'Login unsuccessful. Please check your email and password.', 'danger')
-    if student_form.validate_on_submit():
-        classroom = Classroom.query.filter_by(name=student_form.room_id.data).first()
-        if classroom and classroom.active_quiz:
-            print("-------------------------------------------------------------------")
-            print("ADDING STUDENT")
-            print("-------------------------------------------------------------------")
-            student = Student(quiz_reference=classroom.active_quiz)
-            db.session.add(student)
-            db.session.commit()
-            if classroom.username_required:
-                print("-------------------------------------------------------------------")
-                print("STUDENTS NEED TO PUT A USERNAME HERE")
-                print("-------------------------------------------------------------------")
-                return redirect(url_for('classrooms.student_name', classroom_id=classroom.id, student=student.id))
-            else:
-                return redirect(url_for('classrooms.take_quiz', classroom_id=classroom.id, student=student.id))
-        else:
-            flash(u'A classroom does not exist with that name. Please try again.', 'danger')
-
-    return render_template('login.html', title='Login', teacher_form=teacher_form, student_form=student_form)
+    return render_template('login.html', title='Login', form=form)
 
 
 @users.route("/authorize")
