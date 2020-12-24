@@ -8,7 +8,7 @@
           </button>
         </div>
         <div class="modal-body text-center" style="padding: 10%">
-          <img src="{{ qrcode(url_for('classrooms.take_quiz', classroom_id=classroom.id)) }}" height="150"
+          <img src="bettercrative.herokuapp.com/{{ qrcode(url_for('classrooms.take_quiz', classroom_id=classroom.id, _external=True)) }}" height="150"
                            width="150" alt="Scan this QR code to sign into classroom {{ classroom.name }}">
         </div>
       </div>
