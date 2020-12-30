@@ -142,3 +142,5 @@ config.py
 
 # vscode settings
 settings.json
+
+.DS_Store
