@@ -1,13 +1,14 @@
 import os
 import psycopg2
 
-basedir = os.path.abspath(os.path.dirname(__file__))  # creates a base directory for environment
+# creates a base directory for environment
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class Config(object):
     SECRET_KEY = 'a7fc44f15ab68e45d593cf6f03197c50'
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
-    conn = psycopg2.connect(SQLALCHEMY_DATABASE_URI, sslmode='require')
+    conn = psycopg2.connect(SQLALCHEMY_DATABASE_URI)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587

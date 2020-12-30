@@ -41,7 +41,7 @@
 			     class="btn item {% if quiz.active == question.id %} activeQuestion {% endif %}"
 			     id="qbtn-{{ loop.index }}"
 			     onclick="change_active_question('{{ url_for('quizzes.change_active_question') }}', question_id={{ question.id }}, quiz_id={{ quiz.id }});">
-				ID: {{question.id}}
+				question {{loop.index}}
 				{% if not quiz.is_active %}
 				<button aria-label="remove question" class="fa fa-times remove-question"
 				        onclick="removeQuestionPopup('{{ url_for('quizzes.remove_question') }}', q_id={{ question.id }})">
