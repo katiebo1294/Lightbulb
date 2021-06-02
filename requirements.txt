@@ -56,7 +56,7 @@ requests==2.23.0
 six==1.13.0
 SQLAlchemy==1.3.12
 sqlparse==0.3.0
-urllib3==1.25.8
+urllib3==1.26.5
 vcversioner==2.16.0.0
 virtualenv==16.7.9
 visitor==0.1.3
